@@ -1,0 +1,41 @@
+# Environment variables (YOUR API KEY!)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# OS files
+.DS_Store
+.DS_Store?
+
+# Archive folder (optional - remove # to track old versions)
+# data/archive/
+.venv/
+
+# Test outputs
+tests/__pycache__/
+.pytest_cache/
+
+# Generated outputs
+outputs/excel/*.xlsx
+outputs/dashboards/*.html
+
+# Large datasets (optional - uncomment if needed)
+# data/amazon-google/*.csv
+# data/abt-buy/*.csv
+# data/dblp-acm/*.csv
+# data/dblp-scholar/*.csv
+
+# Keep structure but ignore CSVs in archive
+data/archive/**/*.csv
+.Rhistory

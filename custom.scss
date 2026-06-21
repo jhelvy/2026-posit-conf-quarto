@@ -1,0 +1,152 @@
+/*-- scss:defaults --*/
+
+// Adapted from John Helveston's xaringan "lexis" theme (css/lexis.css +
+// css/lexis-fonts.css) to Quarto RevealJS. Same fonts, colors, and feel.
+
+// --- FONTS ---
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$font-family-body:   Inter, -apple-system, BlinkMacSystemFont, roboto, "segoe ui", Helvetica, Arial, sans-serif;
+$font-family-header: "Fira Sans Condensed", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-mono:   SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+$font-family-fancy:  'Lobster Two', cursive;
+
+// --- COLORS ---
+$color-white:      #FFFFFF;
+$color-red:        #E74A2F;
+$color-orange:     #fa7b3c;
+$color-yellow:     #EFB73E;
+$color-gold:       #e5bf00;
+$color-green:      #38B44A;
+$color-darkgreen:  #2c8475;
+$color-blue:       #007bff;
+$color-lightblue:  #cce5ff;
+$color-dodgerblue: #1E90FF;
+$color-darkblue:   #003087;
+$color-purple:     #772953;
+$color-black:      #121212;
+$color-amber:      #C0820F;  // = "content" in the entanglement figure
+$color-graylight:  #EAE9EA;
+$color-gray:       #696969;
+$color-tan:        #d9d9d9;
+
+// --- REVEALJS VARIABLE OVERRIDES ---
+$body-bg:              $color-graylight;
+$body-color:           $color-black;
+$font-family-sans-serif: $font-family-body;
+$presentation-font-size-root: 32px;
+$presentation-heading-font:  $font-family-header;
+$presentation-heading-color: $color-black;
+$presentation-heading-font-weight: 400;
+$presentation-h1-font-size: 2.1em;
+$presentation-h2-font-size: 1.7em;
+$presentation-h3-font-size: 1.35em;
+$presentation-h4-font-size: 1.2em;
+$link-color:           $color-blue;
+$link-color-hover:     $color-purple;
+$code-color:           $color-darkgreen;
+$code-block-font-size: 0.7em;
+$selection-bg:         rgba(97, 172, 240, .5);
+
+/*-- scss:rules --*/
+
+.reveal {
+  strong { font-weight: 900; color: inherit; }
+  .fancy { font-family: $font-family-fancy; font-weight: 400; font-style: italic; }
+  .fira  { font-family: $font-family-header; }
+}
+
+// --- INVERSE (dark) slides + title slide ---
+.reveal .slide.inverse,
+.reveal section.inverse,
+#title-slide {
+  background-color: $color-black;
+  color: $color-white;
+  h1, h2, h3, h4, h5, h6 { color: $color-white; }
+  strong { color: $color-white; }
+  a, a:visited { color: $color-dodgerblue; text-decoration: underline; }
+  code { color: $color-orange; background-color: transparent; }
+}
+
+#title-slide {
+  .title    { font-family: $font-family-header; font-weight: 500; }
+  .subtitle { font-family: $font-family-header; font-weight: 300; color: $color-tan; }
+  .author, .date, .quarto-title-author-name { color: $color-white; }
+}
+
+// --- INLINE CODE ---
+.reveal code:not(.sourceCode) { color: $color-darkgreen; }
+
+// --- BLOCKQUOTE (matches lexis: blue rounded callout) ---
+.reveal blockquote {
+  border: 3px solid $color-blue;
+  border-radius: 10px;
+  background-color: $color-lightblue;
+  font-family: $font-family-header;
+  box-shadow: 4px 4px 8px 0 rgba(0,0,0,.2);
+  padding: 0.5em 1em;
+  width: auto;
+}
+
+// --- COLOR UTILITY CLASSES ---
+.white  { color: $color-white  !important; }
+.red    { color: $color-red    !important; }
+.orange { color: $color-orange !important; }
+.yellow { color: $color-yellow !important; }
+.green  { color: $color-green  !important; }
+.darkgreen { color: $color-darkgreen !important; }
+.blue   { color: $color-blue   !important; }
+.darkblue  { color: $color-darkblue  !important; }
+.purple { color: $color-purple !important; }
+.black  { color: $color-black  !important; }
+.gray   { color: $color-gray   !important; }
+.amber  { color: $color-amber  !important; }  // "content" (matches figure)
+
+// --- FONT-SIZE UTILITY CLASSES ---
+.small { font-size: 70%; }
+.large { font-size: 160%; }
+@for $i from 1 through 20 {
+  .font#{$i * 10} { font-size: #{$i * 10}#{"%"}; }
+}
+
+// --- COLUMN LAYOUTS (floats, matching lexis class names) ---
+.leftcol    { float: left;  width: 49%; }
+.rightcol   { float: right; width: 49%; }
+.leftcol55  { float: left;  width: 54%; }
+.rightcol45 { float: right; width: 44%; }
+.leftcol45  { float: left;  width: 44%; }
+.rightcol55 { float: right; width: 54%; }
+.leftcol60  { float: left;  width: 59%; }
+.rightcol40 { float: right; width: 39%; }
+.leftcol40  { float: left;  width: 39%; }
+.rightcol60 { float: right; width: 59%; }
+.leftcol65  { float: left;  width: 64%; }
+.rightcol35 { float: right; width: 34%; }
+.leftcol35  { float: left;  width: 34%; }
+.rightcol65 { float: right; width: 64%; }
+.leftcol70  { float: left;  width: 69%; }
+.rightcol30 { float: right; width: 29%; }
+.leftcol30  { float: left;  width: 29%; }
+.rightcol70 { float: right; width: 69%; }
+.leftcol75  { float: left;  width: 74%; }
+.rightcol25 { float: right; width: 25%; }
+.leftcol25  { float: left;  width: 25%; }
+.rightcol75 { float: right; width: 74%; }
+.leftcol80  { float: left;  width: 79%; }
+.rightcol20 { float: right; width: 19%; }
+.leftcol20  { float: left;  width: 19%; }
+.rightcol80 { float: right; width: 79%; }
+
+// --- IMAGE HELPERS ---
+.reveal .border img       { border: 2px solid #000; }
+.reveal .borderthick img  { border: 7px solid #000; }
+.reveal .whiteborder img  { border: 2px solid #fff; }
+.reveal .circle img       { border-radius: 50%; }
+.reveal img { background: transparent; border: none; box-shadow: none; }
+.reveal .polaroid img {
+  border: 10px solid #fff;
+  border-bottom: 45px solid #fff;
+  box-shadow: 3px 3px 3px #111;
+}

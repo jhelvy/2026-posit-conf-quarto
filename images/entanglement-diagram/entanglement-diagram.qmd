@@ -1,0 +1,119 @@
+---
+format:
+  revealjs:
+    theme: simple
+    transition: fade
+    width: 1050
+    height: 600
+    slide-number: false
+---
+
+<!--
+  Entanglement figure — 2 build slides, States A (naive) -> B (Quarto).
+  No title slide (YAML title removed): this is meant to be embedded into the
+  main deck (index.qmd). Color vocabulary, never broken:
+    amber = content, blue = format/structure, green = human's direct action.
+  The output box carries the content/format story:
+    State A -> interleaved amber/blue stripes (fused / entangled)
+    State B -> clean blue-over-amber halves (separable, cleanly assembled)
+-->
+
+```{=html}
+<style>
+  .figbox  { fill:#ffffff; stroke:#b9b7ae; stroke-width:1.5; }
+  .figblue { fill:#E7F1FB; stroke:#3A7FC4; stroke-width:1.5; }
+  .figamber{ fill:#FBEFD9; stroke:#C0820F; stroke-width:1.5; }
+  .figlayer{ fill:none; stroke:#8a8983; stroke-width:1.5; stroke-dasharray:6 6; }
+  .figlbl  { fill:#2b2b29; font-size:20px; font-weight:500; }
+  .figsub  { fill:#6b6a65; font-size:14px; font-weight:400; }
+  .figcap  { fill:#6b6a65; font-size:15px; font-weight:500; letter-spacing:.04em; }
+  .figarr  { stroke:#6f6e69; stroke-width:2; fill:none; }
+  .figedit { stroke:#1f8f6a; stroke-width:2.4; fill:none; }
+  .figalbl { fill:#6b6a65; font-size:14px; }
+  .figelbl { fill:#1f8f6a; font-size:14px; font-weight:500; }
+  .figleg  { fill:#6b6a65; font-size:14px; }
+  .reveal .stagesvg { width:100%; height:auto; max-height:78vh; display:block; margin:0 auto; }
+</style>
+```
+
+## The standard workflow {auto-animate=true}
+
+```{=html}
+<svg class="stagesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+<defs>
+  <marker id="ah1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1.5 L8 5 L2 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <clipPath id="clipOut1"><rect x="760" y="220" width="170" height="104" rx="10"/></clipPath>
+</defs>
+
+<g><rect class="figamber" x="50" y="36" width="16" height="16" rx="3"/><text class="figleg" x="74" y="49">content</text><rect class="figblue" x="180" y="36" width="16" height="16" rx="3"/><text class="figleg" x="204" y="49">format / structure</text></g>
+
+<g data-id="me"><rect class="figbox" x="50" y="237" width="130" height="66" rx="10"/><text class="figlbl" x="115" y="270" text-anchor="middle" dominant-baseline="central">Me</text></g>
+<g data-id="agent"><rect class="figbox" x="250" y="237" width="160" height="66" rx="10"/><text class="figlbl" x="330" y="270" text-anchor="middle" dominant-baseline="central">LLM agent</text></g>
+
+<g data-id="output">
+  <rect class="figbox" x="760" y="220" width="170" height="104" rx="10"/>
+  <g clip-path="url(#clipOut1)">
+    <rect class="figblue"  x="760" y="220" width="17" height="104"/>
+    <rect class="figamber" x="777" y="220" width="17" height="104"/>
+    <rect class="figblue"  x="794" y="220" width="17" height="104"/>
+    <rect class="figamber" x="811" y="220" width="17" height="104"/>
+    <rect class="figblue"  x="828" y="220" width="17" height="104"/>
+    <rect class="figamber" x="845" y="220" width="17" height="104"/>
+    <rect class="figblue"  x="862" y="220" width="17" height="104"/>
+    <rect class="figamber" x="879" y="220" width="17" height="104"/>
+    <rect class="figblue"  x="896" y="220" width="17" height="104"/>
+    <rect class="figamber" x="913" y="220" width="17" height="104"/>
+  </g>
+  <rect x="760" y="220" width="170" height="104" rx="10" fill="none" stroke="#b9b7ae" stroke-width="1.5"/>
+  <text class="figlbl" x="845" y="208" text-anchor="middle">output</text>
+  <text class="figsub" x="845" y="340" text-anchor="middle">content + format fused</text>
+</g>
+
+<g class="fragment" data-fragment-index="1"><line class="figarr" x1="180" y1="270" x2="246" y2="270" marker-end="url(#ah1)"/><text class="figalbl" x="213" y="256" text-anchor="middle">prompt</text></g>
+<g class="fragment" data-fragment-index="2"><line class="figarr" x1="410" y1="270" x2="756" y2="270" marker-end="url(#ah1)"/><text class="figalbl" x="583" y="256" text-anchor="middle">generates</text></g>
+<g class="fragment" data-fragment-index="3"><path class="figarr" d="M845 324 L845 472 L115 472 L115 305" marker-end="url(#ah1)"/><text class="figalbl" x="480" y="462" text-anchor="middle">review, then re-prompt</text></g>
+</svg>
+```
+
+::: {.notes}
+Boxes are already in place. Click 1: you prompt the agent. Click 2: it generates the whole finished output across the gap — content and format come out interleaved, fused, you can't pull them apart. Click 3: all you can do is review and re-prompt. Your only lever on the output is the agent itself.
+:::
+
+## Quarto in the middle {auto-animate=true}
+
+```{=html}
+<svg class="stagesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+<defs>
+  <marker id="ah2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1.5 L8 5 L2 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <clipPath id="clipOut2"><rect x="760" y="220" width="170" height="104" rx="10"/></clipPath>
+</defs>
+
+<g><rect class="figamber" x="50" y="36" width="16" height="16" rx="3"/><text class="figleg" x="74" y="49">content</text><rect class="figblue" x="180" y="36" width="16" height="16" rx="3"/><text class="figleg" x="204" y="49">format / structure</text></g>
+
+<g data-id="me"><rect class="figbox" x="50" y="237" width="130" height="66" rx="10"/><text class="figlbl" x="115" y="270" text-anchor="middle" dominant-baseline="central">Me</text></g>
+<g data-id="agent"><rect class="figbox" x="250" y="237" width="160" height="66" rx="10"/><text class="figlbl" x="330" y="270" text-anchor="middle" dominant-baseline="central">LLM agent</text></g>
+
+<g data-id="output">
+  <rect class="figbox" x="760" y="220" width="170" height="104" rx="10"/>
+  <g clip-path="url(#clipOut2)">
+    <rect class="figblue"  x="760" y="220" width="170" height="52"/>
+    <rect class="figamber" x="760" y="272" width="170" height="52"/>
+  </g>
+  <rect x="760" y="220" width="170" height="104" rx="10" fill="none" stroke="#b9b7ae" stroke-width="1.5"/>
+  <text class="figlbl" x="845" y="208" text-anchor="middle">output</text>
+  <text class="figsub" x="845" y="340" text-anchor="middle">rendered</text>
+</g>
+
+<g><rect class="figlayer" x="470" y="120" width="230" height="300" rx="14"/><text class="figcap" x="585" y="142" text-anchor="middle">Quarto</text><rect class="figblue" x="495" y="165" width="180" height="66" rx="10"/><text class="figlbl" x="585" y="190" text-anchor="middle" dominant-baseline="central">.qmd</text><text class="figsub" x="585" y="211" text-anchor="middle" dominant-baseline="central">structure + logic</text><rect class="figamber" x="495" y="309" width="180" height="66" rx="10"/><text class="figlbl" x="585" y="334" text-anchor="middle" dominant-baseline="central">data files</text><text class="figsub" x="585" y="355" text-anchor="middle" dominant-baseline="central">exact content</text></g>
+
+<g><line class="figarr" x1="180" y1="270" x2="246" y2="270" marker-end="url(#ah2)"/><text class="figalbl" x="213" y="256" text-anchor="middle">prompt</text></g>
+<g><path class="figarr" d="M845 324 L845 472 L115 472 L115 305" marker-end="url(#ah2)"/><text class="figalbl" x="480" y="462" text-anchor="middle">review</text></g>
+<g class="fragment" data-fragment-index="1"><line class="figarr" x1="410" y1="262" x2="491" y2="208" marker-end="url(#ah2)"/><text class="figalbl" x="450" y="222" text-anchor="middle">writes</text></g>
+<g class="fragment" data-fragment-index="2"><line class="figarr" x1="585" y1="307" x2="585" y2="235" marker-end="url(#ah2)"/><text class="figalbl" x="605" y="276" text-anchor="start">reads</text><line class="figarr" x1="677" y1="206" x2="756" y2="250" marker-end="url(#ah2)"/><line class="figarr" x1="677" y1="338" x2="756" y2="294" marker-end="url(#ah2)"/><text class="figalbl" x="720" y="262" text-anchor="middle">render</text></g>
+<g class="fragment" data-fragment-index="3"><path class="figedit" d="M150 240 Q 330 112 493 185" marker-end="url(#ah2)"/><path class="figedit" d="M150 300 Q 330 430 493 352" marker-end="url(#ah2)"/><text class="figelbl" x="250" y="146" text-anchor="middle">you edit directly</text></g>
+</svg>
+```
+
+::: {.notes}
+Same boxes, locked in place — the Quarto layer drops into the gap. Click 1: the agent writes only the .qmd. Click 2: the .qmd reads the data, and together they render to the output — now a clean blue-over-amber stack instead of an interleaved mush. Click 3 (the payoff): you reach past the agent and edit the structure and the content directly. One lever became three.
+:::

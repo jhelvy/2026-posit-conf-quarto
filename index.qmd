@@ -1,0 +1,330 @@
+---
+title: "The Unreasonable Effectiveness of Quarto"
+subtitle: "Disentangling content from format in the age of AI agents"
+author: "John Paul Helveston"
+date: "posit::conf 2026"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    transition: fade
+    width: 1280
+    height: 720
+    slide-number: false
+    history: false
+---
+
+<!--
+  SCAFFOLD per HANDOFF.md §5 + approved plan. ~25 slides for ~18 min.
+  Asset legend used in placeholders below:
+    [SCREENSHOT], [PDF], [CSV], [RECORDING] = author supplies later
+    [FIGURE] = entanglement diagram, lives in
+               images/entanglement-diagram/entanglement-diagram.qmd
+               (still being iterated; embed here once finalized)
+  Build inline = SVG/HTML I produce directly.
+-->
+
+# How does an LLM make a document? {.inverse}
+
+## {.inverse}
+
+::: {.r-fit-text}
+How does an LLM
+<br>make a document?
+:::
+
+::: {.notes}
+Philosophical walk-in. One line. The room knows Quarto, so take the slow road.
+:::
+
+## One probabilistic pass
+
+Content and structure come out **together**, fused, in a single pass.
+
+For a static one-off, that's fine.
+
+The moment you want to *change* something, you're asking a probabilistic
+system to edit a fused artifact — and hoping it touches only what you meant.
+
+::: {.notes}
+A small wink is fine here. Set up the fragility without naming Quarto yet.
+:::
+
+## The standard workflow
+
+> **[FIGURE — State A (naive)]**
+> `Me → LLM agent → output` (content + format fused).
+> Only lever on the output is re-prompting the agent.
+> Source: `images/entanglement-diagram/entanglement-diagram.qmd`, slide 1.
+
+::: {.notes}
+You prompt; it generates the whole finished output across the gap; all you can
+do is review and re-prompt. One lever.
+:::
+
+## {.inverse}
+
+::: {.r-fit-text}
+LLMs entangle
+<br>content and structure.
+:::
+
+[Neither is guaranteed.]{.font140 .orange}
+
+::: {.notes}
+Name the problem, stark. This is the thesis the rest of the talk answers.
+:::
+
+# Disentanglement {.inverse}
+
+## Quarto in the middle
+
+> **[FIGURE — State B (Quarto)]**
+> Quarto sits in the gap: `.qmd` (structure) + `data files` (content).
+> Agent writes only the `.qmd`. You gain direct edit arrows into both.
+> **One lever became three.**
+> Source: `images/entanglement-diagram/entanglement-diagram.qmd`, slide 2.
+
+::: {.notes}
+Same boxes, locked. The agent writes only the .qmd. .qmd + data render to the
+output. The payoff: you reach past the agent and edit structure and content
+directly.
+:::
+
+## A handwriting sheet for my 6-year-old
+
+::: {.leftcol}
+- A practice PDF: trace-the-sentence handwriting.
+- Rendered `.qmd` → Typst → PDF.
+- The *sentences* are the content that must be exact.
+:::
+
+::: {.rightcol}
+> **[PDF — rendered handwriting sheet]**
+:::
+
+::: {.notes}
+This is the emotional center. Make the abstract idea land for non-data people.
+:::
+
+## Ask the LLM for the PDF directly…
+
+::: {.leftcol}
+The sentences are only **probably** what you asked for.
+
+Re-prompt to fix one word → the whole sheet regenerates, and anything could drift.
+:::
+
+::: {.rightcol}
+> **[SCREENSHOT — directly-generated sheet, subtly wrong]**
+:::
+
+::: {.notes}
+Probabilistic output: you can't point at a word and trust it survives the next edit.
+:::
+
+## …or put the sentences in a CSV
+
+::: {.leftcol}
+```r
+# sentences.csv
+The quick brown fox jumps.
+A red kite flew over the hill.
+We read books on rainy days.
+```
+
+The `.qmd` is structure. The CSV is content.
+Editing a sentence is **editing a text file** — exact, every time.
+:::
+
+::: {.rightcol}
+> **[PDF — same sheet, rendered from CSV]**
+:::
+
+::: {.notes}
+Proves the point is about *sentences*, not just numbers. This is disentanglement
+made concrete.
+:::
+
+# This is how you build anything {.inverse}
+
+## The report whose data changed
+
+::: {.leftcol}
+A baked-in HTML report. The underlying numbers change.
+
+The report is now **silently, confidently wrong** — nothing flags it.
+:::
+
+::: {.rightcol}
+> **[SCREENSHOT — stale HTML report, wrong number highlighted]**
+:::
+
+::: {.notes}
+HTML froze the numbers at generation time. No provenance, no recompute.
+:::
+
+## The `.qmd` just re-renders correctly
+
+::: {.leftcol}
+Same data change. Re-render.
+
+The numbers are recomputed from source — **deterministically correct**.
+:::
+
+::: {.rightcol}
+> **[SCREENSHOT — re-rendered report, correct number]**
+:::
+
+::: {.notes}
+Same input change, opposite outcome. Correctness is the headline.
+:::
+
+## Modular by construction
+
+[content]{.amber} in data files · [logic]{.blue} in chunks ·
+[presentation]{.darkgreen} in YAML / themes
+
+Each piece independently editable — by a human **or** an agent.
+
+::: {.notes}
+The architecture, generalized. Each layer is separable and auditable.
+:::
+
+## {.inverse}
+
+::: {.r-fit-text}
+HTML solves presentation.
+<br>It does nothing for provenance.
+:::
+
+::: {.notes}
+Bridge into Thariq. He's about to be right — about presentation.
+:::
+
+# Enter Thariq — and you give up nothing {.inverse}
+
+## "The Unreasonable Effectiveness of HTML"
+
+He's **right**: rich, structured output beats a wall of Markdown.
+
+Agents should produce something you can *see and use*, not plain text.
+
+::: {.notes}
+Concede genuinely. We win by addition, not rebuttal. Paraphrase — no long quotes.
+:::
+
+## Quarto produces all of it
+
+Everything HTML gives you — **plus** correctness and provenance that
+HTML structurally cannot.
+
+::: {.notes}
+Reframe: not either/or. Quarto is a superset for anything that must stay correct.
+:::
+
+## Not a screenshot
+
+> **[INLINE CHART — live interactive plot embedded in this slide]**
+> (Observable Plot / plotly — author to pick data source)
+
+This is rendered, interactive, **inside the deck**.
+
+::: {.notes}
+The "live in the slide" beat. It's itself evidence the approach works.
+:::
+
+## {.inverse}
+
+::: {.r-fit-text}
+This deck is
+<br>a `.qmd` file.
+:::
+
+::: {.notes}
+The meta-reveal. Let it sit.
+:::
+
+## A bonus: token efficiency
+
+Same prompt, same model — only the output target changes:
+
+| Asked for | Output tokens vs. `.qmd` |
+|-----------|--------------------------|
+| Word      | **7.2×** more            |
+| HTML      | **4×** more              |
+| PDF       | **1.8×** more            |
+
+The `.qmd` request stays flat (~1,000 tokens) regardless of final format.
+
+[Correctness is the headline. This is the bonus.]{.gray .small}
+
+::: {.notes}
+One supporting slide. Do NOT let tokens become the headline.
+:::
+
+## One honest concession
+
+Throwaway, single-use custom editors?
+
+That's **HTML's home turf** — concede it.
+
+::: {.notes}
+Buys credibility. We're not claiming Quarto wins everything.
+:::
+
+# The dashboard payoff {.inverse}
+
+## A multi-page dashboard
+
+> **[RECORDING — silent screen capture: Shinylive + JS libraries + React]**
+
+::: {.notes}
+The payoff image, not a deep dive. No audio.
+:::
+
+## The workflow
+
+> **[FIGURE — human + Claude Code + Quarto loop]**
+
+::: {.notes}
+One diagram. Where the human, the agent, and deterministic rendering each sit.
+:::
+
+## Two real patterns
+
+1. **[PATTERN — placeholder]**
+2. **[PITFALL — placeholder]**
+
+::: {.notes}
+1–2 honest, lived pitfalls/patterns. Q&A ammo for the rest.
+:::
+
+# Close {.inverse}
+
+## You don't need to know Quarto
+
+Change **one word** in your prompt.
+
+::: {.notes}
+The accessibility close. This is for everyone, not just power users.
+:::
+
+## For power users
+
+- Quarto **skills** / `CLAUDE.md` to steer the agent.
+- **Lua filters** — there's even more under the hood.
+
+::: {.notes}
+Point the power users somewhere; tease depth without going there.
+:::
+
+## {.inverse}
+
+::: {.r-fit-text}
+Just add a `q`
+<br>in front of `md`.
+:::
+
+::: {.notes}
+Land it.
+:::
