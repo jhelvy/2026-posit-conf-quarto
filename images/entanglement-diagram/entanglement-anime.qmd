@@ -1,0 +1,170 @@
+---
+format:
+  revealjs:
+    theme: simple
+    transition: none
+    width: 1050
+    height: 600
+    slide-number: false
+---
+
+<!--
+  PROTOTYPE — single-slide anime.js version of the entanglement figure.
+  One slide that transforms in place on each click (no slide change).
+
+  LAYOUT: Me, LLM agent, .qmd, and output all sit on ONE row. The data box is
+  FIXED in the lower middle and never moves; only its outgoing arrow retargets
+  (-> agent in the LLM world, -> .qmd in the Quarto world). No dashed container.
+
+  CORE IDEA: the OUTPUT is ALWAYS content + format fused. Here that's literal:
+  the outer box is FORMAT (blue), the inner box is CONTENT (amber). Format is
+  always fine. The variable is whether the CONTENT is trustworthy:
+    - LLM world: you hand the agent your prompt AND your data; it digests both
+                 probabilistically -> the content is ragged / may be wrong.
+    - Quarto   : the data bypasses the agent and feeds the .qmd; render is
+                 deterministic -> the content is exact (and still well formatted).
+
+  Click sequence:
+    load   : Me, LLM agent, your data.
+    click 1: prompt (Me -> agent) AND data (data -> agent) arrows animate in.
+    click 2: agent "generates" the output — fused, but content ragged/red.
+             Review loop appears (all you can do is re-prompt).
+    click 3: the .qmd box appears; agent now "writes" the .qmd; the data arrow
+             swings off the agent and onto the .qmd. Output is orphaned (stale).
+    click 4: render — .qmd -> output; the content snaps to clean/exact, badge
+             clears, "content is exact". Still fused.
+    click 5: green "you edit directly" arrows to .qmd and data. One lever -> three.
+
+  Mechanism: empty .fragment spans are reveal's click counter; we listen to
+  fragmentshown / fragmenthidden and drive anime.js to tween SVG attributes
+  (Emil Hvitfeldt's tidy-animations / slidecraft "Fragments - JS" pattern).
+  Color vocabulary: amber = content, blue = format/structure, green = human's
+  direct action. Red is a status accent (wrong), not a concept color.
+-->
+
+```{=html}
+<style>
+  .figbox  { fill:#ffffff; stroke:#b9b7ae; stroke-width:1.5; }
+  .figblue { fill:#E7F1FB; stroke:#3A7FC4; stroke-width:1.5; }
+  .figamber{ fill:#FBEFD9; stroke:#C0820F; stroke-width:1.5; }
+  .figlbl  { fill:#2b2b29; font-size:20px; font-weight:500; }
+  .figsub  { fill:#6b6a65; font-size:14px; font-weight:400; }
+  .figarr  { stroke:#6f6e69; stroke-width:2; fill:none; }
+  .figedit { stroke:#1f8f6a; stroke-width:2.4; fill:none; }
+  .figalbl { fill:#6b6a65; font-size:14px; }
+  .figelbl { fill:#1f8f6a; font-size:14px; font-weight:500; }
+  .figleg  { fill:#6b6a65; font-size:14px; }
+  .reveal .stagesvg { width:100%; height:auto; max-height:80vh; display:block; margin:0 auto; }
+  .reveal .stepdot { position:absolute; width:0; height:0; opacity:0; }
+</style>
+```
+
+## Quarto keeps your content correct
+
+```{=html}
+<svg class="stagesvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="'Helvetica Neue', Arial, sans-serif">
+<defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1.5 L8 5 L2 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<!-- legend -->
+<g><rect class="figamber" x="50" y="36" width="16" height="16" rx="3"/><text class="figleg" x="74" y="49">content</text><rect class="figblue" x="180" y="36" width="16" height="16" rx="3"/><text class="figleg" x="204" y="49">format / structure</text></g>
+
+<!-- actors (one row, y = 237, h = 66) -->
+<g><rect class="figbox" x="50" y="237" width="130" height="66" rx="10"/><text class="figlbl" x="115" y="270" text-anchor="middle" dominant-baseline="central">Me</text></g>
+<g><rect class="figbox" x="250" y="237" width="160" height="66" rx="10"/><text class="figlbl" x="330" y="270" text-anchor="middle" dominant-baseline="central">LLM agent</text></g>
+
+<!-- .qmd box (Quarto world; same row, blue = format/structure) -->
+<g id="qmd" style="opacity:0"><rect class="figblue" x="520" y="237" width="180" height="66" rx="10"/><text class="figlbl" x="610" y="262" text-anchor="middle" dominant-baseline="central">.qmd</text><text class="figsub" x="610" y="284" text-anchor="middle" dominant-baseline="central">structure + logic</text></g>
+
+<!-- output: ALWAYS fused. outer = format (blue), inner = content (amber). -->
+<g id="output" style="opacity:0">
+  <rect class="figblue" x="760" y="237" width="170" height="66" rx="10"/>
+  <rect id="out-content" class="figamber" x="781" y="245" width="98" height="38" rx="6" stroke="#d64a3f" stroke-dasharray="5 4"/>
+  <text class="figlbl" x="845" y="227" text-anchor="middle">output</text>
+  <text class="figsub" x="845" y="322" text-anchor="middle">content + format fused</text>
+  <text id="cap-status" x="845" y="340" text-anchor="middle" font-size="14" font-weight="600" fill="#d64a3f">content may be wrong</text>
+  <g id="out-badge"><circle cx="924" cy="232" r="12" fill="#d64a3f" stroke="#fff" stroke-width="1.5"/><text x="924" y="237" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">?</text></g>
+</g>
+
+<!-- data: FIXED, lower middle. Only its arrow retargets. -->
+<g><rect class="figamber" x="395" y="388" width="170" height="64" rx="10"/><text class="figlbl" x="480" y="412" text-anchor="middle" dominant-baseline="central">data</text><text class="figsub" x="480" y="433" text-anchor="middle" dominant-baseline="central">exact content</text></g>
+
+<!-- arrows -->
+<g id="arr-prompt" style="opacity:0"><line class="figarr" x1="180" y1="270" x2="246" y2="270" marker-end="url(#ah)"/><text class="figalbl" x="213" y="256" text-anchor="middle">prompt</text></g>
+<g id="arr-data-agent" style="opacity:0"><line class="figarr" x1="452" y1="388" x2="350" y2="306" marker-end="url(#ah)"/></g>
+<g id="arr-generates" style="opacity:0"><line class="figarr" x1="410" y1="270" x2="756" y2="270" marker-end="url(#ah)"/><text class="figalbl" x="583" y="256" text-anchor="middle">generates</text></g>
+<g id="arr-review" style="opacity:0"><path class="figarr" d="M845 303 L845 468 L115 468 L115 303" marker-end="url(#ah)"/><text class="figalbl" x="480" y="458" text-anchor="middle">review / re-prompt</text></g>
+<g id="arr-writes" style="opacity:0"><line class="figarr" x1="410" y1="270" x2="516" y2="270" marker-end="url(#ah)"/><text class="figalbl" x="465" y="256" text-anchor="middle">writes</text></g>
+<g id="arr-reads" style="opacity:0"><line class="figarr" x1="530" y1="388" x2="602" y2="306" marker-end="url(#ah)"/><text class="figalbl" x="588" y="356" text-anchor="start">reads</text></g>
+<g id="arr-render" style="opacity:0"><line class="figarr" x1="700" y1="270" x2="756" y2="270" marker-end="url(#ah)"/><text class="figalbl" x="728" y="256" text-anchor="middle">render</text></g>
+<g id="arr-edits" style="opacity:0"><path class="figedit" d="M185 248 Q 360 150 516 250" marker-end="url(#ah)"/><path class="figedit" d="M125 300 Q 250 432 392 418" marker-end="url(#ah)"/><text class="figelbl" x="320" y="150" text-anchor="middle">you edit directly</text></g>
+</svg>
+```
+
+<span class="stepdot fragment" data-step="1"></span>
+<span class="stepdot fragment" data-step="2"></span>
+<span class="stepdot fragment" data-step="3"></span>
+<span class="stepdot fragment" data-step="4"></span>
+<span class="stepdot fragment" data-step="5"></span>
+
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script>
+(function () {
+  var DUR = 700;
+
+  function render(step, animate) {
+    if (!window.anime) return;
+    var d = animate ? DUR : 0, e = 'easeInOutCubic';
+
+    anime({ targets:'#arr-prompt',     opacity: step>=1?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-data-agent', opacity: (step>=1 && step<=2)?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-generates',  opacity: step==2?1:0, duration:d, easing:e });
+    anime({ targets:'#output',         opacity: step>=2?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-review',     opacity: step>=2?1:0, duration:d, easing:e });
+    anime({ targets:'#qmd',            opacity: step>=3?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-writes',     opacity: step>=3?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-reads',      opacity: step>=3?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-render',     opacity: step>=4?1:0, duration:d, easing:e });
+    anime({ targets:'#out-badge',      opacity: (step>=2 && step<4)?1:0, duration:d, easing:e });
+    anime({ targets:'#arr-edits',      opacity: step>=5?1:0, duration:d, easing:e });
+
+    // the payoff: content snaps from ragged/red -> exact/amber, filling the format box
+    var correct = step>=4;
+    anime({ targets:'#out-content',
+            x:      correct ? 792 : 781,
+            y:      correct ? 251 : 245,
+            width:  correct ? 106 : 98,
+            stroke: correct ? '#C0820F' : '#d64a3f',
+            duration:d, easing:e });
+    var c = document.getElementById('out-content');
+    if (c) c.setAttribute('stroke-dasharray', correct ? '' : '5 4');
+
+    var st = document.getElementById('cap-status');
+    if (st) {
+      st.textContent = correct ? 'content is exact' : 'content may be wrong';
+      st.setAttribute('fill', correct ? '#2b2b29' : '#d64a3f');
+    }
+  }
+
+  function setup() {
+    if (!window.Reveal) { return setTimeout(setup, 50); }
+    var go = function (n) { render(n, true); };
+    Reveal.on('fragmentshown',  function (e) {
+      if (e.fragment && e.fragment.dataset.step) go(+e.fragment.dataset.step);
+    });
+    Reveal.on('fragmenthidden', function (e) {
+      if (e.fragment && e.fragment.dataset.step) go(+e.fragment.dataset.step - 1);
+    });
+    Reveal.on('ready', function () { render(0, false); });
+    if (Reveal.isReady && Reveal.isReady()) render(0, false);
+  }
+  setup();
+})();
+</script>
+```
+
+::: {.notes}
+Load: you, the agent, and your data. Click 1: you hand the agent a prompt AND your data. Click 2: it generates the output — format's fine, but the content is ragged and unverified; all you can do is review and re-prompt. Click 3: the .qmd appears; now the agent only writes the .qmd, and your data arrow swings off the agent and onto the .qmd — your content never passes through the model. Click 4: the .qmd renders to the output; the content snaps to exact, still perfectly formatted. Click 5: you edit structure and content directly. One lever became three.
+:::

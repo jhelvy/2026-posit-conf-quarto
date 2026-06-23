@@ -44,9 +44,15 @@ the approach works).
 - `abstract.md` — canonical title + abstract + bio. Source of truth for wording.
 - `HANDOFF.md` — full design rationale, figure design rules, open decisions.
 - `images/entanglement-diagram/entanglement-diagram.qmd` — the entanglement
-  figure (2 animated SVG slides, States A→B). **Still being iterated.** It is the
-  source of truth for the figure; `index.qmd` currently holds `[FIGURE]`
-  placeholders that will be embedded once the figure is finalized.
+  figure, **two-slide version** (States A→B, reveal fragments + auto-animate).
+  Stable fallback.
+- `images/entanglement-diagram/entanglement-anime.qmd` — the entanglement figure,
+  **single-slide anime.js version**. One slide that transforms in place on each
+  click (stripes sort apart into clean layers, Quarto layer rises in, arrows fade).
+  Uses anime.js (CDN) driven by reveal `fragmentshown`/`fragmenthidden` events —
+  Emil Hvitfeldt's tidy-animations / slidecraft "Fragments - JS" mechanism. This is
+  the direction we're taking; the two-slide file is the fallback. Whichever wins
+  gets embedded into `index.qmd` (currently `[FIGURE]` placeholders).
 
 ## Styling
 
