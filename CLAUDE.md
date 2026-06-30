@@ -43,16 +43,32 @@ the approach works).
 - `custom.scss` — the theme (see Styling). Applied via `theme: [default, custom.scss]`.
 - `abstract.md` — canonical title + abstract + bio. Source of truth for wording.
 - `HANDOFF.md` — full design rationale, figure design rules, open decisions.
-- `images/entanglement-diagram/entanglement-diagram.qmd` — the entanglement
-  figure, **two-slide version** (States A→B, reveal fragments + auto-animate).
-  Stable fallback.
-- `images/entanglement-diagram/entanglement-anime.qmd` — the entanglement figure,
-  **single-slide anime.js version**. One slide that transforms in place on each
-  click (stripes sort apart into clean layers, Quarto layer rises in, arrows fade).
-  Uses anime.js (CDN) driven by reveal `fragmentshown`/`fragmenthidden` events —
-  Emil Hvitfeldt's tidy-animations / slidecraft "Fragments - JS" mechanism. This is
-  the direction we're taking; the two-slide file is the fallback. Whichever wins
-  gets embedded into `index.qmd` (currently `[FIGURE]` placeholders).
+- `images/entanglement-diagram/entanglement-anime.qmd` — **the entanglement
+  figure, canonical design direction.** Single-slide anime.js version that
+  transforms in place across 5 clicks. Uses anime.js (CDN) driven by reveal
+  `fragmentshown`/`fragmenthidden` events — Emil Hvitfeldt's tidy-animations /
+  slidecraft "Fragments - JS" mechanism. Gets embedded into `index.qmd` (currently
+  `[FIGURE]` placeholders) once finalized. Current design (after several rounds of
+  iteration — keep these straight, earlier descriptions are wrong):
+    - `Me · LLM agent · .qmd · output` all sit on ONE row (same height).
+    - **Data box is FIXED** in the lower middle and never moves. Only its outgoing
+      arrow retargets: → agent (LLM world) becomes → `.qmd` (Quarto world).
+    - **No dashed "Quarto" container.** The `.qmd` is just a blue box on the row.
+    - **Output is ALWAYS content + format fused**, shown literally: outer box =
+      format (blue), inner box = content (amber).
+    - **The payoff is correctness, NOT separation.** LLM world: content is
+      ragged + red-dashed, "?" badge, "content may be wrong". On Quarto render the
+      content snaps clean/amber, fills the format box, "content is exact". Format is
+      always fine in both worlds.
+    - 5 clicks: (1) prompt + data→agent; (2) generates → wrong fused output +
+      review loop; (3) `.qmd` appears, agent *writes* it, data arrow swings to
+      `.qmd`; (4) render → content snaps correct; (5) green *you edit directly*
+      arrows to `.qmd` and data.
+- `images/entanglement-diagram/entanglement-diagram.qmd` — older **two-slide
+  version** (States A→B, reveal fragments + auto-animate). Superseded by the anime
+  version AND conceptually outdated (its "fused stripes → clean halves" output was
+  the wrong model — output is always fused). Kept only as a fallback; do not treat
+  its design as current.
 
 ## Styling
 
@@ -81,9 +97,16 @@ Quarto RevealJS. Keep this look:
 
 ## Open / in-progress
 
-- Iterate the entanglement figure further (per HANDOFF.md §6 design rules and §8
-  open decisions: review-loop in State B, crossed-out agent→data arrow, optional
-  stripped-label "clean final" figure), then embed into `index.qmd`.
+- **Entanglement figure (anime version):** design is settled (see Files); paused
+  mid-polish. Not yet verified in a live render. When resuming, things to confirm /
+  decide: that anime.js animating SVG `x`/`width`/`stroke` attributes actually
+  reshapes the content box; whether the data arrow should *pivot* (single rotating
+  arrow) instead of crossfade between two arrows; whether to merge clicks 3+4 so
+  the output is never "orphaned" for a beat; the optional explicit crossed-out
+  `agent ✗ data` arrow (the data-reroute may already say enough). anime.js is
+  loaded from CDN — vendor it locally before the actual talk if presenting offline.
+- **Embed** the finalized figure into `index.qmd` (replace the `[FIGURE]`
+  placeholders on the two figure slides).
 - Produce demo assets: handwriting PDF screenshots, stale-vs-rerendered report
   screenshots, the in-slide interactive chart (§4), the silent dashboard recording.
 - Placeholders in `index.qmd` are marked `[SCREENSHOT] [PDF] [CSV] [RECORDING]
