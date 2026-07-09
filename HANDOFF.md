@@ -206,3 +206,35 @@ the repo. Treat them as the source of truth for the figure geometry.
 - Keep the handwriting example as the emotional/legible center — it makes the
   abstract idea land for non-data people.
 - Paraphrase external sources; no long quotes.
+
+# Other thoughts
+
+From this conversation:
+https://claude.ai/chat/fa39f46f-21b9-4feb-9aa4-265630e87b52
+
+Here's a high-level outline built around the anchor-word structure, sized for 20 minutes at posit::conf (realistically ~18 min talking + buffer). I'd go with **three** pillar words, not four — Correctness, Efficiency, Trust — and fold "verifiability / checkable by machine and human" inside Trust as its two halves. Three words fit on one slide, recur cleanly, and each gets ~4 minutes instead of ~3.
+
+**1. Hook: the handwriting PDF (2–3 min)**
+Open with the hello-world demo, no framing yet. "I asked an agent for handwriting practice sheets for my 8-year-old." Show the naive way (agent generates one giant PDF's worth of content, token-expensive, opaque) vs. the Quarto way (agent writes a tiny qmd + CSV; render produces the PDF). Then the reveal: "the agent never spent a single token on the PDF." Land the thesis: *documents have a source and an artifact — agents should write the source, tools should build the artifact.* That's your source-vs-artifact language planted in minute two, and it becomes the spine everything else hangs on.
+
+**2. The three words (one slide, 30 sec)**
+Correctness. Efficiency. Trust. "Everything in this talk is one of these three." This is the slide you return to between sections — a progress marker the audience can hold onto.
+
+**3. Correctness (~4 min)**
+LLMs are probabilistic; numbers in their prose are generated, not computed. In a qmd, the agent writes *structure* and *code*; the data flows through executed chunks at render time. A number in the output can't be hallucinated because the agent never typed it. Your existing data demo lives here.
+
+**4. Efficiency (~4 min)**
+Two stacked claims. Tokens: the agent emits markdown, never PPTX XML or LaTeX — the renderer does format targeting for free (handwriting demo callback: "the CSV was the entire spend"). One source, many artifacts: same qmd → HTML, PDF, slides. Your dashboard demo probably lives here — "for the token cost of writing text, the artifact is a fully interactive dashboard."
+
+**5. Trust (~4–5 min)**
+The new leg. Two halves, explicitly:
+- *Checkable by machine*: `quarto render` is a compile step for documents. Broken refs, failed chunks, bad YAML → loud, deterministic errors the agent reads and fixes. Documents that can fail suit authors that are probabilistic. If you do one live/recorded demo here, it's the agent breaking a `@fig-` ref, catching it from the render error, fixing it unprompted.
+- *Checkable by human*: plain-text source means the agent's edit is a diff — even a PR. Review scales with the change, not the document. Contrast slide: a docx "diff" (noise) next to a three-line qmd diff. `git revert` as one-command undo for any agent mistake.
+Caveat, stated on the slide for credibility: render passing ≠ analysis correct. It's the same guarantee compilation gives code — no more, no less.
+
+**6. Conclusion: pull the words back (2 min)**
+Return to the three-word slide and restate each in one line, now earned: the numbers can't be hallucinated (Correctness); write once in text, render to anything (Efficiency); checkable by machine *and* human (Trust). Close by rhyming with the opening: software figured out source-vs-artifact decades ago; Quarto brings documents into that paradigm exactly when agents made it necessary.
+
+**On tips & tricks:** mostly out of scope — a 20-minute idea talk dies when it turns into a config tutorial, and posit::conf audiences already know Quarto mechanics. But don't drop them entirely: make your second-to-last slide a single "make this work today" takeaway — three lines, roughly: (1) put "always run `quarto render` before finishing" in `CLAUDE.md`, (2) have the agent work on branches so edits arrive as diffs, (3) keep data in files the qmd reads, never in the prompt. That's the whole practicum, it's photographable, and it converts inspiration into action without costing you narrative time. Anything deeper (freeze, profiles, parameterized reports) is a "come find me after" line.
+
+
