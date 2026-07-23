@@ -1,74 +1,132 @@
 # CLAUDE.md
 
-Project instructions for this repo. The full design rationale lives in
-`HANDOFF.md` — read it for the *why*. This file is the operational summary plus
-the decisions made since.
+Project instructions for this repo. **This file is the single source of truth.**
+
+> `HANDOFF.md` is **superseded and historical.** It documents an earlier framing
+> (three pillar words; a named concession to Thariq; a nested-box entanglement
+> figure) that has since been deliberately reversed. Do not take design direction
+> from it. It's kept only as a record — safe to delete.
 
 ## What this repo is
 
 The slide deck for a **20-minute posit::conf 2026 talk**:
 **"The Unreasonable Effectiveness of Quarto"** (canonical title + abstract in
-`abstract.md`). Built as a **Quarto RevealJS** deck (`index.qmd`). Audience is
-Quarto-literate. **No live demos** — everything is pre-rendered, screenshotted,
-or embedded directly in the slides (embedded interactive HTML is itself evidence
-the approach works).
+`abstract.md` — already published in the program). Audience is Quarto-literate.
+**No live demos** — everything is pre-rendered, screenshotted, or embedded
+directly in the slides (embedded interactive HTML is itself evidence the approach
+works).
 
-## The thesis (don't let it drift)
+**Session placement:** first of four in a session labeled "Dashboards," whose real
+subject is **data products** (the other talks: Tableau→AI-ready data products;
+custom catalogs for data products; template→package→app). This talk is the
+session's thesis statement and its on-ramp. Use the phrase "data product" — it's
+the session's shared vocabulary.
 
-- **Entanglement:** when an LLM generates a finished document, content and
-  structure come out fused in one probabilistic pass. Nothing is guaranteed.
-- **Disentanglement:** Quarto is an abstraction layer — the agent writes the
-  `.qmd` (structure/logic); content that must be exact lives in data files and
-  renders deterministically. You *architect* correctness instead of prompting
-  for it.
-- **Correctness is the headline; token savings are the bonus.** Never reorder these.
-- **Thariq's "Unreasonable Effectiveness of HTML" is a foil you concede to**, not
-  attack. Quarto keeps everything HTML wins and adds provenance HTML can't.
-  Win by addition, not rebuttal.
-- The **handwriting-sheet-for-my-6-year-old** PDF is the emotional/legible center —
-  it proves the point is about *sentences*, not just data. Keep it.
+## The thesis
 
-## Structure (6 sections → see `index.qmd` and HANDOFF.md §5)
+**Spine sentence, said 3× in the deck:**
+> **Agents should write the source, not the artifact.**
 
-1. How does an LLM make a document? (entanglement opener)
-2. Disentanglement, via the handwriting example
-3. This is how you build anything (data products)
-4. Enter Thariq — and you give up nothing
-5. The dashboard payoff
-6. Close — "just add a `q` in front of `md`"
+- **Entanglement** is defined *operationally*, never metaphorically:
+  **the content has no address.** In a generated document there is no file, no
+  line, no cell that *is* a given sentence — it's smeared across one probabilistic
+  pass. To change it you regenerate everything and hope. The audience test is
+  "can you point at it?"
+- **Disentanglement = give the content an address.** A CSV row is an address. The
+  agent writes the `.qmd` (structure/logic); content that must be exact lives in
+  data files and renders deterministically.
+- **You can't prompt your way to correctness. You architect it.**
+- **The turn (Act 3): reproducibility used to be a tax; now it's the discount.**
+  Token efficiency is *evidence for this*, never a standalone pillar. The virtuous
+  path became the lazy path.
+- **Two tiers, and don't blur them.** Prose stays in the `.qmd` — its address is a
+  line number and a readable **diff**. Only *values that must be exact* live in
+  data + code, where they're **recomputed** rather than typed. The move is
+  **"stop asking for the artifact,"** never "extract everything."
+- The **handwriting-sheet-for-my-6-year-old** PDF is the emotional/legible center.
+  Keep it — but note its sentences genuinely *are* data (a list of items to
+  typeset). **Never generalize from it to "put your prose in a CSV"** — nobody
+  writes that way and the room will reject it. `index.qmd` has a slide that
+  pre-empts exactly this objection; don't delete it.
+- **Rhetorical rule, used throughout: name the objection first.** Act 1 pre-empts
+  "we already knew that"; Act 5 pre-empts "why not just ask for HTML?"
+
+### Reversed decisions — do not reintroduce
+
+- ❌ **No three-pillar framing** ("Correctness / Efficiency / Trust"). A benefits
+  list has no tension and reads as a recap to a room that already loves Quarto.
+  Those three ideas survive as *earned consequences* (problem → turn → mechanism),
+  not as announced categories.
+- ❌ **Never name Thariq or reference "The Unreasonable Effectiveness of HTML."**
+  Can't assume the room has read it, and naming an unknown rival costs exposition
+  and makes the talk dependent on someone else's post. The title is a genre
+  (Wigner, 1960) and stands alone — **never explain the title.** Make the HTML
+  case in JP's own voice as the objection, at full strength, then turn.
+- ❌ **No stale-report slide** ("the numbers changed and the report didn't"). That's
+  the knitr elevator pitch since 2012 — the single most "we already knew that"
+  moment available. Cut.
+- ❌ **Don't argue for content/format separation.** Show it. The room grants it
+  instantly; arguing for it is what makes the talk feel like a recap.
+
+## Structure (six acts, ~18 min of content)
+
+| Time | Act | Content |
+|---|---|---|
+| 0:00–2:30 | **1. The problem, unnamed** | Handwriting sheet cold open. No thesis, no agenda. It drifted; fixing one sentence regenerated everything. → *"Where is the sentence?"* → the defusing line |
+| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure. `.qmd` + CSV. Spine sentence (1/3). *Architect, don't prompt* |
+| 5:30–7:30 | **3. The turn** ⭐ | *"And here's what I didn't expect — it's also cheaper."* Token table as evidence. **Tax → discount** |
+| 7:30–13:30 | **4. Scale it** ⭐ | The dashboard, 6 min, deliberately mid-deck so overrun can't reach it. Recording, what the agent wrote vs. never touched, spine (2/3), 2 patterns + 2 pitfalls |
+| 13:30–16:00 | **5. Why it converges** | "So why not just ask for HTML?" — steelman it, live inline chart, *this deck is a `.qmd`*, then: **HTML can't tell you it's broken; `.qmd` has a compile step.** Checkable by machine + human. Caveat |
+| 16:00–18:00 | **6. Close** | Change one word. Monday practicum (3 lines). *Software solved this decades ago.* Spine (3/3). Hand off to the session |
 
 ## Files
 
 - `index.qmd` — the deck (RevealJS). Canonical, lives at repo root.
 - `custom.scss` — the theme (see Styling). Applied via `theme: [default, custom.scss]`.
-- `abstract.md` — canonical title + abstract + bio. Source of truth for wording.
-- `HANDOFF.md` — full design rationale, figure design rules, open decisions.
-- `images/entanglement-diagram/entanglement-anime.qmd` — **the entanglement
-  figure, canonical design direction.** Single-slide anime.js version that
-  transforms in place across 5 clicks. Uses anime.js (CDN) driven by reveal
-  `fragmentshown`/`fragmenthidden` events — Emil Hvitfeldt's tidy-animations /
-  slidecraft "Fragments - JS" mechanism. Gets embedded into `index.qmd` (currently
-  `[FIGURE]` placeholders) once finalized. Current design (after several rounds of
-  iteration — keep these straight, earlier descriptions are wrong):
-    - `Me · LLM agent · .qmd · output` all sit on ONE row (same height).
-    - **Data box is FIXED** in the lower middle and never moves. Only its outgoing
-      arrow retargets: → agent (LLM world) becomes → `.qmd` (Quarto world).
-    - **No dashed "Quarto" container.** The `.qmd` is just a blue box on the row.
-    - **Output is ALWAYS content + format fused**, shown literally: outer box =
-      format (blue), inner box = content (amber).
-    - **The payoff is correctness, NOT separation.** LLM world: content is
-      ragged + red-dashed, "?" badge, "content may be wrong". On Quarto render the
-      content snaps clean/amber, fills the format box, "content is exact". Format is
-      always fine in both worlds.
-    - 5 clicks: (1) prompt + data→agent; (2) generates → wrong fused output +
-      review loop; (3) `.qmd` appears, agent *writes* it, data arrow swings to
-      `.qmd`; (4) render → content snaps correct; (5) green *you edit directly*
-      arrows to `.qmd` and data.
-- `images/entanglement-diagram/entanglement-diagram.qmd` — older **two-slide
-  version** (States A→B, reveal fragments + auto-animate). Superseded by the anime
-  version AND conceptually outdated (its "fused stripes → clean halves" output was
-  the wrong model — output is always fused). Kept only as a fallback; do not treat
-  its design as current.
+- `abstract.md` — canonical title + abstract + bio. Already live in the program.
+- `talk-framing-decision.qmd` — the decision memo behind every choice above
+  (why the thesis talk over the dashboard talk, why not the three words, why no
+  Thariq, why the figure was redesigned). Read it for the *why*.
+- `images/entanglement-diagram/` — the figure. **Both existing `.qmd` files there
+  are outdated** (see below).
+
+## The entanglement figure
+
+**Design direction: "when does it weave?"** Two stacked rows with an **identical**
+output at the end of each.
+
+```
+LLM ALONE
+   [ Me ] ──prompt──▶ [ agent ] ═════▶  ▓▒▓▒▒▓▓▒▓▒▒▓   document
+      ▲                                  ↑
+      └────── re-prompt ──────┘          woven HERE, probabilistically
+
+WITH QUARTO
+   [ Me ] ──prompt──▶ [ agent ] ──writes──▶ [ .qmd ]  ┐
+      │                                               ├─render─▶ ▓▒▓▒▒▓▓▒▓▒▒▓
+      └──── edit ──────────────────────────▶ [ data ] ┘            document
+                                                                      ↑
+                                                        woven HERE, deterministically
+```
+
+- **The output is identical in both rows.** That's the whole point — the difference
+  isn't what comes out, it's *when* the weaving happens and whether you can reach
+  in before it does.
+- **Never draw content as a box inside a format box.** Containment implies the two
+  are already separate and nested, which is the visual opposite of entanglement.
+  Use a **striped/smeared bar** — irregular stripes for the probabilistic weave,
+  clean regular stripes for the deterministic one.
+- **3 build steps max:** (1) top row entire; (2) bottom row skeleton, agent writes
+  only the `.qmd`; (3) render arrow + green edit arrows.
+- Its job in Act 2 is **generalization, not explanation** — the handwriting sheet
+  already taught the idea. That justifies a simple picture.
+- **Color vocabulary (never break it):** amber = **content**, blue =
+  **format/structure**, green = **human's direct action**.
+
+**Both files in `images/entanglement-diagram/` are outdated** — `entanglement-anime.qmd`
+(5-click single-row transform with nested boxes) and `entanglement-diagram.qmd`
+(older two-slide version). Neither reflects the current design. Rebuild rather
+than patch.
 
 ## Styling
 
@@ -79,35 +137,40 @@ Quarto RevealJS. Keep this look:
   system mono for code.
 - **Slides:** light gray bg (`#EAE9EA`), black text. `.inverse` slides = black bg,
   white text (used for section dividers and statement slides).
-- **Utility classes** carried over and available: color classes
-  (`.blue .red .green .darkgreen .orange .amber .purple .gray` …), font-size
-  classes (`.small .large .font10`–`.font200`), float column classes
-  (`.leftcol`/`.rightcol`, `.leftcol60`/`.rightcol40`, …), `.fancy`, image
-  helpers (`.border .circle .polaroid`).
-- **Figure color vocabulary (never break it):** amber = **content**,
-  blue = **format/structure**, green = **human's direct action**. `.amber` in the
-  theme matches the figure's amber so the deck and figure stay consistent.
+- **Utility classes** available: color classes (`.blue .red .green .darkgreen
+  .orange .amber .purple .gray` …), font-size classes (`.small .large
+  .font10`–`.font200`), float column classes (`.leftcol`/`.rightcol`,
+  `.leftcol60`/`.rightcol40`, …), `.fancy`, image helpers
+  (`.border .circle .polaroid`).
+- `.amber` in the theme matches the figure's amber so deck and figure stay
+  consistent.
 
-## Hard rules (from global CLAUDE.md — repeated because they bite here)
+## Hard rules
 
 - **Never run `quarto render`** or any render command. Make changes, report done,
   let John render in his own terminal.
 - **Never run `git` commands.** John commits/pushes himself.
 - Simplicity first; surgical changes; match existing style.
+- Paraphrase external sources; no long quotes.
+- Section dividers are **statements, not labels.** Never put "Act 3" or a category
+  name on a slide — that reintroduces the taxonomy problem.
 
-## Open / in-progress
+## Open / to do
 
-- **Entanglement figure (anime version):** design is settled (see Files); paused
-  mid-polish. Not yet verified in a live render. When resuming, things to confirm /
-  decide: that anime.js animating SVG `x`/`width`/`stroke` attributes actually
-  reshapes the content box; whether the data arrow should *pivot* (single rotating
-  arrow) instead of crossfade between two arrows; whether to merge clicks 3+4 so
-  the output is never "orphaned" for a beat; the optional explicit crossed-out
-  `agent ✗ data` arrow (the data-reroute may already say enough). anime.js is
-  loaded from CDN — vendor it locally before the actual talk if presenting offline.
-- **Embed** the finalized figure into `index.qmd` (replace the `[FIGURE]`
-  placeholders on the two figure slides).
-- Produce demo assets: handwriting PDF screenshots, stale-vs-rerendered report
-  screenshots, the in-slide interactive chart (§4), the silent dashboard recording.
-- Placeholders in `index.qmd` are marked `[SCREENSHOT] [PDF] [CSV] [RECORDING]
-  [FIGURE] [INLINE CHART]` — each is a slot John will fill.
+- **Rebuild the entanglement figure** to the "when does it weave?" design above.
+- **Produce demo assets.** Placeholders in `index.qmd` are marked `[SCREENSHOT]
+  [PDF] [CSV] [RECORDING] [FIGURE] [INLINE CHART]`:
+  - handwriting sheet: the drifted version, the "fixed"-but-different version,
+    and the CSV-rendered version
+  - silent dashboard screen recording (~75s)
+  - the live inline interactive chart for Act 5
+- **Fill the four dashboard placeholders** — 2 patterns, 2 pitfalls. These are the
+  most-remembered slides in a practitioner talk; they need real lived content.
+- **Multi-turn token data** — Act 3's second slide is a placeholder. The published
+  blog post has single-shot numbers only; the multi-turn/agentic cost growth
+  section isn't live yet. Needs John's numbers. Never invent them. Frame it as the
+  measured version of the Act 1 anecdote (one edit → full regeneration → full
+  price), not as a second benchmark.
+- Optional: email the three co-speakers to compare notes (Blake's talk is also
+  AI-adjacent — his angle is data made *consumable by* AI, this one is AI
+  *producing* artifacts; complementary, but check the setup slides don't collide).

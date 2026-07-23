@@ -198,7 +198,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">The Unreasonable Effectiveness of Quarto</h1>
-  <p class="subtitle">Disentangling content from format in the age of AI agents</p>
+  <p class="subtitle">Why agents should write the source, not the artifact</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -213,27 +213,35 @@ John Paul Helveston
 <section class="slide level2">
 
 <!--
-  SCAFFOLD per HANDOFF.md §5 + approved plan. ~25 slides for ~18 min.
-  Asset legend used in placeholders below:
-    [SCREENSHOT], [PDF], [CSV], [RECORDING] = author supplies later
-    [FIGURE] = entanglement diagram, lives in
-               images/entanglement-diagram/entanglement-diagram.qmd
-               (still being iterated; embed here once finalized)
-  Build inline = SVG/HTML I produce directly.
+  SIX-ACT STRUCTURE. ~18 min of content in a 20 min slot.
+  Spine sentence, said 3x: "Agents should write the source, not the artifact."
+
+  Act 1  0:00–2:30   The problem, unnamed      (handwriting sheet cold open)
+  Act 2  2:30–5:30   The move                  (entanglement -> address -> qmd+csv)
+  Act 3  5:30–7:30   The turn                  (it's also cheaper)
+  Act 4  7:30–13:30  Scale it                  (the dashboard, 6 min, protected)
+  Act 5 13:30–16:00  Why it converges          (HTML objection + compile step)
+  Act 6 16:00–18:00  Close                     (practicum, rhyme, handoff)
+
+  Asset legend:
+    [SCREENSHOT] [PDF] [CSV] [RECORDING] = author supplies later
+    [FIGURE]      = entanglement / "when does it weave?" diagram
+    [INLINE CHART]= live interactive plot rendered into this deck
+
+  Rhetorical rule used throughout: NAME THE OBJECTION FIRST.
+  Act 1 pre-empts "we already knew that." Act 5 pre-empts "why not just HTML?"
 -->
 </section>
 <section>
-<section id="how-does-an-llm-make-a-document" class="title-slide slide level1 inverse center">
-<h1>How does an LLM make a document?</h1>
-
-</section>
-<section id="section" class="slide level2 inverse">
-<h2></h2>
+<section id="section" class="title-slide slide level1 inverse center">
+<h1></h1>
 <div class="r-fit-text">
-<p>How does an LLM <br>make a document?</p>
+<p>Handwriting practice <br>for a six-year-old</p>
 </div>
 <aside class="notes">
-<p>Philosophical walk-in. One line. The room knows Quarto, so take the slow road.</p>
+<p>COLD OPEN. No thesis, no framing, no agenda slide. Just the story.</p>
+<p>“My daughter is learning to write. I wanted trace-the-sentence practice sheets. So I asked an agent to make me one.”</p>
+<p>Do not say the word Quarto yet.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -246,32 +254,65 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="one-probabilistic-pass" class="slide level2">
-<h2>One probabilistic pass</h2>
-<p>Content and structure come out <strong>together</strong>, fused, in a single pass.</p>
-<p>For a static one-off, that’s fine.</p>
-<p>The moment you want to <em>change</em> something, you’re asking a probabilistic system to edit a fused artifact — and hoping it touches only what you meant.</p>
-<aside class="notes">
-<p>A small wink is fine here. Set up the fragility without naming Quarto yet.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-standard-workflow" class="slide level2">
-<h2>The standard workflow</h2>
+<section id="what-i-asked-for" class="slide level2">
+<h2>What I asked for</h2>
 <blockquote>
-<p><strong>[FIGURE — State A (naive)]</strong> <code>Me → LLM agent → output</code> (content + format fused). Only lever on the output is re-prompting the agent. Source: <code>images/entanglement-diagram/entanglement-diagram.qmd</code>, slide 1.</p>
+<p>Make me a one-page handwriting practice sheet. Dotted trace lines, three sentences, big friendly type.</p>
 </blockquote>
 <aside class="notes">
-<p>You prompt; it generates the whole finished output across the gap; all you can do is review and re-prompt. One lever.</p>
+<p>Read it out loud. It’s a completely reasonable prompt. Everyone in the room has written a prompt like this.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-i-got" class="slide level2">
+<h2>What I got</h2>
+<div class="leftcol">
+<p>It looked great.</p>
+<p>Three sentences. Big friendly type. Dotted lines.</p>
+<p><span class="red">One of the sentences wasn’t the one I asked for.</span></p>
+</div>
+<div class="rightcol">
+<blockquote>
+<p><strong>[SCREENSHOT — directly-generated sheet, the drifted sentence circled]</strong></p>
+</blockquote>
+</div>
+<aside class="notes">
+<p>Land it lightly, not as a gotcha. The format was perfect. The <em>content</em> drifted.</p>
+<p>Key beat: I didn’t notice at first. My daughter did — she read it out loud.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="so-i-asked-it-to-fix-that-one-sentence" class="slide level2">
+<h2>So I asked it to fix that one sentence</h2>
+<div class="leftcol">
+<p>And it regenerated the whole sheet.</p>
+<p>New spacing. Different line weights. A <em>different</em> third sentence.</p>
+</div>
+<div class="rightcol">
+<blockquote>
+<p><strong>[SCREENSHOT — the “fixed” sheet, now different in other ways]</strong></p>
+</blockquote>
+</div>
+<aside class="notes">
+<p>This is the real problem, and it’s not “LLMs make mistakes.” It’s that there was no way to make a small change. Every edit is a full regeneration.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -287,189 +328,11 @@ John Paul Helveston
 <section id="section-1" class="slide level2 inverse">
 <h2></h2>
 <div class="r-fit-text">
-<p>LLMs entangle <br>content and structure.</p>
-</div>
-<p><span class="font140 orange">Neither is guaranteed.</span></p>
-<aside class="notes">
-<p>Name the problem, stark. This is the thesis the rest of the talk answers.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="disentanglement" class="title-slide slide level1 inverse center">
-<h1>Disentanglement</h1>
-
-</section>
-<section id="quarto-in-the-middle" class="slide level2">
-<h2>Quarto in the middle</h2>
-<blockquote>
-<p><strong>[FIGURE — State B (Quarto)]</strong> Quarto sits in the gap: <code>.qmd</code> (structure) + <code>data files</code> (content). Agent writes only the <code>.qmd</code>. You gain direct edit arrows into both. <strong>One lever became three.</strong> Source: <code>images/entanglement-diagram/entanglement-diagram.qmd</code>, slide 2.</p>
-</blockquote>
-<aside class="notes">
-<p>Same boxes, locked. The agent writes only the .qmd. .qmd + data render to the output. The payoff: you reach past the agent and edit structure and content directly.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="a-handwriting-sheet-for-my-6-year-old" class="slide level2">
-<h2>A handwriting sheet for my 6-year-old</h2>
-<div class="leftcol">
-<ul>
-<li>A practice PDF: trace-the-sentence handwriting.</li>
-<li>Rendered <code>.qmd</code> → Typst → PDF.</li>
-<li>The <em>sentences</em> are the content that must be exact.</li>
-</ul>
-</div>
-<div class="rightcol">
-<blockquote>
-<p><strong>[PDF — rendered handwriting sheet]</strong></p>
-</blockquote>
+<p>Where <em>is</em> <br>the sentence?</p>
 </div>
 <aside class="notes">
-<p>This is the emotional center. Make the abstract idea land for non-data people.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="ask-the-llm-for-the-pdf-directly" class="slide level2">
-<h2>Ask the LLM for the PDF directly…</h2>
-<div class="leftcol">
-<p>The sentences are only <strong>probably</strong> what you asked for.</p>
-<p>Re-prompt to fix one word → the whole sheet regenerates, and anything could drift.</p>
-</div>
-<div class="rightcol">
-<blockquote>
-<p><strong>[SCREENSHOT — directly-generated sheet, subtly wrong]</strong></p>
-</blockquote>
-</div>
-<aside class="notes">
-<p>Probabilistic output: you can’t point at a word and trust it survives the next edit.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="or-put-the-sentences-in-a-csv" class="slide level2">
-<h2>…or put the sentences in a CSV</h2>
-<div class="leftcol">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># sentences.csv</span></span>
-<span id="cb1-2"><a href=""></a>The quick brown fox jumps.</span>
-<span id="cb1-3"><a href=""></a>A red kite flew over the hill.</span>
-<span id="cb1-4"><a href=""></a>We read books on rainy days.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>.qmd</code> is structure. The CSV is content. Editing a sentence is <strong>editing a text file</strong> — exact, every time.</p>
-</div>
-<div class="rightcol">
-<blockquote>
-<p><strong>[PDF — same sheet, rendered from CSV]</strong></p>
-</blockquote>
-</div>
-<aside class="notes">
-<p>Proves the point is about <em>sentences</em>, not just numbers. This is disentanglement made concrete.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="this-is-how-you-build-anything" class="title-slide slide level1 inverse center">
-<h1>This is how you build anything</h1>
-
-</section>
-<section id="the-report-whose-data-changed" class="slide level2">
-<h2>The report whose data changed</h2>
-<div class="leftcol">
-<p>A baked-in HTML report. The underlying numbers change.</p>
-<p>The report is now <strong>silently, confidently wrong</strong> — nothing flags it.</p>
-</div>
-<div class="rightcol">
-<blockquote>
-<p><strong>[SCREENSHOT — stale HTML report, wrong number highlighted]</strong></p>
-</blockquote>
-</div>
-<aside class="notes">
-<p>HTML froze the numbers at generation time. No provenance, no recompute.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-.qmd-just-re-renders-correctly" class="slide level2">
-<h2>The <code>.qmd</code> just re-renders correctly</h2>
-<div class="leftcol">
-<p>Same data change. Re-render.</p>
-<p>The numbers are recomputed from source — <strong>deterministically correct</strong>.</p>
-</div>
-<div class="rightcol">
-<blockquote>
-<p><strong>[SCREENSHOT — re-rendered report, correct number]</strong></p>
-</blockquote>
-</div>
-<aside class="notes">
-<p>Same input change, opposite outcome. Correctness is the headline.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="modular-by-construction" class="slide level2">
-<h2>Modular by construction</h2>
-<p><span class="amber">content</span> in data files · <span class="blue">logic</span> in chunks · <span class="darkgreen">presentation</span> in YAML / themes</p>
-<p>Each piece independently editable — by a human <strong>or</strong> an agent.</p>
-<aside class="notes">
-<p>The architecture, generalized. Each layer is separable and auditable.</p>
+<p>Slow down here. This is the question the whole talk answers.</p>
+<p>In that PDF, there is no line of anything that IS that sentence. It’s smeared across one probabilistic pass. Point at it — you can’t.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -485,10 +348,13 @@ John Paul Helveston
 <section id="section-2" class="slide level2 inverse">
 <h2></h2>
 <div class="r-fit-text">
-<p>HTML solves presentation. <br>It does nothing for provenance.</p>
+<p>You already believe <br>everything I’m about to say.</p>
 </div>
+<p><span class="font140 orange">I want to know why almost none of us do it.</span></p>
 <aside class="notes">
-<p>Bridge into Thariq. He’s about to be right — about presentation.</p>
+<p>THE DEFUSING LINE. Say the audience’s objection out loud before they can think it.</p>
+<p>“This is a room full of people who believe in reproducibility. And I’d bet most of us, when we open a chat window, ask for the finished thing anyway.”</p>
+<p>This converts their prior knowledge from a liability into complicity.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -502,16 +368,23 @@ John Paul Helveston
       }</style></aside>
 </section></section>
 <section>
-<section id="enter-thariq-and-you-give-up-nothing" class="title-slide slide level1 inverse center">
-<h1>Enter Thariq — and you give up nothing</h1>
+<section id="entanglement" class="title-slide slide level1 inverse center">
+<h1>Entanglement</h1>
 
 </section>
-<section id="the-unreasonable-effectiveness-of-html" class="slide level2">
-<h2>“The Unreasonable Effectiveness of HTML”</h2>
-<p>He’s <strong>right</strong>: rich, structured output beats a wall of Markdown.</p>
-<p>Agents should produce something you can <em>see and use</em>, not plain text.</p>
+<section id="the-content-has-no-address" class="slide level2">
+<h2>The content has no address</h2>
+<div class="leftcol">
+<p>When an agent generates a finished document, content and structure come out <strong>woven together</strong> in a single probabilistic pass.</p>
+<p>Nothing in it has a location.</p>
+<p>To change one sentence, you regenerate everything — and hope.</p>
+</div>
+<div class="rightcol">
+<p><span class="font120">There is no file, no line, no cell that <em>is</em> that sentence.</span></p>
+</div>
 <aside class="notes">
-<p>Concede genuinely. We win by addition, not rebuttal. Paraphrase — no long quotes.</p>
+<p>Define entanglement operationally, not metaphorically. “The content has no address” is the sticky version.</p>
+<p>Give them the test they can apply to their own work: can you point at it?</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -524,31 +397,73 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="quarto-produces-all-of-it" class="slide level2">
-<h2>Quarto produces all of it</h2>
-<p>Everything HTML gives you — <strong>plus</strong> correctness and provenance that HTML structurally cannot.</p>
-<aside class="notes">
-<p>Reframe: not either/or. Quarto is a superset for anything that must stay correct.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="not-a-screenshot" class="slide level2">
-<h2>Not a screenshot</h2>
+<section id="when-does-it-weave" class="slide level2">
+<h2>When does it weave?</h2>
 <blockquote>
-<p><strong>[INLINE CHART — live interactive plot embedded in this slide]</strong> (Observable Plot / plotly — author to pick data source)</p>
+<p><strong>[FIGURE — “when does it weave?” diagram]</strong> Two stacked rows, identical output at the end of each. Row 1: Me → agent ⇒ document (woven here, probabilistically). Row 2: Me → agent → <code>.qmd</code> + data → render → same document (woven here, deterministically), plus green edit arrows from Me. 3 clicks. Source: <code>images/entanglement-diagram/</code></p>
 </blockquote>
-<p>This is rendered, interactive, <strong>inside the deck</strong>.</p>
 <aside class="notes">
-<p>The “live in the slide” beat. It’s itself evidence the approach works.</p>
+<p>Both approaches weave content and format together. The only question is WHEN — and by what.</p>
+<p>The output is identical in both rows. That’s the point. The difference isn’t what comes out, it’s whether you can reach in before it does.</p>
+<p>Optional one-liner for this room: “weave” isn’t my metaphor. It’s literate programming’s own word — Sweave, then knitr. Quarto has always been a weaving tool. I’m just arguing we should weave later.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="give-the-content-an-address" class="slide level2">
+<h2>Give the content an address</h2>
+<div class="leftcol">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># sentences.csv</span></span>
+<span id="cb1-2"><a href=""></a>sentence</span>
+<span id="cb1-3"><a href=""></a><span class="st">"The quick brown fox jumps."</span></span>
+<span id="cb1-4"><a href=""></a><span class="st">"A red kite flew over the hill."</span></span>
+<span id="cb1-5"><a href=""></a><span class="st">"We read books on rainy days."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>.qmd</code> is structure. The CSV is content.</p>
+<p>Changing a sentence is <strong>editing row 3 of a text file.</strong></p>
+</div>
+<div class="rightcol">
+<blockquote>
+<p><strong>[PDF — same sheet, rendered from the CSV]</strong></p>
+</blockquote>
+</div>
+<aside class="notes">
+<p>Same sheet. But now the sentence has an address, and I can change it without asking anyone’s permission — including the model’s.</p>
+<p>The agent wrote the .qmd. It never touched the sentences.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="but-your-prose-doesnt-go-in-a-csv" class="slide level2">
+<h2>But your prose doesn’t go in a CSV</h2>
+<div class="leftcol">
+<p><span class="blue"><strong>Prose</strong> stays in the <code>.qmd</code>.</span></p>
+<p>Its address is a <strong>line number</strong>. The agent’s edit arrives as a diff you can read in ten seconds.</p>
+</div>
+<div class="rightcol">
+<p><span class="amber"><strong>Values that must be exact</strong> live in data + code.</span></p>
+<p>Not just locatable — <strong>recomputed.</strong> Never typed by anyone.</p>
+</div>
+<p><span class="font120">The move isn’t “extract everything.”</span> <span class="font120 green">It’s “stop asking for the artifact.”</span></p>
+<aside class="notes">
+<p>NAME THE OBJECTION FIRST. Someone is already thinking “I’m not putting my paragraphs in a spreadsheet.” They’re right, and say so.</p>
+<p>The handwriting sheet is a case where the content genuinely IS data — a list of items to typeset. Don’t over-generalize from it.</p>
+<p>Two tiers, and both are things a fused artifact denies you: prose gets <em>located</em>, data gets <em>derived</em>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -564,10 +479,11 @@ John Paul Helveston
 <section id="section-3" class="slide level2 inverse">
 <h2></h2>
 <div class="r-fit-text">
-<p>This deck is <br>a <code>.qmd</code> file.</p>
+<p>Agents should write the source, <br>not the artifact.</p>
 </div>
 <aside class="notes">
-<p>The meta-reveal. Let it sit.</p>
+<p>SPINE SENTENCE, 1 of 3. Let it sit. This is the whole talk in seven words.</p>
+<p>Note what it does NOT say: “put your content in data files.” It says hand me the source. Everything else follows from that.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -580,53 +496,11 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="a-bonus-token-efficiency" class="slide level2">
-<h2>A bonus: token efficiency</h2>
-<p>Same prompt, same model — only the output target changes:</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Asked for</th>
-<th>Output tokens vs.&nbsp;<code>.qmd</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Word</td>
-<td><strong>7.2×</strong> more</td>
-</tr>
-<tr class="even">
-<td>HTML</td>
-<td><strong>4×</strong> more</td>
-</tr>
-<tr class="odd">
-<td>PDF</td>
-<td><strong>1.8×</strong> more</td>
-</tr>
-</tbody>
-</table>
-<p>The <code>.qmd</code> request stays flat (~1,000 tokens) regardless of final format.</p>
-<p><span class="gray small">Correctness is the headline. This is the bonus.</span></p>
+<section id="you-cant-prompt-your-way-to-correctness" class="slide level2">
+<h2>You can’t prompt your way to correctness</h2>
+<p><span class="font160 blue">You architect it.</span></p>
 <aside class="notes">
-<p>One supporting slide. Do NOT let tokens become the headline.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="one-honest-concession" class="slide level2">
-<h2>One honest concession</h2>
-<p>Throwaway, single-use custom editors?</p>
-<p>That’s <strong>HTML’s home turf</strong> — concede it.</p>
-<aside class="notes">
-<p>Buys credibility. We’re not claiming Quarto wins everything.</p>
+<p>The prescription. Note what it’s NOT: better prompts, better evals, better models. Shrink the surface that has to be probabilistic at all.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -640,17 +514,10 @@ John Paul Helveston
       }</style></aside>
 </section></section>
 <section>
-<section id="the-dashboard-payoff" class="title-slide slide level1 inverse center">
-<h1>The dashboard payoff</h1>
-
-</section>
-<section id="a-multi-page-dashboard" class="slide level2">
-<h2>A multi-page dashboard</h2>
-<blockquote>
-<p><strong>[RECORDING — silent screen capture: Shinylive + JS libraries + React]</strong></p>
-</blockquote>
+<section id="and-then-something-i-didnt-expect" class="title-slide slide level1 inverse center">
+<h1>And then something I didn’t expect</h1>
 <aside class="notes">
-<p>The payoff image, not a deep dive. No audio.</p>
+<p>ACT 3. THE TURN. The audience is braced for a worthiness argument about correctness. Give them an argument about cost instead.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -663,13 +530,45 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-workflow" class="slide level2">
-<h2>The workflow</h2>
-<blockquote>
-<p><strong>[FIGURE — human + Claude Code + Quarto loop]</strong></p>
-</blockquote>
+<section id="its-also-cheaper" class="slide level2">
+<h2>It’s also cheaper</h2>
+<p>Same prompt, same model. Only the output target changes.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Asked for</th>
+<th style="text-align: right;">Direct</th>
+<th style="text-align: right;">Via <code>.qmd</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Word</td>
+<td style="text-align: right;">8,097</td>
+<td style="text-align: right;"><strong>1,121</strong></td>
+</tr>
+<tr class="even">
+<td>HTML</td>
+<td style="text-align: right;">4,046</td>
+<td style="text-align: right;"><strong>1,022</strong></td>
+</tr>
+<tr class="odd">
+<td>PDF</td>
+<td style="text-align: right;">1,992</td>
+<td style="text-align: right;"><strong>1,123</strong></td>
+</tr>
+<tr class="even">
+<td>Markdown</td>
+<td style="text-align: right;">1,267</td>
+<td style="text-align: right;"><strong>1,282</strong></td>
+</tr>
+</tbody>
+</table>
 <aside class="notes">
-<p>One diagram. Where the human, the agent, and deterministic rendering each sit.</p>
+<p>Don’t read the numbers. Point at the SHAPE.</p>
+<p>Left column: wild swings — 1,267 up to 8,097 — because the agent is typing the artifact, and some artifacts are miserable to type. Office Open XML is 8,000 tokens of raw XML.</p>
+<p>Right column is FLAT. Around a thousand, every time. The agent never spends a token on the artifact — the renderer does that part for free.</p>
+<p>Note the honest row: for Markdown it’s a wash. Say so. Costs nothing, buys trust.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -682,14 +581,319 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="two-real-patterns" class="slide level2">
-<h2>Two real patterns</h2>
+<section id="and-thats-just-the-first-turn" class="slide level2">
+<h2>And that’s just the first turn</h2>
+<blockquote>
+<p><strong>[CHART or TABLE — multi-turn token cost]</strong> Cost growth across an agentic session, direct output vs.&nbsp;<code>.qmd</code>. Author to supply — numbers from the revised blog post.</p>
+</blockquote>
+<p>Every edit to a fused artifact <strong>regenerates the whole thing.</strong></p>
+<p>An edit to a <code>.qmd</code> is a <strong>diff.</strong></p>
+<aside class="notes">
+<p>CALLBACK TO ACT 1 — make it explicit: “remember the sheet? I asked it to change one sentence and it rebuilt the entire page. That wasn’t just a correctness problem. I paid full price for it.”</p>
+<p>This is the same phenomenon as the cold open, now measured instead of narrated. The single-shot table understates the case, because nobody generates once — you iterate. The gap doesn’t stay at 7×; it compounds with every turn.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-4" class="slide level2 inverse">
+<h2></h2>
+<div class="r-fit-text">
+<p>Reproducibility used to be a tax.</p>
+</div>
+<p><span class="font160 green">Now it’s the discount.</span></p>
+<aside class="notes">
+<p>THE TURN, stated. This is the most quotable moment in the talk — earn the pause.</p>
+<p>For fifteen years, doing this right cost you something up front. Everyone in this room believes in it, and everyone in this room has a folder of scripts they never turned into a .qmd, because the tax was real.</p>
+<p>The tax is gone. The virtuous path is now the lazy path.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="this-is-how-you-build-anything" class="title-slide slide level1 inverse center">
+<h1>This is how you build anything</h1>
+<aside class="notes">
+<p>ACT 4. THE DASHBOARD. 6 minutes. This is the most concrete material in the talk and it is deliberately in the middle, where running long can’t reach it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-multi-page-data-product" class="slide level2">
+<h2>A multi-page data product</h2>
+<blockquote>
+<p><strong>[RECORDING — silent screen capture, ~75s]</strong> Multi-page Quarto site: JS plotting libraries, Shinylive, React components.</p>
+</blockquote>
+<aside class="notes">
+<p>No audio. Let it play and narrate lightly. Don’t tour features — this is evidence, not a demo.</p>
+<p>Use the phrase “data product.” It’s this session’s shared vocabulary.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="same-move-bigger-artifact" class="slide level2">
+<h2>Same move, bigger artifact</h2>
+<div class="leftcol">
+<p><span class="blue"><strong>The agent wrote:</strong></span></p>
+<ul>
+<li>page structure and layout</li>
+<li>the YAML</li>
+<li>chunk logic</li>
+<li>the embedding glue</li>
+</ul>
+</div>
+<div class="rightcol">
+<p><span class="amber"><strong>The agent never touched:</strong></span></p>
+<ul>
+<li>the data</li>
+<li>the numbers</li>
+<li>the labels anyone reads</li>
+</ul>
+</div>
+<p><span class="font120">Every number on every page is computed at render time.</span></p>
+<aside class="notes">
+<p>This is the modularity claim, made concrete instead of asserted.</p>
+<p>The scale changed. The move didn’t. A one-page PDF for a six-year-old and a multi-page dashboard are the same architecture.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-5" class="slide level2 inverse">
+<h2></h2>
+<div class="r-fit-text">
+<p>Agents should write the source, <br>not the artifact.</p>
+</div>
+<aside class="notes">
+<p>SPINE SENTENCE, 2 of 3. Say it again here, having just proved it at scale.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="two-patterns-worth-stealing" class="slide level2">
+<h2>Two patterns worth stealing</h2>
 <ol type="1">
 <li><strong>[PATTERN — placeholder]</strong></li>
+<li><strong>[PATTERN — placeholder]</strong></li>
+</ol>
+<aside class="notes">
+<p>Concrete, lived, stealable. This is what a builder room came for.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="two-things-that-bit-me" class="slide level2">
+<h2>Two things that bit me</h2>
+<ol type="1">
+<li><strong>[PITFALL — placeholder]</strong></li>
 <li><strong>[PITFALL — placeholder]</strong></li>
 </ol>
 <aside class="notes">
-<p>1–2 honest, lived pitfalls/patterns. Q&amp;A ammo for the rest.</p>
+<p>Honesty buys credibility, and pitfalls are the most-remembered slides in any practitioner talk. Also good Q&amp;A ammunition.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="so-why-not-just-ask-for-html" class="title-slide slide level1 inverse center">
+<h1>“So why not just ask for HTML?”</h1>
+<aside class="notes">
+<p>ACT 5. Name the objection before the audience can. Do NOT reference anyone else’s post — this is your objection, in your voice.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="honestly-the-case-for-html-is-good" class="slide level2">
+<h2>Honestly — the case for HTML is good</h2>
+<ul>
+<li>Rich, structured, immediately viewable</li>
+<li>No toolchain, no render step, opens anywhere</li>
+<li>Infinitely more useful than a wall of Markdown</li>
+<li>Agents are <em>very</em> good at it</li>
+</ul>
+<p><span class="gray">If it’s single-use and disposable, take the HTML.</span></p>
+<aside class="notes">
+<p>Make this case generously and at full strength. Steelman it. You lose nothing by being fair here and you gain the room’s trust for the turn.</p>
+<p>The throwaway-editor concession is genuine — say it and mean it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="not-a-screenshot" class="slide level2">
+<h2>Not a screenshot</h2>
+<blockquote>
+<p><strong>[INLINE CHART — live interactive plot rendered into this slide]</strong></p>
+</blockquote>
+<aside class="notes">
+<p>Quarto gives you all of it. This is rendered and interactive, right here, in the slide you’re looking at.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-6" class="slide level2 inverse">
+<h2></h2>
+<div class="r-fit-text">
+<p>This deck is <br>a <code>.qmd</code> file.</p>
+</div>
+<aside class="notes">
+<p>The meta-reveal. Proof by existence — and the closest thing to a live demo this talk is allowed to have. Let it land.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="but-html-cant-tell-you-its-broken" class="slide level2">
+<h2>But HTML can’t tell you it’s broken</h2>
+<div class="leftcol">
+<p><span class="red"><strong>HTML</strong></span></p>
+<p>No compile step.</p>
+<p>Malformed output still renders as <em>something</em>.</p>
+<p>The agent cannot tell whether it succeeded.</p>
+</div>
+<div class="rightcol">
+<p><span class="blue"><strong><code>.qmd</code></strong></span></p>
+<p>Bad cross-reference, failed chunk, invalid YAML → <strong>loud, deterministic error.</strong></p>
+<p>The agent reads it and fixes it — without you.</p>
+</div>
+<aside class="notes">
+<p>THE KILL SHOT of Act 5. This is the sharpest thing in the talk.</p>
+<p>Documents just got a compile step. Code has had one for decades. Documents get one exactly at the moment their authors became probabilistic.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="checkable-twice" class="slide level2">
+<h2>Checkable twice</h2>
+<div class="leftcol">
+<p><span class="darkgreen"><strong>By machine</strong></span></p>
+<p><code>quarto render</code> is a compile step. Failures are loud and specific.</p>
+</div>
+<div class="rightcol">
+<p><span class="darkgreen"><strong>By human</strong></span></p>
+<p>Plain text means the agent’s edit is a <strong>diff</strong>. Review scales with the change, not the document.</p>
+</div>
+<p><span class="font120">A <code>.docx</code> “diff” is noise. A three-line <code>.qmd</code> diff is a review.</span></p>
+<aside class="notes">
+<p>Both halves matter. git revert is a one-command undo for any agent mistake.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-honest-caveat" class="slide level2">
+<h2>One honest caveat</h2>
+<p>Render passing ≠ analysis correct.</p>
+<p>It’s the same guarantee compilation gives code — <strong>no more, no less.</strong></p>
+<aside class="notes">
+<p>State the limit plainly. It costs 10 seconds and buys more credibility than any other slide in the deck.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -710,8 +914,9 @@ John Paul Helveston
 <section id="you-dont-need-to-know-quarto" class="slide level2">
 <h2>You don’t need to know Quarto</h2>
 <p>Change <strong>one word</strong> in your prompt.</p>
+<p><span class="font160 blue">Ask for the <code>.qmd</code>.</span></p>
 <aside class="notes">
-<p>The accessibility close. This is for everyone, not just power users.</p>
+<p>The accessibility close. This is for everyone in the room, not just power users.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -724,14 +929,16 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="for-power-users" class="slide level2">
-<h2>For power users</h2>
-<ul>
-<li>Quarto <strong>skills</strong> / <code>CLAUDE.md</code> to steer the agent.</li>
-<li><strong>Lua filters</strong> — there’s even more under the hood.</li>
-</ul>
+<section id="make-this-work-monday" class="slide level2">
+<h2>Make this work Monday</h2>
+<ol type="1">
+<li>Put <em>“always run <code>quarto render</code> before finishing”</em> in your <code>CLAUDE.md</code></li>
+<li>Have the agent work on a branch, so edits arrive as diffs</li>
+<li>Keep data in files the <code>.qmd</code> reads — never in the prompt</li>
+</ol>
 <aside class="notes">
-<p>Point the power users somewhere; tease depth without going there.</p>
+<p>Photographable. Three lines. This is the whole practicum, and it converts inspiration into action without costing narrative time.</p>
+<p>Deeper material (Quarto skills, Lua filters, parameterized reports) is a “come find me after” line.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -744,13 +951,53 @@ John Paul Helveston
           display:block!important;
       }</style></aside>
 </section>
-<section id="section-4" class="slide level2 inverse">
+<section id="section-7" class="slide level2 inverse">
 <h2></h2>
 <div class="r-fit-text">
-<p>Just add a <code>q</code> <br>in front of <code>md</code>.</p>
+<p>Software solved this <br>decades ago.</p>
+</div>
+<p><span class="font120">Source and artifact. Documents are only getting there now —</span> <span class="font120 orange">right when the authors became probabilistic.</span></p>
+<aside class="notes">
+<p>THE RHYME. The close callbacks to the opening question — where is the sentence? It’s in a file. It has an address.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-8" class="slide level2 inverse">
+<h2></h2>
+<div class="r-fit-text">
+<p>Agents should write the source, <br>not the artifact.</p>
 </div>
 <aside class="notes">
-<p>Land it.</p>
+<p>SPINE SENTENCE, 3 of 3. Last thing on screen. Stop talking.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-9" class="slide level2 inverse">
+<h2></h2>
+<p>You’re about to hear three more talks about building data products.</p>
+<p><span class="font140">Watch for the same move in each of them.</span></p>
+<p><span class="font120 green">The artifact is never the thing. The thing is whatever produces it.</span></p>
+<aside class="notes">
+<p>Hand off to the session. Generous to the co-speakers, makes the whole session cohere, and positions this talk as its on-ramp rather than its outlier.</p>
+<p>Then: thank you, and out.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
