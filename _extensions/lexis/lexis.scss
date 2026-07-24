@@ -1,0 +1,667 @@
+/*-- scss:defaults --*/
+
+/*
+Lexis theme for Quarto reveal.js — Week 1 (Getting Started).
+Ported from the xaringan (remark.js) `lexis.css` + `lexis-fonts.css` used in
+EMSE 4572/6572 through 2025. Extends the shared W2 base with the few idioms the
+W1 deck leans on: full-slide `.center`/`.left` alignment and `.blackborder`
+image framing. The goal is visual parity with the old decks while
+moving to Quarto reveal.js. Two-part structure:
+  - scss:defaults  = fonts, colors, and reveal Sass variables (the "settings")
+  - scss:rules     = retargeted custom rules + the helper classes decks rely on
+
+Original xaringan css adapted from Allison Hill & Silvia Canelón.
+*/
+
+// ---- Fonts ----------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$font-body:   Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$font-header: "Fira Sans Condensed", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-mono:   SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+$font-fancy:  "Lobster Two", cursive;
+
+// ---- Color palette (mirrors the old :root vars) ---------------------------
+$color-white:      #FFFFFF;
+$color-red:        #E74A2F;
+$color-orange:     #fa7b3c;
+$color-yellow:     #EFB73E;
+$color-gold:       #e5bf00;
+$color-green:      #38B44A;
+$color-darkgreen:  #2c8475;
+$color-blue:       #007bff;
+$color-lightblue:  #cce5ff;
+$color-dodgerblue: #1E90FF;
+$color-darkblue:   #003087;
+$color-purple:     #772953;
+$color-black:      #121212;
+$color-graylight:  #EAE9EA;
+$color-gray:       #696969;
+$color-tan:        #d9d9d9;
+
+// ---- Reveal.js theme variables --------------------------------------------
+// Slide surface + text
+$body-bg:    $color-graylight;
+$body-color: #000000;
+
+// Links
+$link-color:       $color-blue;
+$link-color-hover: $color-purple;
+$selection-bg:     rgba(97, 172, 240, .5);
+
+// Type
+$font-family-sans-serif: $font-body;
+$font-family-monospace:  $font-mono;
+
+// Root size. reveal scales the slide canvas to fit, so this is the anchor the
+// heading sizes below are expressed against. Old deck used ~20pt body text.
+$presentation-font-size-root: 34px;
+$presentation-line-height:    1.35;
+
+// Headings (Fira Sans Condensed). Sizes are em-multiples of the body size,
+// preserving the old 42 / 34 / 27 / 24 pt vs 20 pt body ratios.
+$presentation-heading-font:        $font-header;
+$presentation-heading-color:       #000000;
+$presentation-heading-font-weight: 400;
+$presentation-heading-line-height: 1.1;
+$presentation-h1-font-size: 2.10em;
+$presentation-h2-font-size: 1.70em;
+$presentation-h3-font-size: 1.35em;
+$presentation-h4-font-size: 1.20em;
+
+// Code
+$code-color:           $color-darkgreen;   // inline code
+$code-block-font-size: 0.85em;
+$code-block-bg:        #ffffff;
+
+// Default gutter between `.col` columns (override per-row with `gap=`).
+$cols-gap: 1.5em;
+
+// Reveal's bottom progress-bar fill color (its default is plain white).
+// To turn the bar off entirely, no theme edit needed: set `progress: false`
+// in the document's YAML — it's a native Quarto/reveal.js option.
+$progress-color: $color-blue;
+
+
+/*-- scss:rules --*/
+
+// ---- Slide letterbox (xaringan "card" look) -------------------------------
+// reveal scales `.reveal .slides` to exactly the deck's 16:9 box and centers
+// it; with `margin: 0` (set in _extension.yml) that box fills the window on
+// one axis and leaves a letterbox on the other. Paint the box as the light
+// "card" and fill the surrounding `.reveal-viewport` with the darker gray, so
+// the margins read like the old xaringan deck — a gray band on top/bottom OR
+// left/right, never all four sides at once.
+.reveal-viewport {
+  background-color: $color-gray;
+  // Size of the gray letterbox band on each axis, in real window px. reveal
+  // scales the 1600x900 deck by margin:0 to exactly
+  //   min(100vw, 177.78vh) x min(100vh, 56.25vw)   (16/9 = 1.7778, 9/16 = .5625)
+  // and centers it, so half the leftover on each axis is the band width. The UI
+  // chrome (slide number, menu button, footer bar) is positioned against the
+  // full window, which drops it into that gray band — off the slide. Expose the
+  // band size so those elements can be nudged back onto the card, like the old
+  // xaringan deck where the page number lived inside the slide.
+  --lexis-lb-x: calc((100vw - min(100vw, 177.78vh)) / 2);
+  --lexis-lb-y: calc((100vh - min(100vh,  56.25vw)) / 2);
+}
+.reveal .slides  { background-color: $body-bg; }
+
+// ---- Overview mode (`o`) ---------------------------------------------------
+// The card color above lives on `.slides` — ONE element, not the sections —
+// so in overview, where reveal spreads the sections out in a grid far beyond
+// the `.slides` box, every non-inverse tile was a transparent section against
+// the dark gray viewport (verified: getComputedStyle showed
+// `rgba(0,0,0,0)` on every non-inverse section while `.inverse` tiles, which
+// paint their own section, looked right). Paint the tiles directly here.
+// Exclusions: `.stack` (the wrapper reveal builds around lexis's modified
+// slides — painting the leaf inside is enough), `.inverse` (already dark;
+// this rule's higher specificity would otherwise turn it light), and slides
+// with an explicit {{< bg-color >}} / {{< bg-image >}} background (their
+// color comes from reveal's per-slide background tile, which the section
+// must stay transparent to reveal). `height: 100%` for the same reason as
+// `.inverse` below: sections are only as tall as their content.
+.reveal.overview .slides section:not(.stack):not(.inverse):not([data-background-color]):not([data-background-image]) {
+  background-color: $body-bg;
+  height: 100%;
+}
+
+// ---- Scroll view (`r`) -----------------------------------------------------
+// reveal 5's scroll view (`.reveal-scroll` on the viewport) restacks every
+// slide into full-window `.scroll-page`s inside `.slides` and scrolls the
+// viewport. Two of our rules broke it (verified headlessly by toggling `r`
+// and reading scrollHeight):
+//   1. Our `.reveal:not(.overview) .slides { overflow: hidden }` clip rule
+//      (below) out-specifies reveal's own `.reveal-scroll .slides
+//      { overflow: visible }`, clipping all pages inside the 900px `.slides`
+//      box — scrollHeight collapsed to one page, so scrolling was dead and
+//      activation "jumped to the title slide" (reveal couldn't scroll down
+//      to the current slide's page).
+//   2. The `.slides` card background painted a stray light band across the
+//      top of the scroll strip.
+// In scroll view each section is forced to the full slide box by reveal
+// (width/height/transform !important), so the card color can live on the
+// sections themselves — same exclusions as overview mode above. Slides with
+// {{< bg-color >}} / {{< bg-image >}} keep working via the per-page
+// `.slide-background` reveal moves into each scroll page.
+// The `.reveal-viewport.reveal-scroll` double class is REQUIRED: it lifts
+// this above the clip rule's `.reveal:not(.overview) .slides` specificity,
+// which would otherwise win on source order.
+.reveal-viewport.reveal-scroll .reveal .slides {
+  overflow: visible;
+  background-color: transparent;
+}
+.reveal-viewport.reveal-scroll .reveal .slides section:not(.stack):not(.inverse):not([data-background-color]):not([data-background-image]) {
+  background-color: $body-bg;
+}
+
+// ---- Slide content insets (xaringan's roomy `.remark-slide-content`) --------
+// reveal ships its sections with no padding, so content sits flush against the
+// card edges (and wide code appears to run off). Restore breathing room. Target
+// only leaf sections (`:not(.stack)`) so the wrapper <section> reveal builds for
+// lexis's modified slides doesn't double the inset. box-sizing keeps the 1600x900
+// canvas intact while insetting the content.
+.reveal .slides section:not(.stack) {
+  box-sizing: border-box;
+  padding: 45px 90px 60px;
+}
+
+// Inverse slides are a dark CARD with the gray letterbox preserved, NOT a
+// full-window bleed. lexis.lua no longer sets `data-background-color` for
+// `.inverse`, so paint the card here instead.
+//
+// Painted on the SECTION itself, not the shared `.slides` parent. A prior
+// version painted `.slides:has(section.present.inverse)` — but `.slides` is
+// ONE element shared by every slide, and every individual `<section>` is
+// transparent by default, so that shared background is literally the only
+// color visible behind ANY slide. Gating it on `:present` made it correct
+// for single-slide viewing (only one slide visible at a time) but wrong the
+// moment more than one slide renders at once: in overview (`o`) and scroll
+// (`r`) mode reveal shows many sections simultaneously, so every tile ended
+// up sharing whichever ONE color `:present` last resolved to (verified
+// empirically — navigate to a non-inverse slide, then open overview, and
+// every `.inverse` tile including the current one turns light). Painting
+// the section directly makes the color intrinsic to that slide, correct in
+// every mode. `height: 100%` is required alongside it: outside overview
+// mode (where reveal forces this itself) a section is only as tall as its
+// content, not the full 900px card, so without it a short inverse slide
+// left a gap of `.slides`'s own light background showing beneath the text.
+.reveal .slides section.inverse { background-color: $color-black; height: 100%; }
+
+// Explicit full-bleed slides ({{< bg-color >}} / {{< bg-image >}}) DO use
+// reveal's own edge-to-edge background layer (behind `.slides`); drop the
+// card there to let that layer show through. Two selectors are needed
+// because reveal only flags COLOR backgrounds on `.reveal` (it reads the
+// color's brightness to pick has-dark/has-light); an image background gets
+// no flag at all — verified: on a {{< bg-image >}} slide the image layer
+// was loaded and visible but sat hidden behind the opaque `.slides` card,
+// while overview mode (tiles spread beyond the `.slides` box) showed it
+// fine. The `:has()` clause catches those image slides directly.
+.reveal.has-dark-background  .slides,
+.reveal.has-light-background .slides,
+.reveal:has(.slides section.present[data-background-image]) .slides {
+  background-color: transparent;
+}
+
+// ...but reveal's background layer (`.backgrounds`) fills the whole `.reveal`
+// element, i.e. the whole WINDOW, so {{< bg-color >}} / {{< bg-image >}} bleed
+// across the gray letterbox too. Inset the layer by the letterbox band so the
+// fill covers only the card and the gray margins survive, matching the letterbox
+// look of every other slide. Scoped out of overview mode (`o`): there reveal
+// lays the background tiles out in the same grid as the sections, and
+// offsetting the whole layer by the letterbox band would shift every
+// background tile off its slide whenever the window isn't exactly 16:9.
+// (Scroll view needs no exclusion — reveal hides `.backgrounds` there.)
+.reveal.reveal:not(.overview) .backgrounds {
+  top:    var(--lexis-lb-y);
+  left:   var(--lexis-lb-x);
+  width:  calc(100% - 2 * var(--lexis-lb-x));
+  height: calc(100% - 2 * var(--lexis-lb-y));
+}
+
+// ---- Clip content to the card ---------------------------------------------
+// Content taller/wider than the 1600x900 canvas (e.g. a long printed tibble)
+// otherwise spills past the card edge into the gray, because reveal leaves
+// `.slides` overflow visible. Clip it to the card. Excluded in overview mode
+// (`o`), where reveal deliberately lays the slides out in a grid larger than
+// `.slides` and needs the overflow to show.
+.reveal:not(.overview) .slides { overflow: hidden; }
+
+// ---- Links ----------------------------------------------------------------
+.reveal a {
+  border-bottom: none;
+  &:hover, &:focus {
+    color: $color-purple;
+    background: rgba(97, 172, 240, .5);
+  }
+}
+
+// ---- Inline code (not code blocks) ----------------------------------------
+.reveal :not(pre) > code {
+  color: $color-darkgreen;
+  background-color: transparent;
+  border-radius: 5px;
+}
+
+// ---- Source code blocks: white bg, thin black border ----------------------
+.reveal div.sourceCode {
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+.reveal pre {
+  border-radius: 5px;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0.5em 0;
+  box-shadow: none;
+}
+
+// ---- Printed code OUTPUT: white text on gray (mirrors .remark-code) --------
+// The inner <code> must be targeted too: Quarto's default
+// `.reveal pre code { background-color:#eae9ea; color:#000 }` otherwise paints
+// a light box + black text on top of the gray <pre>, washing this out.
+.reveal .cell-output pre,
+.reveal .cell-output-stdout pre,
+.reveal pre.text-output,
+.reveal .cell-output pre code,
+.reveal .cell-output-stdout pre code,
+.reveal pre.text-output code {
+  color: #fff;
+  background: $color-gray;
+  border: none;
+}
+
+// ---- Blockquotes ----------------------------------------------------------
+.reveal blockquote {
+  width: auto;
+  padding: 0.5em 1em;
+  border: 3px solid $color-blue;
+  border-radius: 10px;
+  background-color: $color-lightblue;
+  font-family: $font-header;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, .2);
+  font-style: normal;
+}
+
+// ---- Tables: zebra striping in tan (mirrors old remark tables) ------------
+.reveal table {
+  border-collapse: collapse;
+  thead th { border-bottom: 1px solid #666; }
+  thead, tfoot, tr:nth-child(even) { background: $color-tan; }
+}
+.reveal .table-blank tr:nth-child(even) { background: transparent; }
+
+// ===========================================================================
+// INVERSE SLIDES
+// Pair with reveal's native full-bleed background, e.g.
+//   ## Title {.inverse background-color="#121212"}
+// The class flips text / code / link / strong colors; the background attribute
+// paints the whole slide.
+// ===========================================================================
+.reveal section.inverse,
+.reveal .inverse {
+  color: $color-white;
+
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 { color: $color-white; }
+  strong { color: $color-white; }
+
+  a, a:visited {
+    color: $color-dodgerblue;
+    text-decoration: underline;
+  }
+  a:hover, a:focus { color: $color-purple; }
+
+  :not(pre) > code { color: $color-orange; background-color: transparent; }
+}
+
+// ===========================================================================
+// HELPER CLASSES (used inline as [text]{.class} or around blocks as ::: {.class})
+// ===========================================================================
+
+// ---- Alignment ------------------------------------------------------------
+// `.center` mirrors xaringan's `class: center` — applied to a whole slide
+// (## Title {.center}) it centers everything; applied to a block/span it
+// centers that. `.left` is the escape hatch for code inside a centered slide.
+.reveal .center { text-align: center; }
+.reveal .center img,
+.reveal .center table { margin-left: auto; margin-right: auto; }
+.reveal .left  { text-align: left; }
+.reveal .right { text-align: right; }
+
+// Center/align just a HEADING (xaringan `# .center[Title]`) without touching
+// the rest of the slide: written `# [Title]{.center}`, the class lands on a
+// span inside the heading, so promote it to a full-width aligned block.
+.reveal {
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    > .center { display: block; text-align: center; }
+    > .left   { display: block; text-align: left; }
+    > .right  { display: block; text-align: right; }
+  }
+}
+
+// ---- Black border around plot output --------------------------------------
+// The old deck wrapped rendered ggplots in `.blackborder[...]`. Alias of
+// `.border` above, kept by name so ported slides read like the originals.
+.reveal .blackborder img { border: 2px solid #000; }
+
+// ---- Synthetic slide-title heading -----------------------------------------
+// lexis.lua prepends an empty `.lexis-slide-title` heading to a modified
+// slide that doesn't already open with one (see its comment for why). Purely
+// structural — never shown.
+.reveal .lexis-slide-title { display: none; }
+
+// ---- Heading-as-text classes ----------------------------------------------
+// The lexis.lua filter rewrites headings nested inside Divs (columns, etc.)
+// into `.h1`..`.h6` so they render as sized text without becoming their own
+// slide. Sizes/colors mirror the real reveal heading variables.
+.reveal {
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    display: block;
+    font-family: $font-header;
+    color: $presentation-heading-color;
+    font-weight: $presentation-heading-font-weight;
+    line-height: $presentation-heading-line-height;
+    margin: 0.2em 0 0.4em;
+  }
+  .h1 { font-size: $presentation-h1-font-size; }
+  .h2 { font-size: $presentation-h2-font-size; }
+  .h3 { font-size: $presentation-h3-font-size; }
+  .h4 { font-size: $presentation-h4-font-size; }
+  .h5 { font-size: 1.0em; }
+  .h6 { font-size: 0.9em; }
+}
+
+// ---- Fancy display font ---------------------------------------------------
+.reveal .fancy {
+  font-family: $font-fancy;
+  font-weight: 400;
+  font-style: italic;
+}
+.reveal .fira { font-family: $font-header; }
+
+// ---- Text colors ----------------------------------------------------------
+.reveal .white     { color: $color-white; }
+.reveal .red       { color: $color-red; }
+.reveal .orange    { color: $color-orange; }
+.reveal .yellow    { color: $color-yellow; }
+.reveal .green     { color: $color-green; }
+.reveal .darkgreen { color: $color-darkgreen; }
+.reveal .blue      { color: $color-blue; }
+.reveal .darkblue  { color: $color-darkblue; }
+.reveal .purple    { color: $color-purple; }
+.reveal .black     { color: $color-black; }
+.reveal .gray      { color: $color-gray; }
+
+// ---- Relative text sizes --------------------------------------------------
+// One system for everything: wrap any content — paragraphs, lists, code
+// chunks and their printed output — in ::: {.font70} etc. (or use
+// [text]{.font70} inline). All sizes inside are em/%-based and inherit, so
+// content scales proportionally and nothing compounds; code stays at
+// Quarto's usual 85%-of-surrounding-text ratio.
+.reveal .small { font-size: 70%; }
+.reveal .large { font-size: 160%; }
+@for $i from 2 through 40 {
+  $pct: $i * 5;
+  .reveal .font#{$pct} { font-size: #{$pct * 1%}; }
+}
+
+// ---- Image treatments -----------------------------------------------------
+.reveal img { border: 0 solid #000; box-shadow: none; }
+.reveal .border img        { border: 2px solid #000; }
+.reveal .borderthick img   { border: 7px solid #000; }
+.reveal .whiteborder img   { border: 2px solid #fff; }
+.reveal .whiteborderthick img { border: 7px solid #fff; }
+.reveal .noborder img      { border: 0 solid #000; }
+.reveal .circle img        { border-radius: 50%; }
+.reveal .polaroid img {
+  border: 10px solid #fff;
+  border-bottom: 45px solid #fff;
+  box-shadow: 3px 3px 3px #111;
+}
+.reveal .thumbnail img {
+  width: 15%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ---- Tabset panels ----------------------------------------------------------
+// Quarto's native `.panel-tabset` (xaringan `.panelset`) ships with a boxed
+// nav-tab look (bordered box around the active tab). Replace it with the old
+// lexis-panelset style: plain gray labels, a bold black label + thick
+// underline for the active tab, sitting on a thin baseline rule. Quarto's
+// tabby plugin adds the ARIA roles at runtime, so we target those instead of
+// nav-tabs/nav-link classes.
+.reveal .panel-tabset {
+  [role="tablist"] {
+    border-bottom: 1px solid $color-tan;
+    margin-bottom: 0.6em;
+  }
+  [role="tab"] {
+    border: none;
+    background: transparent;
+    margin: 0 1.4em 0 0;
+    padding: 0.2em 0 0.5em;
+    font-family: $font-header;
+    font-size: 1.1em;
+    color: $color-gray;
+    border-bottom: 3px solid transparent;
+  }
+  [role="tab"]:hover:not([aria-selected="true"]) {
+    color: $body-color;
+    border-bottom-color: $color-tan;
+  }
+  [role="tab"][aria-selected="true"] {
+    color: $body-color;
+    font-weight: 700;
+    border-bottom-color: $body-color;
+  }
+}
+.reveal section.inverse .panel-tabset,
+.reveal .inverse .panel-tabset {
+  [role="tablist"] { border-bottom-color: $color-gray; }
+  [role="tab"] { color: $color-tan; }
+  [role="tab"]:hover:not([aria-selected="true"]) {
+    color: $color-white;
+    border-bottom-color: $color-gray;
+  }
+  [role="tab"][aria-selected="true"] {
+    color: $color-white;
+    border-bottom-color: $color-white;
+  }
+}
+
+// ---- Footnote -------------------------------------------------------------
+.reveal .footnote {
+  position: absolute;
+  bottom: 2em;
+  padding-right: 4em;
+  font-size: 70%;
+  line-height: 1em;
+}
+
+// ---- Slimtitle (title-slide helper) ---------------------------------------
+.reveal .slimtitle {
+  font-family: $font-header;
+  font-weight: 500;
+  font-size: 55px;
+  margin-block-start: 0;
+  margin-block-end: 0.1em;
+}
+
+// ===========================================================================
+// SLIDE-LEVEL MODIFIERS (set by the {{< inverse >}} / {{< center >}} /
+// {{< middle >}} shortcodes, which lexis.lua hoists onto the slide <section>)
+// ===========================================================================
+
+// `middle` — vertically center the slide's content (xaringan `class: middle`).
+// The slide <section> is the reveal-managed flex container; stretch it to the
+// full canvas height and center its children on the cross axis.
+.reveal .slides section.middle {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// `no-slide-number` — reveal mirrors a slide's `data-state` onto the
+// `.reveal-viewport` element while that slide is active, so we can hide the
+// slide number just for this slide.
+.reveal-viewport.no-slide-number .slide-number { display: none !important; }
+
+// ===========================================================================
+// COLUMN LAYOUTS
+// `::: {.col width="60%" gap="2em" valign="middle"}`. lexis.lua's group_cols
+// wraps any run of 2+ consecutive `.col` Divs in a `.cols-row` flex
+// container and turns `width` into that column's flex-basis — no outer
+// wrapper div to write, no fixed set of splits to memorize. `width` is
+// optional; columns without it share the remaining space evenly. `gap`/
+// `valign` are read off whichever `.col` in the row sets them.
+// ===========================================================================
+.reveal .cols-row {
+  display: flex;
+  gap: $cols-gap;
+  align-items: flex-start;
+
+  > .col {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: left;
+  }
+
+  // `::: {.col .center}` centers everything in that column. Without this the
+  // `> .col` rule above (specificity 0,0,3) out-ranks the generic
+  // `.reveal .center` (0,0,2) and the column stays left-aligned; `.col.center`
+  // (0,0,4) wins it back.
+  > .col.center { text-align: center; }
+}
+
+// ===========================================================================
+// FOOTERS (xaringan `.footer-small` link bar / `.footer-large` block).
+//
+// The repeated link bar is Quarto's native `footer:` (one persistent `.footer`
+// element shown on every slide) restyled as the lexis black bar. `.footer-small`
+// is kept as an alias so hand-written bars read like the originals.
+// `.footer-large` is placed inline on the title/closing slides.
+//
+// IMPORTANT: stay `position: fixed` (reveal's own default for `.footer`), not
+// `absolute` — fixed correctly anchors to the real browser viewport (verified
+// empirically: neither `.reveal` nor any of its ancestors carry a transform/
+// perspective/filter, so nothing hijacks the containing block here).
+//
+// IMPORTANT: the selector needs the repeated `.reveal.reveal` specificity
+// bump. Quarto's own bundled `plugin/quarto-support/footer.css` ships its
+// OWN `.reveal .footer { position: fixed; bottom: 18px; text-align: center;
+// margin: 0 auto; z-index: 2; font-size: 18px; }` and that stylesheet <link>
+// is emitted AFTER our theme's in <head>. Equal specificity + later source
+// order means IT wins each of those properties, not us — verified by
+// rendering, headless-screenshotting, and reading getComputedStyle: our
+// plain `.reveal .footer` rule was silently losing `bottom` (18px, not 0 —
+// a visible gap below the bar) and `text-align`/`margin`/`z-index`/
+// `font-size` too. One extra `.reveal` class outweighs their rule
+// regardless of link order, without resorting to `!important`.
+// ===========================================================================
+.reveal.reveal .footer,
+.reveal.reveal div.footer-small {
+  background-color: $color-black;
+  // Anchored to the card, not the window: bottom/left/right are inset by the
+  // letterbox band (see --lexis-lb-* on .reveal-viewport) so the bar hugs the
+  // slide's bottom edge and spans the slide width, instead of the window's.
+  position: fixed;
+  bottom: var(--lexis-lb-y);
+  left:  var(--lexis-lb-x);
+  right: var(--lexis-lb-x);
+  height: 20px; width: auto;
+  margin: 0; padding: 0;
+  // Per-document override: set `footer-align: center` (or `left`/`right`)
+  // in the YAML front matter; lexis.lua turns that into this custom
+  // property. Defaults to the original left-aligned xaringan look.
+  text-align: var(--lexis-footer-align, left);
+  z-index: 10;
+  color: $color-white;
+  font-size: 10pt;
+  line-height: 20px;
+
+  p, span { margin: 0; padding-left: var(--lexis-footer-pad, 15px); color: $color-white; }
+  a { color: $color-white; text-decoration: none; }
+}
+
+// reveal's slide number is positioned against the full window (right/bottom
+// 8px), so it too lands in the gray letterbox band. Push it back onto the card
+// by the band size + a small margin, so it sits in the slide's bottom-right
+// corner like the old xaringan page number. The `.reveal.reveal` bump is
+// REQUIRED: quarto-support's footer.css (loaded after this theme) also sets
+// `.reveal .slide-number { bottom; right }` at equal specificity, so a plain
+// `.reveal .slide-number` here silently loses on source order.
+.reveal.reveal .slide-number {
+  right:  calc(var(--lexis-lb-x) + 14px);
+  bottom: calc(var(--lexis-lb-y) + 12px);
+  font-size: 20px;    // a touch larger than footer.css's default 16px
+  color: $color-gray; // #696969, matching the old xaringan page number
+}
+
+// When a footer bar is present the number defaults to sitting inside the bar's
+// 20px vertical span; lift it clear, still card-anchored. `:has()` already
+// out-specifies footer.css's plain `.reveal .slide-number`, but match the
+// `.reveal.reveal` bump above for consistency.
+.reveal.reveal:has(> .footer) .slide-number {
+  bottom: calc(var(--lexis-lb-y) + 28px);
+}
+
+// The reveal.js-menu hamburger button is `position: fixed` against the window —
+// same gray-band problem. Nudge it onto the card. footer.css also re-positions
+// it as `.reveal .slide-menu-button { left; bottom }` (equal specificity, loaded
+// later), so the `.reveal.reveal` bump is REQUIRED here too.
+.reveal.reveal .slide-menu-button {
+  left:   calc(var(--lexis-lb-x) + 22px);
+  bottom: calc(var(--lexis-lb-y) + 18px);
+}
+// Recolor the bars to match the slide number (was theme link-blue). The `<a>`
+// color / hover-box come from `.reveal a`, so gray the anchor and kill the blue
+// hover background here...
+.reveal.reveal .slide-menu-button a {
+  color: $color-gray;
+  &:hover, &:focus { color: $color-gray; background: transparent; }
+}
+// ...BUT the three bars themselves are not a font glyph — Quarto's reveal-menu
+// integration renders them as a background-image SVG with `$link-color` baked
+// into `fill=`, so `color`/`currentColor` can't reach them. Override the whole
+// image with the identical icon, gray fill. (Beats the theme's
+// `.reveal .slide-menu-button .fa-bars::before` with the `.reveal.reveal` bump.)
+.reveal.reveal .slide-menu-button .fa-bars::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(105,105,105)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
+}
+// Flip BOTH the hamburger and the slide number to white on inverse / dark-
+// background slides so they stay visible (and matching) on dark cards — the
+// hardcoded gray above would otherwise be invisible there.
+.reveal:has(.slides section.present.inverse) .slide-number,
+.reveal.reveal.has-dark-background .slide-number { color: #fff; }
+.reveal:has(.slides section.present.inverse) .slide-menu-button a,
+.reveal.reveal.has-dark-background .slide-menu-button a {
+  color: #fff;
+  &:hover, &:focus { color: #fff; }
+}
+.reveal:has(.slides section.present.inverse) .slide-menu-button .fa-bars::before,
+.reveal.reveal.has-dark-background .slide-menu-button .fa-bars::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(255,255,255)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
+}
+
+.reveal div.footer-large {
+  position: absolute;
+  bottom: 150px; right: 50px;
+  height: 100px; width: 100%;
+  margin-bottom: 0;
+}
+
+// ---- Progress bar -----------------------------------------------------
+// `.progress span` (the fill) uses `background-color: currentColor`, so
+// setting `color` here is enough to recolor it; the track underneath it
+// keeps reveal's own default translucent-black.
+.reveal .progress {
+  color: $progress-color;
+}

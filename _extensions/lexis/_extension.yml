@@ -1,0 +1,38 @@
+title: Lexis
+author: John Paul Helveston
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    common:
+      # John's xaringan paradigm: `---` starts every slide and all headings are
+      # just styled text within a slide. Slide modifiers (inverse/center/middle/
+      # backgrounds) are written as shortcodes instead of heading attributes and
+      # applied by the lexis.lua filter. See lexis.lua for the mechanism.
+      slide-level: 0
+      theme: [lexis.scss]
+      slide-number: c/t
+      incremental: false
+      highlight-style: github
+      width: 1600
+      height: 900
+      # Scale the slide to fully "contain" the window (like xaringan) instead of
+      # reveal's default ~10% margin, which insets the slide on all four sides.
+      # With margin 0 the 16:9 slide fills one axis and the gray letterbox
+      # (see lexis.scss) shows only on the other — never all the way around.
+      margin: 0
+      # Quarto's reveal template unconditionally emits a title slide whenever
+      # `title:` is set ($if(title)$$title-slide.html()$$endif$ — there's no
+      # YAML switch to disable it). title-slide.html is a no-op partial that
+      # suppresses it, so the ONLY title slide is the one authors write
+      # themselves as the deck's first `---` slide (using {{< meta title >}}
+      # etc. + the shortcodes below). See the top of demo.qmd for the pattern.
+      template-partials:
+        - title-slide.html
+      # Run AFTER Quarto expands the {{< inverse >}}/etc. shortcodes into markers.
+      filters:
+        - at: post-quarto
+          path: lexis.lua
+    revealjs: {}
+  shortcodes:
+    - lexis-shortcodes.lua

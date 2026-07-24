@@ -1,0 +1,6 @@
+/* Deck-specific additions on top of the lexis theme.
+   The lexis extension ships every color/size/column utility this deck uses
+   EXCEPT `.amber`, which is this talk's "content" color and must match the
+   amber in the entanglement figure (images/entanglement-diagram/). */
+
+.reveal .amber { color: #C0820F; }

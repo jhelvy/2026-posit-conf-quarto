@@ -1,14 +1,11 @@
 ---
 title: "The Unreasonable Effectiveness of Quarto"
-subtitle: "Why agents should write the source, not the artifact"
 author: "John Paul Helveston"
 date: "posit::conf 2026"
 format:
-  revealjs:
-    theme: [default, custom.scss]
+  lexis-revealjs:
+    css: custom.css
     transition: fade
-    width: 1280
-    height: 720
     slide-number: false
     history: false
 ---
@@ -31,14 +28,31 @@ format:
 
   Rhetorical rule used throughout: NAME THE OBJECTION FIRST.
   Act 1 pre-empts "we already knew that." Act 5 pre-empts "why not just HTML?"
+
+  FORMAT: lexis-revealjs. `---` starts every slide; headings are text sizes only.
+  Slide modifiers are shortcodes. See the `lexis` skill.
 -->
 
-# {.inverse}
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+{{< no-slide-number >}}
 
-::: {.r-fit-text}
-Handwriting practice
-<br>for a six-year-old
-:::
+# {{< meta title >}}
+
+<br>
+
+[{{< meta author >}}]{.large}
+
+{{< meta date >}}
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Handwriting practice<br>for a six-year-old
 
 ::: {.notes}
 COLD OPEN. No thesis, no framing, no agenda slide. Just the story.
@@ -48,6 +62,8 @@ So I asked an agent to make me one."
 
 Do not say the word Quarto yet.
 :::
+
+---
 
 ## What I asked for
 
@@ -59,9 +75,11 @@ Read it out loud. It's a completely reasonable prompt. Everyone in the room has
 written a prompt like this.
 :::
 
+---
+
 ## What I got
 
-::: {.leftcol}
+::: {.col}
 It looked great.
 
 Three sentences. Big friendly type. Dotted lines.
@@ -69,7 +87,7 @@ Three sentences. Big friendly type. Dotted lines.
 [One of the sentences wasn't the one I asked for.]{.red}
 :::
 
-::: {.rightcol}
+::: {.col}
 > **[SCREENSHOT — directly-generated sheet, the drifted sentence circled]**
 :::
 
@@ -79,15 +97,17 @@ Land it lightly, not as a gotcha. The format was perfect. The *content* drifted.
 Key beat: I didn't notice at first. My daughter did — she read it out loud.
 :::
 
+---
+
 ## So I asked it to fix that one sentence
 
-::: {.leftcol}
+::: {.col}
 And it regenerated the whole sheet.
 
 New spacing. Different line weights. A *different* third sentence.
 :::
 
-::: {.rightcol}
+::: {.col}
 > **[SCREENSHOT — the "fixed" sheet, now different in other ways]**
 :::
 
@@ -96,12 +116,13 @@ This is the real problem, and it's not "LLMs make mistakes." It's that there was
 no way to make a small change. Every edit is a full regeneration.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Where *is*
-<br>the sentence?
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Where *is*<br>the sentence?
 
 ::: {.notes}
 Slow down here. This is the question the whole talk answers.
@@ -110,12 +131,13 @@ In that PDF, there is no line of anything that IS that sentence. It's smeared
 across one probabilistic pass. Point at it — you can't.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-You already believe
-<br>everything I'm about to say.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# You already believe<br>everything I'm about to say.
 
 [I want to know why almost none of us do it.]{.font140 .orange}
 
@@ -128,11 +150,19 @@ of us, when we open a chat window, ask for the finished thing anyway."
 This converts their prior knowledge from a liability into complicity.
 :::
 
-# Entanglement {.inverse}
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Entanglement
+
+---
 
 ## The content has no address
 
-::: {.leftcol}
+::: {.col}
 When an agent generates a finished document, content and structure come out
 **woven together** in a single probabilistic pass.
 
@@ -141,8 +171,8 @@ Nothing in it has a location.
 To change one sentence, you regenerate everything — and hope.
 :::
 
-::: {.rightcol}
-[There is no file, no line, no cell that *is* that sentence.]{.font120}
+::: {.col .font120}
+There is no file, no line, no cell that *is* that sentence.
 :::
 
 ::: {.notes}
@@ -151,6 +181,8 @@ address" is the sticky version.
 
 Give them the test they can apply to their own work: can you point at it?
 :::
+
+---
 
 ## When does it weave?
 
@@ -173,9 +205,11 @@ programming's own word — Sweave, then knitr. Quarto has always been a weaving
 tool. I'm just arguing we should weave later.
 :::
 
+---
+
 ## Give the content an address
 
-::: {.leftcol}
+::: {.col}
 ```r
 # sentences.csv
 sentence
@@ -189,7 +223,7 @@ The `.qmd` is structure. The CSV is content.
 Changing a sentence is **editing row 3 of a text file.**
 :::
 
-::: {.rightcol}
+::: {.col}
 > **[PDF — same sheet, rendered from the CSV]**
 :::
 
@@ -200,16 +234,18 @@ asking anyone's permission — including the model's.
 The agent wrote the .qmd. It never touched the sentences.
 :::
 
+---
+
 ## But your prose doesn't go in a CSV
 
-::: {.leftcol}
+::: {.col}
 [**Prose** stays in the `.qmd`.]{.blue}
 
 Its address is a **line number**. The agent's edit arrives as a diff you can
 read in ten seconds.
 :::
 
-::: {.rightcol}
+::: {.col}
 [**Values that must be exact** live in data + code.]{.amber}
 
 Not just locatable — **recomputed.** Never typed by anyone.
@@ -229,12 +265,13 @@ Two tiers, and both are things a fused artifact denies you: prose gets
 *located*, data gets *derived*.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Agents should write the source,
-<br>not the artifact.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Agents should write the source,<br>not the artifact.
 
 ::: {.notes}
 SPINE SENTENCE, 1 of 3. Let it sit. This is the whole talk in seven words.
@@ -242,6 +279,8 @@ SPINE SENTENCE, 1 of 3. Let it sit. This is the whole talk in seven words.
 Note what it does NOT say: "put your content in data files." It says hand me the
 source. Everything else follows from that.
 :::
+
+---
 
 ## You can't prompt your way to correctness
 
@@ -252,12 +291,20 @@ The prescription. Note what it's NOT: better prompts, better evals, better
 models. Shrink the surface that has to be probabilistic at all.
 :::
 
-# And then something I didn't expect {.inverse}
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# And then something I didn't expect
 
 ::: {.notes}
 ACT 3. THE TURN. The audience is braced for a worthiness argument about
 correctness. Give them an argument about cost instead.
 :::
+
+---
 
 ## It's also cheaper
 
@@ -283,6 +330,8 @@ token on the artifact — the renderer does that part for free.
 Note the honest row: for Markdown it's a wash. Say so. Costs nothing, buys trust.
 :::
 
+---
+
 ## And that's just the first turn
 
 > **[CHART or TABLE — multi-turn token cost]**
@@ -303,11 +352,13 @@ The single-shot table understates the case, because nobody generates once —
 you iterate. The gap doesn't stay at 7×; it compounds with every turn.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Reproducibility used to be a tax.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Reproducibility used to be a tax.
 
 [Now it's the discount.]{.font160 .green}
 
@@ -321,89 +372,208 @@ never turned into a .qmd, because the tax was real.
 The tax is gone. The virtuous path is now the lazy path.
 :::
 
-# This is how you build anything {.inverse}
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# This is how you build anything
 
 ::: {.notes}
-ACT 4. THE DASHBOARD. 6 minutes. This is the most concrete material in the talk
-and it is deliberately in the middle, where running long can't reach it.
+ACT 4. THE DASHBOARD. ~6 minutes. The most concrete material in the talk,
+deliberately mid-deck where running long can't reach it.
+
+This is a REAL product: vehicletrends.us. 10M+ vehicle listings, multi-page,
+interactive, updates itself weekly. Built with exactly the workflow from Act 1–3.
 :::
 
-## A multi-page data product
+---
+
+## A real one: vehicletrends.us
 
 > **[RECORDING — silent screen capture, ~75s]**
-> Multi-page Quarto site: JS plotting libraries, Shinylive, React components.
+> Multi-page Quarto site. ECharts line charts + boxplots, a MapLibre census-tract
+> map, a Shinylive app — all client-side. 10M+ listings.
 
 ::: {.notes}
-No audio. Let it play and narrate lightly. Don't tour features — this is
-evidence, not a demo.
+No audio. Narrate lightly. Don't tour features — this is evidence.
 
-Use the phrase "data product." It's this session's shared vocabulary.
+Say "data product." It's this session's shared vocabulary, and it's literally
+what this is: data + a package + a site, not a one-off report.
 :::
 
-## Same move, bigger artifact
+---
 
-::: {.leftcol}
+## The handwriting sheet, forty pages over
+
+::: {.col}
 [**The agent wrote:**]{.blue}
 
-- page structure and layout
-- the YAML
-- chunk logic
-- the embedding glue
+- the `.qmd` for each page — prose + layout
+- small R chunks that *emit* charts
+- the `_quarto.yml`, the glue
 :::
 
-::: {.rightcol}
+::: {.col}
 [**The agent never touched:**]{.amber}
 
-- the data
-- the numbers
-- the labels anyone reads
+- the data — it lives in an R package
+- the numbers — recomputed at render
+- the map, the app — separate projects
 :::
 
-[Every number on every page is computed at render time.]{.font120}
+[Same move. Bigger artifact.]{.font140 .green}
 
 ::: {.notes}
-This is the modularity claim, made concrete instead of asserted.
-
-The scale changed. The move didn't. A one-page PDF for a six-year-old and a
-multi-page dashboard are the same architecture.
+The scale changed; the move didn't. The data isn't in the repo — it's an external
+package the pages read at render (setup.R pulls CSVs). Every number on every page
+has an address. A weekly GitHub Action re-renders; the site is never stale, and
+nobody regenerates anything.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Agents should write the source,
-<br>not the artifact.
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# "But why not just build<br>a Shiny app?"
+
+::: {.notes}
+NAME THE OBJECTION FIRST. This is THE elephant in a Posit dashboards session —
+everyone is thinking it. Say it out loud.
+
+Shiny is great. This isn't an attack. It's about what you have to hand the agent.
+:::
+
+---
+
+## Shiny asks the agent for the artifact
+
+::: {.col width="55%"}
+[**Shiny**]{.red}
+
+To get one chart on screen: define the UI, wire an input, wire an output, write
+the server, manage reactivity.
+
+The interactivity is a **machine you assemble** — and the agent writes all of it,
+then you run a server to hold it up.
+:::
+
+::: {.col width="45%"}
+[**Quarto**]{.blue}
+
+Write markdown. Drop a code chunk that returns an ECharts widget.
+
+The interactivity ships **inside the widget**, in the browser. Nothing to wire,
+no server to run.
 :::
 
 ::: {.notes}
-SPINE SENTENCE, 2 of 3. Say it again here, having just proved it at scale.
+This is the PDF problem again, one level up. A Shiny UI is an artifact you must
+fully specify — lots of writing, lots of wiring, lots of tokens, and a server at
+the end. Quarto lets the agent write source and lets the browser do the rest.
+
+Honest concession available here: if you genuinely need server-side compute over
+data too big for the browser, that's Shiny's home turf. Take it.
 :::
 
-## Two patterns worth stealing
+---
 
-1. **[PATTERN — placeholder]**
-2. **[PATTERN — placeholder]**
+## Need something heavier? Put it in a box
+
+::: {.col}
+The census-tract map is the hardest thing on the site.
+
+It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
+in isolation, then dropped in:
+
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", width = "100%"
+)
+```
+:::
+
+::: {.col}
+> **[SCREENSHOT — the MapLibre map on market-concentration.qmd]**
+:::
 
 ::: {.notes}
-Concrete, lived, stealable. This is what a builder room came for.
+The map is MapLibre + PMTiles — genuinely complex. Building it inside the
+dashboard would mean holding the whole site in context to work on one component.
+
+Instead: separate project, small surface, iterate fast with the agent, then a
+six-line iframe. It loads instantly — PMTiles on a CDN — and it's on GitHub
+Pages. No server.
 :::
 
-## Two things that bit me
+---
 
-1. **[PITFALL — placeholder]**
-2. **[PITFALL — placeholder]**
+## Small pieces have small context windows
+
+Isolate a component →
+
+- the agent holds **all of it** in one context
+- you iterate on it **without touching the site**
+- it drops back in as an `iframe`
+
+[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
 
 ::: {.notes}
-Honesty buys credibility, and pitfalls are the most-remembered slides in any
-practitioner talk. Also good Q&A ammunition.
+This is the efficiency argument made architectural. Composition isn't just clean
+engineering — it's what keeps each AI interaction cheap and each component
+individually correct. The map, the Shinylive app, each page: all small.
 :::
 
-# "So why not just ask for HTML?" {.inverse}
+---
+
+## It's just static files
+
+Everything here runs in the browser and deploys to GitHub Pages — **for free.**
+
+- charts → ECharts (JS), rendered client-side
+- the map → PMTiles on a CDN, instant
+- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
+
+[No server to run. No server to secure. No server to pay for.]{.font120}
+
+::: {.notes}
+The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via
+WASM. A "dashboard" that is entirely static files is faster, cheaper, and simpler
+to keep alive than anything server-backed — and the agent helped build every
+piece of it.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Agents should write the source,<br>not the artifact.
+
+::: {.notes}
+SPINE SENTENCE, 2 of 3. Say it again here, having just proved it at scale — on a
+real product, against the obvious Shiny alternative.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# "So why not just<br>ask for HTML?"
 
 ::: {.notes}
 ACT 5. Name the objection before the audience can. Do NOT reference anyone
 else's post — this is your objection, in your voice.
 :::
+
+---
 
 ## Honestly — the case for HTML is good
 
@@ -421,6 +591,8 @@ being fair here and you gain the room's trust for the turn.
 The throwaway-editor concession is genuine — say it and mean it.
 :::
 
+---
+
 ## Not a screenshot
 
 > **[INLINE CHART — live interactive plot rendered into this slide]**
@@ -430,21 +602,24 @@ Quarto gives you all of it. This is rendered and interactive, right here, in the
 slide you're looking at.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-This deck is
-<br>a `.qmd` file.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# This deck is<br>a `.qmd` file.
 
 ::: {.notes}
 The meta-reveal. Proof by existence — and the closest thing to a live demo this
 talk is allowed to have. Let it land.
 :::
 
+---
+
 ## But HTML can't tell you it's broken
 
-::: {.leftcol}
+::: {.col}
 [**HTML**]{.red}
 
 No compile step.
@@ -454,7 +629,7 @@ Malformed output still renders as *something*.
 The agent cannot tell whether it succeeded.
 :::
 
-::: {.rightcol}
+::: {.col}
 [**`.qmd`**]{.blue}
 
 Bad cross-reference, failed chunk, invalid YAML → **loud, deterministic error.**
@@ -469,15 +644,17 @@ Documents just got a compile step. Code has had one for decades. Documents get
 one exactly at the moment their authors became probabilistic.
 :::
 
+---
+
 ## Checkable twice
 
-::: {.leftcol}
+::: {.col}
 [**By machine**]{.darkgreen}
 
 `quarto render` is a compile step. Failures are loud and specific.
 :::
 
-::: {.rightcol}
+::: {.col}
 [**By human**]{.darkgreen}
 
 Plain text means the agent's edit is a **diff**. Review scales with the change,
@@ -490,6 +667,8 @@ not the document.
 Both halves matter. git revert is a one-command undo for any agent mistake.
 :::
 
+---
+
 ## One honest caveat
 
 Render passing ≠ analysis correct.
@@ -501,7 +680,15 @@ State the limit plainly. It costs 10 seconds and buys more credibility than any
 other slide in the deck.
 :::
 
-# Close {.inverse}
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Close
+
+---
 
 ## You don't need to know Quarto
 
@@ -512,6 +699,8 @@ Change **one word** in your prompt.
 ::: {.notes}
 The accessibility close. This is for everyone in the room, not just power users.
 :::
+
+---
 
 ## Make this work Monday
 
@@ -527,12 +716,13 @@ Deeper material (Quarto skills, Lua filters, parameterized reports) is a "come
 find me after" line.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Software solved this
-<br>decades ago.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Software solved this<br>decades ago.
 
 [Source and artifact. Documents are only getting there now —]{.font120}
 [right when the authors became probabilistic.]{.font120 .orange}
@@ -542,18 +732,23 @@ THE RHYME. The close callbacks to the opening question — where is the sentence
 It's in a file. It has an address.
 :::
 
-## {.inverse}
+---
 
-::: {.r-fit-text}
-Agents should write the source,
-<br>not the artifact.
-:::
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Agents should write the source,<br>not the artifact.
 
 ::: {.notes}
 SPINE SENTENCE, 3 of 3. Last thing on screen. Stop talking.
 :::
 
-## {.inverse}
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
 
 You're about to hear three more talks about building data products.
 
