@@ -1,0 +1,236 @@
+<!--
+lexis overview (`o`) — the JS half of the xaringan-style tile grid.
+
+The layout itself is pure CSS (see the "Overview mode" block in lexis.scss):
+`.slides` becomes a scrolling CSS grid and each <section> is shrunk to a
+thumbnail with `zoom`. What's left is the handful of jobs CSS alone can't do,
+which is all this script is for:
+
+  1. Pick the thumbnail scale. The grid's track width has to be an exact
+     multiple of the slide width (1600px * scale) or the tiles won't tile, and
+     CSS can't divide one length by another. So compute cols/scale here and
+     publish `--lexis-ov-scale`; every size in the CSS derives from it.
+  2. Load every slide, because a thumbnail grid shows slides reveal considers
+     far away and has therefore left empty.
+  3. Paint {{< bg-color >}} / {{< bg-image >}} tiles. Those backgrounds live in
+     reveal's separate `.backgrounds` layer, whose tiles reveal positions with
+     inline transforms for ITS row layout — meaningless in our grid, so the CSS
+     hides the layer. Copy each slide's background onto the <section> instead
+     while overview is open, and undo it on the way out.
+  4. Keep the wheel to itself, and scroll the current slide into view — with
+     50+ slides the deck is a long scrolling strip, so opening `o` has to land
+     you where you already are.
+  5. Drive the grid from the keyboard: up/down move a whole ROW (reveal only
+     knows about its one row of slides, so it reads them as prev/next), and
+     Enter opens whichever tile is selected.
+-->
+<script>
+(function () {
+  "use strict";
+
+  // Keep in sync with --lexis-ov-gap / --lexis-ov-pad in lexis.scss.
+  var GAP = 26;       // px between tiles
+  var PAD = 30;       // px around the grid
+  var MIN_TILE = 260; // narrowest thumbnail worth rendering, in px
+  var MAX_COLS = 6;   // past this the slides are unreadable
+
+  function init(Reveal) {
+    var viewportEl = Reveal.getViewportElement();
+    var slidesEl = Reveal.getSlidesElement();
+
+    // "12 / 55" on every tile, like the xaringan tile view. Set once, always;
+    // the CSS only reveals it (as a ::after) inside overview mode.
+    var slides = Reveal.getSlides();
+    slides.forEach(function (slide, i) {
+      slide.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
+    });
+
+    // ---- 1. thumbnail scale -------------------------------------------------
+    function fitGrid() {
+      if (!Reveal.isOverview()) return;
+      var avail = slidesEl.clientWidth - 2 * PAD; // clientWidth is scrollbar-aware
+      if (avail <= 0) return;
+      var cols = Math.floor((avail + GAP) / (MIN_TILE + GAP));
+      cols = Math.max(1, Math.min(MAX_COLS, cols));
+      var tile = (avail - GAP * (cols - 1)) / cols;
+      var scale = tile / Reveal.getComputedSlideSize().width;
+      viewportEl.style.setProperty("--lexis-ov-scale", String(scale));
+    }
+
+    // ---- 2. make every tile show its real content ---------------------------
+    // reveal only keeps ~10 slides either side of the current one "loaded", and
+    // Quarto ships slide images as `data-src` — so in a 55-slide deck most of
+    // the grid would be picture frames with nothing in them. (The CSS forces
+    // the sections themselves visible; this is about their contents.) Asking
+    // reveal to load each slide is cheap and idempotent: `loadSlide` drops the
+    // `data-src` attributes as it promotes them, so a second call does nothing.
+    function loadEverySlide() {
+      if (typeof Reveal.loadSlide !== "function") return;
+      slides.forEach(function (slide) { Reveal.loadSlide(slide); });
+    }
+
+    // ---- 3. background slides ----------------------------------------------
+    function paintBackgrounds() {
+      slides.forEach(function (slide) {
+        var color = slide.getAttribute("data-background-color");
+        var image = slide.getAttribute("data-background-image");
+        if (!color && !image) return;
+        if (color) slide.style.backgroundColor = color;
+        if (image) {
+          // Bare paths need url(); gradients and existing url()s go through.
+          slide.style.backgroundImage = /^\s*(url|[a-z-]+-gradient)\s*\(/i.test(image)
+            ? image
+            : 'url("' + image + '")';
+          slide.style.backgroundSize = slide.getAttribute("data-background-size") || "cover";
+          slide.style.backgroundPosition = slide.getAttribute("data-background-position") || "center";
+          slide.style.backgroundRepeat = slide.getAttribute("data-background-repeat") || "no-repeat";
+        }
+        slide.setAttribute("data-lexis-ov-painted", "");
+      });
+    }
+
+    function clearBackgrounds() {
+      slides.forEach(function (slide) {
+        if (!slide.hasAttribute("data-lexis-ov-painted")) return;
+        slide.style.backgroundColor = "";
+        slide.style.backgroundImage = "";
+        slide.style.backgroundSize = "";
+        slide.style.backgroundPosition = "";
+        slide.style.backgroundRepeat = "";
+        slide.removeAttribute("data-lexis-ov-painted");
+      });
+    }
+
+    // ---- 4. let the grid have the wheel ------------------------------------
+    // `mouse-wheel: true` decks navigate from a wheel handler on `document`
+    // (lexis-nav.html, standing in for reveal's throttled one) — so a flick
+    // through the tiles would also move the deck. Swallow those events before
+    // they leave the grid (capture phase, so this runs ahead of the document
+    // listener). Not preventDefault: the scroll itself must go on
+    // happening. Same story for a touch swipe, which reveal treats as a
+    // navigation gesture on the wrapper.
+    ["wheel", "touchstart", "touchmove"].forEach(function (type) {
+      slidesEl.addEventListener(type, function (event) {
+        if (Reveal.isOverview()) event.stopPropagation();
+      }, true);
+    });
+
+    // ---- 5. keyboard ---------------------------------------------------------
+    // reveal's arrow keys walk its own one-dimensional row of slides, so left
+    // and right already read as "previous/next tile" in the grid — but up and
+    // down land on the neighbouring slide too, when what the grid asks for is
+    // the tile a whole ROW away. And there is no key for "open the tile I'm on"
+    // at all; you have to remember that `o` toggles back out onto it.
+    //
+    // Handled on `document` in the CAPTURE phase and swallowed, so reveal's own
+    // keydown listener never sees these three keys while the grid is open.
+    // Deliberately NOT Reveal.addKeyBinding(): that replaces a key's default
+    // action deck-wide, which would mean re-implementing normal up/down
+    // navigation for the other 99% of the time. This way nothing outside
+    // overview mode changes at all.
+
+    // The REAL column count, straight from the laid-out grid — `auto-fill` gets
+    // the last word (a scrollbar can cost a column), so don't trust fitGrid's.
+    function gridColumns() {
+      var tracks = getComputedStyle(slidesEl).gridTemplateColumns;
+      if (!tracks || tracks === "none") return 1;
+      return Math.max(1, tracks.split(" ").length);
+    }
+
+    // One row up or down, in tiles. The grid item is the top-level <section>,
+    // which is what `h` indexes — so a row is exactly `cols` steps of `h`.
+    function rowStep(direction) {
+      var cols = gridColumns();
+      var last = Reveal.getHorizontalSlides().length - 1;
+      var from = Reveal.getIndices().h;
+      var to = from + direction * cols;
+      if (to < 0 || to > last) {
+        // No tile a full row away. Falling off the bottom of a ragged last row
+        // still means "go down", so finish at the end of the deck; falling off
+        // the top means there is nothing above and we stay put.
+        var rowOf = function (i) { return Math.floor(i / cols); };
+        to = direction > 0 && rowOf(last) > rowOf(from) ? last : from;
+      }
+      if (to !== from) Reveal.slide(to, 0);
+    }
+
+    document.addEventListener("keydown", function (event) {
+      if (!Reveal.isOverview()) return;
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.key === "ArrowDown") rowStep(1);
+      else if (event.key === "ArrowUp") rowStep(-1);
+      else if (event.key === "Enter") Reveal.toggleOverview(false); // lands on the selected tile
+      else return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+
+    // ---- 6. keep the current slide in view ----------------------------------
+    function scrollCurrentIntoView(smooth) {
+      if (!Reveal.isOverview()) return;
+      var current = Reveal.getCurrentSlide();
+      if (!current) return;
+      // The grid item is the top-level <section> — for a slide carrying a lexis
+      // shortcode that's the .stack wrapper reveal built around it.
+      var tile = current.parentElement && current.parentElement.classList.contains("stack")
+        ? current.parentElement
+        : current;
+      // Measured, not offsetTop: the tiles sit inside a `zoom`ed subtree, and
+      // getBoundingClientRect is the one measurement that reports real px.
+      var box = tile.getBoundingClientRect();
+      var frame = slidesEl.getBoundingClientRect();
+      var delta = (box.top - frame.top) - (frame.height - box.height) / 2;
+      if (Math.abs(delta) < 1) return;
+      slidesEl.scrollTo({
+        top: slidesEl.scrollTop + delta,
+        behavior: smooth ? "smooth" : "auto"
+      });
+    }
+
+    Reveal.on("overviewshown", function () {
+      loadEverySlide();
+      paintBackgrounds();
+      fitGrid();
+      // Two frames: the first lays the grid out (which may add a scrollbar and
+      // so change the width fitGrid just measured), the second measures for the
+      // scroll — by then the tiles are where they will stay.
+      requestAnimationFrame(function () {
+        fitGrid();
+        requestAnimationFrame(function () { scrollCurrentIntoView(false); });
+      });
+    });
+
+    Reveal.on("overviewhidden", function () {
+      clearBackgrounds();
+      slidesEl.scrollTop = 0;
+    });
+
+    // Arrow keys still move the selection while the grid is open; follow it.
+    Reveal.on("slidechanged", function () { scrollCurrentIntoView(true); });
+
+    window.addEventListener("resize", function () {
+      fitGrid();
+      requestAnimationFrame(function () { scrollCurrentIntoView(false); });
+    });
+  }
+
+  // This runs from <head>, so wait for Reveal to exist and finish booting.
+  function whenReady(callback) {
+    if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+      callback(window.Reveal);
+      return;
+    }
+    var tries = 0;
+    var timer = setInterval(function () {
+      if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+        clearInterval(timer);
+        callback(window.Reveal);
+      } else if (++tries > 600) { // ~30s, then give up quietly
+        clearInterval(timer);
+      }
+    }, 50);
+  }
+
+  whenReady(init);
+})();
+</script>

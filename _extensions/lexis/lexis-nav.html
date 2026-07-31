@@ -1,0 +1,264 @@
+<!--
+lexis navigation — one click of the wheel, one step of the deck.
+
+reveal's own wheel handler (js/controllers/pointer.js) is throttled to ONE step
+per second, with a hard-coded 1000ms:
+
+    if( Date.now() - this.lastMouseWheelStep > 1000 ) { ... }
+
+and every wheel event inside that second is thrown away rather than queued. So
+scrolling at any normal speed silently drops steps — most obviously on a slide
+of incremental bullets, where the reveals just refuse to keep up with the hand.
+
+There's no config for the throttle, so this replaces the handler outright. The
+whole problem is then telling a wheel click apart from a trackpad, because a
+trackpad has no clicks: a two-finger swipe fires dozens of events, plus a
+momentum tail that keeps arriving after your fingers have left, and stepping on
+each of those would tear through ten slides.
+
+Magnitude can't make that call. macOS applies scroll acceleration, so ONE click
+of the same wheel in the same browser reports 4px when you turn it slowly and
+50px when you spin it — measured, in Brave:
+
+    deltaY=4.000244140625  gap=394ms     deltaY=52.7276611328125  gap=119ms
+    deltaY=4.000244140625  gap=384ms     deltaY=42.8515625        gap=100ms
+
+Cadence does. Every click above is one isolated event with idle time around it
+(100-480ms), whereas a trackpad streams events every ~8-16ms without a break.
+So: an event that arrives after a quiet moment is a deliberate click and steps
+on arrival; a dense stream of them is a continuous surface and gets accumulated
+to a threshold and paced instead. Turn `?wheelDebug=1` on (see below) to watch
+which side of that line a given device falls on.
+-->
+<script>
+(function () {
+  "use strict";
+
+  // Tunable per deck: set window.lexisMouseWheel = { ...these... } from a
+  // <script> before reveal boots.
+  var opts = window.lexisMouseWheel || {};
+  var GAP = num(opts.gap, 45);                 // ms of quiet that marks a discrete click
+  // MIN_DELTA is what keeps a slow trackpad drag from reading as clicks when
+  // the main thread stalls long enough to stretch a gap past GAP. macOS's
+  // smallest unaccelerated wheel event is 4.0002px, and a drag or a momentum
+  // tail sits below that — hence 3. Lower it for a device whose clicks report
+  // less (the readout will say), at the cost of that separation.
+  var MIN_DELTA = num(opts.minDelta, 3);       // px of delta that counts as intent
+  var FINE = num(opts.fineThreshold, 24);      // px of streamed delta per step
+  var FINE_FLOOR = num(opts.fineInterval, 90); // ms between streamed steps
+
+  function num(value, fallback) {
+    return typeof value === "number" && value >= 0 ? value : fallback;
+  }
+
+  // Wheel events come in three flavours of unit; normalize everything to px.
+  function deltaOf(event) {
+    var d = event.deltaY;
+    if (typeof d !== "number" || d === 0) return 0;
+    if (event.deltaMode === 1) return d * 16;                    // lines
+    if (event.deltaMode === 2) return d * window.innerHeight;    // pages
+    return d;
+  }
+
+  // Which side of the line a device falls on is a property of the mouse, the OS
+  // and the browser, so the constants above can only be tuned by watching what
+  // one actually reports. Add `?wheelDebug=1` to the deck's URL (before the
+  // `#`) for that readout on screen, no devtools needed — handy given that
+  // Chromium blocks pasting into the console until you type "allow pasting".
+  // Returns null when it's switched off.
+  function makeReadout() {
+    var on = /[?&]wheel-?[Dd]ebug=(1|true)/.test(window.location.search) ||
+             (window.lexisMouseWheel && window.lexisMouseWheel.debug);
+    if (!on) return null;
+
+    var box = document.createElement("div");
+    box.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:99999;" +
+      "font:12px/1.45 ui-monospace,Menlo,monospace;color:#fff;" +
+      "background:rgba(0,0,0,.82);padding:8px 10px;border-radius:6px;" +
+      "pointer-events:none;white-space:pre;max-height:60vh;overflow:hidden";
+    box.textContent = "wheel debug: scroll to measure";
+    (document.body || document.documentElement).appendChild(box);
+
+    var lines = [];
+    return function (text) {
+      lines.unshift(text);
+      if (lines.length > 16) lines.pop();
+      box.textContent = lines.join("\n");
+    };
+  }
+
+  // ---- scroll view (`r`): one page per SLIDE, increments and all ----------
+  // reveal builds scroll view with one scroll trigger PER FRAGMENT, so a deck
+  // of incremental bullets becomes a very long page you crawl through a bullet
+  // at a time — and every slide starts out with its increments hidden. But
+  // scroll view is for reading the deck back, the same job the `o` grid does,
+  // where a slide is one tile with all of its content on it.
+  //
+  // So once scroll view has built itself, take the fragments out of the DOM it
+  // built. With no `.fragment` left to find, createFragmentTriggersForPage
+  // makes no triggers, every page collapses to exactly one viewport height, and
+  // one wheel click (see below) advances exactly one slide. Safe to mutate:
+  // scrollview.js stashes the slides' innerHTML on the way in and restores it
+  // on the way out, so presenting gets its fragments back untouched.
+  function flattenScrollView(Reveal) {
+    var viewport = Reveal.getViewportElement();
+    var slides = Reveal.getSlidesElement();
+
+    function flatten() {
+      // Quarto's line-highlight plugin implements stepped code highlighting by
+      // CLONING the whole code block once per step, each copy marked
+      // `.fragment` (plugins/line-highlight/line-highlight.js) — and it does
+      // that at runtime, so it's invisible in the rendered .html. Stripping the
+      // class off those would stack every copy of the block on top of the
+      // others, so the clones are removed instead; the original stays, carrying
+      // the first step's highlight.
+      var clones = slides.querySelectorAll("pre code.fragment");
+      var i;
+      for (i = 0; i < clones.length; i++) clones[i].parentNode.removeChild(clones[i]);
+
+      // Queried after the clones are gone, so this is everything else.
+      var fragments = slides.querySelectorAll(".fragment");
+      for (i = 0; i < fragments.length; i++) {
+        fragments[i].classList.remove("fragment", "visible", "current-fragment");
+      }
+
+      return !!(clones.length || fragments.length);
+    }
+
+    function sync() {
+      // Returning false when there's nothing left to flatten is what keeps this
+      // from recursing: Reveal.layout() can itself toggle scroll view (the
+      // responsive activation), which trips the observer again.
+      if (Reveal.isScrollView() && flatten()) Reveal.layout();
+    }
+
+    // scrollview.js dispatches no events of its own, so watch the class it puts
+    // on the viewport. That also covers `view: scroll` at load and the
+    // responsive auto-activation, neither of which goes through a keypress.
+    new MutationObserver(function () {
+      if (viewport.classList.contains("reveal-scroll")) requestAnimationFrame(sync);
+    }).observe(viewport, { attributes: true, attributeFilter: ["class"] });
+
+    if (viewport.classList.contains("reveal-scroll")) requestAnimationFrame(sync);
+  }
+
+  function init(Reveal) {
+    flattenScrollView(Reveal); // independent of mouse-wheel: `r` is a keypress
+
+    if (!Reveal.getConfig().mouseWheel) return; // author didn't ask for wheel nav
+
+    // Hand the wheel over from reveal to us. pointer.js binds and unbinds its
+    // document listener from configure(), so flipping the flag off is what
+    // removes it — after this the handler below is the only one navigating.
+    Reveal.configure({ mouseWheel: false });
+
+    var banked = 0;       // streamed delta counted toward the next step
+    var lastStep = 0;
+    var lastEvent = 0;
+    var readout = makeReadout();
+
+    function step(direction, why) {
+      lastStep = Date.now();
+      banked = 0;
+      if (readout) readout("  → STEP " + (direction > 0 ? "next" : "prev") + "   (" + why + ")");
+      if (direction > 0) Reveal.next(); else Reveal.prev();
+    }
+
+    document.addEventListener("wheel", function (event) {
+      var now = Date.now();
+      var gap = lastEvent ? now - lastEvent : GAP;  // first event of the page counts as discrete
+      lastEvent = now;
+
+      // A quiet moment ends a stream, so whatever it had banked is spent: it
+      // belonged to a gesture that's over. Carrying it forward would let the
+      // dregs of one swipe fire a step at the start of the next.
+      if (gap >= GAP) banked = 0;
+
+      // The overview grid scrolls itself, so the wheel there means "scroll the
+      // tiles", never "next slide". (lexis-overview.html also stops these
+      // events inside the grid, which is what used to keep reveal's handler
+      // out; this guard covers the letterboxed margins too.)
+      if (Reveal.isOverview()) {
+        banked = 0;
+        return;
+      }
+
+      var scrolling = !!(Reveal.isScrollView && Reveal.isScrollView());
+      var delta = deltaOf(event);
+      if (delta === 0) return;
+      var direction = delta > 0 ? 1 : -1;
+      var discrete = gap >= GAP && Math.abs(delta) >= MIN_DELTA;
+
+      if (readout) {
+        readout(
+          "deltaY=" + event.deltaY + " mode=" + event.deltaMode + " gap=" + gap + "ms  " +
+          (discrete ? "CLICK" : "stream, banked " + Math.round(banked + delta) + "/" + FINE) +
+          (scrolling ? "  [scroll view]" : "")
+        );
+      }
+
+      // A click of the wheel, so: one step, right now. No threshold to reach
+      // and nothing to wait out — the quiet gap IS the rate limit.
+      if (discrete) {
+        // Scroll view (`r`) is a scrolling page, so the browser would scroll it
+        // too, on top of our step. Cancel that and let the step be the only
+        // movement: Reveal.next() routes to scrollView.next(), which advances
+        // exactly one scroll trigger — and flattenScrollView above has left one
+        // trigger per slide, so that's one whole slide. Taking the
+        // scroll is also what cures the hang-up there, which is NOT reveal's
+        // throttle but `scrollSnap: 'mandatory'`: each wheel scroll starts a
+        // snap animation, and input arriving mid-animation is swallowed. We
+        // land on trigger boundaries, which are exactly the snap points, so
+        // there is never an animation to fight.
+        if (scrolling) event.preventDefault();
+        step(direction, "gap " + gap + "ms");
+        return;
+      }
+
+      // In scroll view a stream is a trackpad swipe, and gliding through the
+      // deck is the entire point of that mode — leave it to native scrolling.
+      if (scrolling) {
+        banked = 0;
+        return;
+      }
+
+      // A trackpad, a Magic Mouse, or a wheel spun faster than GAP: count the
+      // stream up to a step's worth instead, and pace the steps.
+      if (banked !== 0 && direction !== (banked > 0 ? 1 : -1)) banked = 0; // reversed
+      banked += delta;
+      if (Math.abs(banked) < FINE) return;
+
+      if (now - lastStep < FINE_FLOOR) {
+        // Hold at one step's worth until the floor lifts. Nothing is lost by
+        // waiting for the next event rather than queueing a timer: a stream by
+        // definition has one along within ~16ms. Clamping is what stops a
+        // momentum tail banking hundreds of px and cashing them in at once.
+        banked = banked > 0 ? FINE : -FINE;
+        return;
+      }
+      step(direction, "streamed " + FINE + "px");
+      // `passive: false` because Chromium makes document-level wheel listeners
+      // passive by default, which silently no-ops the preventDefault above.
+    }, { passive: false });
+  }
+
+  // This runs from <head>, so wait for Reveal to exist and finish booting.
+  function whenReady(callback) {
+    if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+      callback(window.Reveal);
+      return;
+    }
+    var tries = 0;
+    var timer = setInterval(function () {
+      if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+        clearInterval(timer);
+        callback(window.Reveal);
+      } else if (++tries > 600) { // ~30s, then give up quietly
+        clearInterval(timer);
+      }
+    }, 50);
+  }
+
+  whenReady(init);
+})();
+</script>

@@ -29,6 +29,18 @@ contributes:
       # etc. + the shortcodes below). See the top of demo.qmd for the pattern.
       template-partials:
         - title-slide.html
+      # Put the fragment index in the URL hash (`#/12/0/2`, not just `#/12`) so
+      # that reloading — or clicking a link and coming back — lands on the slide
+      # AND the increment you left off on, instead of resetting the reveals.
+      fragment-in-url: true
+      # Turns reveal's overview (`o`) into a scrollable grid of thumbnails like
+      # the xaringan tile view. The layout is CSS (lexis.scss); this is the
+      # handful of measurements CSS can't make on its own. lexis-nav.html
+      # replaces reveal's 1-step-per-second wheel throttle with something that
+      # keeps up with a real scroll.
+      include-in-header:
+        - lexis-overview.html
+        - lexis-nav.html
       # Run AFTER Quarto expands the {{< inverse >}}/etc. shortcodes into markers.
       filters:
         - at: post-quarto

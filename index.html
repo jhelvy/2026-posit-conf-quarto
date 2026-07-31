@@ -10,7 +10,6 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="John Paul Helveston">
-  <meta name="dcterms.date" content="2026-01-01">
   <title>The Unreasonable Effectiveness of Quarto</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -99,8 +98,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-f22f4f678f9ba7c6b1b7827aca671d05.css">
-  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-e5a934acb88329c8422b3f540c307657.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -192,6 +190,506 @@
       margin-right: 0; 
     }
   </style>
+  <!--
+  lexis overview (`o`) — the JS half of the xaringan-style tile grid.
+
+  The layout itself is pure CSS (see the "Overview mode" block in lexis.scss):
+  `.slides` becomes a scrolling CSS grid and each <section> is shrunk to a
+  thumbnail with `zoom`. What's left is the handful of jobs CSS alone can't do,
+  which is all this script is for:
+
+    1. Pick the thumbnail scale. The grid's track width has to be an exact
+       multiple of the slide width (1600px * scale) or the tiles won't tile, and
+       CSS can't divide one length by another. So compute cols/scale here and
+       publish `--lexis-ov-scale`; every size in the CSS derives from it.
+    2. Load every slide, because a thumbnail grid shows slides reveal considers
+       far away and has therefore left empty.
+    3. Paint  /  tiles. Those backgrounds live in
+       reveal's separate `.backgrounds` layer, whose tiles reveal positions with
+       inline transforms for ITS row layout — meaningless in our grid, so the CSS
+       hides the layer. Copy each slide's background onto the <section> instead
+       while overview is open, and undo it on the way out.
+    4. Keep the wheel to itself, and scroll the current slide into view — with
+       50+ slides the deck is a long scrolling strip, so opening `o` has to land
+       you where you already are.
+    5. Drive the grid from the keyboard: up/down move a whole ROW (reveal only
+       knows about its one row of slides, so it reads them as prev/next), and
+       Enter opens whichever tile is selected.
+  -->
+  <script>
+  (function () {
+    "use strict";
+
+    // Keep in sync with --lexis-ov-gap / --lexis-ov-pad in lexis.scss.
+    var GAP = 26;       // px between tiles
+    var PAD = 30;       // px around the grid
+    var MIN_TILE = 260; // narrowest thumbnail worth rendering, in px
+    var MAX_COLS = 6;   // past this the slides are unreadable
+
+    function init(Reveal) {
+      var viewportEl = Reveal.getViewportElement();
+      var slidesEl = Reveal.getSlidesElement();
+
+      // "12 / 55" on every tile, like the xaringan tile view. Set once, always;
+      // the CSS only reveals it (as a ::after) inside overview mode.
+      var slides = Reveal.getSlides();
+      slides.forEach(function (slide, i) {
+        slide.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
+      });
+
+      // ---- 1. thumbnail scale -------------------------------------------------
+      function fitGrid() {
+        if (!Reveal.isOverview()) return;
+        var avail = slidesEl.clientWidth - 2 * PAD; // clientWidth is scrollbar-aware
+        if (avail <= 0) return;
+        var cols = Math.floor((avail + GAP) / (MIN_TILE + GAP));
+        cols = Math.max(1, Math.min(MAX_COLS, cols));
+        var tile = (avail - GAP * (cols - 1)) / cols;
+        var scale = tile / Reveal.getComputedSlideSize().width;
+        viewportEl.style.setProperty("--lexis-ov-scale", String(scale));
+      }
+
+      // ---- 2. make every tile show its real content ---------------------------
+      // reveal only keeps ~10 slides either side of the current one "loaded", and
+      // Quarto ships slide images as `data-src` — so in a 55-slide deck most of
+      // the grid would be picture frames with nothing in them. (The CSS forces
+      // the sections themselves visible; this is about their contents.) Asking
+      // reveal to load each slide is cheap and idempotent: `loadSlide` drops the
+      // `data-src` attributes as it promotes them, so a second call does nothing.
+      function loadEverySlide() {
+        if (typeof Reveal.loadSlide !== "function") return;
+        slides.forEach(function (slide) { Reveal.loadSlide(slide); });
+      }
+
+      // ---- 3. background slides ----------------------------------------------
+      function paintBackgrounds() {
+        slides.forEach(function (slide) {
+          var color = slide.getAttribute("data-background-color");
+          var image = slide.getAttribute("data-background-image");
+          if (!color && !image) return;
+          if (color) slide.style.backgroundColor = color;
+          if (image) {
+            // Bare paths need url(); gradients and existing url()s go through.
+            slide.style.backgroundImage = /^\s*(url|[a-z-]+-gradient)\s*\(/i.test(image)
+              ? image
+              : 'url("' + image + '")';
+            slide.style.backgroundSize = slide.getAttribute("data-background-size") || "cover";
+            slide.style.backgroundPosition = slide.getAttribute("data-background-position") || "center";
+            slide.style.backgroundRepeat = slide.getAttribute("data-background-repeat") || "no-repeat";
+          }
+          slide.setAttribute("data-lexis-ov-painted", "");
+        });
+      }
+
+      function clearBackgrounds() {
+        slides.forEach(function (slide) {
+          if (!slide.hasAttribute("data-lexis-ov-painted")) return;
+          slide.style.backgroundColor = "";
+          slide.style.backgroundImage = "";
+          slide.style.backgroundSize = "";
+          slide.style.backgroundPosition = "";
+          slide.style.backgroundRepeat = "";
+          slide.removeAttribute("data-lexis-ov-painted");
+        });
+      }
+
+      // ---- 4. let the grid have the wheel ------------------------------------
+      // `mouse-wheel: true` decks navigate from a wheel handler on `document`
+      // (lexis-nav.html, standing in for reveal's throttled one) — so a flick
+      // through the tiles would also move the deck. Swallow those events before
+      // they leave the grid (capture phase, so this runs ahead of the document
+      // listener). Not preventDefault: the scroll itself must go on
+      // happening. Same story for a touch swipe, which reveal treats as a
+      // navigation gesture on the wrapper.
+      ["wheel", "touchstart", "touchmove"].forEach(function (type) {
+        slidesEl.addEventListener(type, function (event) {
+          if (Reveal.isOverview()) event.stopPropagation();
+        }, true);
+      });
+
+      // ---- 5. keyboard ---------------------------------------------------------
+      // reveal's arrow keys walk its own one-dimensional row of slides, so left
+      // and right already read as "previous/next tile" in the grid — but up and
+      // down land on the neighbouring slide too, when what the grid asks for is
+      // the tile a whole ROW away. And there is no key for "open the tile I'm on"
+      // at all; you have to remember that `o` toggles back out onto it.
+      //
+      // Handled on `document` in the CAPTURE phase and swallowed, so reveal's own
+      // keydown listener never sees these three keys while the grid is open.
+      // Deliberately NOT Reveal.addKeyBinding(): that replaces a key's default
+      // action deck-wide, which would mean re-implementing normal up/down
+      // navigation for the other 99% of the time. This way nothing outside
+      // overview mode changes at all.
+
+      // The REAL column count, straight from the laid-out grid — `auto-fill` gets
+      // the last word (a scrollbar can cost a column), so don't trust fitGrid's.
+      function gridColumns() {
+        var tracks = getComputedStyle(slidesEl).gridTemplateColumns;
+        if (!tracks || tracks === "none") return 1;
+        return Math.max(1, tracks.split(" ").length);
+      }
+
+      // One row up or down, in tiles. The grid item is the top-level <section>,
+      // which is what `h` indexes — so a row is exactly `cols` steps of `h`.
+      function rowStep(direction) {
+        var cols = gridColumns();
+        var last = Reveal.getHorizontalSlides().length - 1;
+        var from = Reveal.getIndices().h;
+        var to = from + direction * cols;
+        if (to < 0 || to > last) {
+          // No tile a full row away. Falling off the bottom of a ragged last row
+          // still means "go down", so finish at the end of the deck; falling off
+          // the top means there is nothing above and we stay put.
+          var rowOf = function (i) { return Math.floor(i / cols); };
+          to = direction > 0 && rowOf(last) > rowOf(from) ? last : from;
+        }
+        if (to !== from) Reveal.slide(to, 0);
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (!Reveal.isOverview()) return;
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (event.key === "ArrowDown") rowStep(1);
+        else if (event.key === "ArrowUp") rowStep(-1);
+        else if (event.key === "Enter") Reveal.toggleOverview(false); // lands on the selected tile
+        else return;
+        event.preventDefault();
+        event.stopPropagation();
+      }, true);
+
+      // ---- 6. keep the current slide in view ----------------------------------
+      function scrollCurrentIntoView(smooth) {
+        if (!Reveal.isOverview()) return;
+        var current = Reveal.getCurrentSlide();
+        if (!current) return;
+        // The grid item is the top-level <section> — for a slide carrying a lexis
+        // shortcode that's the .stack wrapper reveal built around it.
+        var tile = current.parentElement && current.parentElement.classList.contains("stack")
+          ? current.parentElement
+          : current;
+        // Measured, not offsetTop: the tiles sit inside a `zoom`ed subtree, and
+        // getBoundingClientRect is the one measurement that reports real px.
+        var box = tile.getBoundingClientRect();
+        var frame = slidesEl.getBoundingClientRect();
+        var delta = (box.top - frame.top) - (frame.height - box.height) / 2;
+        if (Math.abs(delta) < 1) return;
+        slidesEl.scrollTo({
+          top: slidesEl.scrollTop + delta,
+          behavior: smooth ? "smooth" : "auto"
+        });
+      }
+
+      Reveal.on("overviewshown", function () {
+        loadEverySlide();
+        paintBackgrounds();
+        fitGrid();
+        // Two frames: the first lays the grid out (which may add a scrollbar and
+        // so change the width fitGrid just measured), the second measures for the
+        // scroll — by then the tiles are where they will stay.
+        requestAnimationFrame(function () {
+          fitGrid();
+          requestAnimationFrame(function () { scrollCurrentIntoView(false); });
+        });
+      });
+
+      Reveal.on("overviewhidden", function () {
+        clearBackgrounds();
+        slidesEl.scrollTop = 0;
+      });
+
+      // Arrow keys still move the selection while the grid is open; follow it.
+      Reveal.on("slidechanged", function () { scrollCurrentIntoView(true); });
+
+      window.addEventListener("resize", function () {
+        fitGrid();
+        requestAnimationFrame(function () { scrollCurrentIntoView(false); });
+      });
+    }
+
+    // This runs from <head>, so wait for Reveal to exist and finish booting.
+    function whenReady(callback) {
+      if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+        callback(window.Reveal);
+        return;
+      }
+      var tries = 0;
+      var timer = setInterval(function () {
+        if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+          clearInterval(timer);
+          callback(window.Reveal);
+        } else if (++tries > 600) { // ~30s, then give up quietly
+          clearInterval(timer);
+        }
+      }, 50);
+    }
+
+    whenReady(init);
+  })();
+  </script>
+  <!--
+  lexis navigation — one click of the wheel, one step of the deck.
+
+  reveal's own wheel handler (js/controllers/pointer.js) is throttled to ONE step
+  per second, with a hard-coded 1000ms:
+
+      if( Date.now() - this.lastMouseWheelStep > 1000 ) { ... }
+
+  and every wheel event inside that second is thrown away rather than queued. So
+  scrolling at any normal speed silently drops steps — most obviously on a slide
+  of incremental bullets, where the reveals just refuse to keep up with the hand.
+
+  There's no config for the throttle, so this replaces the handler outright. The
+  whole problem is then telling a wheel click apart from a trackpad, because a
+  trackpad has no clicks: a two-finger swipe fires dozens of events, plus a
+  momentum tail that keeps arriving after your fingers have left, and stepping on
+  each of those would tear through ten slides.
+
+  Magnitude can't make that call. macOS applies scroll acceleration, so ONE click
+  of the same wheel in the same browser reports 4px when you turn it slowly and
+  50px when you spin it — measured, in Brave:
+
+      deltaY=4.000244140625  gap=394ms     deltaY=52.7276611328125  gap=119ms
+      deltaY=4.000244140625  gap=384ms     deltaY=42.8515625        gap=100ms
+
+  Cadence does. Every click above is one isolated event with idle time around it
+  (100-480ms), whereas a trackpad streams events every ~8-16ms without a break.
+  So: an event that arrives after a quiet moment is a deliberate click and steps
+  on arrival; a dense stream of them is a continuous surface and gets accumulated
+  to a threshold and paced instead. Turn `?wheelDebug=1` on (see below) to watch
+  which side of that line a given device falls on.
+  -->
+  <script>
+  (function () {
+    "use strict";
+
+    // Tunable per deck: set window.lexisMouseWheel = { ...these... } from a
+    // <script> before reveal boots.
+    var opts = window.lexisMouseWheel || {};
+    var GAP = num(opts.gap, 45);                 // ms of quiet that marks a discrete click
+    // MIN_DELTA is what keeps a slow trackpad drag from reading as clicks when
+    // the main thread stalls long enough to stretch a gap past GAP. macOS's
+    // smallest unaccelerated wheel event is 4.0002px, and a drag or a momentum
+    // tail sits below that — hence 3. Lower it for a device whose clicks report
+    // less (the readout will say), at the cost of that separation.
+    var MIN_DELTA = num(opts.minDelta, 3);       // px of delta that counts as intent
+    var FINE = num(opts.fineThreshold, 24);      // px of streamed delta per step
+    var FINE_FLOOR = num(opts.fineInterval, 90); // ms between streamed steps
+
+    function num(value, fallback) {
+      return typeof value === "number" && value >= 0 ? value : fallback;
+    }
+
+    // Wheel events come in three flavours of unit; normalize everything to px.
+    function deltaOf(event) {
+      var d = event.deltaY;
+      if (typeof d !== "number" || d === 0) return 0;
+      if (event.deltaMode === 1) return d * 16;                    // lines
+      if (event.deltaMode === 2) return d * window.innerHeight;    // pages
+      return d;
+    }
+
+    // Which side of the line a device falls on is a property of the mouse, the OS
+    // and the browser, so the constants above can only be tuned by watching what
+    // one actually reports. Add `?wheelDebug=1` to the deck's URL (before the
+    // `#`) for that readout on screen, no devtools needed — handy given that
+    // Chromium blocks pasting into the console until you type "allow pasting".
+    // Returns null when it's switched off.
+    function makeReadout() {
+      var on = /[?&]wheel-?[Dd]ebug=(1|true)/.test(window.location.search) ||
+               (window.lexisMouseWheel && window.lexisMouseWheel.debug);
+      if (!on) return null;
+
+      var box = document.createElement("div");
+      box.style.cssText = "position:fixed;left:8px;bottom:8px;z-index:99999;" +
+        "font:12px/1.45 ui-monospace,Menlo,monospace;color:#fff;" +
+        "background:rgba(0,0,0,.82);padding:8px 10px;border-radius:6px;" +
+        "pointer-events:none;white-space:pre;max-height:60vh;overflow:hidden";
+      box.textContent = "wheel debug: scroll to measure";
+      (document.body || document.documentElement).appendChild(box);
+
+      var lines = [];
+      return function (text) {
+        lines.unshift(text);
+        if (lines.length > 16) lines.pop();
+        box.textContent = lines.join("\n");
+      };
+    }
+
+    // ---- scroll view (`r`): one page per SLIDE, increments and all ----------
+    // reveal builds scroll view with one scroll trigger PER FRAGMENT, so a deck
+    // of incremental bullets becomes a very long page you crawl through a bullet
+    // at a time — and every slide starts out with its increments hidden. But
+    // scroll view is for reading the deck back, the same job the `o` grid does,
+    // where a slide is one tile with all of its content on it.
+    //
+    // So once scroll view has built itself, take the fragments out of the DOM it
+    // built. With no `.fragment` left to find, createFragmentTriggersForPage
+    // makes no triggers, every page collapses to exactly one viewport height, and
+    // one wheel click (see below) advances exactly one slide. Safe to mutate:
+    // scrollview.js stashes the slides' innerHTML on the way in and restores it
+    // on the way out, so presenting gets its fragments back untouched.
+    function flattenScrollView(Reveal) {
+      var viewport = Reveal.getViewportElement();
+      var slides = Reveal.getSlidesElement();
+
+      function flatten() {
+        // Quarto's line-highlight plugin implements stepped code highlighting by
+        // CLONING the whole code block once per step, each copy marked
+        // `.fragment` (plugins/line-highlight/line-highlight.js) — and it does
+        // that at runtime, so it's invisible in the rendered .html. Stripping the
+        // class off those would stack every copy of the block on top of the
+        // others, so the clones are removed instead; the original stays, carrying
+        // the first step's highlight.
+        var clones = slides.querySelectorAll("pre code.fragment");
+        var i;
+        for (i = 0; i < clones.length; i++) clones[i].parentNode.removeChild(clones[i]);
+
+        // Queried after the clones are gone, so this is everything else.
+        var fragments = slides.querySelectorAll(".fragment");
+        for (i = 0; i < fragments.length; i++) {
+          fragments[i].classList.remove("fragment", "visible", "current-fragment");
+        }
+
+        return !!(clones.length || fragments.length);
+      }
+
+      function sync() {
+        // Returning false when there's nothing left to flatten is what keeps this
+        // from recursing: Reveal.layout() can itself toggle scroll view (the
+        // responsive activation), which trips the observer again.
+        if (Reveal.isScrollView() && flatten()) Reveal.layout();
+      }
+
+      // scrollview.js dispatches no events of its own, so watch the class it puts
+      // on the viewport. That also covers `view: scroll` at load and the
+      // responsive auto-activation, neither of which goes through a keypress.
+      new MutationObserver(function () {
+        if (viewport.classList.contains("reveal-scroll")) requestAnimationFrame(sync);
+      }).observe(viewport, { attributes: true, attributeFilter: ["class"] });
+
+      if (viewport.classList.contains("reveal-scroll")) requestAnimationFrame(sync);
+    }
+
+    function init(Reveal) {
+      flattenScrollView(Reveal); // independent of mouse-wheel: `r` is a keypress
+
+      if (!Reveal.getConfig().mouseWheel) return; // author didn't ask for wheel nav
+
+      // Hand the wheel over from reveal to us. pointer.js binds and unbinds its
+      // document listener from configure(), so flipping the flag off is what
+      // removes it — after this the handler below is the only one navigating.
+      Reveal.configure({ mouseWheel: false });
+
+      var banked = 0;       // streamed delta counted toward the next step
+      var lastStep = 0;
+      var lastEvent = 0;
+      var readout = makeReadout();
+
+      function step(direction, why) {
+        lastStep = Date.now();
+        banked = 0;
+        if (readout) readout("  → STEP " + (direction > 0 ? "next" : "prev") + "   (" + why + ")");
+        if (direction > 0) Reveal.next(); else Reveal.prev();
+      }
+
+      document.addEventListener("wheel", function (event) {
+        var now = Date.now();
+        var gap = lastEvent ? now - lastEvent : GAP;  // first event of the page counts as discrete
+        lastEvent = now;
+
+        // A quiet moment ends a stream, so whatever it had banked is spent: it
+        // belonged to a gesture that's over. Carrying it forward would let the
+        // dregs of one swipe fire a step at the start of the next.
+        if (gap >= GAP) banked = 0;
+
+        // The overview grid scrolls itself, so the wheel there means "scroll the
+        // tiles", never "next slide". (lexis-overview.html also stops these
+        // events inside the grid, which is what used to keep reveal's handler
+        // out; this guard covers the letterboxed margins too.)
+        if (Reveal.isOverview()) {
+          banked = 0;
+          return;
+        }
+
+        var scrolling = !!(Reveal.isScrollView && Reveal.isScrollView());
+        var delta = deltaOf(event);
+        if (delta === 0) return;
+        var direction = delta > 0 ? 1 : -1;
+        var discrete = gap >= GAP && Math.abs(delta) >= MIN_DELTA;
+
+        if (readout) {
+          readout(
+            "deltaY=" + event.deltaY + " mode=" + event.deltaMode + " gap=" + gap + "ms  " +
+            (discrete ? "CLICK" : "stream, banked " + Math.round(banked + delta) + "/" + FINE) +
+            (scrolling ? "  [scroll view]" : "")
+          );
+        }
+
+        // A click of the wheel, so: one step, right now. No threshold to reach
+        // and nothing to wait out — the quiet gap IS the rate limit.
+        if (discrete) {
+          // Scroll view (`r`) is a scrolling page, so the browser would scroll it
+          // too, on top of our step. Cancel that and let the step be the only
+          // movement: Reveal.next() routes to scrollView.next(), which advances
+          // exactly one scroll trigger — and flattenScrollView above has left one
+          // trigger per slide, so that's one whole slide. Taking the
+          // scroll is also what cures the hang-up there, which is NOT reveal's
+          // throttle but `scrollSnap: 'mandatory'`: each wheel scroll starts a
+          // snap animation, and input arriving mid-animation is swallowed. We
+          // land on trigger boundaries, which are exactly the snap points, so
+          // there is never an animation to fight.
+          if (scrolling) event.preventDefault();
+          step(direction, "gap " + gap + "ms");
+          return;
+        }
+
+        // In scroll view a stream is a trackpad swipe, and gliding through the
+        // deck is the entire point of that mode — leave it to native scrolling.
+        if (scrolling) {
+          banked = 0;
+          return;
+        }
+
+        // A trackpad, a Magic Mouse, or a wheel spun faster than GAP: count the
+        // stream up to a step's worth instead, and pace the steps.
+        if (banked !== 0 && direction !== (banked > 0 ? 1 : -1)) banked = 0; // reversed
+        banked += delta;
+        if (Math.abs(banked) < FINE) return;
+
+        if (now - lastStep < FINE_FLOOR) {
+          // Hold at one step's worth until the floor lifts. Nothing is lost by
+          // waiting for the next event rather than queueing a timer: a stream by
+          // definition has one along within ~16ms. Clamping is what stops a
+          // momentum tail banking hundreds of px and cashing them in at once.
+          banked = banked > 0 ? FINE : -FINE;
+          return;
+        }
+        step(direction, "streamed " + FINE + "px");
+        // `passive: false` because Chromium makes document-level wheel listeners
+        // passive by default, which silently no-ops the preventDefault above.
+      }, { passive: false });
+    }
+
+    // This runs from <head>, so wait for Reveal to exist and finish booting.
+    function whenReady(callback) {
+      if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+        callback(window.Reveal);
+        return;
+      }
+      var tries = 0;
+      var timer = setInterval(function () {
+        if (window.Reveal && window.Reveal.isReady && window.Reveal.isReady()) {
+          clearInterval(timer);
+          callback(window.Reveal);
+        } else if (++tries > 600) { // ~30s, then give up quietly
+          clearInterval(timer);
+        }
+      }, 50);
+    }
+
+    whenReady(init);
+  })();
+  </script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -232,7 +730,7 @@ built-in one.
 -->
 <p><br></p>
 <p><span class="large">John Paul Helveston</span></p>
-<p>2026-01-01</p>
+<p>September 15, 2026</p>
 </section>
 </section>
 <section class="slide level0">
@@ -336,165 +834,9 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="where-is-the-sentence" class="inverse center middle">
-<h1>Where <em>is</em><br>the sentence?</h1>
-<aside class="notes">
-<p>Slow down here. This is the question the whole talk answers.</p>
-<p>In that PDF, there is no line of anything that IS that sentence. It’s smeared across one probabilistic pass. Point at it — you can’t.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="entanglement-diagram" class="inverse center middle">
+<h1>Entanglement diagram</h1>
 </section>
-</section>
-<section class="slide level0">
-
-<section id="you-already-believe-everything-im-about-to-say." class="inverse center middle">
-<h1>You already believe<br>everything I’m about to say.</h1>
-<p><span class="font140 orange">I want to know why almost none of us do it.</span></p>
-<aside class="notes">
-<p>THE DEFUSING LINE. Say the audience’s objection out loud before they can think it.</p>
-<p>“This is a room full of people who believe in reproducibility. And I’d bet most of us, when we open a chat window, ask for the finished thing anyway.”</p>
-<p>This converts their prior knowledge from a liability into complicity.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<section id="entanglement" class="inverse center middle">
-<h1>Entanglement</h1>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>The content has no address</h2>
-<div class="cols-row">
-<div class="col">
-<p>When an agent generates a finished document, content and structure come out <strong>woven together</strong> in a single probabilistic pass.</p>
-<p>Nothing in it has a location.</p>
-<p>To change one sentence, you regenerate everything — and hope.</p>
-</div>
-<div class="col font120">
-<p>There is no file, no line, no cell that <em>is</em> that sentence.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Define entanglement operationally, not metaphorically. “The content has no address” is the sticky version.</p>
-<p>Give them the test they can apply to their own work: can you point at it?</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>When does it weave?</h2>
-<blockquote>
-<p><strong>[FIGURE — “when does it weave?” diagram]</strong> Two stacked rows, identical output at the end of each. Row 1: Me → agent ⇒ document (woven here, probabilistically). Row 2: Me → agent → <code>.qmd</code> + data → render → same document (woven here, deterministically), plus green edit arrows from Me. 3 clicks. Source: <code>images/entanglement-diagram/</code></p>
-</blockquote>
-<aside class="notes">
-<p>Both approaches weave content and format together. The only question is WHEN — and by what.</p>
-<p>The output is identical in both rows. That’s the point. The difference isn’t what comes out, it’s whether you can reach in before it does.</p>
-<p>Optional one-liner for this room: “weave” isn’t my metaphor. It’s literate programming’s own word — Sweave, then knitr. Quarto has always been a weaving tool. I’m just arguing we should weave later.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>Give the content an address</h2>
-<div class="cols-row">
-<div class="col">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># sentences.csv</span></span>
-<span id="cb1-2"><a href=""></a>sentence</span>
-<span id="cb1-3"><a href=""></a><span class="st">"The quick brown fox jumps."</span></span>
-<span id="cb1-4"><a href=""></a><span class="st">"A red kite flew over the hill."</span></span>
-<span id="cb1-5"><a href=""></a><span class="st">"We read books on rainy days."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>.qmd</code> is structure. The CSV is content.</p>
-<p>Changing a sentence is <strong>editing row 3 of a text file.</strong></p>
-</div>
-<div class="col">
-<blockquote>
-<p><strong>[PDF — same sheet, rendered from the CSV]</strong></p>
-</blockquote>
-</div>
-</div>
-<aside class="notes">
-<p>Same sheet. But now the sentence has an address, and I can change it without asking anyone’s permission — including the model’s.</p>
-<p>The agent wrote the .qmd. It never touched the sentences.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>But your prose doesn’t go in a CSV</h2>
-<div class="cols-row">
-<div class="col">
-<p><span class="blue"><strong>Prose</strong> stays in the <code>.qmd</code>.</span></p>
-<p>Its address is a <strong>line number</strong>. The agent’s edit arrives as a diff you can read in ten seconds.</p>
-</div>
-<div class="col">
-<p><span class="amber"><strong>Values that must be exact</strong> live in data + code.</span></p>
-<p>Not just locatable — <strong>recomputed.</strong> Never typed by anyone.</p>
-</div>
-</div>
-<p><span class="font120">The move isn’t “extract everything.”</span> <span class="font120 green">It’s “stop asking for the artifact.”</span></p>
-<aside class="notes">
-<p>NAME THE OBJECTION FIRST. Someone is already thinking “I’m not putting my paragraphs in a spreadsheet.” They’re right, and say so.</p>
-<p>The handwriting sheet is a case where the content genuinely IS data — a list of items to typeset. Don’t over-generalize from it.</p>
-<p>Two tiers, and both are things a fused artifact denies you: prose gets <em>located</em>, data gets <em>derived</em>.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level0">
 
@@ -536,8 +878,8 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="and-then-something-i-didnt-expect" class="inverse center middle">
-<h1>And then something I didn’t expect</h1>
+<section id="and-its-also-efficient" class="inverse center middle">
+<h1>And it’s also efficient</h1>
 <aside class="notes">
 <p>ACT 3. THE TURN. The audience is braced for a worthiness argument about correctness. Give them an argument about cost instead.</p>
 <style type="text/css">
@@ -627,28 +969,6 @@ built-in one.
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="reproducibility-used-to-be-a-tax." class="inverse center middle">
-<h1>Reproducibility used to be a tax.</h1>
-<p><span class="font160 green">Now it’s the discount.</span></p>
-<aside class="notes">
-<p>THE TURN, stated. This is the most quotable moment in the talk — earn the pause.</p>
-<p>For fifteen years, doing this right cost you something up front. Everyone in this room believes in it, and everyone in this room has a folder of scripts they never turned into a .qmd, because the tax was real.</p>
-<p>The tax is gone. The virtuous path is now the lazy path.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
 </section>
 <section class="slide level0">
 
@@ -749,7 +1069,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<h2>Shiny asks the agent for the artifact</h2>
+<h2>Shiny feels like asking the agent for the artifact</h2>
 <div class="cols-row">
 <div class="col" style="flex:0 1 55%;width:55%">
 <p><span class="red"><strong>Shiny</strong></span></p>
@@ -784,10 +1104,10 @@ built-in one.
 <div class="col">
 <p>The census-tract map is the hardest thing on the site.</p>
 <p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
-<span id="cb2-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
-<span id="cb2-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb2-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
+<span id="cb1-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
+<span id="cb1-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
+<span id="cb1-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="col">
 <blockquote>
@@ -860,25 +1180,6 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="agents-should-write-the-source-not-the-artifact.-1" class="inverse center middle">
-<h1>Agents should write the source,<br>not the artifact.</h1>
-<aside class="notes">
-<p>SPINE SENTENCE, 2 of 3. Say it again here, having just proved it at scale — on a real product, against the obvious Shiny alternative.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
 <section id="so-why-not-just-ask-for-html" class="inverse center middle">
 <h1>“So why not just<br>ask for HTML?”</h1>
 <aside class="notes">
@@ -905,7 +1206,6 @@ built-in one.
 <li>Infinitely more useful than a wall of Markdown</li>
 <li>Agents are <em>very</em> good at it</li>
 </ul>
-<p><span class="gray">If it’s single-use and disposable, take the HTML.</span></p>
 <aside class="notes">
 <p>Make this case generously and at full strength. Steelman it. You lose nothing by being fair here and you gain the room’s trust for the turn.</p>
 <p>The throwaway-editor concession is genuine — say it and mean it.</p>
@@ -923,42 +1223,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<h2>Not a screenshot</h2>
-<blockquote>
-<p><strong>[INLINE CHART — live interactive plot rendered into this slide]</strong></p>
-</blockquote>
-<aside class="notes">
-<p>Quarto gives you all of it. This is rendered and interactive, right here, in the slide you’re looking at.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="this-deck-is-a-.qmd-file." class="inverse center middle">
-<h1>This deck is<br>a <code>.qmd</code> file.</h1>
-<aside class="notes">
-<p>The meta-reveal. Proof by existence — and the closest thing to a live demo this talk is allowed to have. Let it land.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
+<h2>HTML is great for Isolated subcomponents, but not the whole thing</h2>
 </section>
 <section class="slide level0">
 
@@ -993,7 +1258,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<h2>Checkable twice</h2>
+<h2>Quarto is checkable twice</h2>
 <div class="cols-row">
 <div class="col">
 <p><span class="darkgreen"><strong>By machine</strong></span></p>
@@ -1004,28 +1269,8 @@ built-in one.
 <p>Plain text means the agent’s edit is a <strong>diff</strong>. Review scales with the change, not the document.</p>
 </div>
 </div>
-<p><span class="font120">A <code>.docx</code> “diff” is noise. A three-line <code>.qmd</code> diff is a review.</span></p>
 <aside class="notes">
 <p>Both halves matter. git revert is a one-command undo for any agent mistake.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>One honest caveat</h2>
-<p>Render passing ≠ analysis correct.</p>
-<p>It’s the same guarantee compilation gives code — <strong>no more, no less.</strong></p>
-<aside class="notes">
-<p>State the limit plainly. It costs 10 seconds and buys more credibility than any other slide in the deck.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1046,7 +1291,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<h2>You don’t need to know Quarto</h2>
+<h2>You don’t need to know Quarto to get started</h2>
 <p>Change <strong>one word</strong> in your prompt.</p>
 <p><span class="font160 blue">Ask for the <code>.qmd</code>.</span></p>
 <aside class="notes">
@@ -1071,81 +1316,18 @@ built-in one.
 <li>Have the agent work on a branch, so edits arrive as diffs</li>
 <li>Keep data in files the <code>.qmd</code> reads — never in the prompt</li>
 </ol>
-<aside class="notes">
-<p>Photographable. Three lines. This is the whole practicum, and it converts inspiration into action without costing narrative time.</p>
-<p>Deeper material (Quarto skills, Lua filters, parameterized reports) is a “come find me after” line.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level0">
 
 <section id="software-solved-this-decades-ago." class="inverse center middle">
 <h1>Software solved this<br>decades ago.</h1>
 <p><span class="font120">Source and artifact. Documents are only getting there now —</span> <span class="font120 orange">right when the authors became probabilistic.</span></p>
-<aside class="notes">
-<p>THE RHYME. The close callbacks to the opening question — where is the sentence? It’s in a file. It has an address.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="agents-should-write-the-source-not-the-artifact.-2" class="inverse center middle">
+<section id="agents-should-write-the-source-not-the-artifact.-1" class="inverse center middle">
 <h1>Agents should write the source,<br>not the artifact.</h1>
-<aside class="notes">
-<p>SPINE SENTENCE, 3 of 3. Last thing on screen. Stop talking.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<section class="lexis-slide-title inverse center middle">
-<h1 class="lexis-slide-title"></h1>
-<p>You’re about to hear three more talks about building data products.</p>
-<p><span class="font140">Watch for the same move in each of them.</span></p>
-<p><span class="font120 green">The artifact is never the thing. The thing is whatever produces it.</span></p>
-<aside class="notes">
-<p>Hand off to the session. Generous to the co-speakers, makes the whole session cohere, and positions this talk as its on-ramp rather than its outlier.</p>
-<p>Then: thank you, and out.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 
 </section>
@@ -1200,10 +1382,10 @@ built-in one.
         controlsBackArrows: 'faded',
 
         // Display a presentation progress bar
-        progress: true,
+        progress: false,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -1219,7 +1401,7 @@ built-in one.
         respondToHashChanges: true,
 
         // Push each slide change to the browser history
-        history: false,
+        history: true,
 
         // Enable keyboard shortcuts for navigation
         keyboard: true,
@@ -1254,7 +1436,7 @@ built-in one.
 
         // Flags whether to include the current fragment in the URL,
         // so that reloading brings you to the same fragment position
-        fragmentInURL: false,
+        fragmentInURL: true,
 
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
@@ -1293,7 +1475,7 @@ built-in one.
         defaultTiming: null,
 
         // Enable slide navigation via mouse wheel
-        mouseWheel: false,
+        mouseWheel: true,
 
         // The display mode that will be used to show slides
         display: 'block',
@@ -1308,7 +1490,7 @@ built-in one.
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'fade',
+        transition: 'none',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',

@@ -1,13 +1,14 @@
 ---
 title: "The Unreasonable Effectiveness of Quarto"
+subtitle: "a Quarto theme"
 author: "John Paul Helveston"
-date: "posit::conf 2026"
-format:
-  lexis-revealjs:
-    css: custom.css
-    transition: fade
-    slide-number: false
-    history: false
+format: lexis-revealjs
+mouse-wheel: true 
+progress: false
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
 <!--
@@ -44,7 +45,7 @@ format:
 
 [{{< meta author >}}]{.large}
 
-{{< meta date >}}
+September 15, 2026
 
 ---
 
@@ -122,148 +123,7 @@ no way to make a small change. Every edit is a full regeneration.
 {{< center >}}
 {{< middle >}}
 
-# Where *is*<br>the sentence?
-
-::: {.notes}
-Slow down here. This is the question the whole talk answers.
-
-In that PDF, there is no line of anything that IS that sentence. It's smeared
-across one probabilistic pass. Point at it — you can't.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# You already believe<br>everything I'm about to say.
-
-[I want to know why almost none of us do it.]{.font140 .orange}
-
-::: {.notes}
-THE DEFUSING LINE. Say the audience's objection out loud before they can think it.
-
-"This is a room full of people who believe in reproducibility. And I'd bet most
-of us, when we open a chat window, ask for the finished thing anyway."
-
-This converts their prior knowledge from a liability into complicity.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Entanglement
-
----
-
-## The content has no address
-
-::: {.col}
-When an agent generates a finished document, content and structure come out
-**woven together** in a single probabilistic pass.
-
-Nothing in it has a location.
-
-To change one sentence, you regenerate everything — and hope.
-:::
-
-::: {.col .font120}
-There is no file, no line, no cell that *is* that sentence.
-:::
-
-::: {.notes}
-Define entanglement operationally, not metaphorically. "The content has no
-address" is the sticky version.
-
-Give them the test they can apply to their own work: can you point at it?
-:::
-
----
-
-## When does it weave?
-
-> **[FIGURE — "when does it weave?" diagram]**
-> Two stacked rows, identical output at the end of each.
-> Row 1: Me → agent ⇒ document (woven here, probabilistically).
-> Row 2: Me → agent → `.qmd` + data → render → same document
-> (woven here, deterministically), plus green edit arrows from Me.
-> 3 clicks. Source: `images/entanglement-diagram/`
-
-::: {.notes}
-Both approaches weave content and format together. The only question is WHEN —
-and by what.
-
-The output is identical in both rows. That's the point. The difference isn't
-what comes out, it's whether you can reach in before it does.
-
-Optional one-liner for this room: "weave" isn't my metaphor. It's literate
-programming's own word — Sweave, then knitr. Quarto has always been a weaving
-tool. I'm just arguing we should weave later.
-:::
-
----
-
-## Give the content an address
-
-::: {.col}
-```r
-# sentences.csv
-sentence
-"The quick brown fox jumps."
-"A red kite flew over the hill."
-"We read books on rainy days."
-```
-
-The `.qmd` is structure. The CSV is content.
-
-Changing a sentence is **editing row 3 of a text file.**
-:::
-
-::: {.col}
-> **[PDF — same sheet, rendered from the CSV]**
-:::
-
-::: {.notes}
-Same sheet. But now the sentence has an address, and I can change it without
-asking anyone's permission — including the model's.
-
-The agent wrote the .qmd. It never touched the sentences.
-:::
-
----
-
-## But your prose doesn't go in a CSV
-
-::: {.col}
-[**Prose** stays in the `.qmd`.]{.blue}
-
-Its address is a **line number**. The agent's edit arrives as a diff you can
-read in ten seconds.
-:::
-
-::: {.col}
-[**Values that must be exact** live in data + code.]{.amber}
-
-Not just locatable — **recomputed.** Never typed by anyone.
-:::
-
-[The move isn't "extract everything."]{.font120}
-[It's "stop asking for the artifact."]{.font120 .green}
-
-::: {.notes}
-NAME THE OBJECTION FIRST. Someone is already thinking "I'm not putting my
-paragraphs in a spreadsheet." They're right, and say so.
-
-The handwriting sheet is a case where the content genuinely IS data — a list of
-items to typeset. Don't over-generalize from it.
-
-Two tiers, and both are things a fused artifact denies you: prose gets
-*located*, data gets *derived*.
-:::
+# Entanglement diagram
 
 ---
 
@@ -297,7 +157,7 @@ models. Shrink the surface that has to be probabilistic at all.
 {{< center >}}
 {{< middle >}}
 
-# And then something I didn't expect
+# And it's also efficient
 
 ::: {.notes}
 ACT 3. THE TURN. The audience is braced for a worthiness argument about
@@ -350,26 +210,6 @@ problem. I paid full price for it."
 This is the same phenomenon as the cold open, now measured instead of narrated.
 The single-shot table understates the case, because nobody generates once —
 you iterate. The gap doesn't stay at 7×; it compounds with every turn.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Reproducibility used to be a tax.
-
-[Now it's the discount.]{.font160 .green}
-
-::: {.notes}
-THE TURN, stated. This is the most quotable moment in the talk — earn the pause.
-
-For fifteen years, doing this right cost you something up front. Everyone in
-this room believes in it, and everyone in this room has a folder of scripts they
-never turned into a .qmd, because the tax was real.
-
-The tax is gone. The virtuous path is now the lazy path.
 :::
 
 ---
@@ -449,7 +289,7 @@ Shiny is great. This isn't an attack. It's about what you have to hand the agent
 
 ---
 
-## Shiny asks the agent for the artifact
+## Shiny feels like asking the agent for the artifact
 
 ::: {.col width="55%"}
 [**Shiny**]{.red}
@@ -553,19 +393,6 @@ piece of it.
 {{< center >}}
 {{< middle >}}
 
-# Agents should write the source,<br>not the artifact.
-
-::: {.notes}
-SPINE SENTENCE, 2 of 3. Say it again here, having just proved it at scale — on a
-real product, against the obvious Shiny alternative.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
 # "So why not just<br>ask for HTML?"
 
 ::: {.notes}
@@ -582,8 +409,6 @@ else's post — this is your objection, in your voice.
 - Infinitely more useful than a wall of Markdown
 - Agents are *very* good at it
 
-[If it's single-use and disposable, take the HTML.]{.gray}
-
 ::: {.notes}
 Make this case generously and at full strength. Steelman it. You lose nothing by
 being fair here and you gain the room's trust for the turn.
@@ -593,27 +418,7 @@ The throwaway-editor concession is genuine — say it and mean it.
 
 ---
 
-## Not a screenshot
-
-> **[INLINE CHART — live interactive plot rendered into this slide]**
-
-::: {.notes}
-Quarto gives you all of it. This is rendered and interactive, right here, in the
-slide you're looking at.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# This deck is<br>a `.qmd` file.
-
-::: {.notes}
-The meta-reveal. Proof by existence — and the closest thing to a live demo this
-talk is allowed to have. Let it land.
-:::
+## HTML is great for Isolated subcomponents, but not the whole thing
 
 ---
 
@@ -646,7 +451,7 @@ one exactly at the moment their authors became probabilistic.
 
 ---
 
-## Checkable twice
+## Quarto is checkable twice
 
 ::: {.col}
 [**By machine**]{.darkgreen}
@@ -661,23 +466,8 @@ Plain text means the agent's edit is a **diff**. Review scales with the change,
 not the document.
 :::
 
-[A `.docx` "diff" is noise. A three-line `.qmd` diff is a review.]{.font120}
-
 ::: {.notes}
 Both halves matter. git revert is a one-command undo for any agent mistake.
-:::
-
----
-
-## One honest caveat
-
-Render passing ≠ analysis correct.
-
-It's the same guarantee compilation gives code — **no more, no less.**
-
-::: {.notes}
-State the limit plainly. It costs 10 seconds and buys more credibility than any
-other slide in the deck.
 :::
 
 ---
@@ -690,7 +480,7 @@ other slide in the deck.
 
 ---
 
-## You don't need to know Quarto
+## You don't need to know Quarto to get started
 
 Change **one word** in your prompt.
 
@@ -708,14 +498,6 @@ The accessibility close. This is for everyone in the room, not just power users.
 2. Have the agent work on a branch, so edits arrive as diffs
 3. Keep data in files the `.qmd` reads — never in the prompt
 
-::: {.notes}
-Photographable. Three lines. This is the whole practicum, and it converts
-inspiration into action without costing narrative time.
-
-Deeper material (Quarto skills, Lua filters, parameterized reports) is a "come
-find me after" line.
-:::
-
 ---
 
 {{< inverse >}}
@@ -727,11 +509,6 @@ find me after" line.
 [Source and artifact. Documents are only getting there now —]{.font120}
 [right when the authors became probabilistic.]{.font120 .orange}
 
-::: {.notes}
-THE RHYME. The close callbacks to the opening question — where is the sentence?
-It's in a file. It has an address.
-:::
-
 ---
 
 {{< inverse >}}
@@ -739,26 +516,3 @@ It's in a file. It has an address.
 {{< middle >}}
 
 # Agents should write the source,<br>not the artifact.
-
-::: {.notes}
-SPINE SENTENCE, 3 of 3. Last thing on screen. Stop talking.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-You're about to hear three more talks about building data products.
-
-[Watch for the same move in each of them.]{.font140}
-
-[The artifact is never the thing. The thing is whatever produces it.]{.font120 .green}
-
-::: {.notes}
-Hand off to the session. Generous to the co-speakers, makes the whole session
-cohere, and positions this talk as its on-ramp rather than its outlier.
-
-Then: thank you, and out.
-:::

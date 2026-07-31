@@ -133,6 +133,253 @@ local function group_cols(blocks)
   return out
 end
 
+-- Card grids: `::: {.card icon="images/icons/x.svg" color="green"}`. Any run of
+-- consecutive `.card` Divs is wrapped in a `.card-grid` CSS-grid container, the
+-- same "just write the boxes, no wrapper" ergonomics as `.col` above. Column
+-- count comes from `cols=` on any card in the run; without it, up to 4 cards go
+-- in one row and more wrap into a balanced grid (8 -> 4x2, 6 -> 3x2).
+--
+-- The attributes are all sugar for markup this filter builds so the author never
+-- has to: `icon=`/`image=`/`badge=` become `.card-icon` / `.card-photo` /
+-- `.card-badge` Divs prepended to the card. `icon=` covers image files and
+-- emoji; an icon from a LIBRARY is written as the card's first line instead
+-- (`{{< fa map >}}`) and promoted into the same tile — see is_icon_line for why
+-- it has to work that way round. `color=` becomes the
+-- `--lexis-card-accent` custom property that lexis.scss tints the whole card
+-- from. A `color=` value is used verbatim if it looks like a CSS color
+-- (`#hex`/`rgb()`/`hsl()`), otherwise it resolves through
+-- `var(--lexis-color-NAME, NAME)` — so the theme's palette names (`green`,
+-- `dodgerblue`, ...) work without duplicating their hexes here, and any other
+-- CSS color name still falls through to itself.
+local IMG_EXT = {
+  png = true, jpg = true, jpeg = true, svg = true,
+  gif = true, webp = true, avif = true,
+}
+local function is_image_path(v)
+  local ext = v:match("%.([%a%d]+)$")
+  return ext ~= nil and IMG_EXT[ext:lower()] == true
+end
+
+local function card_color(v)
+  if v:match("^#") or v:match("^rgb") or v:match("^hsl") or v:match("^var%(") then
+    return v
+  end
+  return "var(--lexis-color-" .. v .. ", " .. v .. ")"
+end
+
+-- `.tint` cards paint the accent color THROUGH the icon by using it as a CSS
+-- mask, and a mask image has to be same-origin: Chrome treats every file:// URL
+-- as its own opaque origin, so `mask: url(images/icons/x.svg)` silently renders
+-- NOTHING in a deck opened by double-clicking the .html (verified by
+-- screenshotting the same page over file:// and over http — identical markup,
+-- icons only on http). Since a rendered deck gets opened both ways, inline the
+-- SVG as a data: URI instead, which has no origin to fail. Returns nil for
+-- anything not worth inlining (unreadable, not SVG, implausibly large), and the
+-- caller then falls back to the plain url() — still correct on a served deck.
+local MAX_INLINE_SVG = 32768
+local function svg_data_uri(path)
+  local f = io.open(path, "rb")
+  if not f then return nil end
+  local svg = f:read("a")
+  f:close()
+  if not svg or #svg == 0 or #svg > MAX_INLINE_SVG then return nil end
+  svg = svg:gsub("%s+", " ")
+  -- Percent-encode everything that can't sit inside a double-quoted CSS url():
+  -- `#` would start a fragment, the rest are either delimiters or not URL-legal.
+  svg = svg:gsub("[%%#\"'<>{}|\\%^%[%]`]", function(c)
+    return string.format("%%%02X", string.byte(c))
+  end)
+  return "data:image/svg+xml," .. svg
+end
+
+local function card_part(text, classes)
+  -- Para, not Plain: the <p> is where lexis.scss sizes glyph/emoji icons (it
+  -- can't size the tile itself without resizing the tile's `em`-based box).
+  return pandoc.Div({ pandoc.Para({ pandoc.Str(text) }) },
+    pandoc.Attr("", classes))
+end
+
+-- An icon written as the card's FIRST LINE becomes the icon tile:
+--
+--   ::: {.card color="dodgerblue"}
+--   {{< fa map >}}
+--
+--   ### Plan
+--   :::
+--
+-- This is what makes every icon library work without lexis knowing any of them.
+-- We run at `post-quarto`, so an icon shortcode has already expanded into the
+-- markup it produces — a RawInline `<i class="fa-solid fa-map">` for
+-- quarto-ext/fontawesome, a Span or custom element for bsicons / iconify, and
+-- the same for `fa()`/`bsicons::bs_icon()` output from an R chunk. Each of those
+-- registers its own CSS dependency when it expands, which is exactly why we
+-- can't just synthesize `<i class="fa-...">` from an `icon=` string: the
+-- stylesheet would never be pulled in and the glyph would render as nothing.
+--
+-- The test is deliberately narrow — one line holding nothing but raw inlines,
+-- an image, or a symbol — so ordinary prose or a leading sentence is never
+-- mistaken for an icon.
+local function icon_inline(el)
+  return el.t == "RawInline"   -- <i class="fa-solid fa-map">, <svg>, <iconify-icon>
+    or el.t == "Image"         -- ![](images/icons/map.svg)
+    -- an emoji or other symbol: anything with no letters or digits in it. A
+    -- word is prose, and prose is not an icon.
+    or (el.t == "Str" and not el.text:match("%w"))
+end
+
+local function is_icon_line(block)
+  if not block or (block.t ~= "Para" and block.t ~= "Plain") then return false end
+  local seen = false
+  for _, il in ipairs(block.content) do
+    if il.t ~= "Space" and il.t ~= "SoftBreak" then
+      if not icon_inline(il) then return false end
+      seen = true
+    end
+  end
+  return seen
+end
+
+-- Cards per row when the author doesn't say: everything in one row up to 4,
+-- then two balanced rows (capped at 4 columns so the text stays readable).
+local function default_cols(n)
+  if n <= 4 then return n end
+  return math.min(4, math.ceil(n / 2))
+end
+
+local CARD_ATTRS = {
+  color = true, icon = true, image = true, badge = true,
+  cols = true, gap = true,
+}
+local function group_cards(blocks)
+  local out = pandoc.List({})
+  local run = pandoc.List({})
+  local run_cols, run_gap
+
+  local function flush()
+    if #run == 0 then return end
+    local style = "--lexis-card-cols:" .. (tonumber(run_cols) or default_cols(#run)) .. ";"
+    if run_gap then style = style .. "gap:" .. run_gap .. ";" end
+    out:insert(pandoc.Div(run, pandoc.Attr("", { "card-grid" }, { style = style })))
+    run, run_cols, run_gap = pandoc.List({}), nil, nil
+  end
+
+  for _, b in ipairs(blocks) do
+    if b.t == "Div" then
+      b = pandoc.Div(group_cards(b.content), b.attr)
+    end
+    if b.t == "Div" and b.classes:includes("card") then
+      local a = b.attributes
+      local style = a["style"] and (a["style"] .. ";") or ""
+      if a["color"] then
+        style = style .. "--lexis-card-accent:" .. card_color(a["color"]) .. ";"
+      end
+      local content = pandoc.List(b.content)
+      local tint = b.classes:includes("tint")
+      -- `.tint` masks the icon file with the accent color; the mask needs the
+      -- file as a url(), inlined so it also works from file:// (svg_data_uri).
+      local function tint_var(src)
+        if not tint then return end
+        local url = src:lower():match("%.svg$") and svg_data_uri(src)
+        -- Single-quoted: a `"` here would come back out of the HTML writer as
+        -- `&quot;`. svg_data_uri encodes any `'` in the file.
+        style = style .. "--lexis-card-icon:url('" .. (url or src) .. "');"
+      end
+
+      -- An icon-only first line becomes the tile (see is_icon_line). Skipped
+      -- when `icon=` already says what the icon is.
+      if not a["icon"] and is_icon_line(content[1]) then
+        local line = content:remove(1)
+        for _, il in ipairs(line.content) do
+          if il.t == "Image" then tint_var(il.src) end
+        end
+        content:insert(1, pandoc.Div({ pandoc.Para(line.content) },
+          pandoc.Attr("", { "card-icon" })))
+      end
+
+      -- Prepended in reverse of their final order: badge, photo, icon, body.
+      if a["icon"] then
+        if is_image_path(a["icon"]) then
+          tint_var(a["icon"])
+          content:insert(1, pandoc.Div(
+            { pandoc.Plain({ pandoc.Image({}, a["icon"]) }) },
+            pandoc.Attr("", { "card-icon" })))
+        else
+          -- Not a file path: an emoji or a couple of characters.
+          content:insert(1, card_part(a["icon"], { "card-icon" }))
+        end
+      end
+      if a["image"] then
+        content:insert(1, pandoc.Div(
+          { pandoc.Plain({ pandoc.Image({}, a["image"]) }) },
+          pandoc.Attr("", { "card-photo" })))
+      end
+      if a["badge"] then
+        content:insert(1, card_part(a["badge"], { "card-badge" }))
+      end
+
+      local attrs = { style = style }
+      for k, v in pairs(a) do
+        if not CARD_ATTRS[k] and k ~= "style" then attrs[k] = v end
+      end
+      run:insert(pandoc.Div(content, pandoc.Attr(b.identifier, b.classes, attrs)))
+      if a["cols"] then run_cols = a["cols"] end
+      if a["gap"] then run_gap = a["gap"] end
+    else
+      flush()
+      out:insert(b)
+    end
+  end
+  flush()
+  return out
+end
+
+-- `. . .` — Quarto/Pandoc's "pause", which reveals the rest of the slide as a
+-- fragment. Pandoc implements this in its HTML slide writer, but only over a
+-- slide's own top-level block list — and at `slide-level: 0` a heading makes
+-- the writer wrap everything after it in a section, putting the pause one level
+-- down where the writer never looks (verified: a `. . .` on a heading-LESS
+-- slide still becomes a `.fragment` even here, one with a heading never does).
+-- Since a lexis slide almost always opens with a heading, `. . .` silently
+-- rendered as a literal "..." paragraph. Do the split ourselves, before the
+-- writer ever sees it: content after each pause becomes a sibling
+-- `.fragment` Div, exactly the markup Pandoc emits for a `##`-per-slide deck.
+-- Recurses into Divs, so a pause also works inside a `::: {.col}`.
+local function is_pause(b)
+  if b.t ~= "Para" or #b.content ~= 5 then return false end
+  local c = b.content
+  return c[1].t == "Str" and c[1].text == "."
+    and c[2].t == "Space"
+    and c[3].t == "Str" and c[3].text == "."
+    and c[4].t == "Space"
+    and c[5].t == "Str" and c[5].text == "."
+end
+
+local function split_pauses(blocks)
+  local out = pandoc.List({})
+  local frag = nil -- blocks accumulating into the current fragment, nil before the first pause
+
+  local function flush()
+    if frag then
+      out:insert(pandoc.Div(frag, pandoc.Attr("", { "fragment" })))
+      frag = nil
+    end
+  end
+
+  for _, b in ipairs(blocks) do
+    if b.t == "Div" then b = pandoc.Div(split_pauses(b.content), b.attr) end
+    if is_pause(b) then
+      flush()
+      frag = pandoc.List({})
+    elseif frag then
+      frag:insert(b)
+    else
+      out:insert(b)
+    end
+  end
+  flush()
+  return out
+end
+
 -- Quarto appends housekeeping Divs after the last slide (footnotes/refs, hidden
 -- content). They must stay at the top level, never folded into a slide.
 local SKIP_CLASSES = {
@@ -292,9 +539,13 @@ function Pandoc(doc)
     if visible then
       -- Group consecutive `.col` Divs into `.cols-row` flex containers.
       blocks = group_cols(blocks)
+      -- Group consecutive `.card` Divs into a `.card-grid` CSS grid.
+      blocks = group_cards(blocks)
       -- Rewrite Div-nested headings to styled text so columns/panels that
       -- contain `#`-headings don't fracture into extra slides.
       blocks = demote(blocks, false)
+      -- Turn `. . .` pauses into `.fragment` Divs (Pandoc can't, at level 0).
+      blocks = split_pauses(blocks)
       -- Inverse slides are styled as a dark CARD in lexis.scss (a `.slides`
       -- background keyed off `section.present.inverse`), NOT a reveal
       -- full-bleed background — that keeps the gray letterbox around the slide
