@@ -55,66 +55,28 @@ September 15, 2026
 
 # Handwriting practice<br>for a six-year-old
 
-::: {.notes}
-COLD OPEN. No thesis, no framing, no agenda slide. Just the story.
-
-"My daughter is learning to write. I wanted trace-the-sentence practice sheets.
-So I asked an agent to make me one."
-
-Do not say the word Quarto yet.
-:::
-
 ---
 
+::: {.col}
 ## What I asked for
 
-> Make me a one-page handwriting practice sheet.
-> Dotted trace lines, three sentences, big friendly type.
+> Make me a one-page handwriting practice sheet for my son with sentences about **minecraft**
+:::
 
-::: {.notes}
-Read it out loud. It's a completely reasonable prompt. Everyone in the room has
-written a prompt like this.
+::: {.col}
+![](images/handwriting-practice-minecraft.png){fig-align="center" width=100%}
 :::
 
 ---
 
-## What I got
-
 ::: {.col}
-It looked great.
+## What I got the next time
 
-Three sentences. Big friendly type. Dotted lines.
-
-[One of the sentences wasn't the one I asked for.]{.red}
+> Make me a one-page handwriting practice sheet for my son with sentences about **pokemon**
 :::
 
 ::: {.col}
-> **[SCREENSHOT — directly-generated sheet, the drifted sentence circled]**
-:::
-
-::: {.notes}
-Land it lightly, not as a gotcha. The format was perfect. The *content* drifted.
-
-Key beat: I didn't notice at first. My daughter did — she read it out loud.
-:::
-
----
-
-## So I asked it to fix that one sentence
-
-::: {.col}
-And it regenerated the whole sheet.
-
-New spacing. Different line weights. A *different* third sentence.
-:::
-
-::: {.col}
-> **[SCREENSHOT — the "fixed" sheet, now different in other ways]**
-:::
-
-::: {.notes}
-This is the real problem, and it's not "LLMs make mistakes." It's that there was
-no way to make a small change. Every edit is a full regeneration.
+![](images/handwriting-practice-pokemon.png){fig-align="center" width=100%}
 :::
 
 ---
