@@ -1,33 +1,23 @@
 # The Unreasonable Effectiveness of Quarto — Outline
 
 posit::conf 2026 · 20 min slot
-Session: "Dashboards" (really: **data products**) — this talk is first, and is the
-session's thesis statement.
+Session: "Dashboards"
 
-*Timing deliberately omitted. Structure first; we'll budget minutes once there's a
-full deck.*
+**Core Theme**:
 
-**Spine sentence, said 3×:**
 > **Agents should write the source, not the artifact.**
 
-**One-line argument:** When an agent generates a finished document, the content has
-no address — you can't point at a sentence, so you can't fix one. Ask for the `.qmd`
-instead and every piece gets an address. First that buys you **control**, then it
-turns out to be the only way to be **correct**, and then it scales all the way to a
-real data product.
+**Main argument:** When an agent generates a finished document, the content is entangled with the structure, and making modifications to it is challenging / impossible without going back to the agent. The pass is probabilistic, leaving the user with less control.
 
-**The escalation (felt, never listed on a slide):** stakes climb from a kid's
-worksheet → a government slide with every country wrong → a live dashboard over 10M
-records. **Efficiency is not a step on that ladder** — it's a thirty-second surprise
-attached to the move in Act 2, and it comes back in Act 4 as architecture. Never a
-pillar, never its own act.
+Instead, if you ask for a .qmd file, every piece of data has a source that you **control**, which also turns out to also enable **correct** outputs that scale to real data products like dashboards
+
+**The escalation**: Stakes climb from a kid's worksheet → a government slide with every country wrong → a live dashboard over 10M records.
 
 ---
 
 ## Act 1 — The problem, unnamed
 
-**Main point:** I couldn't change one sentence. Not because it was wrong — because
-there was nowhere to reach in. No thesis yet, no agenda.
+**Main point:** I couldn't change one sentence. Not because it was wrong — because there was nowhere to reach in.
 
 - Cold open: handwriting practice sheet for my six-year-old. Minecraft version.
 - Ask again for a different topic → **a completely different document.** I changed
