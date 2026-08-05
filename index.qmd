@@ -11,29 +11,6 @@ execute:
   message: false
 ---
 
-<!--
-  SIX-ACT STRUCTURE. ~18 min of content in a 20 min slot.
-  Spine sentence, said 3x: "Agents should write the source, not the artifact."
-
-  Act 1  0:00–2:30   The problem, unnamed      (handwriting sheet cold open)
-  Act 2  2:30–5:30   The move                  (entanglement -> address -> qmd+csv)
-  Act 3  5:30–7:30   The turn                  (it's also cheaper)
-  Act 4  7:30–13:30  Scale it                  (the dashboard, 6 min, protected)
-  Act 5 13:30–16:00  Why it converges          (HTML objection + compile step)
-  Act 6 16:00–18:00  Close                     (practicum, rhyme, handoff)
-
-  Asset legend:
-    [SCREENSHOT] [PDF] [CSV] [RECORDING] = author supplies later
-    [FIGURE]      = entanglement / "when does it weave?" diagram
-    [INLINE CHART]= live interactive plot rendered into this deck
-
-  Rhetorical rule used throughout: NAME THE OBJECTION FIRST.
-  Act 1 pre-empts "we already knew that." Act 5 pre-empts "why not just HTML?"
-
-  FORMAT: lexis-revealjs. `---` starts every slide; headings are text sizes only.
-  Slide modifiers are shortcodes. See the `lexis` skill.
--->
-
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}

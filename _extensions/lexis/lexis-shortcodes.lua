@@ -45,6 +45,7 @@ return {
   ["inverse"] = function(args, kwargs, meta) return class_marker("inverse") end,
   ["center"]  = function(args, kwargs, meta) return class_marker("center") end,
   ["middle"]  = function(args, kwargs, meta) return class_marker("middle") end,
+  ["tight"]   = function(args, kwargs, meta) return class_marker("tight") end,
 
   ["bg-color"] = function(args, kwargs, meta)
     return attr_marker({ ["lexis-bg-color"] = arg(args, 1) or "" })

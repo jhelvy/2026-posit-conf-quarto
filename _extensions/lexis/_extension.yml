@@ -29,10 +29,22 @@ contributes:
       # etc. + the shortcodes below). See the top of demo.qmd for the pattern.
       template-partials:
         - title-slide.html
+      # One PDF page per slide, always. reveal's print view otherwise measures
+      # each slide and spills anything taller than the 1600x900 canvas onto a
+      # second (mostly blank) page — but on screen lexis CLIPS that overflow to
+      # the card, so the extra page shows content the presenter never sees and
+      # throws the page count off. Clamping to 1 makes the export match the
+      # deck: `.pdf-page` clips exactly the way `.slides` does in the browser.
+      pdf-max-pages-per-slide: 1
       # Put the fragment index in the URL hash (`#/12/0/2`, not just `#/12`) so
       # that reloading — or clicking a link and coming back — lands on the slide
       # AND the increment you left off on, instead of resetting the reveals.
       fragment-in-url: true
+      # Open external links in a new tab. Following a link in place unloads the
+      # deck mid-presentation, and coming back re-runs reveal's setup; a new tab
+      # leaves the deck exactly where it was. Internal links (`#/12`, relative
+      # paths) are unaffected, so slide-to-slide navigation still works.
+      link-external-newwindow: true
       # Turns reveal's overview (`o`) into a scrollable grid of thumbnails like
       # the xaringan tile view. The layout is CSS (lexis.scss); this is the
       # handful of measurements CSS can't make on its own. lexis-nav.html
