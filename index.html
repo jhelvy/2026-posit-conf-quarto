@@ -773,12 +773,143 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="i-have-no-way-to-ask-for-that." class="inverse center middle">
-<h1>I have no way to ask for that.</h1>
+<section class="lexis-slide-title center middle">
+<h1 class="lexis-slide-title"></h1>
+<!--
+  ENTANGLEMENT FIGURE, SLIDE 1 OF 2 — "ask for the document."
+
+  Its job here is GENERALIZATION, not explanation: the handwriting sheet already
+  taught the idea, so this only has to show the same shape without pokemon in it.
+
+  The claim: the weaving happens inside one probabilistic pass, so the only lever
+  you have on the content is to re-prompt and take another draw. The document
+  swaps IN PLACE across two clicks (run 1 -> 2 -> 3) rather than fanning out,
+  because the point is that each new run REPLACES the last one — you never get to
+  hold two of them and pick. Same prompt, different document, every time.
+
+  Colors are the deck's vocabulary and never change: amber = content/data,
+  blue = structure/format, green = the human's direct action.
+
+  NOTE: #doc is duplicated in slide 2's <defs> below and the two copies must stay
+  byte-identical — that is the "you have not made a better document" point. They
+  are NOT shared via one <use> across slides on purpose: reveal puts non-current
+  slides in display:none, and cross-slide <use> resolution is unreliable there.
+-->
+<svg viewbox="0 0 1240 470" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <!-- THE DOCUMENT. Amber and blue interleaved, irregular: content and format
+         fused. Never drawn as a box inside a box — containment would imply they
+         are already separate, which is the visual opposite of entanglement. -->
+    <g id="doc">
+      <rect x="0" y="0" width="18" height="64" fill="#007bff"></rect>
+      <rect x="18" y="0" width="26" height="64" fill="#C0820F"></rect>
+      <rect x="44" y="0" width="14" height="64" fill="#007bff"></rect>
+      <rect x="58" y="0" width="32" height="64" fill="#C0820F"></rect>
+      <rect x="90" y="0" width="20" height="64" fill="#007bff"></rect>
+      <rect x="110" y="0" width="16" height="64" fill="#C0820F"></rect>
+      <rect x="126" y="0" width="28" height="64" fill="#007bff"></rect>
+      <rect x="154" y="0" width="24" height="64" fill="#C0820F"></rect>
+      <rect x="178" y="0" width="12" height="64" fill="#007bff"></rect>
+      <rect x="190" y="0" width="28" height="64" fill="#C0820F"></rect>
+      <rect x="218" y="0" width="22" height="64" fill="#007bff"></rect>
+      <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
+    </g>
+
+    <!-- Runs 2 and 3: same prompt, different draw. Same total width, same
+         height, different stripes — so the only thing that reads as changed is
+         the weave itself. -->
+    <g id="docRun2">
+      <rect x="0" y="0" width="30" height="64" fill="#007bff"></rect>
+      <rect x="30" y="0" width="18" height="64" fill="#C0820F"></rect>
+      <rect x="48" y="0" width="24" height="64" fill="#007bff"></rect>
+      <rect x="72" y="0" width="14" height="64" fill="#C0820F"></rect>
+      <rect x="86" y="0" width="34" height="64" fill="#007bff"></rect>
+      <rect x="120" y="0" width="26" height="64" fill="#C0820F"></rect>
+      <rect x="146" y="0" width="16" height="64" fill="#007bff"></rect>
+      <rect x="162" y="0" width="30" height="64" fill="#C0820F"></rect>
+      <rect x="192" y="0" width="20" height="64" fill="#007bff"></rect>
+      <rect x="212" y="0" width="28" height="64" fill="#C0820F"></rect>
+      <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
+    </g>
+
+    <g id="docRun3">
+      <rect x="0" y="0" width="14" height="64" fill="#C0820F"></rect>
+      <rect x="14" y="0" width="34" height="64" fill="#007bff"></rect>
+      <rect x="48" y="0" width="20" height="64" fill="#C0820F"></rect>
+      <rect x="68" y="0" width="12" height="64" fill="#007bff"></rect>
+      <rect x="80" y="0" width="30" height="64" fill="#C0820F"></rect>
+      <rect x="110" y="0" width="24" height="64" fill="#007bff"></rect>
+      <rect x="134" y="0" width="32" height="64" fill="#C0820F"></rect>
+      <rect x="166" y="0" width="18" height="64" fill="#007bff"></rect>
+      <rect x="184" y="0" width="26" height="64" fill="#C0820F"></rect>
+      <rect x="210" y="0" width="30" height="64" fill="#007bff"></rect>
+      <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
+    </g>
+
+    <marker id="ahDark" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"></path></marker>
+    <marker id="ahGray" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#696969"></path></marker>
+  </defs>
+
+  <!-- The striped bar is the only place the audience meets these two colors,
+       so name them once, up front, before the bar appears. -->
+  <g transform="translate(420 16)">
+    <rect x="0" y="0" width="18" height="18" fill="#C0820F"></rect>
+    <text x="28" y="15" font-size="17" fill="#696969">content / data</text>
+    <rect x="176" y="0" width="18" height="18" fill="#007bff"></rect>
+    <text x="204" y="15" font-size="17" fill="#696969">structure / format</text>
+  </g>
+
+  <text x="40" y="32" font-size="19" fill="#696969" letter-spacing="1.5">ASK FOR THE DOCUMENT</text>
+
+  <!-- me -->
+  <rect x="40" y="178" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <text x="95" y="217" font-size="22" text-anchor="middle" fill="#121212">me</text>
+
+  <path d="M 152 210 L 202 210" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark)"></path>
+
+  <!-- agent. dashed = the stochastic component. Same box in both slides: the
+       agent is not what changes between them. -->
+  <rect x="210" y="178" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+  <text x="300" y="217" font-size="22" text-anchor="middle" fill="#121212">LLM agent</text>
+
+  <!-- One jump, no intermediate. The emptiness under this arrow is exactly the
+       space Quarto fills on the next slide. -->
+  <text x="531" y="188" font-size="20" fill="#121212" text-anchor="middle">one probabilistic pass</text>
+  <path d="M 394 210 L 668 210" stroke="#121212" stroke-width="6" marker-end="url(#ahDark)"></path>
+  <text x="531" y="240" font-size="19" fill="#E74A2F" text-anchor="middle">woven here</text>
+
+  <!-- THE SWAP. All three occupy the same slot, so each run replaces the last.
+       run 1 is visible at rest and fades out on click 1; run 2 lives only while
+       fragment 1 is current; run 3 arrives on click 2 and stays. -->
+  <g class="fragment fade-out" data-fragment-index="1">
+    <g transform="translate(690 156) scale(1.7)"><use href="#doc"></use></g>
+    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 1</text>
+  </g>
+
+  <g class="fragment fade-in-then-out" data-fragment-index="1">
+    <g transform="translate(690 156) scale(1.7)"><use href="#docRun2"></use></g>
+    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 2</text>
+  </g>
+
+  <g class="fragment" data-fragment-index="2">
+    <g transform="translate(690 156) scale(1.7)"><use href="#docRun3"></use></g>
+    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 3</text>
+  </g>
+
+  <text x="894" y="300" font-size="17" fill="#696969" text-anchor="middle">same prompt, different document</text>
+
+  <!-- The only lever. This is the whole claim of the slide: the loop does not
+       reach the content, it just takes another draw. -->
+  <path d="M 1060 270 L 1060 376 Q 1060 390 1046 390 L 109 390 Q 95 390 95 376 L 95 248" fill="none" stroke="#696969" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
+  <text x="560" y="418" font-size="20" fill="#696969" text-anchor="middle">review &amp; re-prompt — your only lever to edit the content</text>
+
+</svg>
 <aside class="notes">
-<p>Not “it’s hard.” No way. There is no such request.</p>
-<p>The layout and the sentences are the same object. I can’t keep one and swap the other, because there is no “one” and no “other” — there’s one PDF that came out of one pass. My only move is to start over and re-roll, and eight rounds of evidence say I might not get back here.</p>
-<p>That’s the real cost, and it’s the one a better model doesn’t fix.</p>
+<p>Generalize what they just watched — don’t re-explain it.</p>
+<p>Amber is my content, blue is the structure. By the time I see the document they’re fused: one probabilistic pass wove them together. Note the dashed box — that step is a draw, not a computation.</p>
+<p>Click 1, click 2: same prompt, same model. Run 2. Run 3. And notice what happens to run 1 — it’s gone. That’s the part that matters. Each new run doesn’t sit next to the last one so I can pick; it REPLACES it. Eight rounds of that is how I lost the pokemon sentences.</p>
+<p>So when a sentence is wrong, there’s nothing to reach into. All I can do is review, ask again, and take another draw.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -794,50 +925,44 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="where-is-the-sentence" class="inverse center middle">
-<h1>Where is the sentence?</h1>
-<aside class="notes">
-<p>The audience test. Point at it. In that PDF, which file, which line, which cell IS “Diamonds are the best ore to find”? Nowhere. It’s smeared across one probabilistic pass.</p>
-<!-- TODO: the defusing line goes here — pre-empt "we already knew that"
-     before Act 2 names entanglement. -->
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<section id="agents-should-write-the-source-not-the-artifact" class="inverse center middle">
+<h1>Agents should write the source,<br>not the artifact</h1>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="entanglement-diagram" class="inverse center middle">
-<h1>Entanglement diagram</h1>
+<section id="building-trust" class="inverse center middle">
+<h1>Building trust</h1>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="agents-should-write-the-source-not-the-artifact." class="inverse center middle">
-<h1>Agents should write the source,<br>not the artifact.</h1>
-<aside class="notes">
-<p>SPINE SENTENCE, 1 of 3. Let it sit. This is the whole talk in seven words.</p>
-<p>Note what it does NOT say: “put your content in data files.” It says hand me the source. Everything else follows from that.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+
+<img data-src="images/africa-bad.jpeg" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section class="slide level0">
+
+<section id="quarto-is-token-efficient" class="inverse center middle">
+<h1>Quarto is <em>token efficient</em></h1>
 </section>
+</section>
+<section class="slide level0">
+
+<section id="and-unexpectedly-its-cheaper" class="inverse center middle">
+<h1>…and, unexpectedly, it’s cheaper</h1>
+<center>
+<img src="images/fig-tokens.png" width="100%">
+</center>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="easy-to-deploy-serverless" class="inverse center middle">
+<h1>Easy to deploy (serverless)</h1>
+</section>
+</section>
+<section class="slide level0">
+
+<p>[Left off here]</p>
 </section>
 <section class="slide level0">
 
@@ -1307,7 +1432,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="agents-should-write-the-source-not-the-artifact.-1" class="inverse center middle">
+<section id="agents-should-write-the-source-not-the-artifact." class="inverse center middle">
 <h1>Agents should write the source,<br>not the artifact.</h1>
 </section>
 

@@ -1,11 +1,9 @@
 # CLAUDE.md
 
 Project instructions for this repo. **This file is the single source of truth.**
-
-> `HANDOFF.md` is **superseded and historical.** It documents an earlier framing
-> (three pillar words; a named concession to Thariq; a nested-box entanglement
-> figure) that has since been deliberately reversed. Do not take design direction
-> from it. It's kept only as a record — safe to delete.
+It is also the only surviving record of *why* the talk is shaped this way — the
+old `HANDOFF.md` and `talk-framing-decision.qmd` are both gone, so the "Reversed
+decisions" section below is the whole rationale. Don't delete it to save space.
 
 ## What this repo is
 
@@ -81,25 +79,51 @@ the session's shared vocabulary.
 
 ## Files
 
+**The deck — the only thing that gets presented.**
+
 - `index.qmd` — the deck. Canonical, lives at repo root. Uses
   `format: lexis-revealjs` — **read the Styling section before editing it**, the
-  slide syntax is not stock Quarto reveal.
+  slide syntax is not stock Quarto reveal. **The entanglement figure now lives
+  inside this file** as two hand-written inline-SVG slides (see below); there is
+  no separate figure document any more.
+- `index.html` + `index_files/` — rendered output, committed to the repo. Stale
+  between John's renders; never hand-edit, never read it as the source of truth.
 - `_extensions/lexis/` — the lexis format extension (installed, do not hand-edit).
-- `custom.css` — one rule (`.amber`) layered on top of lexis. See Styling.
-- `custom.scss` — legacy hand-port, now only used by the figure drafts.
-- `abstract.md` — canonical title + abstract + bio. Already live in the program.
-- `talk-framing-decision.qmd` — the decision memo behind every choice above
-  (why the thesis talk over the dashboard talk, why not the three words, why no
-  Thariq, why the figure was redesigned). Read it for the *why*.
-- `images/entanglement-diagram/weave-figure.qmd` — **current** figure draft
-  ("when does it weave?", see below). Renders clean; not yet visually vetted.
-- `images/entanglement-diagram/entanglement-{anime,diagram}.qmd` — **outdated**
-  earlier versions, left untouched as fallback. Do not treat as current.
+- `custom.css` — the deck's only local stylesheet. See Styling.
 
-Render status: `weave-figure.qmd` and `talk-framing-decision.qmd` render without
-error. `index.qmd` rendered clean under the old hand-rolled theme; it has since
-been converted to `lexis-revealjs` and **has not been re-rendered** (John
-renders; agents do not).
+**Talk prose (not slides).**
+
+- `abstract.md` — canonical title + abstract + bio. Already live in the program.
+- `submission.md` — the original conference submission, under a **different,
+  superseded title** ("The Multi-page Dashboard Framework You Didn't Know You
+  Had"). Historical; `abstract.md` wins.
+- `README.md` — short repo readme. **Stale**: still says the theme is
+  `custom.scss` and describes no extension.
+
+**Planning material — historical, do not take design direction from it.**
+
+- `outline.qmd` — an **earlier draft deck**, also `lexis-revealjs`. Superseded by
+  `index.qmd`; kept for reference. Its rendered `outline.html` / `outline_files/`
+  have been deleted from the working tree (still tracked, deletion uncommitted).
+- `outline-long.md` — the full six-act outline the deck was built from.
+- `outline.md` — loose notes and open questions. Predates several reversed
+  decisions; treat as scratch.
+- `outline.pptx` — an export, not a source.
+
+**`images/` — every asset the deck references, flat, no subdirectories.**
+
+| File | Used by |
+|---|---|
+| `handwriting-practice-pokemon.{png,pdf}` | Act 1 cold open — the original |
+| `handwriting-practice-minecraft.{png,pdf}` | Act 1 — the drifted version, eight rounds later |
+| `vehicletrends.gif` | the teaser slide right after the title |
+| `fig-tokens.png` | Act 3, token cost |
+| `africa-bad.jpeg` | Act 5 |
+| `africa-correct.png` | **currently unreferenced** by `index.qmd` |
+
+Render status: `index.qmd` **has not been re-rendered** since the lexis
+conversion, the `css: custom.css` fix, or the entanglement figure being ported
+in. John renders; agents do not.
 
 ## The dashboard case study (Act 4)
 
@@ -138,48 +162,65 @@ slide, get the real ones from John.
 
 ## The entanglement figure
 
-**Design direction: "when does it weave?"** Two stacked rows with an **identical**
-output at the end of each.
+**Settled: the figure is IN, and it is TWO slides**, both inline SVG living
+directly in `index.qmd` (Act 2, right after "Where is the sentence?"). Neither is
+`{{< inverse >}}` — the SVG uses white fills and near-black strokes and needs a
+light slide.
 
 ```
-LLM ALONE
-   [ Me ] ──prompt──▶ [ agent ] ═════▶  ▓▒▓▒▒▓▓▒▓▒▒▓   document
-      ▲                                  ↑
-      └────── re-prompt ──────┘          woven HERE, probabilistically
+SLIDE 1 — ASK FOR THE DOCUMENT
+   [ me ] ──▶ [ agent ] ═══════▶  ▓▒▓▒▒▓▓▒   run 1     ← swaps in place
+      ▲          (dashed)          ↑                      to run 2, run 3
+      └──── review & re-prompt ────┘  woven here, probabilistically
 
-WITH QUARTO
-   [ Me ] ──prompt──▶ [ agent ] ──writes──▶ [ .qmd ]  ┐
-      │                                               ├─render─▶ ▓▒▓▒▒▓▓▒▓▒▒▓
-      └──── edit ──────────────────────────▶ [ data ] ┘            document
-                                                                      ↑
-                                                        woven HERE, deterministically
+SLIDE 2 — ASK FOR THE SOURCE
+   [ me ] ──▶ [ agent ] ──writes──▶ [ .qmd ]  ┐
+      │          (dashed)                     ├─render─▶ ▓▒▓▒▒▓▓▒
+      └──── you edit directly ──────▶ [ data ]┘   woven here, deterministically
 ```
 
-- **The output is identical in both rows.** That's the whole point — the difference
-  isn't what comes out, it's *when* the weaving happens and whether you can reach
-  in before it does.
+Design rules, in force:
+
 - **Never draw content as a box inside a format box.** Containment implies the two
   are already separate and nested, which is the visual opposite of entanglement.
-  Use a **striped/smeared bar** — irregular stripes for the probabilistic weave,
-  clean regular stripes for the deterministic one.
-- **3 build steps max:** (1) top row entire; (2) bottom row skeleton, agent writes
-  only the `.qmd`; (3) render arrow + green edit arrows.
+  Use a **striped bar** — irregular stripes, content and format interleaved.
+- **Color vocabulary (never break it):** amber = **content**, blue =
+  **format/structure**, green = **human's direct action**. Green appears on slide
+  2 only, and is the only new color there.
+- **The agent box is identical and dashed on both slides.** Dashed = stochastic.
+  It is deliberately *unchanged* between them: the agent did not get better, the
+  thing it writes did. Don't "improve" the agent on slide 2.
+- **Slide 2's left-hand composition mirrors slide 1's** — same boxes, same
+  positions — so the pair reads as one picture with one variable changed.
 - Its job in Act 2 is **generalization, not explanation** — the handwriting sheet
   already taught the idea. That justifies a simple picture.
-- **Color vocabulary (never break it):** amber = **content**, blue =
-  **format/structure**, green = **human's direct action**.
 
-**Current draft: `weave-figure.qmd`.** Pure inline SVG + reveal fragments (no
-anime.js/CDN — nothing to vendor). `viewBox="0 0 1240 690"`, base + 2 fragments =
-3 states. The two output bars are ONE `<defs>` group `<use>`d twice, so they are
-provably identical. Provenance drawn as an amber thread from the output back to
-"row 3 of sentences.csv." Renders clean but is NOT yet visually vetted — the
-coordinates are hand-computed, so expect cosmetic collision fixes.
+**Slide 1 shows variance by swapping in place.** Three documents (`#doc`,
+`#docRun2`, `#docRun3`) occupy the same slot and replace each other across two
+clicks: `fragment fade-out` at index 1, `fragment fade-in-then-out` at index 1,
+`fragment` at index 2. **The replacement is the argument** — each new run doesn't
+sit beside the last one so you can pick, it destroys it. That is the eight-rounds
+story, generalized. A fanned-out layout was considered and rejected for exactly
+this reason.
 
-**Open question John is weighing: whether the deck needs the diagram at all.** He
-finds the concept possibly clearer via the handwriting-sheet + CSV example alone.
-If kept, its job is *generalization, not explanation* (Act 2, after the concrete
-example). Don't over-invest until he decides.
+**Slide 2 ends in ONE output, and it is byte-identical to slide 1's run 1.**
+`#docOut` is a hand-kept copy of `#doc` — **if you edit one, edit both.** The
+claim is *not* "this makes a better document"; it's that the weaving moved
+somewhere you can reach. Losing that identity silently turns the figure into an
+argument for determinism, which is the wrong takeaway (a better model doesn't fix
+entanglement).
+
+Mechanics: pure inline SVG in a ```` ```{=html} ```` block + reveal fragments — no
+anime.js, no CDN, nothing to vendor. Each slide is `viewBox="0 0 1240 470"`, and
+each carries **its own `<defs>`**; they deliberately do *not* share one `<use>`
+across slides, because reveal puts non-current slides in `display:none` and
+cross-slide `<use>` resolution is unreliable there. SVG ids are unique across the
+whole document (`ahDark`/`ahDark2` etc.) — keep them that way.
+
+**Not yet visually vetted.** Coordinates are hand-computed; bounding boxes were
+checked on paper but never rendered. Likeliest cosmetic fixes: the `writes` label
+wedged between the agent and `.qmd` boxes on slide 2 (~50px clearance), and the
+green edit arrows' clearance under the `data` box.
 
 ## Styling
 
@@ -204,14 +245,33 @@ xaringan "lexis" theme. **Authoring paradigm differs from stock Quarto reveal:**
 - **Full authoring reference: the `/lexis` skill.** Use it before editing the
   deck's structure. `/lexis-clean` audits an existing deck.
 
-Two local style files remain:
+One local stylesheet, `custom.css`, loaded via the **nested** format key:
 
-- `custom.css` — loaded by `index.qmd` via `css:`. Holds **only** `.amber`, the
-  talk's "content" color, which lexis doesn't ship. It matches the figure's amber
-  so deck and figure stay consistent. Add nothing else here that lexis provides.
-- `custom.scss` — the pre-extension hand-port. **No longer used by `index.qmd`**;
-  still used by `images/entanglement-diagram/*.qmd`. Don't delete it until the
-  figure is either ported to lexis or embedded into the deck.
+```yaml
+format:
+  lexis-revealjs:
+    css: custom.css
+```
+
+That nesting is load-bearing. `format: lexis-revealjs` as a bare scalar has no
+place to hang `css:`, and for a long time the key was simply absent — so
+`custom.css` never loaded and every rule in it was silently dead. If a class
+defined there "doesn't work," **check this YAML first**, before touching CSS.
+
+`custom.css` holds only what lexis does not ship, and nothing else belongs there:
+
+- `.amber` — the talk's "content" color (`#C0820F`), matching the amber in the
+  entanglement figure so deck and figure stay consistent.
+- `.amberborder` / `.blueborder` — colored image borders following lexis's own
+  wrapper-div pattern (`.treatment img`), so they go on a **wrapping div**, not in
+  the image's attribute block: `::: {.col .blueborder}`. Used on the "I want
+  *this* layout, with *these* sentences" slide to tie each colored word to an
+  image. Same two hexes as the figure.
+
+`custom.scss` is still on disk but is now **dead** — it was the pre-extension
+hand-port, and its last consumer was the standalone figure document, which no
+longer exists. No `.qmd` in the repo loads it; the only remaining references are
+prose lines in `README.md` and this file. Safe to delete whenever John wants to.
 
 ## Hard rules
 
@@ -225,18 +285,19 @@ Two local style files remain:
 
 ## Open / to do
 
-- **Decide whether to keep the entanglement figure at all** (see figure section).
-  If yes, visually vet `weave-figure.qmd` and fix any coordinate collisions, then
-  embed it into `index.qmd` Act 2 (currently a `[FIGURE]` placeholder there).
-- **Produce demo assets.** Placeholders in `index.qmd` are marked `[SCREENSHOT]
-  [PDF] [CSV] [RECORDING] [FIGURE] [INLINE CHART]`:
-  - handwriting sheet: the drifted version, the "fixed"-but-different version,
-    and the CSV-rendered version
-  - silent dashboard screen recording (~75s)
+- **Visually vet the entanglement figure.** It's written and in the deck, but has
+  never been rendered — coordinates are hand-computed. See the figure section for
+  the two likeliest collisions. Check both slides' fragment steps actually swap
+  the way they're meant to.
+- **Produce remaining demo assets.** The handwriting-sheet images exist; these
+  slots are still marked with `> **[BRACKETED]**` blockquote placeholders in
+  `index.qmd`:
+  - silent dashboard screen recording (~75s) for Act 4
+  - a screenshot of the MapLibre map on `market-concentration.qmd`
   - the live inline interactive chart for Act 5
-- **Dashboard assets for Act 4** — silent screen recording of vehicletrends.us
-  (~75s); a screenshot of the MapLibre map on `market-concentration.qmd`. Act 4
-  content itself is written (from the real repo); these are the visual slots.
+  - the multi-turn token chart for Act 3 (see below — needs real numbers)
+- **Refresh `README.md`** — it still names `custom.scss` as the theme and doesn't
+  mention the lexis extension at all.
 - **Optional "what bit me" slide** — only if John supplies real, lived pitfalls
   from building the dashboard. Never fabricate them.
 - **Multi-turn token data** — Act 3's SECOND slide ("And that's just the first
