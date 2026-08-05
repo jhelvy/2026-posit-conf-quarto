@@ -57,26 +57,132 @@ September 15, 2026
 
 ---
 
-::: {.col}
+<!--
+  ACT 1 SLIDE RHYTHM. Setup beats are washed in mterese cream (#f7ddaa) so the
+  white sheets read as PAPER instead of floating on white. Same wash on every
+  setup slide: the sheet is the only thing allowed to change. The act's two
+  punch lines stay {{< inverse >}} black — that treatment is the punctuation,
+  so don't spend it on setup.
+-->
+
+{{< bg-color "#f7ddaa" >}}
+{{< middle >}}
+
 ## What I asked for
 
-> Make me a one-page handwriting practice sheet for my son with sentences about **minecraft**
-:::
+> Make me a one-page handwriting practice sheet for my son with sentences about **pokemon**
 
-::: {.col}
-![](images/handwriting-practice-minecraft.png){fig-align="center" width=100%}
+::: {.notes}
+Read the prompt. Nothing else on screen — let them picture what they'd expect
+back, THEN show it.
 :::
 
 ---
 
-::: {.col}
-## What I got the next time
+{{< bg-color "#f7ddaa" >}}
 
-> Make me a one-page handwriting practice sheet for my son with sentences about **pokemon**
+![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
+
+::: {.notes}
+This is what I got. It isn't wrong. It's just not what I pictured — too busy,
+too many lines to trace for a six-year-old.
+
+Don't editorialize. Let them look at it. Silence is fine here.
+:::
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+{{< middle >}}
+
+## Eight rounds later
+
+One sentence. One line to trace.
+
+The sheet I wanted from the start.
+
+::: {.notes}
+Say the number, don't narrate the rounds. "Eight" gets the laugh of recognition
+and costs four seconds.
+
+Somewhere in those eight it also became Minecraft — mention it in passing.
+The point is that the LAYOUT is finally right.
+
+Do NOT let this land as "the model was bad at this." The iteration count is
+setup, not the point. The point is two slides from here.
+:::
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+
+![](images/handwriting-practice-minecraft.png){fig-align="center" height="800"}
+
+::: {.notes}
+Same wash, same frame, only the sheet changed. That's deliberate.
+:::
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+
+## This week he's back on Pokémon
+
+[I want **this** layout, with **those** sentences.]{.large}
+
+::: {.col}
+![](images/handwriting-practice-minecraft.png){fig-align="center" height="520"}
 :::
 
 ::: {.col}
-![](images/handwriting-practice-pokemon.png){fig-align="center" width=100%}
+![](images/handwriting-practice-pokemon.png){fig-align="center" height="520"}
+:::
+
+::: {.notes}
+The one slide in the act that has to be side by side — the ask IS the
+juxtaposition. Point left, then right, in the order you say it.
+
+Legibility doesn't matter here. They've seen both full-screen; they're
+recognizing two shapes, not reading them.
+
+This is the whole talk in one ask. It is a completely reasonable thing to want,
+and I have no way to say it.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# I have no way to ask for that.
+
+::: {.notes}
+Not "it's hard." No way. There is no such request.
+
+The layout and the sentences are the same object. I can't keep one and swap the
+other, because there is no "one" and no "other" — there's one PDF that came out
+of one pass. My only move is to start over and re-roll, and eight rounds of
+evidence say I might not get back here.
+
+That's the real cost, and it's the one a better model doesn't fix.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Where is the sentence?
+
+::: {.notes}
+The audience test. Point at it. In that PDF, which file, which line, which cell
+IS "Diamonds are the best ore to find"? Nowhere. It's smeared across one
+probabilistic pass.
+
+<!-- TODO: the defusing line goes here — pre-empt "we already knew that"
+     before Act 2 names entanglement. -->
 :::
 
 ---

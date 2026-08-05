@@ -1,0 +1,137 @@
+---
+title: "The Unreasonable Effectiveness of Quarto"
+author: "John Paul Helveston"
+format: lexis-revealjs
+mouse-wheel: true
+progress: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+{{< no-slide-number >}}
+
+# {{< meta title >}}
+
+<br>
+
+[{{< meta author >}}]{.large}
+
+September 15, 2026
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+{{< middle >}}
+{{< center >}}
+
+## Prompt:
+
+#### *"Make me a one-page<br>handwriting practice sheet for my son<br>with sentences about **pokemon**"*
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+
+![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+{{< middle >}}
+{{< center >}}
+
+## Eight rounds later...
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+
+![](images/handwriting-practice-minecraft.png){fig-align="center" height="800"}
+
+---
+
+{{< bg-color "#f7ddaa" >}}
+{{< center >}}
+
+[I want **this** layout, with **those** sentences.]{.large}
+
+::: {.col}
+![](images/handwriting-practice-minecraft.png){fig-align="center" height="550"}
+:::
+
+::: {.col}
+![](images/handwriting-practice-pokemon.png){fig-align="center" height="550"}
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# I have no way to ask for that.
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Entanglement diagram.
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Agents should write the source, not the artifact.
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# …and, unexpectedly, it's cheaper
+
+<center>
+<img src="images/fig-tokens.png" width=100%>
+</center>
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Act 3 — And it's the only way to be right
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Act 4 — Scale it
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Act 5 — Why it converges
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Act 6 — Close
