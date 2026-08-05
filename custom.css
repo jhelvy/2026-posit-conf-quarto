@@ -4,3 +4,11 @@
    amber in the entanglement figure (images/entanglement-diagram/). */
 
 .reveal .amber { color: #C0820F; }
+
+/* Colored image borders, matching the talk's color vocabulary
+   (amber = content, blue = format/structure). Used on the
+   "this layout / those sentences" slide so each word is tied to
+   an image. lexis ships .border/.whiteborder/etc. but no color
+   variants; these follow the same wrapper-div pattern. */
+.reveal .amberborder img { border: 6px solid #C0820F; }
+.reveal .blueborder img  { border: 6px solid #007bff; }

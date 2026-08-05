@@ -98,7 +98,8 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-e5a934acb88329c8422b3f540c307657.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-85520e607e78399f333533d08902faca.css">
+  <link rel="stylesheet" href="custom.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -706,28 +707,6 @@ built-in one.
 
 <section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206d657461207469746c65203e7d7d" class="inverse center middle" data-state="no-slide-number">
 <h1>The Unreasonable Effectiveness of Quarto</h1>
-<!--
-  SIX-ACT STRUCTURE. ~18 min of content in a 20 min slot.
-  Spine sentence, said 3x: "Agents should write the source, not the artifact."
-
-  Act 1  0:00–2:30   The problem, unnamed      (handwriting sheet cold open)
-  Act 2  2:30–5:30   The move                  (entanglement -> address -> qmd+csv)
-  Act 3  5:30–7:30   The turn                  (it's also cheaper)
-  Act 4  7:30–13:30  Scale it                  (the dashboard, 6 min, protected)
-  Act 5 13:30–16:00  Why it converges          (HTML objection + compile step)
-  Act 6 16:00–18:00  Close                     (practicum, rhyme, handoff)
-
-  Asset legend:
-    [SCREENSHOT] [PDF] [CSV] [RECORDING] = author supplies later
-    [FIGURE]      = entanglement / "when does it weave?" diagram
-    [INLINE CHART]= live interactive plot rendered into this deck
-
-  Rhetorical rule used throughout: NAME THE OBJECTION FIRST.
-  Act 1 pre-empts "we already knew that." Act 5 pre-empts "why not just HTML?"
-
-  FORMAT: lexis-revealjs. `---` starts every slide; headings are text sizes only.
-  Slide modifiers are shortcodes. See the `lexis` skill.
--->
 <p><br></p>
 <p><span class="large">John Paul Helveston</span></p>
 <p>September 15, 2026</p>
@@ -735,49 +714,104 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="handwriting-practice-for-a-six-year-old" class="inverse center middle">
-<h1>Handwriting practice<br>for a six-year-old</h1>
+<section class="lexis-slide-title middle center" data-background-color="#000000">
+<h1 class="lexis-slide-title"></h1>
+<p><br> <img data-src="images/vehicletrends.gif" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
 </section>
 </section>
 <section class="slide level0">
 
-<div class="cols-row">
-<div class="col">
-<div id="what-i-asked-for" class="h2">
-What I asked for
-</div>
-<blockquote>
-<p>Make me a one-page handwriting practice sheet for my son with sentences about <strong>minecraft</strong></p>
-</blockquote>
-</div>
-<div class="col">
+<section id="prompt" class="middle center">
+<h1>Prompt:</h1>
+<h2 id="make-a-one-page-handwriting-practice-sheet-with-sentences-about-pokemon"><em>“Make a one-page handwriting practice sheet<br>with sentences about <strong>pokemon</strong>”</em></h2>
+</section>
+</section>
+<section class="slide level0">
+
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/handwriting-practice-minecraft.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+<p><img data-src="images/handwriting-practice-pokemon.png" class="quarto-figure quarto-figure-center" height="800"></p>
+</figure>
+</div>
+</section>
+<section class="slide level0">
+
+<section id="eight-rounds-later" class="inverse middle center">
+<h1>Eight rounds later…</h1>
+</section>
+</section>
+<section class="slide level0">
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-practice-minecraft.png" class="quarto-figure quarto-figure-center" height="800"></p>
+</figure>
+</div>
+</section>
+<section class="slide level0">
+
+<section class="lexis-slide-title center">
+<h1 class="lexis-slide-title"></h1>
+<p><span class="large">I want <span class="blue"><strong>this</strong></span> layout, with <span class="amber"><strong>these</strong></span> sentences.</span></p>
+<div class="cols-row">
+<div class="col blueborder">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-practice-minecraft.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</div>
+<div class="col amberborder">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-practice-pokemon.png" class="quarto-figure quarto-figure-center" height="600"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
+</section>
 <section class="slide level0">
 
-<div class="cols-row">
-<div class="col">
-<div id="what-i-got-the-next-time" class="h2">
-What I got the next time
-</div>
-<blockquote>
-<p>Make me a one-page handwriting practice sheet for my son with sentences about <strong>pokemon</strong></p>
-</blockquote>
-</div>
-<div class="col">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/handwriting-practice-pokemon.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="i-have-no-way-to-ask-for-that." class="inverse center middle">
+<h1>I have no way to ask for that.</h1>
+<aside class="notes">
+<p>Not “it’s hard.” No way. There is no such request.</p>
+<p>The layout and the sentences are the same object. I can’t keep one and swap the other, because there is no “one” and no “other” — there’s one PDF that came out of one pass. My only move is to start over and re-roll, and eight rounds of evidence say I might not get back here.</p>
+<p>That’s the real cost, and it’s the one a better model doesn’t fix.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="where-is-the-sentence" class="inverse center middle">
+<h1>Where is the sentence?</h1>
+<aside class="notes">
+<p>The audience test. Point at it. In that PDF, which file, which line, which cell IS “Diamonds are the best ore to find”? Nowhere. It’s smeared across one probabilistic pass.</p>
+<!-- TODO: the defusing line goes here — pre-empt "we already knew that"
+     before Act 2 names entanglement. -->
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 </section>
 <section class="slide level0">
 
@@ -1311,6 +1345,7 @@ What I got the next time
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
+'pdfMaxPagesPerSlide': 1,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
@@ -1575,6 +1610,11 @@ What I got the next time
               if (link.dataset.originalHref !== undefined) {
                 link.href = link.dataset.originalHref;
               }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
             }
           }
         function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
