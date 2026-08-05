@@ -1,3 +1,19 @@
+- Put the dashboard somewhere earlier on
+- I wrote a blog post about how I built it
+- Can we get "trust" in
+
+Diagram:
+
+- Find where to take AI out of the loop (with quarto)
+- Top half -> Africa map -> bottom half -> trust
+
+Next time:
+
+- Show the hook - walk through it completely
+- Glimpse into "here's what you'll see in the rest of the talk"
+- Anything you want feedback on (specific examples, slide design, etc.)
+
+
 # The Unreasonable Effectiveness of Quarto — Outline
 
 **Core Theme**:
@@ -31,24 +47,11 @@ Agents are probabilistic. Quarto is not.
 
 - Embarrassing Africa map
 
----
-
-## Act 4 — Scaling to bigger artifacts: data websites
-
-- vehicletrends.us — real, multi-page, self-updating Quarto site over 10M+
-  vehicle listings.
-- Agent never touched the data — it lives in an R package the
-  pages read at render, so every number has an address and nothing goes stale.
-- "But why not just build a Shiny app?"** — Shiny is fine and it's still source, but Shiny makes you to *assemble the artifact* (UI + inputs + outputs + server + reactivity) and then run a server to hold it up.
-- Quarto: markdown + a chunk returning a widget the browser runs, no server.
-- **Small pieces have small context windows** — Isolation is the efficiency argument made architectural. The whole site is never in scope at once, so every interaction stays cheap and every component stays individually correct.
-- **Put the hard thing in a box.** The MapLibre/PMTiles map is a separate repo,
-  iterated alone, dropped in via a 6-line iframe.
-- **It's just static files.** Charts, map, even the Shiny app (Shinylive → WASM) all run client-side. No server to run, secure, or pay for.
+How do you get trust?
 
 ---
 
-## Act 5 — You also get trust
+## Act 5 — You get trust
 
 HTML can't tell you it's broken. A `.qmd` has a compile step
 
@@ -60,6 +63,19 @@ HTML can't tell you it's broken. A `.qmd` has a compile step
   deterministic error the agent reads and fixes without me.
   (Rhymes with Africa map: *that map rendered fine too.*)
 - **Checkable twice:** by machine (`quarto render`) and by human (plain text → the edit is a diff; review scales with the change, not the document).
+
+---
+
+## Act 4 — Scaling to bigger artifacts: data websites
+
+- vehicletrends.us — real, multi-page, self-updating Quarto site over 10M+
+  vehicle listings.
+- Agent never touched the data — it lives in an R package the
+  pages read at render, so every number has an address and nothing goes stale.
+- "But why not just build a Shiny app?"** — You can! It's fine. I just wanted to keep it serverless. **It's just static files.** Charts, map, even the Shiny app (Shinylive → WASM) all run client-side. No server to run, secure, or pay for.
+- **Small pieces have small context windows** — Isolation is the efficiency argument made architectural. The whole site is never in scope at once, so every interaction stays cheap and every component stays individually correct. **asking for a qmd is just markdown** - fewer tokens.
+- **Put the hard thing in a box.** The MapLibre/PMTiles map is a separate repo,
+  iterated alone, dropped in via a 6-line iframe.
 
 ---
 
