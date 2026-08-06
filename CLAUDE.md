@@ -71,7 +71,7 @@ the session's shared vocabulary.
 | Time | Act | Content |
 |---|---|---|
 | 0:00–2:30 | **1. The problem, unnamed** | Handwriting sheet cold open. No thesis, no agenda. It drifted; fixing one sentence regenerated everything. → *"Where is the sentence?"* → the defusing line |
-| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure. `.qmd` + CSV. Spine sentence (1/3). *Architect, don't prompt* |
+| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure (2 slides). The three-sheet payoff. Spine sentence (1/3). *Architect, don't prompt* |
 | 5:30–7:30 | **3. The turn** ⭐ | *"And here's what I didn't expect — it's also cheaper."* Token table as evidence. **Tax → discount** |
 | 7:30–13:30 | **4. Scale it** ⭐ | The **vehicletrends.us** dashboard, 6 min, mid-deck so overrun can't reach it. Recording → "handwriting sheet at scale" (agent wrote source, never the data) → **"why not Shiny?"** (Shiny = build the artifact; Quarto = write source, browser renders) → iframe isolation / small context windows → "it's just static files" → spine (2/3) |
 | 13:30–16:00 | **5. Why it converges** | "So why not just ask for HTML?" — steelman it, live inline chart, *this deck is a `.qmd`*, then: **HTML can't tell you it's broken; `.qmd` has a compile step.** Checkable by machine + human. Caveat |
@@ -115,11 +115,18 @@ the session's shared vocabulary.
 | File | Used by |
 |---|---|
 | `handwriting-practice-pokemon.{png,pdf}` | Act 1 cold open — the original |
-| `handwriting-practice-minecraft.{png,pdf}` | Act 1 — the drifted version, eight rounds later |
+| `handwriting-good-minecraft.png` | Act 1 — the drifted version, eight rounds later |
+| `handwriting-good-{pokemon,minecraft,mario}.png` | Act 2 payoff — the three-sheet slide |
+| `handwriting-practice-minecraft.pdf` | **png is gone**; only the pdf survives, nothing references it |
 | `vehicletrends.gif` | the teaser slide right after the title |
 | `fig-tokens.png` | Act 3, token cost |
 | `africa-bad.jpeg` | Act 5 |
 | `africa-correct.png` | **currently unreferenced** by `index.qmd` |
+
+Note `handwriting-good-minecraft.png` does double duty: it is both the *drifted*
+sheet in Act 1 and the *minecraft* sheet in the Act 2 payoff. That's fine — same
+artifact, two arguments — but if Act 1 ever needs a visibly worse sheet, don't
+just swap the file, it will change the payoff slide too.
 
 Render status: `index.qmd` **has not been re-rendered** since the lexis
 conversion, the `css: custom.css` fix, or the entanglement figure being ported
@@ -168,22 +175,46 @@ directly in `index.qmd` (Act 2, right after "Where is the sentence?"). Neither i
 light slide.
 
 ```
-SLIDE 1 — ASK FOR THE DOCUMENT
-   [ me ] ──▶ [ agent ] ═══════▶  ▓▒▓▒▒▓▓▒   run 1     ← swaps in place
-      ▲          (dashed)          ↑                      to run 2, run 3
-      └──── review & re-prompt ────┘  woven here, probabilistically
+SLIDE 1 —  content/data ENTANGLED WITH structure/format   (one loop, stacked 3×)
+   [ me ] ──▶ [ agent ] ═══════▶  ▓▒▓▒▒▓▓▒            stripes
+      ▲          (dashed)
+      └──── review & re-prompt ────┐
+   [ me ] ──▶ [ agent ] ═══════▶  ∴∵∴∵∴∵∴             dots
+      ▲                                                 same loop,
+      └──── review & re-prompt ────┐                    different weave
+   [ me ] ──▶ [ agent ] ═══════▶  ▪▫▪▫▫▪▪             blocks
 
-SLIDE 2 — ASK FOR THE SOURCE
-   [ me ] ──▶ [ agent ] ──writes──▶ [ .qmd ]  ┐
-      │          (dashed)                     ├─render─▶ ▓▒▓▒▒▓▓▒
-      └──── you edit directly ──────▶ [ data ]┘   woven here, deterministically
+SLIDE 2 —  Content NO LONGER ENTANGLED WITH Format
+                                     ┌ .qmd ──────┐
+   [ me ] ──▶ [ agent ] ──writes──▶  │ ▒▒ yaml ▒▒ │ ──render──▶ ▓▒▓▒▒▓▓▒
+      │          (dashed)            │ ▓▓content▓▓│            click 2:
+      └──── you edit directly ─────▶ └─────▲──────┘            ▒▓▒▓▓▒▒▓
+                                        [ data ]          amber→green, blue fixed
 ```
+
+**Both headings are colored SVG `<tspan>`s, not labels, and they are the whole
+legend.** Slide 2's is slide 1's sentence with two words inserted — that echo is
+the point, so change them together or not at all. The color vocabulary is taught
+by the two slides *before* the figure and never re-explained inside it:
+
+1. **concrete** — "I want [*this*]{blue} layout, with [*these*]{amber}
+   sentences", over the two handwriting sheets in matching colored borders;
+2. **named** — "Everything I ask an agent for is two things":
+   `content / data` (amber) and `structure / format` (blue), closing on *"ask
+   for the document, and they come back **entangled**"*;
+3. **the figure**, carrying only that closing sentence across its top.
+
+Don't reintroduce a swatch legend. There was one; at 17px it was unreadable from
+the back, and it duplicated in miniature what step 2 already says at full size.
 
 Design rules, in force:
 
-- **Never draw content as a box inside a format box.** Containment implies the two
-  are already separate and nested, which is the visual opposite of entanglement.
-  Use a **striped bar** — irregular stripes, content and format interleaved.
+- **Never draw the OUTPUT as content nested inside a format box.** Containment
+  implies the two are already separate and in their own places, which is the
+  visual opposite of entanglement. The rendered document is always a **striped
+  bar** — irregular stripes, content and format interleaved, no boundaries.
+  (Scope matters: nesting inside the **`.qmd`** on slide 2 is not a violation, it
+  is the claim — see below. The rule is about the artifact, not the source.)
 - **Color vocabulary (never break it):** amber = **content**, blue =
   **format/structure**, green = **human's direct action**. Green appears on slide
   2 only, and is the only new color there.
@@ -195,32 +226,185 @@ Design rules, in force:
 - Its job in Act 2 is **generalization, not explanation** — the handwriting sheet
   already taught the idea. That justifies a simple picture.
 
-**Slide 1 shows variance by swapping in place.** Three documents (`#doc`,
-`#docRun2`, `#docRun3`) occupy the same slot and replace each other across two
-clicks: `fragment fade-out` at index 1, `fragment fade-in-then-out` at index 1,
-`fragment` at index 2. **The replacement is the argument** — each new run doesn't
-sit beside the last one so you can pick, it destroys it. That is the eight-rounds
-story, generalized. A fanned-out layout was considered and rejected for exactly
-this reason.
+**Slide 1 shows variance by stacking the same loop three times.** (This replaces
+an earlier swap-in-place build, where three documents shared one slot and
+replaced each other. It was too subtle to read from the back of the room — the
+only thing that changed was stripe widths inside a small box.) Now: at rest, one
+loop, centered. Click 1 lifts it to the top third and run 2 arrives beneath it;
+click 2 adds run 3.
+
+- **The loop is drawn once, as `#loop` in `<defs>`, and `<use>`d three times.**
+  Keep it that way. The rows being *provably* identical is the argument; the
+  eye lines them up and the only difference left is what falls out the end.
+- **The big arrow carries no label, on purpose.** It used to say "one
+  probabilistic pass" above and "woven here" below; stacked three deep that was
+  six lines of repeated text. Both are now spoken, not drawn. Anything added to
+  `#loop` costs 3×, so the bar for putting text in there is high.
+- **The three documents differ in MOTIF, not in proportion:** `#doc` (stripes,
+  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same frame, same two colors,
+  unmistakably different weave. Do not "unify" them back into three stripe
+  patterns — legibility at distance is the whole reason they exist. The rows are
+  **unlabelled**: no "run 1 / run 2 / run 3". Three documents falling out of one
+  identical loop already says it, and the numbers only invited reading the stack
+  as progress.
+- **A known imperfection, considered and kept.** "Format as little dots" is a bit
+  odd — arguably the format *is* the box, and only the content should vary. But
+  an agent re-draws the wording too, not just the layout, so both really do move
+  between runs. Holding one motif fixed would quietly claim otherwise. If this
+  ever gets revisited, that's the trade being made.
+- **Nothing points from one document to the next.** The only route between rows
+  is the dashed *review & re-prompt* connector, and it lands on `me`, never on
+  the document. Run 2 is not an edit of run 1; run 1 is discarded and the whole
+  thing rewoven. That's the eight-rounds story, and it's what the old
+  replace-in-place build was carrying. If you ever redraw this, **do not draw an
+  arrow from run 1 to run 2** — that turns the figure into an argument for
+  iteration converging, which is the opposite claim.
+- **The lift is CSS, not a reveal effect.** The row-1 group is
+  `fragment custom lift`; reveal's `.fragment:not(.custom)` rule leaves it
+  visible at rest and just toggles `.visible`, and `custom.css` parks it 150
+  user units low until then. Degrades safely: without that rule the row renders
+  at its final position and simply doesn't move.
+- **Nothing is captioned at the bottom.** A summary line ("same prompt, same
+  model — a different document every time") lived there and was cut as implied.
+  The stack is the caption.
+- **Both arrows in `#loop` are identical** — `stroke-width="2.5"`, a 50-unit run,
+  a 4-unit gap before whatever they land on. me→agent and agent→document are the
+  same kind of step and should not be weighted differently; the second one used
+  to be a 274-unit, 6-wide slab. That shortening is what pulled the document in
+  to x=621 and left the row centred with 211 units of margin either side.
 
 **Slide 2 ends in ONE output, and it is byte-identical to slide 1's run 1.**
 `#docOut` is a hand-kept copy of `#doc` — **if you edit one, edit both.** The
 claim is *not* "this makes a better document"; it's that the weaving moved
 somewhere you can reach. Losing that identity silently turns the figure into an
 argument for determinism, which is the wrong takeaway (a better model doesn't fix
-entanglement).
+entanglement). It carries **no caption** — "same input, same document — every
+time" was there and was cut; the identical bar is the caption. "woven here" is
+gone from both slides too.
+
+- **The `.qmd` box is a NEUTRAL container — black stroke, never blue.** That is
+  load-bearing. It holds a blue `yaml` block and an amber `content` block, each
+  in its own place. Painting the container blue would say "format contains
+  content"; painting it black says "a file contains both," which is what a
+  `.qmd` is. This is the **only** box in the deck where the two colours nest.
+- **The blue IS the YAML, and naming it is worth the ink.** It turns "format"
+  into something the room can point at, and it is precisely what Act 6's *change
+  one word* changes — the figure sets up its own callback four acts later. If it
+  ever needs to be more concrete, `format: pdf` in the band beats the word
+  `yaml`; don't annotate further than that. **The file is not meant to be read**,
+  only to show that each half has a place.
+- **The `.qmd` and the output bar carry the same two colours on purpose.** In the
+  file they sit in labelled blocks; in the bar they interleave with no boundary.
+  That contrast is the whole address argument, so the two must stay on screen
+  together — don't move the output off this slide.
+- **`data` is amber, lives outside, and feeds the `.qmd` — not render.** Data *is*
+  content; what differs is the kind of address (a row, not a line number), which
+  is why it doesn't get a colour of its own. Routing it into the `.qmd` is both
+  literally true (a chunk reads it at render) and safe *because the container is
+  neutral* — an earlier version fed it straight into render, on the reasoning
+  that flowing amber into a blue box collapses two addresses into one. That
+  objection died with the blue box; if the container ever goes back to blue,
+  the routing has to go back too.
+- **Nothing points at `data`** — not the agent, not the green arrow. Data comes
+  from the world. Resist adding an arrow; the empty input is the point.
+- **One green arrow, landing square on the `.qmd`'s bottom edge.** It lands on
+  the file, not on either block, because both halves inside it are yours to edit.
+  There were two; the second pointed at `data`, which reversed the tier-2 story
+  (you don't hand-type exact values, you recompute them). An even earlier version
+  ended *beside* the `data` box, pointing up past it at nothing. It enters at
+  x=418 — left of the `data` box, which stays **centred on the `.qmd` at x=493**.
+  Arrows get out of each other's way; boxes don't go off-axis to make room.
+- **Every arrow in the figure is `stroke-width="2.5"`.** `markerUnits` is
+  `strokeWidth`, so a fatter line silently means a fatter head: the green arrow
+  at 3 had a head running 16.5 units back from the tip, which overlapped its own
+  corner. If a line ever needs a different weight, check that the straight run
+  before the tip is longer than 5.5 × stroke-width.
+
+**Click 2 on slide 2: the content changes and the format doesn't.** The amber
+`content` block in the `.qmd` and every amber band in the output bar turn green
+together, in place; the blue bands are byte-identical and **do not move**. That
+stillness is the argument — a regenerated document can never promise it. Green
+because green has meant *your direct action* since the arrow one click earlier,
+so the green bands read as exactly the bits your hand reached.
+
+- `#docOutEdited` is `#docOut` with every `#C0820F` → `#38B44A` and **nothing
+  else changed** — same rects, same widths, same order. Edit one, edit both, or
+  the click stops meaning "only the content changed." (Generate it, don't
+  hand-copy: `body.replace('#C0820F','#38B44A')`.)
+- The at-rest bar is still byte-identical to slide 1's `#doc`. The rule covers
+  the document *before* the click; the green state is a third thing.
+- Mechanism is the swap-in-place pattern: `fragment fade-out` at index 2 for the
+  amber version, plain `fragment` at index 2 for the green one, same transform.
+
+## The three-sheet payoff (Act 2, immediately after the figure)
+
+**"Same `format`. No drift."** — three lexis columns, each a `.qmd` box over the
+real sheet it produces: pokemon, minecraft, mario. It cashes the abstraction out
+in the actual artifacts and answers the Act 1 cold open, and the spine sentence
+lands on the slide right after it.
+
+It is **deliberately the same shape as figure slide 1** — three variants of one
+identical thing — with the meaning inverted. There, one unchanged input gave
+three different documents. Here, three changed inputs give three documents that
+differ only where they were changed. Keep that rhyme.
+
+- **What carries it is what doesn't vary.** Same `.qmd` box as the figure, same
+  190×124, and the blue `yaml` band byte-identical in all three columns. Only
+  the content block changes: one word, one colour. The three SVGs are verified
+  identical apart from that — keep them that way, it's the argument.
+- **Colours are amber / purple / red — NOT green.** Green means *your direct
+  action* and was on screen one slide earlier as the content you had just
+  edited; a green block here reads as "this is the edited one". Thematic
+  colours (pokemon amber, minecraft green, mario red) are charming and cost
+  exactly that.
+- **No `render` label under the arrows** — three of them is three repetitions of
+  a word the previous slide just taught. Same rule as `#loop`: anything inside a
+  repeated unit costs 3×.
+- These three SVGs use **no ids and no markers** — arrowheads are explicit
+  triangles — so they add nothing to the document-wide id namespace. Keep it
+  that way if you copy the pattern.
 
 Mechanics: pure inline SVG in a ```` ```{=html} ```` block + reveal fragments — no
-anime.js, no CDN, nothing to vendor. Each slide is `viewBox="0 0 1240 470"`, and
-each carries **its own `<defs>`**; they deliberately do *not* share one `<use>`
+anime.js, no CDN, nothing to vendor. Slide 1 is `viewBox="0 0 1240 585"` (three
+rows, centerlines at y = 175 / 340 / 505), slide 2 is `viewBox="0 0 1240 470"`,
+and each carries **its own `<defs>`**; they deliberately do *not* share one `<use>`
 across slides, because reveal puts non-current slides in `display:none` and
 cross-slide `<use>` resolution is unreliable there. SVG ids are unique across the
-whole document (`ahDark`/`ahDark2` etc.) — keep them that way.
+whole document (`ahDark`/`ahDark2` etc.) — keep them that way. **Both slides
+share the 1240-unit width on purpose**: same viewBox width means both render at
+the same scale, so a box on slide 2 is physically the same size as the matching
+box on slide 1. Don't shrink slide 1's width to close up its margins — that
+silently breaks the mirroring.
+
+**All five arrowhead markers use `refX="5.5"`, not `7`.** `markerUnits` defaults
+to `strokeWidth`, so the head scales with the line. Putting refX on the tip (7)
+parks the point exactly at the path end, and near that point the triangle is
+narrower than the stroke is thick — so the line's butt-cap pokes out through the
+tip. Backing refX off by 1.5 marker units slides the head forward until the
+stroke ends where the triangle is already wider than it. Consequence: **the
+visible tip lands 1.5 × stroke-width beyond the path end**, so path endpoints are
+written with that overhang already subtracted (e.g. the connectors stop at
+y=301/466 to land ~3 units above the `me` boxes at y=308/473). If you ever change
+a stroke width, re-check the arrow's landing gap.
 
 **Not yet visually vetted.** Coordinates are hand-computed; bounding boxes were
-checked on paper but never rendered. Likeliest cosmetic fixes: the `writes` label
-wedged between the agent and `.qmd` boxes on slide 2 (~50px clearance), and the
-green edit arrows' clearance under the `data` box.
+checked on paper but never rendered. Likeliest cosmetic fixes: on slide 1, the
+`review & re-prompt` labels sit ~22px under their connector lines; on slide 2,
+the `writes` label wedged between the agent and `.qmd` boxes (~50px clearance),
+and whether white monospace on the amber `content` block has enough contrast —
+`#C0820F` is dark enough that it should, but it is the one colour pairing here
+that has never been looked at. Slide 1 is tall
+(585 units) and its aspect is wider than 16:9, so **width** is what binds, not
+`max-height:80vh` — to make its type bigger, raise the font sizes; narrowing the
+viewBox would work too but is ruled out by the shared-width rule above, and
+changing the height alone does nothing.
+
+**Known asymmetry, not yet resolved:** slide 1's `me`/`LLM agent` boxes are
+110/180 wide and slide 2's are 96/156, at different x. The pair is *supposed* to
+read as one picture with one variable changed, so this is worth a pass — but
+slide 1's row is centred and slide 2's chain is genuinely longer (it has `.qmd`
+and `data` in the middle), so they can't be both centred and x-aligned. Pick one
+before fiddling.
 
 ## Styling
 
@@ -287,7 +471,7 @@ prose lines in `README.md` and this file. Safe to delete whenever John wants to.
 
 - **Visually vet the entanglement figure.** It's written and in the deck, but has
   never been rendered — coordinates are hand-computed. See the figure section for
-  the two likeliest collisions. Check both slides' fragment steps actually swap
+  the two likeliest collisions. Check both slides' fragment steps actually build
   the way they're meant to.
 - **Produce remaining demo assets.** The handwriting-sheet images exist; these
   slots are still marked with `> **[BRACKETED]**` blockquote placeholders in

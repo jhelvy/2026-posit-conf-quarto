@@ -31,18 +31,26 @@ which is all this script is for:
   // Keep in sync with --lexis-ov-gap / --lexis-ov-pad in lexis.scss.
   var GAP = 26;       // px between tiles
   var PAD = 30;       // px around the grid
-  var MIN_TILE = 260; // narrowest thumbnail worth rendering, in px
+  var MIN_TILE = 320; // narrowest thumbnail worth rendering, in px (a laptop
+                      // lands on 4 columns; a wide monitor gets 5)
   var MAX_COLS = 6;   // past this the slides are unreadable
 
   function init(Reveal) {
     var viewportEl = Reveal.getViewportElement();
     var slidesEl = Reveal.getSlidesElement();
 
-    // "12 / 55" on every tile, like the xaringan tile view. Set once, always;
-    // the CSS only reveals it (as a ::after) inside overview mode.
+    // "12 / 55" under every tile, like the xaringan tile view. Set once,
+    // always; the CSS only reveals it (as a ::after) inside overview mode. The
+    // attribute goes on the GRID ITEM (the .stack wrapper when reveal built
+    // one, else the section itself), not the leaf slide: the label is drawn
+    // below the tile in the row gap, so it has to hang off an element with
+    // `overflow: visible` — the leaf keeps `overflow: hidden` to clip content.
     var slides = Reveal.getSlides();
     slides.forEach(function (slide, i) {
-      slide.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
+      var tile = slide.parentElement && slide.parentElement.classList.contains("stack")
+        ? slide.parentElement
+        : slide;
+      tile.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
     });
 
     // ---- 1. thumbnail scale -------------------------------------------------

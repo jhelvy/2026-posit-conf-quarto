@@ -98,7 +98,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-85520e607e78399f333533d08902faca.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-d91063f734c5651f8531c17988f933d2.css">
   <link rel="stylesheet" href="custom.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -224,18 +224,26 @@
     // Keep in sync with --lexis-ov-gap / --lexis-ov-pad in lexis.scss.
     var GAP = 26;       // px between tiles
     var PAD = 30;       // px around the grid
-    var MIN_TILE = 260; // narrowest thumbnail worth rendering, in px
+    var MIN_TILE = 320; // narrowest thumbnail worth rendering, in px (a laptop
+                        // lands on 4 columns; a wide monitor gets 5)
     var MAX_COLS = 6;   // past this the slides are unreadable
 
     function init(Reveal) {
       var viewportEl = Reveal.getViewportElement();
       var slidesEl = Reveal.getSlidesElement();
 
-      // "12 / 55" on every tile, like the xaringan tile view. Set once, always;
-      // the CSS only reveals it (as a ::after) inside overview mode.
+      // "12 / 55" under every tile, like the xaringan tile view. Set once,
+      // always; the CSS only reveals it (as a ::after) inside overview mode. The
+      // attribute goes on the GRID ITEM (the .stack wrapper when reveal built
+      // one, else the section itself), not the leaf slide: the label is drawn
+      // below the tile in the row gap, so it has to hang off an element with
+      // `overflow: visible` — the leaf keeps `overflow: hidden` to clip content.
       var slides = Reveal.getSlides();
       slides.forEach(function (slide, i) {
-        slide.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
+        var tile = slide.parentElement && slide.parentElement.classList.contains("stack")
+          ? slide.parentElement
+          : slide;
+        tile.setAttribute("data-lexis-ov-num", (i + 1) + " / " + slides.length);
       });
 
       // ---- 1. thumbnail scale -------------------------------------------------
@@ -728,11 +736,14 @@ built-in one.
 </section>
 <section class="slide level0">
 
+<section class="lexis-slide-title inverse">
+<h1 class="lexis-slide-title"></h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/handwriting-practice-pokemon.png" class="quarto-figure quarto-figure-center" height="800"></p>
 </figure>
 </div>
+</section>
 </section>
 <section class="slide level0">
 
@@ -742,25 +753,20 @@ built-in one.
 </section>
 <section class="slide level0">
 
+<section class="lexis-slide-title inverse">
+<h1 class="lexis-slide-title"></h1>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="images/handwriting-practice-minecraft.png" class="quarto-figure quarto-figure-center" height="800"></p>
+<p><img data-src="images/handwriting-good-minecraft.png" class="quarto-figure quarto-figure-center" height="800"></p>
 </figure>
 </div>
 </section>
+</section>
 <section class="slide level0">
 
-<section class="lexis-slide-title center">
-<h1 class="lexis-slide-title"></h1>
-<p><span class="large">I want <span class="blue"><strong>this</strong></span> layout, with <span class="amber"><strong>these</strong></span> sentences.</span></p>
+<section id="i-want-these-sentences-with-this-layout" class="center">
+<h1>I want <span class="amber"><strong>these</strong></span> sentences with <span class="blue"><strong>this</strong></span> layout</h1>
 <div class="cols-row">
-<div class="col blueborder">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/handwriting-practice-minecraft.png" class="quarto-figure quarto-figure-center" height="600"></p>
-</figure>
-</div>
-</div>
 <div class="col amberborder">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -768,8 +774,38 @@ built-in one.
 </figure>
 </div>
 </div>
+<div class="col blueborder">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-good-minecraft.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
+</section>
+<section class="slide level0">
+
+<div class="center">
+<h1 id="if-you-ask-ai-for-the-artifact">If you ask AI for the <em>artifact</em>,</h1>
+<h1 id="the-content-is-entangled-with-the-format">the <span class="amber">Content</span> is entangled with the <span class="blue">Format</span></h1>
+<div class="cols-row">
+<div class="col amberborder">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-practice-pokemon.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</div>
+<div class="col blueborder">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-good-minecraft.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level0">
 
@@ -782,10 +818,29 @@ built-in one.
   taught the idea, so this only has to show the same shape without pokemon in it.
 
   The claim: the weaving happens inside one probabilistic pass, so the only lever
-  you have on the content is to re-prompt and take another draw. The document
-  swaps IN PLACE across two clicks (run 1 -> 2 -> 3) rather than fanning out,
-  because the point is that each new run REPLACES the last one — you never get to
-  hold two of them and pick. Same prompt, different document, every time.
+  you have on the content is to re-prompt and take another draw.
+
+  BUILD. At rest, one loop, centered. Click 1: that loop LIFTS to the top third
+  (CSS transform, see custom.css) and run 2 arrives under it. Click 2: run 3.
+  The three loops are byte-identical to each other — literally one <use> of
+  #loop — so the only thing that differs down the column is the document that
+  falls out the end. That is the whole argument, and it has to be legible from
+  the back of the room, which is why the three documents differ in SHAPE
+  (stripes / dots / blocks) and not merely in stripe widths.
+
+  The connectors matter: run 2 is not an edit of run 1, it is another full pass
+  reached only by re-prompting. Nothing points from one document to the next.
+
+  NO LEGEND, on purpose. The two previous slides teach the color vocabulary —
+  one concretely (this layout / these sentences), one by naming it — so all this
+  slide needs is the closing sentence from that second slide, carried across the
+  top in the same two colors. A swatch legend said the same thing in 17px type
+  nobody could read from the back.
+
+  Everything else that used to be labelled is now spoken: no "ASK FOR THE
+  DOCUMENT" (the sentence above says it), no run 1/2/3 (the stack says it), no
+  summary caption (three different documents off one identical loop IS the
+  caption).
 
   Colors are the deck's vocabulary and never change: amber = content/data,
   blue = structure/format, green = the human's direct action.
@@ -795,7 +850,7 @@ built-in one.
   are NOT shared via one <use> across slides on purpose: reveal puts non-current
   slides in display:none, and cross-slide <use> resolution is unreliable there.
 -->
-<svg viewbox="0 0 1240 470" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+<svg viewbox="0 0 1240 585" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
   <defs>
     <!-- THE DOCUMENT. Amber and blue interleaved, irregular: content and format
@@ -816,100 +871,425 @@ built-in one.
       <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
     </g>
 
-    <!-- Runs 2 and 3: same prompt, different draw. Same total width, same
-         height, different stripes — so the only thing that reads as changed is
-         the weave itself. -->
-    <g id="docRun2">
-      <rect x="0" y="0" width="30" height="64" fill="#007bff"></rect>
-      <rect x="30" y="0" width="18" height="64" fill="#C0820F"></rect>
-      <rect x="48" y="0" width="24" height="64" fill="#007bff"></rect>
-      <rect x="72" y="0" width="14" height="64" fill="#C0820F"></rect>
-      <rect x="86" y="0" width="34" height="64" fill="#007bff"></rect>
-      <rect x="120" y="0" width="26" height="64" fill="#C0820F"></rect>
-      <rect x="146" y="0" width="16" height="64" fill="#007bff"></rect>
-      <rect x="162" y="0" width="30" height="64" fill="#C0820F"></rect>
-      <rect x="192" y="0" width="20" height="64" fill="#007bff"></rect>
-      <rect x="212" y="0" width="28" height="64" fill="#C0820F"></rect>
+    <!-- Runs 2 and 3: same prompt, different draw. Same frame, same two colors,
+         a completely different weave. The motif changes (stripes -> dots ->
+         blocks) rather than just the proportions, because from row 10 a
+         re-shuffled stripe pattern reads as "the same picture again." -->
+    <g id="docDots">
+      <rect x="0" y="0" width="240" height="64" fill="#FFFFFF"></rect>
+      <circle cx="15" cy="14" r="7" fill="#007bff"></circle>
+      <circle cx="37" cy="16" r="7" fill="#C0820F"></circle>
+      <circle cx="58" cy="13" r="7" fill="#C0820F"></circle>
+      <circle cx="80" cy="16" r="7" fill="#007bff"></circle>
+      <circle cx="101" cy="14" r="7" fill="#C0820F"></circle>
+      <circle cx="123" cy="15" r="7" fill="#007bff"></circle>
+      <circle cx="144" cy="13" r="7" fill="#C0820F"></circle>
+      <circle cx="166" cy="16" r="7" fill="#C0820F"></circle>
+      <circle cx="187" cy="14" r="7" fill="#007bff"></circle>
+      <circle cx="209" cy="15" r="7" fill="#C0820F"></circle>
+      <circle cx="228" cy="13" r="7" fill="#007bff"></circle>
+      <circle cx="25" cy="32" r="7" fill="#C0820F"></circle>
+      <circle cx="47" cy="34" r="7" fill="#007bff"></circle>
+      <circle cx="69" cy="31" r="7" fill="#C0820F"></circle>
+      <circle cx="90" cy="33" r="7" fill="#C0820F"></circle>
+      <circle cx="112" cy="32" r="7" fill="#007bff"></circle>
+      <circle cx="134" cy="34" r="7" fill="#C0820F"></circle>
+      <circle cx="155" cy="31" r="7" fill="#007bff"></circle>
+      <circle cx="177" cy="33" r="7" fill="#C0820F"></circle>
+      <circle cx="198" cy="32" r="7" fill="#007bff"></circle>
+      <circle cx="220" cy="34" r="7" fill="#C0820F"></circle>
+      <circle cx="15" cy="50" r="7" fill="#C0820F"></circle>
+      <circle cx="37" cy="48" r="7" fill="#007bff"></circle>
+      <circle cx="58" cy="51" r="7" fill="#C0820F"></circle>
+      <circle cx="80" cy="49" r="7" fill="#007bff"></circle>
+      <circle cx="101" cy="50" r="7" fill="#007bff"></circle>
+      <circle cx="123" cy="48" r="7" fill="#C0820F"></circle>
+      <circle cx="144" cy="51" r="7" fill="#007bff"></circle>
+      <circle cx="166" cy="49" r="7" fill="#C0820F"></circle>
+      <circle cx="187" cy="50" r="7" fill="#C0820F"></circle>
+      <circle cx="209" cy="48" r="7" fill="#007bff"></circle>
+      <circle cx="228" cy="51" r="7" fill="#C0820F"></circle>
       <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
     </g>
 
-    <g id="docRun3">
-      <rect x="0" y="0" width="14" height="64" fill="#C0820F"></rect>
-      <rect x="14" y="0" width="34" height="64" fill="#007bff"></rect>
-      <rect x="48" y="0" width="20" height="64" fill="#C0820F"></rect>
-      <rect x="68" y="0" width="12" height="64" fill="#007bff"></rect>
-      <rect x="80" y="0" width="30" height="64" fill="#C0820F"></rect>
-      <rect x="110" y="0" width="24" height="64" fill="#007bff"></rect>
-      <rect x="134" y="0" width="32" height="64" fill="#C0820F"></rect>
-      <rect x="166" y="0" width="18" height="64" fill="#007bff"></rect>
-      <rect x="184" y="0" width="26" height="64" fill="#C0820F"></rect>
-      <rect x="210" y="0" width="30" height="64" fill="#007bff"></rect>
+    <g id="docBlocks">
+      <rect x="0" y="0" width="240" height="64" fill="#FFFFFF"></rect>
+      <rect x="12" y="7" width="16" height="16" fill="#C0820F"></rect>
+      <rect x="35" y="5" width="14" height="14" fill="#007bff"></rect>
+      <rect x="56" y="8" width="15" height="15" fill="#C0820F"></rect>
+      <rect x="79" y="6" width="17" height="17" fill="#007bff"></rect>
+      <rect x="103" y="7" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="124" y="5" width="16" height="16" fill="#C0820F"></rect>
+      <rect x="147" y="8" width="15" height="15" fill="#007bff"></rect>
+      <rect x="169" y="6" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="191" y="7" width="17" height="17" fill="#007bff"></rect>
+      <rect x="215" y="5" width="15" height="15" fill="#C0820F"></rect>
+      <rect x="15" y="27" width="15" height="15" fill="#007bff"></rect>
+      <rect x="37" y="29" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="59" y="26" width="17" height="17" fill="#007bff"></rect>
+      <rect x="83" y="28" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="104" y="27" width="16" height="16" fill="#007bff"></rect>
+      <rect x="127" y="29" width="15" height="15" fill="#C0820F"></rect>
+      <rect x="149" y="26" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="170" y="28" width="17" height="17" fill="#007bff"></rect>
+      <rect x="194" y="27" width="15" height="15" fill="#C0820F"></rect>
+      <rect x="216" y="29" width="14" height="14" fill="#007bff"></rect>
+      <rect x="12" y="47" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="33" y="45" width="16" height="16" fill="#007bff"></rect>
+      <rect x="56" y="48" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="77" y="46" width="15" height="15" fill="#007bff"></rect>
+      <rect x="99" y="47" width="14" height="14" fill="#C0820F"></rect>
+      <rect x="120" y="45" width="17" height="17" fill="#C0820F"></rect>
+      <rect x="144" y="48" width="14" height="14" fill="#007bff"></rect>
+      <rect x="165" y="46" width="16" height="16" fill="#C0820F"></rect>
+      <rect x="188" y="47" width="15" height="15" fill="#007bff"></rect>
+      <rect x="211" y="45" width="16" height="16" fill="#C0820F"></rect>
       <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
     </g>
 
-    <marker id="ahDark" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"></path></marker>
-    <marker id="ahGray" markerwidth="9" markerheight="9" refx="7" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#696969"></path></marker>
+    <!-- THE LOOP, drawn once and <use>d three times so the rows are provably
+         identical. Local coords: the row's centerline is y = 0. -->
+    <!-- The row is centred in the 1240-wide box: 211 units of margin either
+         side. Both arrows are identical — same weight, same 50-unit run, same
+         4-unit landing gap — because they are the same kind of step. -->
+    <g id="loop">
+      <rect x="211" y="-32" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+      <text x="266" y="9" font-size="24" text-anchor="middle" fill="#121212">me</text>
+
+      <path d="M 323 0 L 373 0" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark)"></path>
+
+      <!-- agent. dashed = the stochastic component. Same box in both slides:
+           the agent is not what changes between them. -->
+      <rect x="381" y="-32" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+      <text x="471" y="9" font-size="24" text-anchor="middle" fill="#121212">LLM agent</text>
+
+      <!-- One jump, no intermediate, and deliberately unlabelled: the row
+           repeats three times, so any text here repeats three times too. The
+           emptiness under this arrow is exactly the space Quarto fills on the
+           next slide — say "one probabilistic pass" out loud instead. -->
+      <path d="M 563 0 L 613 0" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark)"></path>
+    </g>
+
+    <!-- refX=5.5, not 7 (the tip). markerUnits defaults to strokeWidth, so the
+         head scales with the line; parking the tip exactly on the path end
+         leaves the line's blunt butt-cap poking out through the taper, because
+         near the point the triangle is narrower than the stroke is thick.
+         Backing refX off by 1.5 marker units pushes the head forward far enough
+         that the stroke ends where the triangle is already wider than it —
+         covered — while the visible tip lands 1.5x stroke-width past the path
+         end. Path ends are set with that overhang subtracted. -->
+    <marker id="ahDark" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"></path></marker>
+    <marker id="ahGray" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#696969"></path></marker>
   </defs>
 
-  <!-- The striped bar is the only place the audience meets these two colors,
-       so name them once, up front, before the bar appears. -->
-  <g transform="translate(420 16)">
-    <rect x="0" y="0" width="18" height="18" fill="#C0820F"></rect>
-    <text x="28" y="15" font-size="17" fill="#696969">content / data</text>
-    <rect x="176" y="0" width="18" height="18" fill="#007bff"></rect>
-    <text x="204" y="15" font-size="17" fill="#696969">structure / format</text>
+  <!-- Carried verbatim from the slide before, in the same two colors. This is
+       the legend now — a sentence they have already read once, at a size that
+       survives the back of the room. -->
+  <text x="620" y="46" font-size="50" text-anchor="middle" fill="#121212">
+    <tspan fill="#C0820F">Content</tspan>
+    <tspan> entangled with </tspan>
+    <tspan fill="#007bff">Format</tspan>
+  </text>
+
+  <!-- RUN 1. `fragment custom lift` is a transform trigger, not a reveal
+       effect: reveal's `:not(.custom)` rule leaves it visible at rest, and
+       custom.css parks it 150 units low so it sits centered on its own, then
+       releases it to y=175 on click 1. If that CSS ever goes missing the row
+       simply renders in its final place and nothing breaks. -->
+  <g class="fragment custom lift" data-fragment-index="1">
+    <g transform="translate(0 175)">
+      <use href="#loop"></use>
+      <g transform="translate(621 -54) scale(1.7)"><use href="#doc"></use></g>
+    </g>
   </g>
 
-  <text x="40" y="32" font-size="19" fill="#696969" letter-spacing="1.5">ASK FOR THE DOCUMENT</text>
-
-  <!-- me -->
-  <rect x="40" y="178" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
-  <text x="95" y="217" font-size="22" text-anchor="middle" fill="#121212">me</text>
-
-  <path d="M 152 210 L 202 210" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark)"></path>
-
-  <!-- agent. dashed = the stochastic component. Same box in both slides: the
-       agent is not what changes between them. -->
-  <rect x="210" y="178" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5" stroke-dasharray="7 5"></rect>
-  <text x="300" y="217" font-size="22" text-anchor="middle" fill="#121212">LLM agent</text>
-
-  <!-- One jump, no intermediate. The emptiness under this arrow is exactly the
-       space Quarto fills on the next slide. -->
-  <text x="531" y="188" font-size="20" fill="#121212" text-anchor="middle">one probabilistic pass</text>
-  <path d="M 394 210 L 668 210" stroke="#121212" stroke-width="6" marker-end="url(#ahDark)"></path>
-  <text x="531" y="240" font-size="19" fill="#E74A2F" text-anchor="middle">woven here</text>
-
-  <!-- THE SWAP. All three occupy the same slot, so each run replaces the last.
-       run 1 is visible at rest and fades out on click 1; run 2 lives only while
-       fragment 1 is current; run 3 arrives on click 2 and stays. -->
-  <g class="fragment fade-out" data-fragment-index="1">
-    <g transform="translate(690 156) scale(1.7)"><use href="#doc"></use></g>
-    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 1</text>
+  <!-- RUN 2. The connector is the only route from one row to the next, and it
+       lands on `me` — not on the document. You don't get to touch run 1; you
+       get to ask again. -->
+  <g class="fragment" data-fragment-index="1">
+    <path d="M 825 233 L 825 245 Q 825 257 811 257 L 280 257 Q 266 257 266 269 L 266 301" fill="none" stroke="#696969" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
+    <text x="545" y="279" font-size="22" fill="#696969" text-anchor="middle">review &amp; re-prompt</text>
+    <g transform="translate(0 340)">
+      <use href="#loop"></use>
+      <g transform="translate(621 -54) scale(1.7)"><use href="#docDots"></use></g>
+    </g>
   </g>
 
-  <g class="fragment fade-in-then-out" data-fragment-index="1">
-    <g transform="translate(690 156) scale(1.7)"><use href="#docRun2"></use></g>
-    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 2</text>
-  </g>
-
+  <!-- RUN 3. -->
   <g class="fragment" data-fragment-index="2">
-    <g transform="translate(690 156) scale(1.7)"><use href="#docRun3"></use></g>
-    <text x="894" y="140" font-size="19" fill="#696969" text-anchor="middle">run 3</text>
+    <path d="M 825 398 L 825 410 Q 825 422 811 422 L 280 422 Q 266 422 266 434 L 266 466" fill="none" stroke="#696969" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
+    <text x="545" y="444" font-size="22" fill="#696969" text-anchor="middle">review &amp; re-prompt</text>
+    <g transform="translate(0 505)">
+      <use href="#loop"></use>
+      <g transform="translate(621 -54) scale(1.7)"><use href="#docBlocks"></use></g>
+    </g>
   </g>
-
-  <text x="894" y="300" font-size="17" fill="#696969" text-anchor="middle">same prompt, different document</text>
-
-  <!-- The only lever. This is the whole claim of the slide: the loop does not
-       reach the content, it just takes another draw. -->
-  <path d="M 1060 270 L 1060 376 Q 1060 390 1046 390 L 109 390 Q 95 390 95 376 L 95 248" fill="none" stroke="#696969" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
-  <text x="560" y="418" font-size="20" fill="#696969" text-anchor="middle">review &amp; re-prompt — your only lever to edit the content</text>
 
 </svg>
 <aside class="notes">
 <p>Generalize what they just watched — don’t re-explain it.</p>
-<p>Amber is my content, blue is the structure. By the time I see the document they’re fused: one probabilistic pass wove them together. Note the dashed box — that step is a draw, not a computation.</p>
-<p>Click 1, click 2: same prompt, same model. Run 2. Run 3. And notice what happens to run 1 — it’s gone. That’s the part that matters. Each new run doesn’t sit next to the last one so I can pick; it REPLACES it. Eight rounds of that is how I lost the pokemon sentences.</p>
+<p>Same two things, same two colors. By the time I see the document they’re fused — one probabilistic pass wove them together, right there in the middle. Note the dashed box: that step is a draw, not a computation.</p>
+<p>Click 1. Same prompt, same model, same loop — line it up, it’s the identical picture — and look what comes out the end. Click 2. Again.</p>
+<p>And notice what the arrow connects to. It never reaches the document above it. It goes back to me. The second one isn’t an edit of the first — the first is thrown away and the whole thing is rewoven from scratch. Eight rounds of that is how I lost the pokemon sentences.</p>
 <p>So when a sentence is wrong, there’s nothing to reach into. All I can do is review, ask again, and take another draw.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+</section>
+<section class="slide level0">
+
+<section class="lexis-slide-title center middle">
+<h1 class="lexis-slide-title"></h1>
+<!--
+  ENTANGLEMENT FIGURE, SLIDE 2 OF 2 — "ask for the source."
+
+  Deliberately the SAME left-hand composition as slide 1 (me -> agent, same
+  boxes, same positions) so the pair reads as one picture with one thing
+  changed. What changed is the middle: the agent now writes structure, the
+  content sits beside it, and the weave happens at render.
+
+  The output is the SAME #doc as run 1 on the previous slide, on purpose. The
+  argument is NOT "this makes a better document" — it's that the weaving moved
+  somewhere you can reach. Keep the two <defs> copies identical.
+-->
+<svg viewbox="0 0 1240 470" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <!-- Byte-identical to #doc on the previous slide. If you edit one, edit
+         both — the whole point is that the output did not change. -->
+    <g id="docOut">
+      <rect x="0" y="0" width="18" height="64" fill="#007bff"></rect>
+      <rect x="18" y="0" width="26" height="64" fill="#C0820F"></rect>
+      <rect x="44" y="0" width="14" height="64" fill="#007bff"></rect>
+      <rect x="58" y="0" width="32" height="64" fill="#C0820F"></rect>
+      <rect x="90" y="0" width="20" height="64" fill="#007bff"></rect>
+      <rect x="110" y="0" width="16" height="64" fill="#C0820F"></rect>
+      <rect x="126" y="0" width="28" height="64" fill="#007bff"></rect>
+      <rect x="154" y="0" width="24" height="64" fill="#C0820F"></rect>
+      <rect x="178" y="0" width="12" height="64" fill="#007bff"></rect>
+      <rect x="190" y="0" width="28" height="64" fill="#C0820F"></rect>
+      <rect x="218" y="0" width="22" height="64" fill="#007bff"></rect>
+      <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
+    </g>
+
+    <!-- Byte-identical to #docOut except every amber fill is green. Same
+         rects, same widths, same order — if you touch one, touch both, or the
+         click stops meaning "only the content changed". -->
+    <g id="docOutEdited">
+      <rect x="0" y="0" width="18" height="64" fill="#007bff"></rect>
+      <rect x="18" y="0" width="26" height="64" fill="#38B44A"></rect>
+      <rect x="44" y="0" width="14" height="64" fill="#007bff"></rect>
+      <rect x="58" y="0" width="32" height="64" fill="#38B44A"></rect>
+      <rect x="90" y="0" width="20" height="64" fill="#007bff"></rect>
+      <rect x="110" y="0" width="16" height="64" fill="#38B44A"></rect>
+      <rect x="126" y="0" width="28" height="64" fill="#007bff"></rect>
+      <rect x="154" y="0" width="24" height="64" fill="#38B44A"></rect>
+      <rect x="178" y="0" width="12" height="64" fill="#007bff"></rect>
+      <rect x="190" y="0" width="28" height="64" fill="#38B44A"></rect>
+      <rect x="218" y="0" width="22" height="64" fill="#007bff"></rect>
+      <rect x="0" y="0" width="240" height="64" fill="none" stroke="#121212" stroke-width="2.5"></rect>
+    </g>
+
+    <!-- refX=5.5 for the same reason as slide 1's markers: at 7 the tip sits on
+         the path end and the stroke poked out through the taper. -->
+    <marker id="ahDark2" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"></path></marker>
+    <marker id="ahAmber2" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#C0820F"></path></marker>
+    <marker id="ahGreen2" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#38B44A"></path></marker>
+  </defs>
+
+  <!-- The same sentence as slide 1, with two words inserted. Deliberately the
+       maximum callback: the room re-reads a line it already knows and the only
+       thing that changed is the claim. Same reason there's no legend here. -->
+  <text x="620" y="46" font-size="50" text-anchor="middle" fill="#121212">
+    <tspan> Quarto disentangles </tspan>
+    <tspan fill="#C0820F">Content</tspan>
+    <tspan> and </tspan>
+    <tspan fill="#007bff">Format</tspan>
+  </text>
+
+  <!-- me. The whole row sits on y=180, the .qmd box's centre line. -->
+  <rect x="30" y="148" width="96" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <text x="78" y="187" font-size="22" text-anchor="middle" fill="#121212">me</text>
+
+  <!-- no loop back on this slide: the agent runs once, not round and round -->
+  <text x="150" y="136" font-size="16" fill="#696969" text-anchor="middle">prompt once</text>
+  <path d="M 128 180 L 170 180" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+
+  <!-- agent. STILL dashed — still probabilistic. That's the honest part: the
+       agent didn't get better, the thing it writes did. -->
+  <rect x="178" y="148" width="156" height="64" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+  <text x="256" y="187" font-size="22" text-anchor="middle" fill="#121212">LLM agent</text>
+
+  <text x="364" y="168" font-size="17" fill="#121212" text-anchor="middle">writes</text>
+  <path d="M 338 180 L 390 180" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+
+  <!-- THE .qmd — a NEUTRAL container, black-stroked, holding both halves in
+       named places. This is the one box in the deck where content may sit
+       inside format's colour scheme, and it is legal precisely because the
+       container is not blue: it is a file, not a format. Nesting here is the
+       truth (a .qmd really does hold both), which is the opposite of the
+       output bar, where nesting would be a lie.
+
+       The blue is the YAML, and saying so is worth the ink: it makes "format"
+       a thing this room can point at, and it is what Act 6's "change one word"
+       changes. Two solid blocks, no further annotation — the file's job here is
+       to show that each half has a PLACE, not to be read. -->
+  <text x="493" y="106" font-size="22" text-anchor="middle" fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+  <rect x="398" y="118" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <rect x="414" y="134" width="158" height="36" fill="#007bff"></rect>
+  <text x="493" y="159" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <!-- The content block swaps to green on click 2 — see the note on the output
+       bar below for what that click is arguing. -->
+  <g class="fragment fade-out" data-fragment-index="2">
+    <rect x="414" y="182" width="158" height="44" fill="#C0820F"></rect>
+    <text x="493" y="211" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect x="414" y="182" width="158" height="44" fill="#38B44A"></rect>
+    <text x="493" y="211" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
+  </g>
+
+  <!-- data = the exact values, living OUTSIDE in a file of their own. Still
+       amber, because data is content — what differs is the kind of address
+       (a row, not a line number). No arrow reaches it from the agent, and none
+       from me either: data comes from the world. Centred under the .qmd: the
+       green arrow gets out of its way by entering further left, not by pushing
+       this off-axis. -->
+  <rect x="433" y="300" width="120" height="56" rx="6" fill="#FFFFFF" stroke="#C0820F" stroke-width="3.5"></rect>
+  <text x="493" y="337" font-size="22" text-anchor="middle" fill="#C0820F" font-family="SFMono-Regular, Menlo, monospace">data</text>
+  <path d="M 493 296 L 493 250" fill="none" stroke="#C0820F" stroke-width="2.5" marker-end="url(#ahAmber2)"></path>
+
+  <!-- One input, one output. `quarto render` takes the .qmd; the data is
+       pulled in by it. -->
+  <text x="669" y="166" font-size="20" fill="#121212" text-anchor="middle">render</text>
+  <path d="M 592 180 L 746 180" stroke="#121212" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+
+  <!-- The same document as run 1. Deliberately, provably unchanged. Same two
+       colours as the .qmd box above — but here they interleave with no
+       boundary, and there they each have a place. That contrast IS the address
+       argument, so keep both on screen together.
+
+       CLICK 2 swaps it for #docOutEdited, which is the same bar with the amber
+       bands turned green. The blue bands are byte-identical and do NOT move:
+       you changed the content, so only the content changed. Every band stayed
+       exactly where it was, which is the thing a regenerated document can never
+       promise. Green because green has meant "your direct action" all along —
+       the green bands are the ones your hand reached. -->
+  <g class="fragment fade-out" data-fragment-index="2">
+    <g transform="translate(768 126) scale(1.7)"><use href="#docOut"></use></g>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <g transform="translate(768 126) scale(1.7)"><use href="#docOutEdited"></use></g>
+  </g>
+
+  <!-- The payoff, and now a single arrow: you reach past the agent into the
+       source itself. Both halves inside it are yours — the yaml and the
+       content — so it lands on the file, not on one block. Green = your direct
+       action, and it is the only new colour on the slide.
+       stroke-width 2.5 like every other arrow on both slides: markerUnits is
+       strokeWidth, so a fatter line also means a fatter head. At 3 the head ran
+       16.5 units back from the tip and sat on top of the corner. -->
+  <g class="fragment" data-fragment-index="1">
+    <path d="M 78 216 L 78 270 Q 78 282 90 282 L 406 282 Q 418 282 418 270 L 418 250" fill="none" stroke="#38B44A" stroke-width="2.5" marker-end="url(#ahGreen2)"></path>
+    <text x="250" y="308" font-size="20" fill="#38B44A" text-anchor="middle">you edit directly</text>
+  </g>
+
+</svg>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="same-format.-no-drift." class="center">
+<h1>Same <span class="blue">format</span>. No drift.</h1>
+<!--
+  THE PAYOFF — the abstraction cashed out in the real sheets, and the answer to
+  Act 1. It is deliberately the same shape as figure slide 1 (three variants of
+  one identical thing) with the meaning inverted: there, one unchanged input
+  gave three different documents; here, three changed inputs give three
+  documents that differ ONLY where they were changed.
+
+  What carries it is what DOESN'T vary. The `.qmd` box is the same box from the
+  slide before, at the same 190x124, and the blue `yaml` band is byte-identical
+  in all three columns. Only the content block changes — one word, one colour —
+  and the sheets below differ in exactly that and nothing else. Same layout,
+  same margins, same everything. That is "no drift", shown rather than claimed.
+
+  Colours: amber / purple / red. NOT green, deliberately — green means "your
+  direct action" and it was on screen one slide ago as the content you had just
+  edited; a green block here would read as "this is the edited one". Thematic
+  colours (pokemon amber, minecraft green, mario red) are tempting and would be
+  charming; they cost that.
+
+  No `render` label under the arrows: three of them would be three repetitions
+  of a word the previous slide just taught. Same rule as `#loop` on slide 1 —
+  anything in a repeated unit costs 3x.
+-->
+<div class="cols-row">
+<div class="col center">
+<svg viewbox="0 0 240 200" width="216" height="180" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+  <text x="120" y="20" font-size="20" text-anchor="middle" fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+  <rect x="25" y="30" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <rect x="41" y="46" width="158" height="36" fill="#007bff"></rect>
+  <text x="120" y="71" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="41" y="94" width="158" height="44" fill="#C0820F"></rect>
+  <text x="120" y="123" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">pokemon</text>
+  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"></path>
+  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"></path>
+</svg>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-good-pokemon.png" class="quarto-figure quarto-figure-center" height="330"></p>
+</figure>
+</div>
+</div>
+<div class="col center">
+<svg viewbox="0 0 240 200" width="216" height="180" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+  <text x="120" y="20" font-size="20" text-anchor="middle" fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+  <rect x="25" y="30" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <rect x="41" y="46" width="158" height="36" fill="#007bff"></rect>
+  <text x="120" y="71" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="41" y="94" width="158" height="44" fill="#7B5CD6"></rect>
+  <text x="120" y="123" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">minecraft</text>
+  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"></path>
+  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"></path>
+</svg>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-good-minecraft.png" class="quarto-figure quarto-figure-center" height="330"></p>
+</figure>
+</div>
+</div>
+<div class="col center">
+<svg viewbox="0 0 240 200" width="216" height="180" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+  <text x="120" y="20" font-size="20" text-anchor="middle" fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+  <rect x="25" y="30" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#121212" stroke-width="2.5"></rect>
+  <rect x="41" y="46" width="158" height="36" fill="#007bff"></rect>
+  <text x="120" y="71" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="41" y="94" width="158" height="44" fill="#E74A2F"></rect>
+  <text x="120" y="123" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">mario</text>
+  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"></path>
+  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"></path>
+</svg>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/handwriting-good-mario.png" class="quarto-figure quarto-figure-center" height="330"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>This is the answer to the sheet I opened with.</p>
+<p>Three sheets, three topics, and I never touched the layout — same margins, same guide lines, same everything. The only thing I changed is the one block that says what it’s about. Nothing drifted, because there was nothing to drift: the layout isn’t being re-decided every time, it’s being re-run.</p>
+<p>And I didn’t proofread three documents. I proofread one word, three times.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

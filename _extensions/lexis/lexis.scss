@@ -139,7 +139,8 @@ $progress-color: $color-blue;
   // declaring them here is what lets them follow the scale the script picks.
   // The fallbacks keep the grid usable if the script never runs.
   --lexis-ov-scale: .25;
-  --lexis-ov-gap: 26px;  // keep in sync with GAP in lexis-overview.html
+  --lexis-ov-gap: 26px;  // COLUMN gap; keep in sync with GAP in lexis-overview.html
+  --lexis-ov-row-gap: 58px; // taller: holds the per-tile number below each tile
   --lexis-ov-pad: 30px;  // keep in sync with PAD in lexis-overview.html
   --lexis-ov-tile-w: calc(var(--slide-width, 1600px) * var(--lexis-ov-scale));
   // One REAL pixel, expressed inside the zoomed tile: every border, shadow and
@@ -211,7 +212,8 @@ $progress-color: $color-blue;
 
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--lexis-ov-tile-w));
-  gap: var(--lexis-ov-gap);
+  column-gap: var(--lexis-ov-gap);
+  row-gap: var(--lexis-ov-row-gap); // extra room for the number below each tile
   justify-content: center;
   align-content: start;
   text-align: left;
@@ -239,7 +241,12 @@ $progress-color: $color-blue;
   zoom: var(--lexis-ov-scale);
   transform: none !important;
   transition: none !important;
-  overflow: hidden;
+  // `visible`, not `hidden`: the per-tile number is drawn just BELOW the tile
+  // (in the row gap) as this element's ::after, so it must not be clipped.
+  // Content that overflows the slide is clipped on the inner leaf instead (see
+  // the `> section > section` rule); a bare non-stack slide is authored to the
+  // 1600x900 canvas, so there is nothing of its own to clip here.
+  overflow: visible;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -256,6 +263,9 @@ $progress-color: $color-blue;
   height: 100% !important;
   transform: none !important;
   transition: none !important;
+  // Clips slide content here (the grid item above is now `overflow: visible` so
+  // its ::after number can hang into the row gap below the tile).
+  overflow: hidden;
 }
 
 // `.stack` needs its own selector for anything reveal sets on
@@ -264,7 +274,7 @@ $progress-color: $color-blue;
 // `pointer-events: none` is left alone on purpose: reveal binds its
 // click-to-jump handler to leaf sections only, and the leaf covers the whole
 // tile, so clicks have to fall through the wrapper to reach it.
-.reveal.overview .slides > section.stack { overflow: hidden; }
+.reveal.overview .slides > section.stack { overflow: visible; }
 
 // A thumbnail should show the WHOLE slide, fragments included — otherwise a
 // slide built out of `. . .` pauses is mostly blank space in the grid. reveal's
@@ -307,7 +317,7 @@ $progress-color: $color-blue;
 .reveal.overview .slides > section.stack:hover {
   outline: none;
   box-shadow:
-    0 0 0 calc(4 * var(--lexis-ov-px)) $color-blue,
+    0 0 0 calc(4 * var(--lexis-ov-px)) $color-yellow,
     0 calc(3 * var(--lexis-ov-px)) calc(10 * var(--lexis-ov-px)) rgba(0, 0, 0, .45);
 }
 
@@ -317,43 +327,42 @@ $progress-color: $color-blue;
 .reveal.overview .slides > section.stack.present {
   outline: none;
   box-shadow:
-    0 0 0 calc(4 * var(--lexis-ov-px)) $color-red,
+    0 0 0 calc(4 * var(--lexis-ov-px)) $color-blue,
     0 calc(3 * var(--lexis-ov-px)) calc(10 * var(--lexis-ov-px)) rgba(0, 0, 0, .45);
 }
 .reveal.overview .slides > section.present:hover,
 .reveal.overview .slides > section.stack.present:hover {
   box-shadow:
-    0 0 0 calc(4 * var(--lexis-ov-px)) $color-blue,
+    0 0 0 calc(4 * var(--lexis-ov-px)) $color-yellow,
     0 calc(3 * var(--lexis-ov-px)) calc(10 * var(--lexis-ov-px)) rgba(0, 0, 0, .45);
 }
 // reveal's own outline, on the leaf inside a stack.
 .reveal.overview .slides section.present,
 .reveal.overview .slides section:hover { outline: none; }
 
-// Per-tile page number ("12 / 55"), like the xaringan tile view — the deck's
-// real slide number is a single window-anchored element and is hidden below.
-// lexis-overview.js writes the attribute. The attribute selector in the
-// pseudo-element rule is REQUIRED: reveal kills `section::before/::after`
+// Per-tile page number ("12 / 55"), centered BELOW the tile in the row gap,
+// like the xaringan tile view — the deck's real slide number is a single
+// window-anchored element and is hidden below. lexis-overview.js writes the
+// attribute onto the grid item (see there for why), so `> section` targets it.
+// The attribute selector is REQUIRED: reveal kills `section::before/::after`
 // outright in overview (`display: none !important`), so this has to both
-// out-specify that and be `!important` itself.
-.reveal.overview .slides section[data-lexis-ov-num]::after {
+// out-specify that and be `!important` itself. `top: 100%` drops it past the
+// bottom edge; the grid item is `overflow: visible`, so it shows in the gap.
+// One color for all tiles now — it sits on the gray backdrop, never on a tile.
+.reveal.overview .slides > section[data-lexis-ov-num]::after {
   display: block !important;
   content: attr(data-lexis-ov-num);
   position: absolute;
-  right: calc(11 * var(--lexis-ov-px));
-  bottom: calc(8 * var(--lexis-ov-px));
+  left: 0;
+  right: 0;
+  top: calc(100% + 9 * var(--lexis-ov-px));
+  text-align: center;
   z-index: 20;
   font-family: $font-body;
-  font-size: calc(13 * var(--lexis-ov-px));
+  font-size: calc(15 * var(--lexis-ov-px));
   line-height: 1;
-  color: $color-gray;
+  color: rgba(255, 255, 255, .92);
   pointer-events: none;
-}
-// ...white where the tile is dark, matching the slide-number rules below.
-.reveal.overview .slides section.inverse[data-lexis-ov-num]::after,
-.reveal.overview .slides section[data-background-color][data-lexis-ov-num]::after,
-.reveal.overview .slides section[data-background-image][data-lexis-ov-num]::after {
-  color: rgba(255, 255, 255, .85);
 }
 
 // Window-anchored chrome that would otherwise float on top of the tiles: the

@@ -12,3 +12,18 @@
    variants; these follow the same wrapper-div pattern. */
 .reveal .amberborder img { border: 6px solid #C0820F; }
 .reveal .blueborder img  { border: 6px solid #007bff; }
+
+/* Entanglement figure, slide 1: the lift.
+   Run 1 sits centered on its own, then rises to the top third to make room for
+   runs 2 and 3. This is not a reveal effect — the group is marked
+   `fragment custom lift` so reveal's `.fragment:not(.custom)` rule leaves it
+   visible at rest and only toggles `.visible` on it; all this does is park it
+   150 user units low until that happens. 150 = 325 (optical center of the
+   figure, below its heading) - 175 (its final row position), both in the SVG's
+   viewBox units. If this rule is ever lost, the row just renders at its final
+   position and the slide still reads correctly — it simply doesn't move. */
+.reveal svg g.lift {
+  transform: translateY(150px);
+  transition: transform 500ms ease;
+}
+.reveal svg g.lift.visible { transform: translateY(0); }

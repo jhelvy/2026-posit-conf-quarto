@@ -533,8 +533,22 @@ function Pandoc(doc)
     -- blank slides.
     local visible = #pandoc.utils.stringify(pandoc.Pandoc(blocks)):gsub("%s", "") > 0
     if not visible then
-      -- images/plots carry no stringify text but are still visible content
-      pandoc.walk_block(pandoc.Div(blocks), { Image = function() visible = true end })
+      -- Images/plots carry no stringify text but are still visible content, and
+      -- so is raw HTML: a slide whose whole body is a ```{=html} block (an
+      -- inline <svg> figure, an <iframe> embed) stringifies to "" and would
+      -- otherwise vanish silently. An HTML *comment* is raw too and must stay
+      -- invisible, so strip comments before deciding.
+      local function raw_visible(el)
+        if el.format ~= "html" and el.format ~= "html5" then return end
+        if #(el.text:gsub("<!%-%-.-%-%->", ""):gsub("%s", "")) > 0 then
+          visible = true
+        end
+      end
+      pandoc.walk_block(pandoc.Div(blocks), {
+        Image     = function() visible = true end,
+        RawBlock  = raw_visible,
+        RawInline = raw_visible,
+      })
     end
     if visible then
       -- Group consecutive `.col` Divs into `.cols-row` flex containers.
