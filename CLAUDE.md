@@ -71,7 +71,7 @@ the session's shared vocabulary.
 | Time | Act | Content |
 |---|---|---|
 | 0:00–2:30 | **1. The problem, unnamed** | Handwriting sheet cold open. No thesis, no agenda. It drifted; fixing one sentence regenerated everything. → *"Where is the sentence?"* → the defusing line |
-| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure (2 slides). The three-sheet payoff. Spine sentence (1/3). *Architect, don't prompt* |
+| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure (2 slides). The payoff slide. Spine sentence (1/3). *Architect, don't prompt* |
 | 5:30–7:30 | **3. The turn** ⭐ | *"And here's what I didn't expect — it's also cheaper."* Token table as evidence. **Tax → discount** |
 | 7:30–13:30 | **4. Scale it** ⭐ | The **vehicletrends.us** dashboard, 6 min, mid-deck so overrun can't reach it. Recording → "handwriting sheet at scale" (agent wrote source, never the data) → **"why not Shiny?"** (Shiny = build the artifact; Quarto = write source, browser renders) → iframe isolation / small context windows → "it's just static files" → spine (2/3) |
 | 13:30–16:00 | **5. Why it converges** | "So why not just ask for HTML?" — steelman it, live inline chart, *this deck is a `.qmd`*, then: **HTML can't tell you it's broken; `.qmd` has a compile step.** Checkable by machine + human. Caveat |
@@ -314,21 +314,21 @@ light slide.
 
 ```
 SLIDE 1 —  content/data ENTANGLED WITH structure/format   (one loop, stacked 3×)
-   [ me ] ──▶ [ agent ] ═══════▶  ▓▒▓▒▒▓▓▒            stripes
+   [ me ] ──▶ [ agent ] ═══▶  (▓▒▓▒▒▓)          stripes in an OVAL
       ▲          (dashed)
-      └──── review & re-prompt ────┐
-   [ me ] ──▶ [ agent ] ═══════▶  ∴∵∴∵∴∵∴             dots
-      ▲                                                 same loop,
-      └──── review & re-prompt ────┐                    different weave
-   [ me ] ──▶ [ agent ] ═══════▶  ▪▫▪▫▫▪▪             blocks
+      └──── review & re-prompt ──┐
+   [ me ] ──▶ [ agent ] ═══▶  (∴∵∴∵∴)           dots
+      ▲                                           same loop,
+      └──── review & re-prompt ──┐                different weave
+   [ me ] ──▶ [ agent ] ═══▶  (▪▫▪▫▫)           blocks
 
 SLIDE 2 —  Quarto DISENTANGLES Content and Format
    at rest — identical to slide 1's row 1, in the same place on screen:
-   [ me ] ──▶ [ agent ] ═══════▶  ▓▒▓▒▒▓▓▒
+   [ me ] ──▶ [ agent ] ═══▶  (▓▒▓▒▒▓)
 
-   click 1 — the chain opens ±155 and the .qmd drops into the gap:
+   click 1 — the chain opens ±140 and the .qmd drops into the gap:
                                      ┌ .qmd ──────┐
-   [ me ] ──▶ [ agent ] ──writes───▶ │ ▒▒ yaml ▒▒ │ ──render──▶ ▓▒▓▒▒▓▓▒
+   [ me ] ──▶ [ agent ] ──writes───▶ │ ▒▒ yaml ▒▒ │ ──render──▶ (▓▒▓▒▒▓)
       │          (dashed)            │ ▓▓content▓▓│
       └──── you edit directly ─────▶ └─────▲──────┘   click 2: PURPLE arrow
                     (click 2)         [▓ data ▓]      click 3: yellow→RED,
@@ -362,17 +362,26 @@ inside its SVG the crop has to be undone with it.
 
 **THE TWO SLIDES ARE REGISTERED, and that is load-bearing.** Slide 2 at rest is
 *byte-for-byte slide 1's row 1* — same boxes, same widths, same coordinates
-(me x=211, agent x=381, document x=621, row centred on y=175), differing only in
-the per-slide marker id. The two viewBoxes are then chosen so **both have centre
-y = 340.5** (slide 1 `0 96 1240 489`, slide 2 `0 76 1240 529`), and since both
-are width-bound at 1240 and vertically centred on the slide, the row lands at
-the *same screen position* on both. Advancing from slide 1 to slide 2 therefore
-changes **nothing at all** until you click — that stillness is the setup, and
-it is what earns the "one picture with one variable changed" claim. Slide 2's
-viewBox has ~250 units of dead space under the figure purely to hold that
-centre; it is invisible and it is the price. **Anything that changes either
-viewBox, either heading level, or that row's geometry breaks the registration —
-recompute both.**
+(me x=285, agent x=485, artifact x=755, row centred on y=175), differing only in
+the per-slide marker id. **Both slides now carry the identical viewBox,
+`0 77 1240 553`**, so the registration is exact by construction rather than by
+arithmetic: same box, same row y, and since both are width-bound at 1240 and
+vertically centred on the slide (`{{< middle >}}`), the row lands on the same
+pixels. Advancing from slide 1 to slide 2 therefore changes **nothing at all**
+until you click — that stillness is the setup, and it is what earns the "one
+picture with one variable changed" claim. Slide 2's content ends at y≈351, so
+it carries ~280 units of dead canvas below the figure purely to hold the
+registration; it is invisible and it is the price. **Anything that changes
+either viewBox, either heading level, or that row's geometry breaks the
+registration — recompute both.**
+
+Why 553 and not more: the lexis slide is **1600×900** with `padding: 45px 90px
+60px`, so the usable box is 1420×795, and the `#` heading eats ~100px of it.
+At viewBox width 1240 the figure renders 1420 px wide and 553/1240 × 1420 ≈
+**633 px** tall, which with the heading is ~735 of the 795 available. That
+~60px is the entire remaining slack — **height is now the binding constraint on
+slide 1, not width**, and it is why the artifact could get narrower but not
+appreciably taller.
 
 The color vocabulary is taught by the two slides *before* the figure and never
 re-explained inside it:
@@ -388,12 +397,26 @@ the back, and it duplicated in miniature what step 2 already says at full size.
 
 Design rules, in force:
 
+- **THE ARTIFACT IS AN OVAL, and the shape is doing work.** Three shapes, three
+  kinds of thing: **rounded rects are actors** (`me`, the agent), **a rect is a
+  file** (the `.qmd`), and the artifact is **neither**. In flowchart grammar an
+  oval is the terminator — the end of the line — which is exactly what a
+  rendered artifact is, and it also draws the thesis: a shape with no corners
+  and no edges has nothing to index against, so *you cannot point into it*.
+  **Hold this shape constant across both figure slides**; it is
+  `200 × 116`, an `<ellipse cx=100 cy=58 rx=100 ry=58>`, drawn 1:1 in parent
+  units (**no `scale()` on the `<use>` any more**). It replaced a 240×64 def at
+  `scale(1.7)` — 408×109, nearly four times wider than tall, which John read as
+  "a pretty long and big rectangle" rather than as a thing. Same height, half
+  the width.
 - **Never draw the OUTPUT as content nested inside a format box.** Containment
   implies the two are already separate and in their own places, which is the
-  visual opposite of entanglement. The rendered document is always a **striped
-  bar** — irregular stripes, content and format interleaved, no boundaries.
-  (Scope matters: nesting inside the **`.qmd`** on slide 2 is not a violation, it
-  is the claim — see below. The rule is about the artifact, not the source.)
+  visual opposite of entanglement. The artifact is always **irregular stripes,
+  content and format interleaved, no boundaries** — now clipped to the oval via
+  a `<clipPath>`, which leaves thin crescents at each end. That is correct:
+  they are stripes, not objects. (Scope matters: nesting inside the **`.qmd`**
+  on slide 2 is not a violation, it is the claim — see below. The rule is about
+  the artifact, not the source.)
 - **Color vocabulary (never break it):** yellow = **content**, teal =
   **format/structure**, purple = **human's direct action**, red = **content that
   changed**. Purple and red appear on slide 2 only. Exact hexes and the fill/ink split
@@ -424,9 +447,13 @@ beneath it; click 2 adds run 3.
   six lines of repeated text. Both are now spoken, not drawn. Anything added to
   `#loop` costs 3×, so the bar for putting text in there is high.
 - **The three documents differ in MOTIF, not in proportion:** `#doc` (stripes,
-  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same frame, same two colors,
+  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same oval, same two colors,
   unmistakably different weave. Do not "unify" them back into three stripe
-  patterns — legibility at distance is the whole reason they exist. The rows are
+  patterns — legibility at distance is the whole reason they exist. Only the
+  stripes are clipped; **every dot and block is placed to sit wholly inside the
+  oval** so nothing is sliced in half at the rim (a clipped half-dot reads as a
+  rendering bug, a clipped stripe doesn't). `r=10` and side 14–18 keep them the
+  physical size they had at `scale(1.7)`. The rows are
   **unlabelled**: no "run 1 / run 2 / run 3". Three documents falling out of one
   identical loop already says it, and the numbers only invited reading the stack
   as progress.
@@ -454,11 +481,22 @@ beneath it; click 2 adds run 3.
 - **Nothing is captioned at the bottom.** A summary line ("same prompt, same
   model — a different document every time") lived there and was cut as implied.
   The stack is the caption.
-- **Both arrows in `#loop` are identical** — `stroke-width="2.5"`, a 50-unit run,
-  a 4-unit gap before whatever they land on. me→agent and agent→document are the
-  same kind of step and should not be weighted differently; the second one used
-  to be a 274-unit, 6-wide slab. That shortening is what pulled the document in
-  to x=621 and left the row centred with 211 units of margin either side.
+- **Both arrows in `#loop` are identical** — `stroke-width="2.5"`, an **80-unit**
+  run, an 8-unit gap before whatever they land on. me→agent and agent→artifact
+  are the same kind of step and should not be weighted differently; the second
+  one was once a 274-unit, 6-wide slab. They were 50 until the artifact
+  narrowed: the oval gave back 208 units of width, and 30 of that went into each
+  arrow so the chain still spans the slide. **80 is now the only arrow length in
+  the whole figure** — slide 1's two and slide 2's three — which retires the old
+  50-vs-80 split. Row: me x=285, agent x=485, artifact x=755, ending at 955,
+  centred with 285 units of margin either side.
+- **The rows are 186 apart** (was 165), i.e. **70 units of clear air** between
+  one artifact and the next, against 56 before. John's read was that "the lines
+  feel a little cramped," and the measurable version is the `review &
+  re-prompt` label: it used to clear the next row's document by **2 units** and
+  now clears it by **15**. The oval is 7 units taller than the bar it replaced,
+  so all of the extra spacing came out of the height budget above — see the
+  1600×900 arithmetic in the registration note before adding any more.
 
 **Slide 2 ends in ONE output, and it is byte-identical to slide 1's run 1.**
 `#docOut` is a hand-kept copy of `#doc` — **if you edit one, edit both.** The
@@ -480,10 +518,12 @@ gone from both slides too.
   ever needs to be more concrete, `format: pdf` in the band beats the word
   `yaml`; don't annotate further than that. **The file is not meant to be read**,
   only to show that each half has a place.
-- **The `.qmd` and the output bar carry the same two colours on purpose.** In the
-  file they sit in labelled blocks; in the bar they interleave with no boundary.
-  That contrast is the whole address argument, so the two must stay on screen
-  together — don't move the output off this slide.
+- **The `.qmd` and the artifact carry the same two colours on purpose.** In the
+  file they sit in labelled blocks; in the oval they interleave with no
+  boundary. That contrast is the whole address argument, so the two must stay on
+  screen together — don't move the artifact off this slide. The **shapes** say
+  it a second time now: the file is a rect you can point into, the artifact is
+  an oval you can't.
 - **`data` is yellow, lives outside, and feeds the `.qmd` — not render.** Data *is*
   content; what differs is the kind of address (a row, not a line number), which
   is why it doesn't get a colour of its own. Routing it into the `.qmd` is both
@@ -499,7 +539,8 @@ gone from both slides too.
   There were two; the second pointed at `data`, which reversed the tier-2 story
   (you don't hand-type exact values, you recompute them). An even earlier version
   ended *beside* the `data` box, pointing up past it at nothing. It enters at
-  x=418 — left of the `data` box, which stays **centred on the `.qmd` at x=493**.
+  x=635 — inside the `.qmd`'s left edge (615) but left of the `data` box, which
+  stays **centred on the `.qmd` at x=710**.
   Arrows get out of each other's way; boxes don't go off-axis to make room.
 - **Every arrow in the figure is `stroke-width="2.5"`.** `markerUnits` is
   `strokeWidth`, so a fatter line silently means a fatter head: the edit arrow
@@ -512,30 +553,34 @@ gone from both slides too.
 | Click | What happens |
 |---|---|
 | *(rest)* | slide 1's row 1, exactly and in the same place |
-| **1** | the chain opens ±155 and the `.qmd` + `data` fade into the gap |
+| **1** | the chain opens ±140 and the `.qmd` + `data` fade into the gap |
 | **2** | the purple *you edit directly* arrow |
 | **3** | the content turns **red**; the format does not move |
 
 **Click 1 is the one the slide is built around.** Inserting the `.qmd` makes the
-chain 310 units longer, so it grows **symmetrically** — `me`+agent glide 155
-left, the document glides 155 right — and the row stays centred. Two CSS rules
+chain 280 units longer, so it grows **symmetrically** — `me`+agent glide 140
+left, the artifact glides 140 right — and the row stays centred. Two CSS rules
 (`.openleft` / `.openright` on `fragment custom` groups) do the gliding; **they
 are not optional**, unlike the old `.lift`, because without them the boxes stay
-put and the `.qmd` lands on top of the document. 155 = (1128 − 818) / 2.
+put and the `.qmd` lands on top of the artifact. 140 = (950 − 670) / 2. Opened,
+the chain runs me 145 · agent 345 · `.qmd` 615 · artifact 895–1095, with 145
+units of margin either side and a uniform 90-unit gap at every step.
 
-**The two arrows either side of the `.qmd` are 80 units, not 50.** Everything
-else in the chain — including `me`→agent, which has to stay identical to slide
-1 — is 50. The extra 30 each side is there so `writes` and `render` aren't
-wedged against the boxes. General rule: **shift = 75 + L**, and usefully the
-`.qmd` lands at x=496 *whatever* L is, so the data box, its arrow and the edit
-arrow's landing point never have to be recomputed when the arrows change. The direct agent→document arrow is nested *inside* `.openleft` so
-it travels with the agent while it fades — the one line that says "entangled"
-leaves as the file that fixes it arrives.
+**Every arrow in the figure is 80 units** — there is no longer a special case
+around the `.qmd`. It used to be 80 there and 50 everywhere else, so that
+`writes` and `render` weren't wedged against the boxes; when the artifact
+narrowed, slide 1's arrows went to 80 too and the split retired. `writes` and
+`render` are consequently the **same font size** now (20). General rule:
+**shift = 75 + L**, and usefully the `.qmd` lands at x=615 *whatever* L is, so
+the data box, its arrow and the edit arrow's landing point never have to be
+recomputed when the arrows change. The direct agent→artifact arrow is nested
+*inside* `.openleft` so it travels with the agent while it fades — the one line
+that says "entangled" leaves as the file that fixes it arrives.
 
 **Click 3: the content changes and the format doesn't.** The yellow `content`
-block in the `.qmd` and every yellow band in the output bar turn **red**
-together, in place; the teal bands are byte-identical and **do not move**. That
-stillness is the argument — a regenerated document can never promise it.
+block in the `.qmd` and every yellow stripe in the artifact turn **red**
+together, in place; the teal stripes are byte-identical and **do not move**.
+That stillness is the argument — a regenerated document can never promise it.
 
 Red is `#d1495b`, and the payoff slide two slides later uses **that exact red,
 white text and all**, for the minecraft column. So this click and that slide are
@@ -557,15 +602,16 @@ doesn't need to be — the arrow is labelled.
   else changed** — same rects, same widths, same order. Edit one, edit both, or
   the click stops meaning "only the content changed." (Generate it, don't
   hand-copy: `body.replace('#edae49','#d1495b')`.)
-- The at-rest bar is still byte-identical to slide 1's `#doc`. The rule covers
-  the document *before* the click; the red state is a third thing.
+- The at-rest oval is still byte-identical to slide 1's `#doc` (modulo the
+  per-slide clip id). The rule covers the artifact *before* the click; the red
+  state is a third thing.
 - **Mechanism is now an overlay, not a swap.** The red versions are drawn
   *after* the yellow ones with identical geometry, so they simply paint over.
   This replaced a `fade-out` + `fragment` pair, which stopped working once the
   `.qmd` itself became a fragment: a `fade-out` is visible *at rest*, so the
   amber block would have floated on screen before its own box existed.
 
-## The three-sheet payoff (Act 2, immediately after the figure)
+## The payoff slide (Act 2, immediately after the figure)
 
 **"Same `format`. No drift."** — **two** lexis columns, each a `.qmd` box over
 the real sheet it produces: pokemon and minecraft. It cashes the abstraction out
@@ -606,26 +652,27 @@ from the Act 1 cold open — pokemon, and the minecraft one it drifted into.
   that way if you copy the pattern.
 
 Mechanics: pure inline SVG in a ```` ```{=html} ```` block + reveal fragments — no
-anime.js, no CDN, nothing to vendor. Slide 1 is `viewBox="0 96 1240 489"` (three
-rows, centerlines at y = 175 / 340 / 505), slide 2 is `viewBox="0 64 1240 317"`,
-and each carries **its own `<defs>`**; they deliberately do *not* share one `<use>`
+anime.js, no CDN, nothing to vendor. **Both figure slides carry the identical
+`viewBox="0 77 1240 553"`** (slide 1's three rows are centred on y = 175 / 361 /
+547), and each carries **its own `<defs>`**, including its own `<clipPath>`
+(`artifactClip` / `artifactClip2`); they deliberately do *not* share one `<use>`
 across slides, because reveal puts non-current slides in `display:none` and
 cross-slide `<use>` resolution is unreliable there. SVG ids are unique across the
-whole document (`ahDark`/`ahDark2` etc.) — keep them that way. **Both slides
-share the 1240-unit width on purpose**: same viewBox width means both render at
-the same scale, so a box on slide 2 is physically the same size as the matching
-box on slide 1. Don't shrink slide 1's width to close up its margins — that
-silently breaks the mirroring.
+whole document (`ahDark`/`ahDark2` etc.) — keep them that way. **The shared
+viewBox is what registers the two slides** and it also means both render at the
+same scale, so a box on slide 2 is physically the same size as the matching box
+on slide 1. Don't shrink slide 1's width to close up its margins: it would break
+the mirroring *and* it would shrink the height budget, since the figure is laid
+out to fill the 1420 px of usable slide width.
 
-**The viewBox tops are crops, not layout.** Neither starts at y=0: the headings
+**The viewBox top is a crop, not layout.** It doesn't start at y=0: the headings
 moved out to lexis lines and the `min-y` reclaims the space their `<text>` held.
 Every coordinate *inside* both SVGs is unchanged and unshifted — do not renumber
-them to make the boxes start at zero. Both were set by measuring the real content
-extent and matching the top margin to the bottom one (~25 units each), which on
-slide 2 also cropped 114 units of dead space that had always been sitting under
-the figure.
+them to make the boxes start at zero. Slide 1 sits 40 units below the top and 25
+above the bottom; slide 2 needs the extra top room because its `.qmd` label
+(baseline y=101) is the highest thing on either slide.
 
-**All five arrowhead markers use `refX="5.5"`, not `7`.** `markerUnits` defaults
+**All four arrowhead markers use `refX="5.5"`, not `7`.** `markerUnits` defaults
 to `strokeWidth`, so the head scales with the line. Putting refX on the tip (7)
 parks the point exactly at the path end, and near that point the triangle is
 narrower than the stroke is thick — so the line's butt-cap pokes out through the
@@ -633,34 +680,37 @@ tip. Backing refX off by 1.5 marker units slides the head forward until the
 stroke ends where the triangle is already wider than it. Consequence: **the
 visible tip lands 1.5 × stroke-width beyond the path end**, so path endpoints are
 written with that overhang already subtracted (e.g. the connectors stop at
-y=301/466 to land ~3 units above the `me` boxes at y=308/473). If you ever change
+y=322/508 to land ~3 units above the `me` boxes at y=329/515). If you ever change
 a stroke width, re-check the arrow's landing gap.
 
-**Not yet visually vetted.** Coordinates are hand-computed; bounding boxes were
-checked on paper but never rendered. Likeliest cosmetic fixes: on slide 1, the
-`review & re-prompt` labels sit ~22px under their connector lines; on slide 2,
-the `writes` label wedged between the agent and `.qmd` boxes (~50px clearance).
-Text-on-fill contrast is no longer a worry — every pairing was measured when the
+**Not yet visually vetted.** Coordinates are computed, not eyeballed — every
+`<use>` and transform is resolved by script, and each dot and block is checked
+to sit wholly inside the oval — but nothing here has ever been rendered.
+Text-on-fill contrast is no longer a worry: every pairing was measured when the
 palette moved to minou (see Palette), and the labels were flipped to navy
 wherever white failed.
 
-One thing to look at specifically on the first render, new with the
-heading move: whether the heading and the figure **together** clear the
-slide (each SVG got shorter, so they should, but `max-height:80vh` has never
-been observed actually binding).
+What to look at on the first render:
 
+- **Does the whole thing fit?** This is the live risk. Slide 1 now renders ~633
+  px tall in a 795 px box that the heading already takes ~100 px of, so the
+  slack is ~60 px. If it clips, the knob is the row spacing (186) — not the
+  viewBox width, which would make it worse.
+- **The stripe crescents.** The two end stripes of the oval taper to slivers at
+  the rim. Intended, but worth confirming they don't read as a rendering fault.
+- **`max-height:80vh`** has still never been observed binding. On a short, wide
+  browser window it now could, at which point the figure just scales down
+  whole — graceful, not broken.
 
-Slide 1 is tall (489 units) and its aspect is wider than 16:9, so **width** is
-what binds, not `max-height:80vh` — to make its type bigger, raise the font
-sizes; narrowing the viewBox would work too but is ruled out by the shared-width
-rule above, and changing the height alone does nothing.
+Slide 1's aspect (1240 × 553) is still wider than 16:9, so **width** binds the
+scale, but **height is what binds the design** — see the arithmetic in the
+registration note. To make its type bigger, raise the font sizes; narrowing the
+viewBox is ruled out by the shared-viewBox rule above and by the height budget.
 
-**Known asymmetry, not yet resolved:** slide 1's `me`/`LLM agent` boxes are
-110/180 wide and slide 2's are 96/156, at different x. The pair is *supposed* to
-read as one picture with one variable changed, so this is worth a pass — but
-slide 1's row is centred and slide 2's chain is genuinely longer (it has `.qmd`
-and `data` in the middle), so they can't be both centred and x-aligned. Pick one
-before fiddling.
+**The old me/agent asymmetry is resolved.** Slide 1's and slide 2's `me` /
+`LLM agent` boxes were once 110/180 and 96/156 at different x. They are now the
+same boxes at the same coordinates (me x=285, agent x=485), which is what makes
+the at-rest registration byte-for-byte rather than approximate.
 
 ## Styling
 
@@ -735,13 +785,13 @@ prose lines in `README.md` and this file. Safe to delete whenever John wants to.
 ## Open / to do
 
 - **Visually vet the entanglement figure.** It's written and in the deck, but has
-  never been rendered — coordinates are hand-computed. See the figure section for
-  the two likeliest collisions. Check both slides' fragment steps actually build
-  the way they're meant to, and that heading + figure together clear the slide.
-  On slide 2 specifically: that the ±155 glide reads as the chain *opening* and
-  not as things scattering, and that 80-unit arrows give `writes` / `render`
-  enough room (that number is the knob — see the figure section for how it ties
-  to the shift).
+  never been rendered — coordinates are computed by script, not eyeballed. See
+  "What to look at on the first render" in the figure section. The live risk is
+  **whether slide 1 fits**: it renders ~633 px tall with ~60 px of slack under
+  the heading, and the knob is the 186-unit row spacing. Also check both slides'
+  fragment steps build the way they're meant to, that the ±140 glide reads as
+  the chain *opening* rather than as things scattering, and that the oval's end
+  stripes don't look like a clipping bug.
 - **Produce remaining demo assets.** The handwriting-sheet images exist; these
   slots are still marked with `> **[BRACKETED]**` blockquote placeholders in
   `index.qmd`:

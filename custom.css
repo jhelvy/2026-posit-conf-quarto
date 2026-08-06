@@ -110,18 +110,17 @@
 
 /* Entanglement figure, slide 2: the chain opens.
    At rest the slide is byte-for-byte slide 1's picture — me -> agent ->
-   document. Click 1 inserts the .qmd between the agent and the document, which
-   means the chain has to get 310 units longer. It grows symmetrically so the
-   row stays centred: me+agent glide 155 left, the document glides 155 right,
+   artifact. Click 1 inserts the .qmd between the agent and the artifact, which
+   means the chain has to get 280 units longer. It grows symmetrically so the
+   row stays centred: me+agent glide 140 left, the artifact glides 140 right,
    and the .qmd fades into the gap they open.
 
-   155 = (1128 - 818) / 2, i.e. half of what the .qmd and its arrows add to the
-   chain. The two arrows either side of the .qmd are 80 units, not the 50 used
-   everywhere else, so the `writes` and `render` labels have room to breathe —
-   that is where the extra 60 over the original 125 comes from. Recompute if
+   140 = (950 - 670) / 2, i.e. half of what the .qmd and its extra arrow add to
+   the chain. Every arrow in the figure is 80 units now — slide 1's two and
+   slide 2's three — so there is no longer a special case here. Recompute if
    any box width or arrow length in that row changes: with arrow length L,
-   shift = 75 + L. (The .qmd itself always lands at x=496 whatever L is, so the
-   data box, its arrow, and the green arrow's landing point never move.)
+   shift = 75 + L. (The .qmd itself always lands at x=615 whatever L is, so the
+   data box, its arrow, and the purple arrow's landing point never move.)
 
    `fragment custom` means reveal leaves these visible at rest and only toggles
    `.visible`, so the transform is ours. UNLIKE the old `.lift` on slide 1,
@@ -132,20 +131,20 @@
   transform: translateX(0);
   transition: transform 500ms ease;
 }
-.reveal svg g.openleft.visible  { transform: translateX(-155px); }
-.reveal svg g.openright.visible { transform: translateX(155px); }
+.reveal svg g.openleft.visible  { transform: translateX(-140px); }
+.reveal svg g.openright.visible { transform: translateX(140px); }
 
 /* NOTE: there is deliberately no `.lift` rule here any more.
    Entanglement figure slide 1 used to park run 1 low so it read as centred on
-   its own, then slide it up to y=175 on click 1 to make room for run 2. Run 1
+   its own, then slide it up on click 1 to make room for run 2. Run 1
    now renders in its final place from the start and rows 2 and 3 arrive under
    it. Nothing on that slide moves except what the argument requires. If you
    ever want the slide-up back, it needs BOTH the CSS below and the
    `fragment custom lift` class on the run-1 group in index.qmd:
 
-     .reveal svg g.lift          { transform: translateY(165px);
+     .reveal svg g.lift          { transform: translateY(178px);
                                    transition: transform 500ms ease; }
      .reveal svg g.lift.visible  { transform: translateY(0); }
 
-   165 = 340 (centre of the visible viewBox, y 96..585) - 175 (run 1's row), in
-   the SVG's own units — recompute it if that viewBox ever changes. */
+   178 = 353.5 (centre of the visible viewBox, y 77..630) - 175 (run 1's row),
+   in the SVG's own units — recompute it if that viewBox ever changes. */
