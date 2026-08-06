@@ -1,29 +1,151 @@
 /* Deck-specific additions on top of the lexis theme.
-   The lexis extension ships every color/size/column utility this deck uses
-   EXCEPT `.amber`, which is this talk's "content" color and must match the
-   amber in the entanglement figure (images/entanglement-diagram/). */
 
-.reveal .amber { color: #C0820F; }
+   ── THE PALETTE ────────────────────────────────────────────────────────────
+   Every color in this talk comes from `ltc::ltc("minou")`, so the slides, the
+   entanglement figure, and the plots in `plots.R` are one palette:
 
-/* Colored image borders, matching the talk's color vocabulary
-   (amber = content, blue = format/structure). Used on the
-   "this layout / those sentences" slide so each word is tied to
-   an image. lexis ships .border/.whiteborder/etc. but no color
-   variants; these follow the same wrapper-div pattern. */
-.reveal .amberborder img { border: 6px solid #C0820F; }
-.reveal .blueborder img  { border: 6px solid #007bff; }
+     #edae49  yellow  CONTENT / data      #d1495b  red    CHANGED content
+     #00798c  teal    FORMAT / structure  #2e4057  navy   ink — strokes, labels
+     #66a182  green   (retired, see below)  #8d96a3  grey  (unused)
 
-/* Entanglement figure, slide 1: the lift.
-   Run 1 sits centered on its own, then rises to the top third to make room for
-   runs 2 and 3. This is not a reveal effect — the group is marked
-   `fragment custom lift` so reveal's `.fragment:not(.custom)` rule leaves it
-   visible at rest and only toggles `.visible` on it; all this does is park it
-   150 user units low until that happens. 150 = 325 (optical center of the
-   figure, below its heading) - 175 (its final row position), both in the SVG's
-   viewBox units. If this rule is ever lost, the row just renders at its final
-   position and the slide still reads correctly — it simply doesn't move. */
-.reveal svg g.lift {
-  transform: translateY(150px);
+   Plus ONE deliberate outsider:
+
+     #852f88  purple  YOUR DIRECT ACTION — the `you edit directly` arrow
+
+   Purple is from `ltc("hat")`, not minou, and it is the only colour in the deck
+   that isn't. It earns the exception: it must be the thing your eye goes to,
+   and minou has nothing left that can do that. It sits at hue 306, the one
+   region minou leaves empty (its nearest neighbour is 59 deg away), at chroma
+   62 and 7.6:1 on white — the most saturated thing on any slide.
+
+   This replaced a green (#4A6D5A) that John found too easy to miss, and he was
+   right for a measurable reason: that green sat at **chroma 20 against navy's
+   21**. Same saturation, similar darkness — so it read as just another
+   structural line rather than as the one line that is YOU. When picking an
+   accent, chroma is the axis that matters, not hue.
+
+   GREEN IS NOW RETIRED from the deck. It was "your direct action" (now purple)
+   and minecraft on the payoff slide (now red). `.green` still resolves, but
+   nothing uses it — if you reach for it, check you don't mean purple or red.
+
+   minou was chosen over paloma because it is the only ltc palette that covers
+   all six roles at once. Content vs. format is the load-bearing pair and these
+   two are 163 deg apart in hue and stay distinct under red-green colorblindness
+   (#D4C04C vs #5B698C) — paloma has no blue at all, so once yellow/green/red
+   were spoken for by pokemon/minecraft/mario the only format colors left sat
+   within 25 deg of the content yellow.
+
+   ── FILL vs. INK ───────────────────────────────────────────────────────────
+   minou's yellow and green are light (lightness 75 and 62). They work as FILLS
+   with dark text on them, but as text or thin strokes on a light slide they
+   are 1.6:1 and 2.5:1 — invisible from the back of a room. So each has a
+   darker INK variant, same hue, used wherever the color has to be a line or a
+   letter rather than a block:
+
+     yellow  fill #edae49   ink #A77400     (both read as "the yellow one")
+     green   fill #66a182   ink #4A6D5A
+
+   Teal and red are dark enough to serve as both, so they have no ink variant.
+   Consequence inside the figure: text on a teal band is white, text on a
+   yellow or green band is navy. That is forced by legibility, not taste.
+   Red takes either (4.4:1 white, 4.3:1 navy), so it is the one place the
+   choice is editorial — see the figure's click-3 block. */
+
+/* The talk's semantic colors. `.amber` is ours; the rest override lexis's
+   defaults (#007bff / #E74A2F / #38B44A) so a `[word]{.blue}` on a slide is
+   the same teal as the format band in the figure. Same specificity as lexis's
+   own rules, and custom.css loads after the theme, so these win. */
+.reveal .amber { color: #A77400; }
+.reveal .blue  { color: #00798c; }
+.reveal .red   { color: #d1495b; }
+.reveal .green { color: #4A6D5A; }
+
+/* ── CHIPS ──────────────────────────────────────────────────────────────────
+   The two slides before the entanglement figure exist to teach its color
+   vocabulary, so the word has to be the same visual object the figure shows —
+   not merely the same hue. A chip IS the figure's `content` / `yaml` band:
+   same fill, same text color, same relationship. Colored *text* can't do that
+   job here, because #edae49 as a letter on a light slide is 1.6:1.
+
+   Only for the standalone vocabulary words. Longer phrases elsewhere in the
+   deck still use `.amber` / `.blue` as text colors — a chip round a whole
+   clause reads as a highlighter, not a swatch. */
+.reveal .contentchip,
+.reveal .formatchip {
+  display: inline-block;
+  padding: 0.02em 0.3em;
+  border-radius: 0.1em;
+  line-height: 1.1;
+}
+.reveal .contentchip { background-color: #edae49; color: #2e4057; }
+.reveal .formatchip  { background-color: #00798c; color: #FFFFFF; }
+
+/* `.turnsred` — entanglement figure slide 2 only. Click 3 recolours the
+   `content` block inside the SVG; this recolours the word `Content` in the
+   heading above it at the same moment, so the legend and the figure never
+   disagree. Used as `fragment custom`, so reveal leaves the chip visible at
+   rest and only toggles `.visible` — the colour change is ours, and the
+   heading never moves or reflows.
+
+   Specificity: `.reveal .contentchip.turnsred.visible` (0,3,1) beats
+   `.reveal .contentchip` (0,2,1), so it wins wherever it is in the file. */
+.reveal .contentchip.turnsred {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+.reveal .contentchip.turnsred.visible {
+  background-color: #d1495b;
+  color: #FFFFFF;
+}
+
+/* Colored image borders, tying each chip to the sheet it describes on the
+   "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.
+   but no color variants; these follow its own wrapper-div pattern, so they go
+   on a wrapping div — `::: {.col .blueborder}` — not in the image's attribute
+   block. Same fills as the chips, deliberately: the border is the chip's echo.
+   Wider than lexis's 6px because the yellow is light and needs the area to
+   read against a light slide; if it still looks faint when rendered, this
+   number is the knob. */
+.reveal .amberborder img { border: 10px solid #edae49; }
+.reveal .blueborder img  { border: 10px solid #00798c; }
+
+/* Entanglement figure, slide 2: the chain opens.
+   At rest the slide is byte-for-byte slide 1's picture — me -> agent ->
+   document. Click 1 inserts the .qmd between the agent and the document, which
+   means the chain has to get 310 units longer. It grows symmetrically so the
+   row stays centred: me+agent glide 155 left, the document glides 155 right,
+   and the .qmd fades into the gap they open.
+
+   155 = (1128 - 818) / 2, i.e. half of what the .qmd and its arrows add to the
+   chain. The two arrows either side of the .qmd are 80 units, not the 50 used
+   everywhere else, so the `writes` and `render` labels have room to breathe —
+   that is where the extra 60 over the original 125 comes from. Recompute if
+   any box width or arrow length in that row changes: with arrow length L,
+   shift = 75 + L. (The .qmd itself always lands at x=496 whatever L is, so the
+   data box, its arrow, and the green arrow's landing point never move.)
+
+   `fragment custom` means reveal leaves these visible at rest and only toggles
+   `.visible`, so the transform is ours. UNLIKE the old `.lift` on slide 1,
+   these two rules are NOT optional: without them the boxes stay put and the
+   .qmd lands on top of the document. */
+.reveal svg g.openleft,
+.reveal svg g.openright {
+  transform: translateX(0);
   transition: transform 500ms ease;
 }
-.reveal svg g.lift.visible { transform: translateY(0); }
+.reveal svg g.openleft.visible  { transform: translateX(-155px); }
+.reveal svg g.openright.visible { transform: translateX(155px); }
+
+/* NOTE: there is deliberately no `.lift` rule here any more.
+   Entanglement figure slide 1 used to park run 1 low so it read as centred on
+   its own, then slide it up to y=175 on click 1 to make room for run 2. Run 1
+   now renders in its final place from the start and rows 2 and 3 arrive under
+   it. Nothing on that slide moves except what the argument requires. If you
+   ever want the slide-up back, it needs BOTH the CSS below and the
+   `fragment custom lift` class on the run-1 group in index.qmd:
+
+     .reveal svg g.lift          { transform: translateY(165px);
+                                   transition: transform 500ms ease; }
+     .reveal svg g.lift.visible  { transform: translateY(0); }
+
+   165 = 340 (centre of the visible viewBox, y 96..585) - 175 (run 1's row), in
+   the SVG's own units — recompute it if that viewBox ever changes. */

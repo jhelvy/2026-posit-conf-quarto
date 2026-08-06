@@ -68,23 +68,7 @@ September 15, 2026
 
 {{< center >}}
 
-# I want [**these**]{.amber} sentences with [**this**]{.blue} layout
-
-::: {.col .amberborder}
-![](images/handwriting-practice-pokemon.png){fig-align="center" height="600"}
-:::
-
-::: {.col .blueborder}
-![](images/handwriting-good-minecraft.png){fig-align="center" height="600"}
-:::
-
----
-
-{{< center >}}
-
-# If you ask AI for the *artifact*,
-
-# the [Content]{.amber} is entangled with the [Format]{.blue}
+# I want [**these**]{.contentchip} sentences with [**this**]{.formatchip} layout
 
 ::: {.col .amberborder}
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="600"}
@@ -108,8 +92,8 @@ September 15, 2026
   The claim: the weaving happens inside one probabilistic pass, so the only lever
   you have on the content is to re-prompt and take another draw.
 
-  BUILD. At rest, one loop, centered. Click 1: that loop LIFTS to the top third
-  (CSS transform, see custom.css) and run 2 arrives under it. Click 2: run 3.
+  BUILD. At rest, one loop, ALREADY in the top third at its final y=175 —
+  nothing slides. Click 1: run 2 arrives under it. Click 2: run 3.
   The three loops are byte-identical to each other — literally one <use> of
   #loop — so the only thing that differs down the column is the document that
   falls out the end. That is the whole argument, and it has to be legible from
@@ -125,6 +109,12 @@ September 15, 2026
   top in the same two colors. A swatch legend said the same thing in 17px type
   nobody could read from the back.
 
+  That sentence is the lexis heading ABOVE this block, not SVG text, so its two
+  words are the same `.contentchip` / `.formatchip` the previous slides taught —
+  the same object, not merely the same hue. Consequence: the viewBox starts at
+  y=96 rather than 0, cropping the space the old <text> occupied. Coordinates
+  inside are unchanged; don't renumber them.
+
   Everything else that used to be labelled is now spoken: no "ASK FOR THE
   DOCUMENT" (the sentence above says it), no run 1/2/3 (the stack says it), no
   summary caption (three different documents off one identical loop IS the
@@ -139,8 +129,10 @@ September 15, 2026
   slides in display:none, and cross-slide <use> resolution is unreliable there.
 -->
 
+# [Content]{.contentchip} entangled with [Format]{.formatchip}
+
 ```{=html}
-<svg viewBox="0 0 1240 585" width="100%" style="max-height:80vh;"
+<svg viewBox="0 96 1240 489" width="100%" style="max-height:80vh;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -149,19 +141,19 @@ September 15, 2026
          fused. Never drawn as a box inside a box — containment would imply they
          are already separate, which is the visual opposite of entanglement. -->
     <g id="doc">
-      <rect x="0"   y="0" width="18" height="64" fill="#007bff"/>
-      <rect x="18"  y="0" width="26" height="64" fill="#C0820F"/>
-      <rect x="44"  y="0" width="14" height="64" fill="#007bff"/>
-      <rect x="58"  y="0" width="32" height="64" fill="#C0820F"/>
-      <rect x="90"  y="0" width="20" height="64" fill="#007bff"/>
-      <rect x="110" y="0" width="16" height="64" fill="#C0820F"/>
-      <rect x="126" y="0" width="28" height="64" fill="#007bff"/>
-      <rect x="154" y="0" width="24" height="64" fill="#C0820F"/>
-      <rect x="178" y="0" width="12" height="64" fill="#007bff"/>
-      <rect x="190" y="0" width="28" height="64" fill="#C0820F"/>
-      <rect x="218" y="0" width="22" height="64" fill="#007bff"/>
+      <rect x="0"   y="0" width="18" height="64" fill="#00798c"/>
+      <rect x="18"  y="0" width="26" height="64" fill="#edae49"/>
+      <rect x="44"  y="0" width="14" height="64" fill="#00798c"/>
+      <rect x="58"  y="0" width="32" height="64" fill="#edae49"/>
+      <rect x="90"  y="0" width="20" height="64" fill="#00798c"/>
+      <rect x="110" y="0" width="16" height="64" fill="#edae49"/>
+      <rect x="126" y="0" width="28" height="64" fill="#00798c"/>
+      <rect x="154" y="0" width="24" height="64" fill="#edae49"/>
+      <rect x="178" y="0" width="12" height="64" fill="#00798c"/>
+      <rect x="190" y="0" width="28" height="64" fill="#edae49"/>
+      <rect x="218" y="0" width="22" height="64" fill="#00798c"/>
       <rect x="0"   y="0" width="240" height="64" fill="none"
-            stroke="#121212" stroke-width="2.5"/>
+            stroke="#2e4057" stroke-width="2.5"/>
     </g>
 
     <!-- Runs 2 and 3: same prompt, different draw. Same frame, same two colors,
@@ -170,76 +162,76 @@ September 15, 2026
          re-shuffled stripe pattern reads as "the same picture again." -->
     <g id="docDots">
       <rect x="0" y="0" width="240" height="64" fill="#FFFFFF"/>
-      <circle cx="15"  cy="14" r="7" fill="#007bff"/>
-      <circle cx="37"  cy="16" r="7" fill="#C0820F"/>
-      <circle cx="58"  cy="13" r="7" fill="#C0820F"/>
-      <circle cx="80"  cy="16" r="7" fill="#007bff"/>
-      <circle cx="101" cy="14" r="7" fill="#C0820F"/>
-      <circle cx="123" cy="15" r="7" fill="#007bff"/>
-      <circle cx="144" cy="13" r="7" fill="#C0820F"/>
-      <circle cx="166" cy="16" r="7" fill="#C0820F"/>
-      <circle cx="187" cy="14" r="7" fill="#007bff"/>
-      <circle cx="209" cy="15" r="7" fill="#C0820F"/>
-      <circle cx="228" cy="13" r="7" fill="#007bff"/>
-      <circle cx="25"  cy="32" r="7" fill="#C0820F"/>
-      <circle cx="47"  cy="34" r="7" fill="#007bff"/>
-      <circle cx="69"  cy="31" r="7" fill="#C0820F"/>
-      <circle cx="90"  cy="33" r="7" fill="#C0820F"/>
-      <circle cx="112" cy="32" r="7" fill="#007bff"/>
-      <circle cx="134" cy="34" r="7" fill="#C0820F"/>
-      <circle cx="155" cy="31" r="7" fill="#007bff"/>
-      <circle cx="177" cy="33" r="7" fill="#C0820F"/>
-      <circle cx="198" cy="32" r="7" fill="#007bff"/>
-      <circle cx="220" cy="34" r="7" fill="#C0820F"/>
-      <circle cx="15"  cy="50" r="7" fill="#C0820F"/>
-      <circle cx="37"  cy="48" r="7" fill="#007bff"/>
-      <circle cx="58"  cy="51" r="7" fill="#C0820F"/>
-      <circle cx="80"  cy="49" r="7" fill="#007bff"/>
-      <circle cx="101" cy="50" r="7" fill="#007bff"/>
-      <circle cx="123" cy="48" r="7" fill="#C0820F"/>
-      <circle cx="144" cy="51" r="7" fill="#007bff"/>
-      <circle cx="166" cy="49" r="7" fill="#C0820F"/>
-      <circle cx="187" cy="50" r="7" fill="#C0820F"/>
-      <circle cx="209" cy="48" r="7" fill="#007bff"/>
-      <circle cx="228" cy="51" r="7" fill="#C0820F"/>
+      <circle cx="15"  cy="14" r="7" fill="#00798c"/>
+      <circle cx="37"  cy="16" r="7" fill="#edae49"/>
+      <circle cx="58"  cy="13" r="7" fill="#edae49"/>
+      <circle cx="80"  cy="16" r="7" fill="#00798c"/>
+      <circle cx="101" cy="14" r="7" fill="#edae49"/>
+      <circle cx="123" cy="15" r="7" fill="#00798c"/>
+      <circle cx="144" cy="13" r="7" fill="#edae49"/>
+      <circle cx="166" cy="16" r="7" fill="#edae49"/>
+      <circle cx="187" cy="14" r="7" fill="#00798c"/>
+      <circle cx="209" cy="15" r="7" fill="#edae49"/>
+      <circle cx="228" cy="13" r="7" fill="#00798c"/>
+      <circle cx="25"  cy="32" r="7" fill="#edae49"/>
+      <circle cx="47"  cy="34" r="7" fill="#00798c"/>
+      <circle cx="69"  cy="31" r="7" fill="#edae49"/>
+      <circle cx="90"  cy="33" r="7" fill="#edae49"/>
+      <circle cx="112" cy="32" r="7" fill="#00798c"/>
+      <circle cx="134" cy="34" r="7" fill="#edae49"/>
+      <circle cx="155" cy="31" r="7" fill="#00798c"/>
+      <circle cx="177" cy="33" r="7" fill="#edae49"/>
+      <circle cx="198" cy="32" r="7" fill="#00798c"/>
+      <circle cx="220" cy="34" r="7" fill="#edae49"/>
+      <circle cx="15"  cy="50" r="7" fill="#edae49"/>
+      <circle cx="37"  cy="48" r="7" fill="#00798c"/>
+      <circle cx="58"  cy="51" r="7" fill="#edae49"/>
+      <circle cx="80"  cy="49" r="7" fill="#00798c"/>
+      <circle cx="101" cy="50" r="7" fill="#00798c"/>
+      <circle cx="123" cy="48" r="7" fill="#edae49"/>
+      <circle cx="144" cy="51" r="7" fill="#00798c"/>
+      <circle cx="166" cy="49" r="7" fill="#edae49"/>
+      <circle cx="187" cy="50" r="7" fill="#edae49"/>
+      <circle cx="209" cy="48" r="7" fill="#00798c"/>
+      <circle cx="228" cy="51" r="7" fill="#edae49"/>
       <rect x="0" y="0" width="240" height="64" fill="none"
-            stroke="#121212" stroke-width="2.5"/>
+            stroke="#2e4057" stroke-width="2.5"/>
     </g>
 
     <g id="docBlocks">
       <rect x="0" y="0" width="240" height="64" fill="#FFFFFF"/>
-      <rect x="12"  y="7"  width="16" height="16" fill="#C0820F"/>
-      <rect x="35"  y="5"  width="14" height="14" fill="#007bff"/>
-      <rect x="56"  y="8"  width="15" height="15" fill="#C0820F"/>
-      <rect x="79"  y="6"  width="17" height="17" fill="#007bff"/>
-      <rect x="103" y="7"  width="14" height="14" fill="#C0820F"/>
-      <rect x="124" y="5"  width="16" height="16" fill="#C0820F"/>
-      <rect x="147" y="8"  width="15" height="15" fill="#007bff"/>
-      <rect x="169" y="6"  width="14" height="14" fill="#C0820F"/>
-      <rect x="191" y="7"  width="17" height="17" fill="#007bff"/>
-      <rect x="215" y="5"  width="15" height="15" fill="#C0820F"/>
-      <rect x="15"  y="27" width="15" height="15" fill="#007bff"/>
-      <rect x="37"  y="29" width="14" height="14" fill="#C0820F"/>
-      <rect x="59"  y="26" width="17" height="17" fill="#007bff"/>
-      <rect x="83"  y="28" width="14" height="14" fill="#C0820F"/>
-      <rect x="104" y="27" width="16" height="16" fill="#007bff"/>
-      <rect x="127" y="29" width="15" height="15" fill="#C0820F"/>
-      <rect x="149" y="26" width="14" height="14" fill="#C0820F"/>
-      <rect x="170" y="28" width="17" height="17" fill="#007bff"/>
-      <rect x="194" y="27" width="15" height="15" fill="#C0820F"/>
-      <rect x="216" y="29" width="14" height="14" fill="#007bff"/>
-      <rect x="12"  y="47" width="14" height="14" fill="#C0820F"/>
-      <rect x="33"  y="45" width="16" height="16" fill="#007bff"/>
-      <rect x="56"  y="48" width="14" height="14" fill="#C0820F"/>
-      <rect x="77"  y="46" width="15" height="15" fill="#007bff"/>
-      <rect x="99"  y="47" width="14" height="14" fill="#C0820F"/>
-      <rect x="120" y="45" width="17" height="17" fill="#C0820F"/>
-      <rect x="144" y="48" width="14" height="14" fill="#007bff"/>
-      <rect x="165" y="46" width="16" height="16" fill="#C0820F"/>
-      <rect x="188" y="47" width="15" height="15" fill="#007bff"/>
-      <rect x="211" y="45" width="16" height="16" fill="#C0820F"/>
+      <rect x="12"  y="7"  width="16" height="16" fill="#edae49"/>
+      <rect x="35"  y="5"  width="14" height="14" fill="#00798c"/>
+      <rect x="56"  y="8"  width="15" height="15" fill="#edae49"/>
+      <rect x="79"  y="6"  width="17" height="17" fill="#00798c"/>
+      <rect x="103" y="7"  width="14" height="14" fill="#edae49"/>
+      <rect x="124" y="5"  width="16" height="16" fill="#edae49"/>
+      <rect x="147" y="8"  width="15" height="15" fill="#00798c"/>
+      <rect x="169" y="6"  width="14" height="14" fill="#edae49"/>
+      <rect x="191" y="7"  width="17" height="17" fill="#00798c"/>
+      <rect x="215" y="5"  width="15" height="15" fill="#edae49"/>
+      <rect x="15"  y="27" width="15" height="15" fill="#00798c"/>
+      <rect x="37"  y="29" width="14" height="14" fill="#edae49"/>
+      <rect x="59"  y="26" width="17" height="17" fill="#00798c"/>
+      <rect x="83"  y="28" width="14" height="14" fill="#edae49"/>
+      <rect x="104" y="27" width="16" height="16" fill="#00798c"/>
+      <rect x="127" y="29" width="15" height="15" fill="#edae49"/>
+      <rect x="149" y="26" width="14" height="14" fill="#edae49"/>
+      <rect x="170" y="28" width="17" height="17" fill="#00798c"/>
+      <rect x="194" y="27" width="15" height="15" fill="#edae49"/>
+      <rect x="216" y="29" width="14" height="14" fill="#00798c"/>
+      <rect x="12"  y="47" width="14" height="14" fill="#edae49"/>
+      <rect x="33"  y="45" width="16" height="16" fill="#00798c"/>
+      <rect x="56"  y="48" width="14" height="14" fill="#edae49"/>
+      <rect x="77"  y="46" width="15" height="15" fill="#00798c"/>
+      <rect x="99"  y="47" width="14" height="14" fill="#edae49"/>
+      <rect x="120" y="45" width="17" height="17" fill="#edae49"/>
+      <rect x="144" y="48" width="14" height="14" fill="#00798c"/>
+      <rect x="165" y="46" width="16" height="16" fill="#edae49"/>
+      <rect x="188" y="47" width="15" height="15" fill="#00798c"/>
+      <rect x="211" y="45" width="16" height="16" fill="#edae49"/>
       <rect x="0" y="0" width="240" height="64" fill="none"
-            stroke="#121212" stroke-width="2.5"/>
+            stroke="#2e4057" stroke-width="2.5"/>
     </g>
 
     <!-- THE LOOP, drawn once and <use>d three times so the rows are provably
@@ -249,24 +241,24 @@ September 15, 2026
          4-unit landing gap — because they are the same kind of step. -->
     <g id="loop">
       <rect x="211" y="-32" width="110" height="64" rx="6"
-            fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-      <text x="266" y="9" font-size="24" text-anchor="middle" fill="#121212">me</text>
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+      <text x="266" y="9" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
 
-      <path d="M 323 0 L 373 0" stroke="#121212" stroke-width="2.5"
+      <path d="M 323 0 L 373 0" stroke="#2e4057" stroke-width="2.5"
             marker-end="url(#ahDark)"/>
 
       <!-- agent. dashed = the stochastic component. Same box in both slides:
            the agent is not what changes between them. -->
       <rect x="381" y="-32" width="180" height="64" rx="6"
-            fill="#FFFFFF" stroke="#121212" stroke-width="2.5"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
             stroke-dasharray="7 5"/>
-      <text x="471" y="9" font-size="24" text-anchor="middle" fill="#121212">LLM agent</text>
+      <text x="471" y="9" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
 
       <!-- One jump, no intermediate, and deliberately unlabelled: the row
            repeats three times, so any text here repeats three times too. The
            emptiness under this arrow is exactly the space Quarto fills on the
            next slide — say "one probabilistic pass" out loud instead. -->
-      <path d="M 563 0 L 613 0" stroke="#121212" stroke-width="2.5"
+      <path d="M 563 0 L 613 0" stroke="#2e4057" stroke-width="2.5"
             marker-end="url(#ahDark)"/>
     </g>
 
@@ -279,30 +271,21 @@ September 15, 2026
          covered — while the visible tip lands 1.5x stroke-width past the path
          end. Path ends are set with that overhang subtracted. -->
     <marker id="ahDark" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"/></marker>
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
     <marker id="ahGray" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#696969"/></marker>
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#606771"/></marker>
   </defs>
 
-  <!-- Carried verbatim from the slide before, in the same two colors. This is
-       the legend now — a sentence they have already read once, at a size that
-       survives the back of the room. -->
-  <text x="620" y="46" font-size="50" text-anchor="middle" fill="#121212">
-    <tspan fill="#C0820F">Content</tspan>
-    <tspan> entangled with </tspan>
-    <tspan fill="#007bff">Format</tspan>
-  </text>
-
-  <!-- RUN 1. `fragment custom lift` is a transform trigger, not a reveal
-       effect: reveal's `:not(.custom)` rule leaves it visible at rest, and
-       custom.css parks it 150 units low so it sits centered on its own, then
-       releases it to y=175 on click 1. If that CSS ever goes missing the row
-       simply renders in its final place and nothing breaks. -->
-  <g class="fragment custom lift" data-fragment-index="1">
-    <g transform="translate(0 175)">
-      <use href="#loop"/>
-      <g transform="translate(621 -54) scale(1.7)"><use href="#doc"/></g>
-    </g>
+  <!-- RUN 1. Static, and it sits in its final place from the moment the slide
+       appears — no reveal class, no transform trigger. It used to be
+       `fragment custom lift`: parked low so it read as centred on its own, then
+       released up to y=175 on click 1 to make room for run 2. Cut because
+       nothing on screen should move that isn't part of the argument, and a row
+       sliding up is a motion the audience has to parse before the point lands.
+       Rows 2 and 3 now simply arrive underneath it. -->
+  <g transform="translate(0 175)">
+    <use href="#loop"/>
+    <g transform="translate(621 -54) scale(1.7)"><use href="#doc"/></g>
   </g>
 
   <!-- RUN 2. The connector is the only route from one row to the next, and it
@@ -310,9 +293,9 @@ September 15, 2026
        get to ask again. -->
   <g class="fragment" data-fragment-index="1">
     <path d="M 825 233 L 825 245 Q 825 257 811 257 L 280 257 Q 266 257 266 269 L 266 301"
-          fill="none" stroke="#696969" stroke-width="2.5"
+          fill="none" stroke="#606771" stroke-width="2.5"
           stroke-dasharray="7 5" marker-end="url(#ahGray)"/>
-    <text x="545" y="279" font-size="22" fill="#696969"
+    <text x="545" y="279" font-size="22" fill="#606771"
           text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 340)">
       <use href="#loop"/>
@@ -323,9 +306,9 @@ September 15, 2026
   <!-- RUN 3. -->
   <g class="fragment" data-fragment-index="2">
     <path d="M 825 398 L 825 410 Q 825 422 811 422 L 280 422 Q 266 422 266 434 L 266 466"
-          fill="none" stroke="#696969" stroke-width="2.5"
+          fill="none" stroke="#606771" stroke-width="2.5"
           stroke-dasharray="7 5" marker-end="url(#ahGray)"/>
-    <text x="545" y="444" font-size="22" fill="#696969"
+    <text x="545" y="444" font-size="22" fill="#606771"
           text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 505)">
       <use href="#loop"/>
@@ -371,10 +354,25 @@ review, ask again, and take another draw.
   The output is the SAME #doc as run 1 on the previous slide, on purpose. The
   argument is NOT "this makes a better document" — it's that the weaving moved
   somewhere you can reach. Keep the two <defs> copies identical.
+
+  The heading is the lexis line ABOVE this block, matching slide 1 — same
+  sentence with two words inserted, same chips. The viewBox therefore starts at
+  y=64; it also crops 114 units of dead space that were always sitting under
+  this figure. Coordinates inside are unchanged.
 -->
 
+<!-- The Content chip turns red on click 3, with the content block inside the
+     figure. It is a `fragment custom` colour toggle, not a second heading:
+     reveal leaves it visible at rest and only adds `.visible`, and custom.css
+     does the rest. Stacking two headings and cross-fading them would have
+     reserved space for both (reveal hides fragments with visibility:hidden,
+     which still occupies layout), and moving the heading back inside the SVG
+     would cost the chips. -->
+
+# Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
+
 ```{=html}
-<svg viewBox="0 0 1240 470" width="100%" style="max-height:80vh;"
+<svg viewBox="0 76 1240 529" width="100%" style="max-height:80vh;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -382,165 +380,211 @@ review, ask again, and take another draw.
     <!-- Byte-identical to #doc on the previous slide. If you edit one, edit
          both — the whole point is that the output did not change. -->
     <g id="docOut">
-      <rect x="0"   y="0" width="18" height="64" fill="#007bff"/>
-      <rect x="18"  y="0" width="26" height="64" fill="#C0820F"/>
-      <rect x="44"  y="0" width="14" height="64" fill="#007bff"/>
-      <rect x="58"  y="0" width="32" height="64" fill="#C0820F"/>
-      <rect x="90"  y="0" width="20" height="64" fill="#007bff"/>
-      <rect x="110" y="0" width="16" height="64" fill="#C0820F"/>
-      <rect x="126" y="0" width="28" height="64" fill="#007bff"/>
-      <rect x="154" y="0" width="24" height="64" fill="#C0820F"/>
-      <rect x="178" y="0" width="12" height="64" fill="#007bff"/>
-      <rect x="190" y="0" width="28" height="64" fill="#C0820F"/>
-      <rect x="218" y="0" width="22" height="64" fill="#007bff"/>
+      <rect x="0"   y="0" width="18" height="64" fill="#00798c"/>
+      <rect x="18"  y="0" width="26" height="64" fill="#edae49"/>
+      <rect x="44"  y="0" width="14" height="64" fill="#00798c"/>
+      <rect x="58"  y="0" width="32" height="64" fill="#edae49"/>
+      <rect x="90"  y="0" width="20" height="64" fill="#00798c"/>
+      <rect x="110" y="0" width="16" height="64" fill="#edae49"/>
+      <rect x="126" y="0" width="28" height="64" fill="#00798c"/>
+      <rect x="154" y="0" width="24" height="64" fill="#edae49"/>
+      <rect x="178" y="0" width="12" height="64" fill="#00798c"/>
+      <rect x="190" y="0" width="28" height="64" fill="#edae49"/>
+      <rect x="218" y="0" width="22" height="64" fill="#00798c"/>
       <rect x="0"   y="0" width="240" height="64" fill="none"
-            stroke="#121212" stroke-width="2.5"/>
+            stroke="#2e4057" stroke-width="2.5"/>
     </g>
 
     <!-- Byte-identical to #docOut except every amber fill is green. Same
          rects, same widths, same order — if you touch one, touch both, or the
          click stops meaning "only the content changed". -->
     <g id="docOutEdited">
-      <rect x="0"   y="0" width="18" height="64" fill="#007bff"/>
-      <rect x="18"  y="0" width="26" height="64" fill="#38B44A"/>
-      <rect x="44"  y="0" width="14" height="64" fill="#007bff"/>
-      <rect x="58"  y="0" width="32" height="64" fill="#38B44A"/>
-      <rect x="90"  y="0" width="20" height="64" fill="#007bff"/>
-      <rect x="110" y="0" width="16" height="64" fill="#38B44A"/>
-      <rect x="126" y="0" width="28" height="64" fill="#007bff"/>
-      <rect x="154" y="0" width="24" height="64" fill="#38B44A"/>
-      <rect x="178" y="0" width="12" height="64" fill="#007bff"/>
-      <rect x="190" y="0" width="28" height="64" fill="#38B44A"/>
-      <rect x="218" y="0" width="22" height="64" fill="#007bff"/>
+      <rect x="0"   y="0" width="18" height="64" fill="#00798c"/>
+      <rect x="18"  y="0" width="26" height="64" fill="#d1495b"/>
+      <rect x="44"  y="0" width="14" height="64" fill="#00798c"/>
+      <rect x="58"  y="0" width="32" height="64" fill="#d1495b"/>
+      <rect x="90"  y="0" width="20" height="64" fill="#00798c"/>
+      <rect x="110" y="0" width="16" height="64" fill="#d1495b"/>
+      <rect x="126" y="0" width="28" height="64" fill="#00798c"/>
+      <rect x="154" y="0" width="24" height="64" fill="#d1495b"/>
+      <rect x="178" y="0" width="12" height="64" fill="#00798c"/>
+      <rect x="190" y="0" width="28" height="64" fill="#d1495b"/>
+      <rect x="218" y="0" width="22" height="64" fill="#00798c"/>
       <rect x="0"   y="0" width="240" height="64" fill="none"
-            stroke="#121212" stroke-width="2.5"/>
+            stroke="#2e4057" stroke-width="2.5"/>
     </g>
 
     <!-- refX=5.5 for the same reason as slide 1's markers: at 7 the tip sits on
          the path end and the stroke poked out through the taper. -->
     <marker id="ahDark2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#121212"/></marker>
-    <marker id="ahAmber2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#C0820F"/></marker>
-    <marker id="ahGreen2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#38B44A"/></marker>
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+    <!-- The edit arrow's head. Purple #852f88 (ltc "hat"), the deck's one
+         accent: see the note on the arrow itself for why it isn't green. -->
+    <marker id="ahEdit2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"/></marker>
   </defs>
+  <!-- ── AT REST: the picture from slide 1, unchanged ────────────────────
+       me -> agent -> document, at slide 1's own coordinates (me x=211,
+       agent x=381, document x=621, row centred on y=175), at the same box
+       sizes and the same 50-unit arrows. The viewBox below is tuned so this
+       lands at the SAME SCREEN POSITION as slide 1's row 1, so arriving on
+       this slide changes nothing at all until you click. That stillness is
+       the setup: same me, same agent, same document.
 
-  <!-- The same sentence as slide 1, with two words inserted. Deliberately the
-       maximum callback: the room re-reads a line it already knows and the only
-       thing that changed is the claim. Same reason there's no legend here. -->
-  <text x="620" y="46" font-size="50" text-anchor="middle" fill="#121212">
-    <tspan> Quarto disentangles </tspan>
-    <tspan fill="#C0820F">Content</tspan>
-    <tspan> and </tspan>
-    <tspan fill="#007bff">Format</tspan>
-  </text>
+       No "prompt once" label any more — at rest this slide must not claim
+       anything slide 1 didn't.
 
-  <!-- me. The whole row sits on y=180, the .qmd box's centre line. -->
-  <rect x="30" y="148" width="96" height="64" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-  <text x="78" y="187" font-size="22" text-anchor="middle" fill="#121212">me</text>
+       CLICK 1 opens the chain and drops the .qmd into the gap: me+agent glide
+       155 units left, the document glides 155 right (symmetric, so the row
+       stays centred), and the source file fades in between them with equal
+       50-unit arrows either side. Both shifts are CSS transforms on
+       `fragment custom` groups — reveal's `:not(.custom)` rule leaves them
+       visible at rest and only toggles `.visible`. If that CSS is ever lost
+       the boxes simply stay put and the .qmd lands on top of the document,
+       so the two rules in custom.css are NOT optional here (unlike the old
+       lift on slide 1, which degraded safely). -->
 
-  <!-- no loop back on this slide: the agent runs once, not round and round -->
-  <text x="150" y="136" font-size="16" fill="#696969"
-        text-anchor="middle">prompt once</text>
-  <path d="M 128 180 L 170 180" stroke="#121212" stroke-width="2.5"
-        marker-end="url(#ahDark2)"/>
+  <g class="fragment custom openleft" data-fragment-index="1">
+    <rect x="211" y="143" width="110" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="266" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+    <path d="M 323 175 L 373 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
 
-  <!-- agent. STILL dashed — still probabilistic. That's the honest part: the
-       agent didn't get better, the thing it writes did. -->
-  <rect x="178" y="148" width="156" height="64" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"
-        stroke-dasharray="7 5"/>
-  <text x="256" y="187" font-size="22" text-anchor="middle" fill="#121212">LLM agent</text>
+    <!-- agent. STILL dashed — still probabilistic. That's the honest part: the
+         agent didn't get better, the thing it writes did. -->
+    <rect x="381" y="143" width="180" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+          stroke-dasharray="7 5"/>
+    <text x="471" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
 
-  <text x="364" y="168" font-size="17" fill="#121212"
-        text-anchor="middle">writes</text>
-  <path d="M 338 180 L 390 180" stroke="#121212" stroke-width="2.5"
-        marker-end="url(#ahDark2)"/>
+    <!-- The direct agent -> document arrow: the whole of slide 1's claim in one
+         line. It rides along with the agent as the chain opens and fades out
+         as the .qmd takes its place. Nested inside this group on purpose, so
+         it stays attached to the agent while it goes. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <path d="M 563 175 L 613 175" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDark2)"/>
+    </g>
+  </g>
 
-  <!-- THE .qmd — a NEUTRAL container, black-stroked, holding both halves in
-       named places. This is the one box in the deck where content may sit
-       inside format's colour scheme, and it is legal precisely because the
-       container is not blue: it is a file, not a format. Nesting here is the
-       truth (a .qmd really does hold both), which is the opposite of the
-       output bar, where nesting would be a lie.
+  <!-- The document. Byte-identical to run 1 on slide 1 and at the same scale:
+       the argument is NOT "this makes a better document", it's that the weaving
+       moved somewhere you can reach. Same two colours as the .qmd box — but
+       here they interleave with no boundary, and there they each have a place.
+       That contrast IS the address argument, so keep both on screen together.
 
-       The blue is the YAML, and saying so is worth the ink: it makes "format"
+       CLICK 3 paints #docOutEdited over it: the same bar with the amber bands
+       turned green. The teal bands are byte-identical and do NOT move — you
+       changed the content, so only the content changed. Every band stayed
+       exactly where it was, which is the thing a regenerated document can never
+       promise. It is an overlay rather than a swap because the two bars have
+       identical geometry, so the green simply covers the amber. -->
+  <g class="fragment custom openright" data-fragment-index="1">
+    <g transform="translate(621 121) scale(1.7)"><use href="#docOut"/></g>
+    <g class="fragment" data-fragment-index="3">
+      <g transform="translate(621 121) scale(1.7)"><use href="#docOutEdited"/></g>
+    </g>
+  </g>
+
+  <!-- ── CLICK 1: the .qmd arrives ───────────────────────────────────────
+       A NEUTRAL container, navy-stroked, holding both halves in named places.
+       This is the one box in the deck where content may sit inside format's
+       colour scheme, and it is legal precisely because the container is not
+       teal: it is a file, not a format. Nesting here is the truth (a .qmd
+       really does hold both), which is the opposite of the output bar, where
+       nesting would be a lie.
+
+       The teal is the YAML, and saying so is worth the ink: it makes "format"
        a thing this room can point at, and it is what Act 6's "change one word"
        changes. Two solid blocks, no further annotation — the file's job here is
        to show that each half has a PLACE, not to be read. -->
-  <text x="493" y="106" font-size="22" text-anchor="middle"
-        fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
-  <rect x="398" y="118" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-  <rect x="414" y="134" width="158" height="36" fill="#007bff"/>
-  <text x="493" y="159" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <!-- The content block swaps to green on click 2 — see the note on the output
-       bar below for what that click is arguing. -->
-  <g class="fragment fade-out" data-fragment-index="2">
-    <rect x="414" y="182" width="158" height="44" fill="#C0820F"/>
-    <text x="493" y="211" font-size="20" text-anchor="middle"
-          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <rect x="414" y="182" width="158" height="44" fill="#38B44A"/>
-    <text x="493" y="211" font-size="20" text-anchor="middle"
-          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
-  </g>
-
-  <!-- data = the exact values, living OUTSIDE in a file of their own. Still
-       amber, because data is content — what differs is the kind of address
-       (a row, not a line number). No arrow reaches it from the agent, and none
-       from me either: data comes from the world. Centred under the .qmd: the
-       green arrow gets out of its way by entering further left, not by pushing
-       this off-axis. -->
-  <rect x="433" y="300" width="120" height="56" rx="6"
-        fill="#FFFFFF" stroke="#C0820F" stroke-width="3.5"/>
-  <text x="493" y="337" font-size="22" text-anchor="middle"
-        fill="#C0820F" font-family="SFMono-Regular, Menlo, monospace">data</text>
-  <path d="M 493 296 L 493 250" fill="none" stroke="#C0820F" stroke-width="2.5"
-        marker-end="url(#ahAmber2)"/>
-
-  <!-- One input, one output. `quarto render` takes the .qmd; the data is
-       pulled in by it. -->
-  <text x="669" y="166" font-size="20" fill="#121212"
-        text-anchor="middle">render</text>
-  <path d="M 592 180 L 746 180" stroke="#121212" stroke-width="2.5"
-        marker-end="url(#ahDark2)"/>
-
-  <!-- The same document as run 1. Deliberately, provably unchanged. Same two
-       colours as the .qmd box above — but here they interleave with no
-       boundary, and there they each have a place. That contrast IS the address
-       argument, so keep both on screen together.
-
-       CLICK 2 swaps it for #docOutEdited, which is the same bar with the amber
-       bands turned green. The blue bands are byte-identical and do NOT move:
-       you changed the content, so only the content changed. Every band stayed
-       exactly where it was, which is the thing a regenerated document can never
-       promise. Green because green has meant "your direct action" all along —
-       the green bands are the ones your hand reached. -->
-  <g class="fragment fade-out" data-fragment-index="2">
-    <g transform="translate(768 126) scale(1.7)"><use href="#docOut"/></g>
-  </g>
-  <g class="fragment" data-fragment-index="2">
-    <g transform="translate(768 126) scale(1.7)"><use href="#docOutEdited"/></g>
-  </g>
-
-  <!-- The payoff, and now a single arrow: you reach past the agent into the
-       source itself. Both halves inside it are yours — the yaml and the
-       content — so it lands on the file, not on one block. Green = your direct
-       action, and it is the only new colour on the slide.
-       stroke-width 2.5 like every other arrow on both slides: markerUnits is
-       strokeWidth, so a fatter line also means a fatter head. At 3 the head ran
-       16.5 units back from the tip and sat on top of the corner. -->
   <g class="fragment" data-fragment-index="1">
-    <path d="M 78 216 L 78 270 Q 78 282 90 282 L 406 282 Q 418 282 418 270 L 418 250"
-          fill="none" stroke="#38B44A" stroke-width="2.5"
-          marker-end="url(#ahGreen2)"/>
-    <text x="250" y="308" font-size="20" fill="#38B44A"
+    <text x="448" y="161" font-size="17" fill="#2e4057"
+          text-anchor="middle">writes</text>
+    <path d="M 408 175 L 488 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+
+    <text x="591" y="101" font-size="22" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+    <rect x="496" y="113" width="190" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="512" y="129" width="158" height="36" fill="#00798c"/>
+    <text x="591" y="154" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+    <rect x="512" y="177" width="158" height="44" fill="#edae49"/>
+    <text x="591" y="206" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+    <!-- One input, one output. `quarto render` takes the .qmd; the data is
+         pulled in by it. Same 50 units as every other arrow in the chain. -->
+    <text x="728" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">render</text>
+    <path d="M 688 175 L 768 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+
+    <!-- data = the exact values, living OUTSIDE in a file of their own. Drawn
+         EXACTLY like the `content` block above it — solid #edae49, navy text —
+         because data IS content; the only thing that differs is the kind of
+         address (a row, not a line number). Same fill, so the eye pairs them
+         without a word being spent on it. Its arrow is navy like every other
+         structural connector here: the yellow block at one end and the yellow
+         band at the other already say "content flows in", and a third yellow
+         (the darker ink one, which a 2.5-unit line would need) would have been
+         a second yellow on screen for no gain.
+         No arrow reaches data from the agent, and none from me either: data
+         comes from the world. Centred under the .qmd at x=591; the green arrow
+         gets out of its way by entering further left, not by pushing this
+         off-axis. -->
+    <rect x="531" y="295" width="120" height="56" rx="6" fill="#edae49"/>
+    <text x="591" y="332" font-size="22" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">data</text>
+    <path d="M 591 291 L 591 245" fill="none" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+  </g>
+
+  <!-- ── CLICK 2: the payoff ─────────────────────────────────────────────
+       A single arrow: you reach past the agent into the source itself. Both
+       halves inside it are yours — the yaml and the content — so it lands on
+       the file, not on one block. PURPLE #852f88 = your direct action, and it
+       is the only new colour on the slide.
+
+       It used to be green #4A6D5A and was too easy to miss. The reason is
+       measurable: that green sat at chroma 20 against navy's 21 — same
+       saturation, similar darkness, so at a glance it read as just another
+       structural line. #852f88 is chroma 62 and 7.6:1 on white, in the one
+       hue region (306 deg) the palette leaves empty — every other colour here
+       is 59 deg or more away. It is the single most saturated thing on the
+       slide, which is right: it is the one line that is YOU. It leaves from `me` at its opened-out
+       position (x=111) and enters at x=516, left of the data box, so the two
+       arrows into the .qmd don't collide.
+       stroke-width 2.5 like every other arrow on both slides: markerUnits is
+       strokeWidth, so a fatter line also means a fatter head. -->
+  <g class="fragment" data-fragment-index="2">
+    <path d="M 111 211 L 111 265 Q 111 277 123 277 L 504 277 Q 516 277 516 265 L 516 245"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEdit2)"/>
+    <text x="314" y="303" font-size="20" fill="#852f88"
           text-anchor="middle">you edit directly</text>
+  </g>
+
+  <!-- CLICK 3: the content changes and the format doesn't. Painted over the
+       yellow block above — same rect, same text position, RED fill (#d1495b,
+       mario's colour on the payoff slide two slides later). Note the arrow one
+       click earlier is still green: green is the ACTION ("you edit directly"),
+       red is the RESULT. If that split ever reads wrong, the fix is to make
+       the arrow red too — one hex, here and on #ahEdit2.
+
+       WHITE text here, not the navy the yellow block uses. Both clear on red
+       (4.4:1 white, 4.3:1 navy), so this is a deliberate call rather than a
+       legibility one: flipping the text as well as the fill makes the block
+       read as a STATE CHANGE and not just a recolour. The three peer blocks on
+       the payoff slide keep navy — they are alternatives to each other, not a
+       before/after. -->
+  <g class="fragment" data-fragment-index="3">
+    <rect x="512" y="177" width="158" height="44" fill="#d1495b"/>
+    <text x="591" y="206" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
   </g>
 
 </svg>
@@ -552,51 +596,56 @@ review, ask again, and take another draw.
 
 <!--
   THE PAYOFF — the abstraction cashed out in the real sheets, and the answer to
-  Act 1. It is deliberately the same shape as figure slide 1 (three variants of
-  one identical thing) with the meaning inverted: there, one unchanged input
-  gave three different documents; here, three changed inputs give three
-  documents that differ ONLY where they were changed.
+  Act 1. TWO columns, and the pair is the point: it is the slide before, made
+  concrete. There, `content` went yellow -> red inside a .qmd box and the format
+  did not move. Here are the two documents that come out of exactly that, and
+  they differ ONLY where the word differs.
+
+  So the colours are not decorative: pokemon wears the SAME yellow as the
+  at-rest `content` block, minecraft wears the SAME red as the block after the
+  click, white text and all. Read left to right it is the animation, frozen.
 
   What carries it is what DOESN'T vary. The `.qmd` box is the same box from the
-  slide before, at the same 190x124, and the blue `yaml` band is byte-identical
-  in all three columns. Only the content block changes — one word, one colour —
-  and the sheets below differ in exactly that and nothing else. Same layout,
-  same margins, same everything. That is "no drift", shown rather than claimed.
+  slide before at the same 190x124, and the teal `yaml` band is byte-identical
+  in both columns. Only the content block changes — one word, one colour — and
+  the sheets below differ in exactly that and nothing else. Same layout, same
+  margins, same everything. That is "no drift", shown rather than claimed.
 
-  Colours: amber / purple / red. NOT green, deliberately — green means "your
-  direct action" and it was on screen one slide ago as the content you had just
-  edited; a green block here would read as "this is the edited one". Thematic
-  colours (pokemon amber, minecraft green, mario red) are tempting and would be
-  charming; they cost that.
+  REVERSED, do not restore: this was three columns (pokemon amber / minecraft
+  green / mario red), rhyming with figure slide 1's three stacked rows. Mario
+  was cut and minecraft moved from green to red to build the stronger rhyme
+  with figure slide 2 instead. Two side effects, both good: green now means
+  ONLY "your direct action" anywhere in the deck, and the two sheets on screen
+  are exactly the two topics from the Act 1 cold open (pokemon, then the
+  minecraft one it drifted into). images/handwriting-good-mario.png is now
+  unreferenced.
 
-  No `render` label under the arrows: three of them would be three repetitions
-  of a word the previous slide just taught. Same rule as `#loop` on slide 1 —
-  anything in a repeated unit costs 3x.
+  No `render` label under the arrows: two of them would be two repetitions of a
+  word the previous slide just taught. Same rule as `#loop` on slide 1 —
+  anything in a repeated unit is paid for per copy.
 -->
 
-# Same [format]{.blue}. No drift.
-
 ::: {.col .center}
 ```{=html}
 <svg viewBox="0 0 240 200" width="216" height="180"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
   <text x="120" y="20" font-size="20" text-anchor="middle"
-        fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
   <rect x="25" y="30" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-  <rect x="41" y="46" width="158" height="36" fill="#007bff"/>
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="41" y="46" width="158" height="36" fill="#00798c"/>
   <text x="120" y="71" font-size="20" text-anchor="middle"
         fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <rect x="41" y="94" width="158" height="44" fill="#C0820F"/>
+  <rect x="41" y="94" width="158" height="44" fill="#edae49"/>
   <text x="120" y="123" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">pokemon</text>
-  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"/>
-  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"/>
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">pokemon</text>
+  <path d="M 120 162 L 120 178" stroke="#2e4057" stroke-width="2.5"/>
+  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#2e4057"/>
 </svg>
 ```
 
-![](images/handwriting-good-pokemon.png){fig-align="center" height="330"}
+![](images/handwriting-good-pokemon.png){fig-align="center" height="530"}
 :::
 
 ::: {.col .center}
@@ -605,55 +654,21 @@ review, ask again, and take another draw.
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
   <text x="120" y="20" font-size="20" text-anchor="middle"
-        fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
   <rect x="25" y="30" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-  <rect x="41" y="46" width="158" height="36" fill="#007bff"/>
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="41" y="46" width="158" height="36" fill="#00798c"/>
   <text x="120" y="71" font-size="20" text-anchor="middle"
         fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <rect x="41" y="94" width="158" height="44" fill="#7B5CD6"/>
+  <rect x="41" y="94" width="158" height="44" fill="#d1495b"/>
   <text x="120" y="123" font-size="20" text-anchor="middle"
         fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">minecraft</text>
-  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"/>
-  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"/>
+  <path d="M 120 162 L 120 178" stroke="#2e4057" stroke-width="2.5"/>
+  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#2e4057"/>
 </svg>
 ```
 
-![](images/handwriting-good-minecraft.png){fig-align="center" height="330"}
-:::
-
-::: {.col .center}
-```{=html}
-<svg viewBox="0 0 240 200" width="216" height="180"
-     xmlns="http://www.w3.org/2000/svg"
-     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
-  <text x="120" y="20" font-size="20" text-anchor="middle"
-        fill="#121212" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
-  <rect x="25" y="30" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#121212" stroke-width="2.5"/>
-  <rect x="41" y="46" width="158" height="36" fill="#007bff"/>
-  <text x="120" y="71" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <rect x="41" y="94" width="158" height="44" fill="#E74A2F"/>
-  <text x="120" y="123" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">mario</text>
-  <path d="M 120 162 L 120 178" stroke="#121212" stroke-width="2.5"/>
-  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#121212"/>
-</svg>
-```
-
-![](images/handwriting-good-mario.png){fig-align="center" height="330"}
-:::
-
-::: {.notes}
-This is the answer to the sheet I opened with.
-
-Three sheets, three topics, and I never touched the layout — same margins, same
-guide lines, same everything. The only thing I changed is the one block that
-says what it's about. Nothing drifted, because there was nothing to drift: the
-layout isn't being re-decided every time, it's being re-run.
-
-And I didn't proofread three documents. I proofread one word, three times.
+![](images/handwriting-good-minecraft.png){fig-align="center" height="530"}
 :::
 
 ---
@@ -662,7 +677,7 @@ And I didn't proofread three documents. I proofread one word, three times.
 {{< center >}}
 {{< middle >}}
 
-# Agents should write the source,<br>not the artifact
+# Ask agents for a .qmd file,<br>not an artifact
 
 ---
 
