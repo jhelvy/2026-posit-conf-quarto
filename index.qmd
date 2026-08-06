@@ -649,7 +649,7 @@ review, ask again, and take another draw.
   slide before at the same 190x124, and the teal `yaml` band is byte-identical
   in both columns. Only the content block changes — one word, one colour — and
   the sheets below differ in exactly that and nothing else. Same layout, same
-  margins, same everything. That is "no drift", shown rather than claimed.
+  margins, same everything.
 
   REVERSED, do not restore: this was three columns (pokemon amber / minecraft
   green / mario red), rhyming with figure slide 1's three stacked rows. Mario
@@ -664,8 +664,6 @@ review, ask again, and take another draw.
   word the previous slide just taught. Same rule as `#loop` on slide 1 —
   anything in a repeated unit is paid for per copy.
 -->
-
-# Same [format]{.formatchip}. No drift.
 
 ::: {.col .center}
 ```{=html}
@@ -727,7 +725,7 @@ review, ask again, and take another draw.
 {{< center >}}
 {{< middle >}}
 
-# Building trust
+# Quarto + Agents = Love
 
 ---
 
