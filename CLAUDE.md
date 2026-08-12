@@ -1,775 +1,285 @@
 # CLAUDE.md
 
-What this repo is. 
+Slide deck for a **20-minute posit::conf 2026 talk**: "The Unreasonable
+Effectiveness of Quarto." Canonical title/abstract in `abstract.md` (already
+published). No live demos — everything pre-rendered, screenshotted, or embedded.
 
-The slide deck for a **20-minute posit::conf 2026 talk**:
-**"The Unreasonable Effectiveness of Quarto"** (canonical title + abstract in
-`abstract.md` — already published in the program).
+First of four talks in a "Dashboards" session whose real subject is **data
+products**. Use that phrase; it's the session's shared vocabulary.
 
-**No live demos** — everything is pre-rendered, screenshotted, or embedded
-directly in the slides (embedded interactive HTML is itself evidence the approach
-works).
+## Rules for agents
 
-**Session placement:** first of four in a session labeled "Dashboards," whose real
-subject is **data products** (the other talks: Tableau→AI-ready data products;
-custom catalogs for data products; template→package→app). This talk is the
-session's thesis statement and its on-ramp. Use the phrase "data product" — it's
-the session's shared vocabulary.
+- **No speaker notes.** Never add `::: {.notes}` blocks. John doesn't use them.
+- **Keep edits to this file minimal.** A design decision gets one line, not a
+  paragraph. Don't narrate the reasoning behind small changes here.
+- **Never run `quarto render`** or any render command. Report done; John renders.
+- **Never run `git` commands.** John commits and pushes himself.
+- Simplicity first; surgical changes; match existing style.
+- Section dividers are **statements, not labels** — never "Act 3" on a slide.
+- Paraphrase external sources; no long quotes.
 
 ## The thesis
 
-**Spine sentence:**
-
 > **Agents should write the source, not the artifact.**
 
-- **Entanglement** is defined *operationally*, never metaphorically:
-  **the content has no address.** In a generated document there is no file, no
-  line, no cell that *is* a given sentence — it's smeared across one probabilistic
-  pass. To change it you regenerate everything and hope.
-- **Disentanglement = give the content an address.** The
-  agent writes the `.qmd` (structure/logic); content that must be exact lives in
-  data files and renders deterministically.
+- **Entanglement is operational, never metaphorical: the content has no
+  address.** No file, no line, no cell *is* a given sentence — it's smeared
+  across one probabilistic pass. To change it you regenerate everything.
+- **Disentanglement = give the content an address.** Agent writes the `.qmd`;
+  values that must be exact live in data files and are recomputed, not typed.
 - **You can't prompt your way to correctness. You architect it.**
-- **Two tiers, and don't blur them.** Prose stays in the `.qmd` — its address is a
-  line number and a readable **diff**. Only *values that must be exact* live in
-  data + code, where they're **recomputed** rather than typed. The move is
-  **"stop asking for the artifact,"** never "extract everything."
-- The **handwriting-sheet-for-my-6-year-old** PDF is the emotional/legible center.
-  Keep it — but note its sentences genuinely *are* data (a list of items to
-  typeset). 
+- **Two tiers, don't blur them.** Prose stays in the `.qmd` (address = line
+  number + diff). Only exact values move to data. The move is "stop asking for
+  the artifact," never "extract everything."
 
-Previous framing:
-- **Three-pillar framing** ("Correctness / Efficiency / Trust"). Not sure if will use or not 
+❌ **Never name Thariq or reference "The Unreasonable Effectiveness of HTML."**
+Can't assume the room read it. **Never explain the title** (it's a genre —
+Wigner, 1960). Make the HTML case in John's own voice as the objection, at full
+strength, then turn.
 
-### Reversed decisions — do not reintroduce
+❌ **Don't argue for content/format separation. Show it.** Arguing makes the
+talk feel like a recap.
 
-
-- ❌ **Never name Thariq or reference "The Unreasonable Effectiveness of HTML."**
-  Can't assume the room has read it, and naming an unknown rival costs exposition
-  and makes the talk dependent on someone else's post. The title is a genre
-  (Wigner, 1960) and stands alone — **never explain the title.** Make the HTML
-  case in JP's own voice as the objection, at full strength, then turn.
-- ❌ **Don't argue for content/format separation.** Show it. The room grants it
-  instantly; arguing for it is what makes the talk feel like a recap.
-
-## Structure
- 
-Read the outilne.md for the outline
+Outline: `outline.md`.
 
 ## Files
 
-**The deck — the only thing that gets presented.**
+- `index.qmd` — the deck. Canonical, repo root. `format: lexis-revealjs` — read
+  Styling before editing; the syntax is not stock Quarto reveal. Both
+  entanglement figure slides live in here as inline SVG.
+- `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
+- `_extensions/lexis/` — the lexis extension. Don't hand-edit.
+- `custom.css` — the only local stylesheet.
+- `custom.scss` — **dead**, safe to delete.
+- `plots.R` — regenerates `images/fig-tokens.png` (the only generated image).
+  `Rscript plots.R`. Everything else in `images/` is a screenshot or export.
+- `data/token_results.csv` — verbatim copy of the blog post's data. Numbers on
+  the token slide are computed from it. Change the CSV and re-run; never
+  hand-edit the PNG.
+- `abstract.md` — canonical title/abstract/bio.
+- `submission.md`, `outline.qmd`, `outline-long.md`, `outline.pptx` —
+  historical. Don't take design direction from them.
+- `README.md` — **stale**; still names `custom.scss`.
 
-- `index.qmd` — the deck. Canonical, lives at repo root. Uses
-  `format: lexis-revealjs` — **read the Styling section before editing it**, the
-  slide syntax is not stock Quarto reveal. **The entanglement figure now lives
-  inside this file** as two hand-written inline-SVG slides (see below); there is
-  no separate figure document any more.
-- `index.html` + `index_files/` — rendered output, committed to the repo. Stale
-  between John's renders; never hand-edit, never read it as the source of truth.
-- `_extensions/lexis/` — the lexis format extension (installed, do not hand-edit).
-- `custom.css` — the deck's only local stylesheet. See Styling.
+`fig-tokens` differs from the blog version deliberately: Fira Sans Condensed,
+minou colors, no per-dot counts, and a bold multiplier right of each
+direct-format dot (1× 1.8× 4× 7.2×) computed from the CSV. The x-axis right
+expansion (`0.14`) holds those multipliers — shrink it and `7.2×` clips.
+`dpi = 192` gives 1920×960, matching the post.
 
-**Figure source.**
+**`images/`** — flat. `handwriting-good-minecraft.png` does double duty (the
+drifted sheet in Act 1, the minecraft sheet on the payoff slide); swapping it
+changes both. `handwriting-good-mario.png`, `handwriting-practice-minecraft.pdf`
+and `africa-correct.png` are unreferenced.
 
-- `plots.R` — regenerates every image in `images/` that is a *plot*. Right now
-  that is only `images/fig-tokens.png`. Run it with `Rscript plots.R`; it writes
-  straight into `images/`. Everything else in `images/` is a screenshot, a GIF,
-  or a PDF export and does **not** come from here.
-- `data/token_results.csv` — a verbatim copy of the token-efficiency post's data
-  file (`jhelvy.com/blog/2026-05-12-quarto-optimal-claude-output/data/`), so the
-  numbers on the Act 3 slide and the numbers in the post are the same numbers.
-  **The deck is now the same shape as its own thesis:** the figure has an
-  address, and the values are recomputed rather than typed. If the numbers ever
-  change, edit the CSV and re-run — never hand-edit the PNG.
-
-**`fig-tokens` departs from the blog version in four ways, all deliberate:**
-
-1. **Font is Fira Sans Condensed** (the lexis deck font), not Roboto Condensed.
-2. **Colors are minou** — teal = Quarto, red = direct format. See Palette.
-3. **The per-dot token counts are gone.** The axis already gives the magnitudes.
-4. **A bold multiplier sits to the right of each direct-format dot** — 1×, 1.8×,
-   4×, 7.2× — computed from the CSV, never typed. It is the only annotation left,
-   and it is the sentence John says out loud. The `.0` is stripped so these read
-   "4×" not "4.0×", and the x-axis right expansion (`0.14`) exists to hold them —
-   shrink it and the `7.2×` clips.
-
-`dpi = 192` reproduces knitr's default (96 × `fig-retina` 2), which is why the
-output is 1920×960 — the same pixel dimensions as the post's.
-
-**The plot lands on an `{{< inverse >}}` slide** and has a white background, so
-it currently reads as a pasted-in exhibit on a dark slide. Not yet decided
-whether to leave it or give it a dark panel.
-
-**Talk prose (not slides).**
-
-- `abstract.md` — canonical title + abstract + bio. Already live in the program.
-- `submission.md` — the original conference submission, under a **different,
-  superseded title** ("The Multi-page Dashboard Framework You Didn't Know You
-  Had"). Historical; `abstract.md` wins.
-- `README.md` — short repo readme. **Stale**: still says the theme is
-  `custom.scss` and describes no extension.
-
-**Planning material — historical, do not take design direction from it.**
-
-- `outline.qmd` — an **earlier draft deck**, also `lexis-revealjs`. Superseded by
-  `index.qmd`; kept for reference. Its rendered `outline.html` / `outline_files/`
-  have been deleted from the working tree (still tracked, deletion uncommitted).
-- `outline-long.md` — the full six-act outline the deck was built from.
-- `outline.md` — loose notes and open questions. Predates several reversed
-  decisions; treat as scratch.
-- `outline.pptx` — an export, not a source.
-
-**`images/` — every asset the deck references, flat, no subdirectories.**
-
-| File | Used by |
-|---|---|
-| `handwriting-practice-pokemon.{png,pdf}` | Act 1 cold open — the original |
-| `handwriting-good-minecraft.png` | Act 1 — the drifted version, eight rounds later |
-| `handwriting-good-{pokemon,minecraft}.png` | Act 2 payoff — the two-sheet slide |
-| `handwriting-good-mario.png` | **unreferenced** since the payoff went from 3 columns to 2 |
-| `handwriting-practice-minecraft.pdf` | **png is gone**; only the pdf survives, nothing references it |
-| `vehicletrends.gif` | the teaser slide right after the title |
-| `fig-tokens.png` | Act 3, token cost — **generated by `plots.R`**, don't hand-edit |
-| `africa-bad.jpeg` | Act 5 |
-| `africa-correct.png` | **currently unreferenced** by `index.qmd` |
-
-Note `handwriting-good-minecraft.png` does double duty: it is both the *drifted*
-sheet in Act 1 and the *minecraft* sheet in the Act 2 payoff. That's fine — same
-artifact, two arguments — but if Act 1 ever needs a visibly worse sheet, don't
-just swap the file, it will change the payoff slide too.
-
-Render status: `index.qmd` **has not been re-rendered** since the lexis
-conversion, the `css: custom.css` fix, or the entanglement figure being ported
-in. John renders; agents do not.
-
-## The dashboard case study (Act 4)
-
-Canonical evidence: **vehicletrends.us** — source at `/Users/jhelvy/gh/vehicletrends/dashboard`.
-A real, multi-page, self-updating Quarto website (10M+ vehicle listings). It
-instantiates the whole thesis, so Act 4 draws its principles from the real repo,
-not invented patterns. The five that carry the act:
-
-1. **Same move, at scale.** Agent writes the `.qmd` + small R chunks; the **data
-   lives in an external R package** (`vehicletrends`) the pages read at render
-   (`setup.R`). Every number has an address; a weekly GitHub Action re-renders so
-   the site is never stale.
-2. **Shiny asks for the artifact; Quarto asks for the source.** THE objection to
-   pre-empt in a Posit dashboards room. Shiny = specify UI + wire inputs/outputs +
-   server + reactivity (lots of writing, lots of tokens, a server to run). Quarto =
-   markdown + a chunk that returns a self-contained JS widget (ECharts) that runs
-   client-side. The PDF problem one level up. Honest concession: server-side
-   compute over browser-too-big data is Shiny's home turf.
-3. **Isolate heavy components behind an iframe.** The hardest thing on the site —
-   the MapLibre + PMTiles census-tract map — is a **separate repo** (`hhi-map`),
-   built/iterated alone, dropped in via a 6-line iframe. Also how the Shinylive
-   app and Posit Connect charts embed.
-4. **Small pieces have small context windows.** Isolation is the *efficiency*
-   argument made architectural: the whole dashboard is never in the agent's scope
-   at once, so each interaction stays cheap and each component individually
-   correct.
-5. **It's just static files.** Charts (ECharts JS), the map (PMTiles on a CDN),
-   even the Shiny app (**Shinylive** → WebAssembly, no server) all run in the
-   browser and deploy free to GitHub Pages. No server to run, secure, or pay for.
-
-Tech specifics for accuracy: charts = `echarts4r`; tables = `reactable`; map =
-MapLibre GL JS + PMTiles (Cloudflare R2, Tippecanoe via the `{pmtiles}` R pkg);
-in-browser app = Shinylive/webR; CI = GitHub Actions (push + weekly); hosting =
-GitHub Pages / Netlify. Don't invent pitfalls — if the deck needs a "what bit me"
-slide, get the real ones from John.
+Render status: `index.qmd` has not been re-rendered since the lexis conversion.
 
 ## The palette
 
-**Every color in the talk comes from `ltc::ltc("minou")`** — slides, the
-entanglement figure, and the plots in `plots.R` are one palette. `ltc` is
-John's own color package; `minou` is one of its 31 built-ins.
+Everything comes from `ltc::ltc("minou")` — slides, figure, `plots.R`.
 
-| Hex | Name | Role |
-|---|---|---|
-| `#edae49` | yellow | **content / data** |
-| `#00798c` | teal | **format / structure** |
-| `#d1495b` | red | **content that changed**; also Shiny and raw HTML |
-| `#2e4057` | navy | **ink**: every stroke, arrowhead and label in the figure |
-| `#852f88` | purple | **your direct action** — *not minou, see below* |
-| `#66a182` | green | **retired** — nothing uses it |
-| `#8d96a3` | grey | unused |
+| Hex | Role |
+|---|---|
+| `#edae49` yellow | content / data |
+| `#00798c` teal | format / structure |
+| `#d1495b` red | content that changed; also Shiny, raw HTML |
+| `#2e4057` navy | ink — every stroke, arrowhead, label |
+| `#852f88` purple | your direct action (from `ltc("hat")`, the one non-minou color) |
+| `#66a182` green | **retired** — nothing uses it |
 
-**Purple is the one deliberate outsider.** It comes from `ltc("hat")`, and it is
-the only colour in the deck that isn't minou. It earns the exception because it
-has one job — be the thing your eye goes to — and minou has nothing left that
-can do it. Hue 306 is the one region minou leaves empty (nearest neighbour 59°
-away), at chroma 62 and 7.6:1 on white.
+**Fill vs. ink.** Yellow is light: fine as a **fill** with dark text, invisible
+as a line or letter (1.6:1). Ink variant `#A77400` = `.amber`, used only where
+yellow must be text. Teal and red serve as both. Consequence inside the figure:
+**text on teal is white, text on yellow is navy, text on red is white.**
+Legibility, not taste — don't "fix" it.
 
-It replaced a green (`#4A6D5A`) John found too easy to miss, and the reason is
-measurable and worth remembering: **that green sat at chroma 20 against navy's
-21.** Same saturation, similar darkness, so it read as just another structural
-line instead of the one line that is *you*. When picking an accent, **chroma is
-the axis that matters, not hue.**
+**Yellow appears only as a fill inside both figure SVGs**, never as a line or
+letter.
 
-**Green is now retired.** It was "your direct action" (now purple) and minecraft
-on the payoff slide (now red). `.green` still resolves but nothing uses it — if
-you reach for it, check you don't mean purple or red.
+**Where the color is being *taught*, use a chip, not ink.**
+`[**these**]{.contentchip}` / `[**this**]{.formatchip}` — the word becomes the
+same object as the band, not just the same hue. Longer phrases stay plain
+colored text; a chip round a clause reads as a highlighter.
 
-**Fill vs. ink — the one rule that isn't obvious.** minou's yellow and green are
-light (lightness 75 and 62). They work as **fills** with dark text on them, but
-as text or a thin stroke on a light slide they measure 1.6:1 and 2.5:1 —
-invisible from the back of a room. Each therefore has a darker **ink** variant at
-the same hue (drift < 0.5°, so both genuinely read as "the yellow one"), used
-wherever the color has to be a line or a letter:
+**Hexes live in three places with no shared variable** — `custom.css`, the
+inline SVGs in `index.qmd`, `plots.R`. A palette change is a three-file
+find-and-replace.
 
-| | fill | ink |
-|---|---|---|
-| yellow | `#edae49` | `#A77400` |
-| green | `#66a182` | `#4A6D5A` | *(both retired — nothing uses either)* |
+`.blue` / `.red` / `.green` **override** lexis's defaults so `[word]{.blue}` is
+the figure's teal.
 
-Teal and red are dark enough to serve as both and have no ink variant.
-Consequence inside the figure, and it looks inconsistent until you know why:
-**text on a teal band is white; text on a yellow band is navy; text on red is
-white.**
-That is forced by legibility, not taste — don't "fix" it.
-
-**Red is the one fill that takes either** (4.4:1 white, 4.3:1 navy), so on red
-the text colour is an editorial choice rather than a legibility one, and the
-deck uses it both ways on purpose:
-
-- **white**, everywhere red means *changed content*: the figure's click-3
-  `content` block, the heading chip that recolours with it, and the payoff
-  slide's minecraft column. Flipping the text *and* the fill makes it read as a
-  **state change**, not a recolour.
-- The rule is therefore simple now that mario is gone: **red always takes white
-  in this deck.**
-
-**Prefer a chip to ink where the color is being *taught*.** The split above is a
-compromise, and it costs the most on the two slides before the figure, whose
-whole job is to teach the vocabulary the figure then uses — teaching the ink
-yellow and then showing the fill yellow undercuts them. So those words are
-**chips**: `[**these**]{.contentchip}` / `[**this**]{.formatchip}`, an inline
-block in the fill color with the same text color the figure's bands use. The
-word stops being *the same hue as* the content band and becomes *the same object
-as* it. Longer phrases elsewhere (`[**The agent never touched:**]{.amber}`) stay
-plain colored text — a chip round a whole clause reads as a highlighter, not a
-swatch.
-
-**Both figure headings are now lexis lines, not SVG text** — see the figure
-section. **The two figure SVGs now contain no ink yellow at all.** The `data`
-box was the last holdout; it is now drawn exactly like the `content` block —
-solid `#edae49`, navy text — with a navy arrow like every other structural
-connector. So inside the figure the rule is absolute: **yellow and green appear
-only as fills, never as a line or a letter.** The ink variants survive purely as
-*text* colours on slides (`.amber`, `.green`), where there is no block to sit
-on. What that cost: the arrow into the `.qmd` no longer reads as "content
-flowing in" — the yellow block at one end and the yellow band at the other carry
-that instead, and a third yellow on screen bought nothing.
-
-**Why minou and not something prettier.** John first asked for `paloma`. Paloma
-is a five-color pastel set with **no blue and no dark color**, spanning hues
-2°–154°. Once yellow / green / red were reserved for pokemon / minecraft / mario,
-the only candidates left for *format* were khaki `#C8C8A9` and peach `#f7bf95` —
-both within 25° of the content yellow and 1.04:1 against each other. Content vs.
-format is the load-bearing pair in the whole deck, so that was fatal. minou was
-chosen because it is the only ltc palette that covers all six roles at once:
-content and format land **163° apart** and stay distinct under red-green
-colorblindness (`#D4C04C` vs `#5B698C`). If the palette is ever revisited, that
-is the test to re-run — not "does it look nice."
-
-**Where the hexes actually live.** `custom.css` (semantic classes + the header
-comment that restates all of this), the five inline SVGs in `index.qmd`, and
-`plots.R`. There is no shared variable across those three — a palette change is a
-three-file find-and-replace, so check all three.
-
-**lexis's own color utilities are overridden.** `.blue` / `.red` / `.green` ship
-as `#007bff` / `#E74A2F` / `#38B44A`; `custom.css` repoints them at minou so a
-`[word]{.blue}` on a slide is the same teal as the format band in the figure.
-Same specificity as lexis's rules, and `custom.css` loads after the theme, so
-they win. `.amber` is ours and is the **ink** yellow, because it is only ever
-text.
+❌ Don't revisit the palette casually. The test is that content and format stay
+distinct under red-green colorblindness (163° apart in minou), not "does it look
+nice." When picking an accent, **chroma is the axis that matters, not hue.**
 
 ## The entanglement figure
 
-**Settled: the figure is IN, and it is TWO slides**, both inline SVG living
-directly in `index.qmd` (Act 2, right after "Where is the sentence?"). Neither is
-`{{< inverse >}}` — the SVG uses white fills and near-black strokes and needs a
-light slide.
+Two slides of inline SVG in `index.qmd` (Act 2). Neither is `{{< inverse >}}` —
+the SVG needs a light slide.
 
 ```
-SLIDE 1 —  content/data ENTANGLED WITH structure/format   (one loop, stacked 3×)
-                                            .pdf
-   [ me ] ──▶ [ agent ] ═══▶  [▓▒▓▒▒▓/]     horizontal BANDS in a PAGE
-      ▲          (dashed)                   (folded corner, 90×116)
+SLIDE 1 — one loop, stacked 3×, three different documents fall out
+   [ me ] ──▶ [ agent ] ──▶ [▓▒▓▒▒▓/] .pdf     bands
+      ▲          (dashed)
       └──── review & re-prompt ──┐
-   [ me ] ──▶ [ agent ] ═══▶  [∴∵∴∵∴/]      dots
-      ▲                                           same loop,
-      └──── review & re-prompt ──┐                different weave
-   [ me ] ──▶ [ agent ] ═══▶  [▪▫▪▫▫/]      blocks
+   [ me ] ──▶ [ agent ] ──▶ [∴∵∴∵∴/]           dots
+   [ me ] ──▶ [ agent ] ──▶ [▪▫▪▫▫/]           blocks
 
-SLIDE 2 —  Quarto DISENTANGLES Content and Format
-   at rest — identical to slide 1's row 1, in the same place on screen:
-   [ me ] ──▶ [ agent ] ═══▶  [▓▒▓▒▒▓/]
-
-   click 1 — the chain opens ±140 and the .qmd drops into the gap:
-                                     ┌ .qmd ──────┐              .pdf
-   [ me ] ──▶ [ agent ] ──writes───▶ │ ▒▒ yaml ▒▒ │ ──render──▶ [▓▒▓▒▒▓/]
-      │          (dashed)            │ ▓▓content▓▓│
-      └──── you edit directly ─────▶ └─────▲──────┘   click 2: PURPLE arrow
-                    (click 2)         [▓ data ▓]      click 3: yellow→RED,
-                                       same fill as            teal fixed
-                                       `content`
+SLIDE 2 — at rest: byte-for-byte slide 1's row 1
+   click 1: chain opens ±140, .qmd + data fade into the gap
+   [ me ] ──▶ [ agent ] ─writes─▶ │ yaml / content │ ─render─▶ [▓▒▓▒▒▓/]
+      │                           └───────▲────────┘
+      └── you edit directly ──────┘   [▓ data ▓]
+   click 2: purple edit arrow.  click 3: content yellow→RED, teal doesn't move.
 ```
 
-**Both headings are ordinary lexis `#` lines ABOVE their SVG, and they are the
-whole legend.**
+**Headings are lexis `#` lines above each SVG, and they are the whole legend:**
 
 ```
 # [Content]{.contentchip} entangled with [Format]{.formatchip}
 # Quarto disentangles [Content]{.contentchip} and [Format]{.formatchip}
 ```
 
-Slide 2's is slide 1's sentence with two words inserted — that echo is the
-point, so change them together or not at all.
+Slide 2's is slide 1's sentence with two words inserted — change them together
+or not at all, and keep both at `#` (see registration).
 
-They **used to be SVG `<tspan>`s** at `font-size="50"`, and moving them out is
-what lets them use the same chips the setup slides teach: a `<tspan>` can't have
-a background, so inside the SVG the words had to be the darker *ink* yellow
-while the bands beside them were the *fill* yellow — the legend taught one
-colour and the figure showed another. As markup the browser sizes the chips and
-no text metrics are hand-computed. Both are `#`, and they must STAY the same
-level as each other: the two slides are registered (below), and a different
-heading height on one of them would break that.
+❌ No swatch legend. The two slides before the figure teach the vocabulary
+(concrete: "I want *these* sentences with *this* layout"; then named), and the
+figure carries that same sentence across its top.
 
-**The viewBox top crop moves with those headings** (below): each `min-y`
-reclaims exactly the space its old `<text>` held, so if a heading ever goes back
-inside its SVG the crop has to be undone with it.
+### Invariants
 
-**THE TWO SLIDES ARE REGISTERED, and that is load-bearing.** Slide 2 at rest is
-*byte-for-byte slide 1's row 1* — same boxes, same widths, same coordinates
-(me x=285, agent x=485, artifact x=755, row centred on y=175), differing only in
-the per-slide marker id. **Both slides now carry the identical viewBox,
-`0 77 1240 553`**, so the registration is exact by construction rather than by
-arithmetic: same box, same row y, and since both are width-bound at 1240 and
-vertically centred on the slide (`{{< middle >}}`), the row lands on the same
-pixels. Advancing from slide 1 to slide 2 therefore changes **nothing at all**
-until you click — that stillness is the setup, and it is what earns the "one
-picture with one variable changed" claim. Slide 2's content ends at y≈351, so
-it carries ~280 units of dead canvas below the figure purely to hold the
-registration; it is invisible and it is the price. **Anything that changes
-either viewBox, either heading level, or that row's geometry breaks the
-registration — recompute both.**
-
-Why 553 and not more: the lexis slide is **1600×900** with `padding: 45px 90px
-60px`, so the usable box is 1420×795, and the `#` heading eats ~100px of it.
-At viewBox width 1240 the figure renders 1420 px wide and 553/1240 × 1420 ≈
-**633 px** tall, which with the heading is ~735 of the 795 available. That
-~60px is the entire remaining slack — **height is now the binding constraint on
-slide 1, not width**, and it is why the artifact could get narrower but not
-appreciably taller.
-
-The color vocabulary is taught by the two slides *before* the figure and never
-re-explained inside it:
-
-1. **concrete** — "I want [*these*]{content chip} sentences with [*this*]{format
-   chip} layout", over the two handwriting sheets in matching colored borders;
-2. **named** — "If you ask AI for the *artifact*, the [Content]{content chip} is
-   entangled with the [Format]{format chip}";
-3. **the figure**, carrying that same sentence across its top in the same chips.
-
-Don't reintroduce a swatch legend. There was one; at 17px it was unreadable from
-the back, and it duplicated in miniature what step 2 already says at full size.
-
-Design rules, in force:
-
-- **THE ARTIFACT IS A PAGE WITH A FOLDED CORNER, labelled `.pdf`.** It is the
-  thing it stands for: the rendered handwriting sheet from Act 1, and the same
-  portrait sheet the payoff slide puts on screen two slides later. `90 × 116` —
-  US Letter proportions — drawn 1:1 in parent units (**no `scale()` on the
-  `<use>`**), outline
-  `M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z` with the fold triangle
-  `M 68 0 L 90 22 L 68 22 Z` in white on top. The dog-ear is the universal
-  document glyph, so it reads from the back of the room without the label doing
-  the work. **Hold this shape constant across both figure slides.**
-  It is deliberately **not** a rounded rect — that is the actor shape (`me`, the
-  agent). It **is** the same rect family as the `.qmd`, and that is the point:
-  same two colours, same kind of box, and the only thing that differs is
-  **whether the bands have places.** One variable, and it is the address
-  argument.
-  ❌ **Reversed decision, do not reintroduce: the oval.** It was `200 × 116`,
-  an `<ellipse cx=100 cy=58 rx=100 ry=58>`, justified as the flowchart
-  terminator plus "no corners, nothing to index against." That logic only ever
-  resolved for whoever drew it; at distance the room saw a blob, and it
-  disagreed with the real portrait sheets on the payoff slide. Height is
-  unchanged at 116, so **no row spacing or height-budget arithmetic moved** —
-  only the width came down, 200 → 90, and the chain shifted 55 right to stay
-  centred.
-- **Never draw the OUTPUT as content nested inside a format box.** Containment
-  implies the two are already separate and in their own places, which is the
-  visual opposite of entanglement. The artifact is always **irregular bands,
-  content and format interleaved, no boundaries**, bleeding edge to edge and
-  clipped to the page via a `<clipPath>` so the fold notch stays clean. (Scope
-  matters: nesting inside the **`.qmd`** on slide 2 is not a violation, it is
-  the claim — see below. The rule is about the artifact, not the source.)
-- **The bands are HORIZONTAL, not vertical stripes.** On a page, horizontal
-  reads as lines of a document, and it makes the comparison with the `.qmd`'s
-  two stacked bands direct rather than cross-axis. The 11 heights are slide 1's
-  old stripe *widths* scaled 200 → 116, so the weave kept its rhythm; they sum
-  to 116 and are contiguous, and the bleed to both edges is what keeps it from
-  reading as a box inside a box.
-- **The `.pdf` label is the one piece of text inside a repeated unit**, and it
-  is worth paying for 3×. It makes slide 2 read `.qmd` → render → `.pdf`, which
-  is the whole of what Quarto *is* for anyone watching the recording who doesn't
-  already know — an explainer slide's worth of work for no slide. It also
-  removes any question about which rect is which once the `.qmd` arrives. This
-  is a deliberate exception to the "anything in `#loop` costs 3×" rule; the bar
-  was high and one mono word cleared it.
-- **Color vocabulary (never break it):** yellow = **content**, teal =
-  **format/structure**, purple = **human's direct action**, red = **content that
-  changed**. Purple and red appear on slide 2 only. Exact hexes and the fill/ink split
-  live in **the Palette section below** — read it before touching a color.
-- **The agent box is identical and dashed on both slides.** Dashed = stochastic.
-  It is deliberately *unchanged* between them: the agent did not get better, the
-  thing it writes did. Don't "improve" the agent on slide 2.
-- **Slide 2 at rest *is* slide 1's row 1** — not merely a mirror of it. See the
-  registration note above; this replaces an older slide 2 that had its own
-  smaller boxes (me 96 wide, agent 156) at its own coordinates, and a
-  `prompt once` label. Both are gone: at rest, slide 2 must claim nothing slide
-  1 didn't.
-- Its job in Act 2 is **generalization, not explanation** — the handwriting sheet
-  already taught the idea. That justifies a simple picture.
-
-**Slide 1 shows variance by stacking the same loop three times.** (This replaces
-an earlier swap-in-place build, where three documents shared one slot and
-replaced each other. It was too subtle to read from the back of the room — the
-only thing that changed was stripe widths inside a small box.) Now: at rest, one
-loop, **already in the top third at its final y=175**. Click 1 adds run 2
-beneath it; click 2 adds run 3.
-
-- **The loop is drawn once, as `#loop` in `<defs>`, and `<use>`d three times.**
-  Keep it that way. The rows being *provably* identical is the argument; the
-  eye lines them up and the only difference left is what falls out the end.
-- **The big arrow carries no label, on purpose.** It used to say "one
-  probabilistic pass" above and "woven here" below; stacked three deep that was
-  six lines of repeated text. Both are now spoken, not drawn. Anything added to
-  `#loop` costs 3×, so the bar for putting text in there is high.
-- **The three documents differ in MOTIF, not in proportion:** `#doc` (bands,
-  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same page, same two colors,
-  unmistakably different weave. Do not "unify" them back into three band
-  patterns — legibility at distance is the whole reason they exist. Only the
-  bands are clipped; **every dot and block is placed to sit wholly inside the
-  page and clear of the folded corner** (`x ≥ 68` and `y ≤ 22`), so nothing is
-  sliced at an edge (a clipped half-dot reads as a rendering bug, a clipped band
-  doesn't). `r=10` and side 14–18 keep them the physical size they had before
-  the page narrowed — three columns instead of seven, four rows instead of
-  three, 11 marks each. The rows are
-  **unlabelled**: no "run 1 / run 2 / run 3". Three documents falling out of one
-  identical loop already says it, and the numbers only invited reading the stack
-  as progress.
-- **Both content AND format are redrawn on every pass. ❌ Do not "hold the
-  content constant and vary only the format."** It was proposed and rejected:
-  the cold open is pokemon sentences drifting into *minecraft* sentences, so a
-  figure that keeps the yellow fixed claims the content survived the re-prompt —
-  the opposite of the story just told — and it would leave the payoff slide's
-  content-turns-red click answering a problem the figure never showed. The
-  residual oddity ("format as little dots" — arguably the format *is* the box)
-  is the price, and it is the cheaper one: an agent re-draws the wording as well
-  as the layout, so both really do move between runs.
-  **Where that instinct does belong: Act 6's *change one word*.** Same content,
-  `format: pdf` → `format: html`, and the *shape of the output* changes while
-  the content doesn't — the exact mirror of slide 2's click 3, four acts later.
-  Shape-as-format pays off there, where it is true. Not yet built.
+- **The two slides are REGISTERED.** Both carry `viewBox="0 77 1240 553"`; slide
+  2 at rest is byte-for-byte slide 1's row 1, same coordinates. Advancing
+  changes nothing until you click — that stillness earns the "one picture, one
+  variable" claim. Slide 2 carries ~280 units of dead canvas below its figure to
+  hold this. **Changing either viewBox, either heading level, or that row's
+  geometry breaks it — recompute both.**
+- **Height is the binding constraint, not width.** Slide is 1600×900, padding
+  `45px 90px 60px`, usable 1420×795; the heading eats ~100px; the figure renders
+  ~633px. ~60px slack. The knob is row spacing (186), never the viewBox width.
+- **The artifact is a PAGE with a folded corner, labelled `.pdf`.** 90×116 (US
+  Letter), drawn 1:1, outline `M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z`, fold
+  triangle `M 68 0 L 90 22 L 68 22 Z` in white. Same rect family as the `.qmd`,
+  on purpose: same colors, same kind of box, and the **only** variable is
+  whether the bands have places. ❌ Not an oval (read as a blob at distance,
+  disagreed with the real sheets on the payoff slide). ❌ Not a rounded rect —
+  that's the actor shape.
+- **Never draw the artifact as content nested inside a format box.** Containment
+  implies they're already separate. Always irregular **horizontal** bands
+  bleeding edge to edge, clipped to the page. (Nesting inside the `.qmd` is not
+  a violation — that's the claim.)
+- **The three documents differ in MOTIF** — `#doc` bands, `#docDots`,
+  `#docBlocks` — for legibility at distance. Every dot and block sits wholly
+  inside the page and clear of the fold (`x ≥ 68`, `y ≤ 22`); only bands are
+  clipped. Rows are **unlabelled** — no "run 1/2/3", which invites reading the
+  stack as progress.
+- **`#loop` is drawn once and `<use>`d three times.** The rows being *provably*
+  identical is the argument. **Anything added to `#loop` costs 3×** — the `.pdf`
+  label is the one deliberate exception, because it makes slide 2 read
+  `.qmd` → render → `.pdf`, which is an explainer slide's work for free.
 - **Nothing points from one document to the next.** The only route between rows
-  is the dashed *review & re-prompt* connector, and it lands on `me`, never on
-  the document. Run 2 is not an edit of run 1; run 1 is discarded and the whole
-  thing rewoven. That's the eight-rounds story, and it's what the old
-  replace-in-place build was carrying. If you ever redraw this, **do not draw an
-  arrow from run 1 to run 2** — that turns the figure into an argument for
-  iteration converging, which is the opposite claim.
-- **Nothing on this slide moves — run 1 is static.** ❌ **Reversed decision, do
-  not reintroduce:** run 1 used to be `fragment custom lift`, parked low by a
-  `.lift` rule in `custom.css` so it read as centred on its own, then sliding up
-  to y=175 on click 1 to make room for run 2. John cut it — a row sliding up is
-  a motion the room has to parse *before* the point lands, and the at-rest
-  composition was never the argument. Run 1 now renders at y=175 from the moment
-  the slide appears and the other two arrive underneath it. Click count is
-  unchanged (2). The CSS is gone; `custom.css` keeps the rule in a comment with
-  the arithmetic, in case it is ever wanted back.
-- **Nothing is captioned at the bottom.** A summary line ("same prompt, same
-  model — a different document every time") lived there and was cut as implied.
-  The stack is the caption.
-- **Both arrows in `#loop` are identical** — `stroke-width="2.5"`, an **80-unit**
-  run, an 8-unit gap before whatever they land on. me→agent and agent→artifact
-  are the same kind of step and should not be weighted differently; the second
-  one was once a 274-unit, 6-wide slab. **80 is the only arrow length in the
-  whole figure** — slide 1's two and slide 2's three — which retires the old
-  50-vs-80 split. Row: me x=340, agent x=540, artifact x=810, ending at 900,
-  centred with 340 units of margin either side. (Everything shifted 55 right
-  when the page replaced the oval: the artifact is 110 narrower, so half of that
-  went to each margin and **the artifact's centre stayed at x=855** — which is
-  why the `review & re-prompt` connectors needed no new x, only a new landing
-  point on `me` at 395.)
-- **The rows are 186 apart** (was 165), i.e. **70 units of clear air** between
-  one artifact and the next, against 56 before. John's read was that "the lines
-  feel a little cramped," and the measurable version is the `review &
-  re-prompt` label: it used to clear the next row's document by **2 units** and
-  now clears it by **15**. The artifact is 116 tall — the oval's height, kept
-  exactly when the page replaced it — so none of this arithmetic moved with the
-  shape change. See the 1600×900 arithmetic in the registration note before
-  adding any more.
+  is the dashed *review & re-prompt* connector, landing on `me`. ❌ An arrow from
+  run 1 to run 2 would argue iteration converges — the opposite claim.
+- **Nothing on slide 1 moves.** ❌ Reversed: run 1 used to slide up on click 1
+  (`.lift`, kept commented in `custom.css`). Motion the room parses before the
+  point lands.
+- **Both content AND format are redrawn on every pass.** ❌ Do not hold content
+  constant and vary only format: the cold open is pokemon drifting into
+  minecraft, so content is exactly what moved. That instinct belongs in Act 6's
+  *change one word* (`format: pdf` → `format: html`), not built yet.
+- **The agent box is dashed and identical on both slides.** The agent didn't get
+  better; the thing it writes did. Don't "improve" it on slide 2.
+- **The `.qmd` box is a NEUTRAL container — navy stroke, never teal.** Teal
+  would say "format contains content"; navy says "a file contains both." The
+  only box in the deck where the two colors nest.
+- **The teal band is the YAML**, and it's what Act 6's *change one word*
+  changes. The file is not meant to be read.
+- **`data` is yellow, sits outside, feeds the `.qmd`** — not render. Data is
+  content; only the kind of address differs. **Nothing points at `data`** — it
+  comes from the world, and the empty input is the point.
+- **One purple arrow**, landing on the `.qmd`'s bottom edge (the file, not
+  either block — both halves are yours to edit). Purple = the action, red = the
+  changed content; no color link between them, the arrow is labelled.
+- **`#docOut` is a hand-kept copy of `#doc`; `#docOutEdited` is `#docOut` with
+  `#edae49` → `#d1495b` and nothing else.** Edit one, edit all. Slide 2 ending
+  in the *same* document is the point — losing that turns the figure into an
+  argument for determinism.
+- **Click 3 = content changes, format doesn't.** Teal bands byte-identical and
+  unmoved. The `Content` chip in the heading recolours at the same index so
+  legend and figure never disagree. Mechanism is an **overlay**, not a
+  fade-out swap (a `fade-out` is visible at rest, which broke once the `.qmd`
+  became a fragment).
+- **Every arrow: `stroke-width="2.5"`, 80 units, 8-unit gap.** All four markers
+  use `refX="5.5"` — `markerUnits` is `strokeWidth`, so at `refX="7"` the butt
+  cap pokes through the tip. The visible tip lands 1.5 × stroke-width past the
+  path end, and endpoints are written with that subtracted. Change a stroke
+  width and re-check every landing gap.
 
-**Slide 2 ends in ONE output, and it is byte-identical to slide 1's run 1.**
-`#docOut` is a hand-kept copy of `#doc` — **if you edit one, edit both.** The
-claim is *not* "this makes a better document"; it's that the weaving moved
-somewhere you can reach. Losing that identity silently turns the figure into an
-argument for determinism, which is the wrong takeaway (a better model doesn't fix
-entanglement). It carries **no caption** — "same input, same document — every
-time" was there and was cut; the identical bar is the caption. "woven here" is
-gone from both slides too.
+### Coordinates
 
-- **The `.qmd` box is a NEUTRAL container — navy stroke, never teal.** That is
-  load-bearing. It holds a teal `yaml` block and a yellow `content` block, each
-  in its own place. Painting the container teal would say "format contains
-  content"; painting it black says "a file contains both," which is what a
-  `.qmd` is. This is the **only** box in the deck where the two colours nest.
-- **The teal IS the YAML, and naming it is worth the ink.** It turns "format"
-  into something the room can point at, and it is precisely what Act 6's *change
-  one word* changes — the figure sets up its own callback four acts later. If it
-  ever needs to be more concrete, `format: pdf` in the band beats the word
-  `yaml`; don't annotate further than that. **The file is not meant to be read**,
-  only to show that each half has a place.
-- **The `.qmd` and the artifact carry the same two colours on purpose.** In the
-  file they sit in labelled blocks; in the page they interleave with no
-  boundary. That contrast is the whole address argument, so the two must stay on
-  screen together — don't move the artifact off this slide. Now that both are
-  rects, the comparison is clean: **same colours, same kind of box, and the only
-  variable is whether the bands have places.** The two labels finish it —
-  `.qmd` on the source, `.pdf` on the output.
-- **`data` is yellow, lives outside, and feeds the `.qmd` — not render.** Data *is*
-  content; what differs is the kind of address (a row, not a line number), which
-  is why it doesn't get a colour of its own. Routing it into the `.qmd` is both
-  literally true (a chunk reads it at render) and safe *because the container is
-  neutral* — an earlier version fed it straight into render, on the reasoning
-  that flowing yellow into a teal box collapses two addresses into one. That
-  objection died with the teal box; if the container ever goes back to teal,
-  the routing has to go back too.
-- **Nothing points at `data`** — not the agent, not the purple arrow. Data comes
-  from the world. Resist adding an arrow; the empty input is the point.
-- **One purple arrow, landing square on the `.qmd`'s bottom edge.** It lands on
-  the file, not on either block, because both halves inside it are yours to edit.
-  There were two; the second pointed at `data`, which reversed the tier-2 story
-  (you don't hand-type exact values, you recompute them). An even earlier version
-  ended *beside* the `data` box, pointing up past it at nothing. It leaves `me`
-  at its opened-out centre (x=255) and enters at x=690 — inside the `.qmd`'s
-  left edge (670) but left of the `data` box, which stays **centred on the
-  `.qmd` at x=765**.
-  Arrows get out of each other's way; boxes don't go off-axis to make room.
-- **Every arrow in the figure is `stroke-width="2.5"`.** `markerUnits` is
-  `strokeWidth`, so a fatter line silently means a fatter head: the edit arrow
-  at 3 had a head running 16.5 units back from the tip, which overlapped its own
-  corner. If a line ever needs a different weight, check that the straight run
-  before the tip is longer than 5.5 × stroke-width.
+Closed row: me 340 · agent 540 · artifact 810–900, centred, 340 margin each
+side. Rows 186 apart, centred on y = 175 / 361 / 547.
 
-**Slide 2 builds in three clicks:**
+Opened (slide 2, click 1): me 200 · agent 400 · `.qmd` 670 · artifact
+950–1040, 200 margin each side, uniform 90-unit gaps. The `.openleft` /
+`.openright` CSS rules glide ±140 and **are not optional** — without them the
+`.qmd` lands on top of the artifact. 140 = half the 280 the `.qmd` inserts, and
+is **independent of the artifact's width**. General rule: shift = 75 + L; the
+`.qmd` lands at x=670 whatever L is, so `data` (centred at 765) and the purple
+arrow's landing point (690) never need recomputing.
 
-| Click | What happens |
-|---|---|
-| *(rest)* | slide 1's row 1, exactly and in the same place |
-| **1** | the chain opens ±140 and the `.qmd` + `data` fade into the gap |
-| **2** | the purple *you edit directly* arrow |
-| **3** | the content turns **red**; the format does not move |
+The agent→artifact arrow is nested inside `.openleft` so the one line that says
+"entangled" leaves as the file that fixes it arrives.
 
-**Click 1 is the one the slide is built around.** Inserting the `.qmd` makes the
-chain 280 units longer, so it grows **symmetrically** — `me`+agent glide 140
-left, the artifact glides 140 right — and the row stays centred. Two CSS rules
-(`.openleft` / `.openright` on `fragment custom` groups) do the gliding; **they
-are not optional**, unlike the old `.lift`, because without them the boxes stay
-put and the `.qmd` lands on top of the artifact. 140 = 280 / 2, and it is
-**independent of the artifact's width** — inserting the `.qmd` always adds 280 —
-which is why narrowing the artifact from 200 to 90 left both CSS rules
-untouched. Opened, the chain runs me 200 · agent 400 · `.qmd` 670 ·
-artifact 950–1040, with 200 units of margin either side and a uniform 90-unit
-gap at every step. Closed it runs me 340 · agent 540 · artifact 810–900, 340
-either side.
+Each slide carries **its own `<defs>` and `<clipPath>`** (`artifactClip` /
+`artifactClip2`) and ids are unique document-wide (`ahDark`/`ahDark2`) —
+reveal puts non-current slides in `display:none` and cross-slide `<use>` is
+unreliable. The viewBox top (77) is a **crop**, reclaiming the space the old SVG
+headings held; coordinates inside are unshifted — don't renumber them.
 
-**Every arrow in the figure is 80 units** — there is no longer a special case
-around the `.qmd`. It used to be 80 there and 50 everywhere else, so that
-`writes` and `render` weren't wedged against the boxes; when the artifact
-narrowed, slide 1's arrows went to 80 too and the split retired. `writes` and
-`render` are consequently the **same font size** now (20). General rule:
-**shift = 75 + L**, and usefully the `.qmd` lands at x=670 *whatever* L is, so
-the data box, its arrow and the edit arrow's landing point never have to be
-recomputed when the arrows change. The direct agent→artifact arrow is nested
-*inside* `.openleft` so it travels with the agent while it fades — the one line
-that says "entangled" leaves as the file that fixes it arrives.
+### Not yet visually vetted
 
-**Click 3: the content changes and the format doesn't.** The yellow `content`
-block in the `.qmd` and every yellow band in the artifact turn **red**
-together, in place; the teal bands are byte-identical and **do not move**.
-That stillness is the argument — a regenerated document can never promise it.
+Coordinates are computed by script, never rendered. On first render check:
+does slide 1 **fit** (~60px slack); does the 22-unit dog-ear register; are the
+dots/blocks legible at 3 columns; do the four `.pdf` labels read as labels
+rather than clutter; does the ±140 glide read as *opening* rather than
+scattering.
 
-Red is `#d1495b`, and the payoff slide two slides later uses **that exact red,
-white text and all**, for the minecraft column. So this click and that slide are
-the same event twice: once abstract, once in real paper.
+## The payoff slide (right after the figure)
 
-**The heading recolours with it.** The word `Content` in the `#` line above the
-figure is a `.contentchip .fragment .custom .turnsred` at index 3, so it turns
-red at the same moment the block does — legend and figure never disagree. It is
-a CSS colour toggle rather than a second heading because reveal hides fragments
-with `visibility:hidden`, which still occupies layout: two stacked headings
-would have reserved space for both.
+**"Same `format`. No drift."** Two columns, each a `.qmd` box over the real
+sheet it produces: pokemon and minecraft.
 
-**The split with the arrow is deliberate.** The `you edit directly` arrow one
-click earlier is **purple**; the result is red. Purple is the *action*, red is
-the *changed content*. There is no colour link from hand to band and there
-doesn't need to be — the arrow is labelled.
+**It is figure slide 2's click, frozen.** pokemon wears the at-rest `content`
+yellow `#edae49` + navy text; minecraft wears the post-click red `#d1495b` +
+**white** text. Read left to right, it's the animation.
 
-- `#docOutEdited` is `#docOut` with every `#edae49` → `#d1495b` and **nothing
-  else changed** — same rects, same heights, same order, same fold, same `.pdf`
-  label. Edit one, edit both, or the click stops meaning "only the content
-  changed." (Generate it, don't hand-copy:
-  `body.replace('#edae49','#d1495b')`.)
-- The at-rest page is still byte-identical to slide 1's `#doc` (modulo the
-  per-slide clip id). The rule covers the artifact *before* the click; the red
-  state is a third thing.
-- **Mechanism is now an overlay, not a swap.** The red versions are drawn
-  *after* the yellow ones with identical geometry, so they simply paint over.
-  This replaced a `fade-out` + `fragment` pair, which stopped working once the
-  `.qmd` itself became a fragment: a `fade-out` is visible *at rest*, so the
-  amber block would have floated on screen before its own box existed.
-
-## The payoff slide (Act 2, immediately after the figure)
-
-**"Same `format`. No drift."** — **two** lexis columns, each a `.qmd` box over
-the real sheet it produces: pokemon and minecraft. It cashes the abstraction out
-in the actual artifacts and answers the Act 1 cold open, and the spine sentence
-lands on the slide right after it.
-
-**It is figure slide 2's click, frozen.** There, `content` went yellow → red
-inside a `.qmd` box and the format did not move. Here are the two documents that
-come out of exactly that. So the colours are not decorative: **pokemon wears the
-same yellow as the at-rest `content` block, minecraft the same red as the block
-after the click, white text and all.** Read left to right, it is the animation.
-
-❌ **Reversed, do not restore:** this was **three** columns (pokemon amber /
-minecraft green / mario red), rhyming with figure slide 1's three stacked rows.
-Mario was cut and minecraft moved green → red to build the stronger rhyme with
-figure slide 2 instead. Two side effects, both good: **green retired from the
-deck entirely**, and the two sheets on screen are now exactly the two topics
-from the Act 1 cold open — pokemon, and the minecraft one it drifted into.
-`images/handwriting-good-mario.png` is now unreferenced.
-
-- **What carries it is what doesn't vary.** Same `.qmd` box as the figure, same
-  190×124, and the teal `yaml` band byte-identical in both columns. Only the
-  content block changes: one word, one colour, one text ink. The two SVGs are
-  verified identical apart from that — keep them that way, it's the argument.
-- **The two colours are the figure's two states, not thematic ones.** pokemon =
-  content yellow `#edae49` + navy text; minecraft = red `#d1495b` + **white**
-  text. Both pairs are copied exactly from the `content` block on figure slide 2
-  before and after its click. Don't "fix" minecraft to green because minecraft
-  is green — that reading was tried and cut.
-- **pokemon wears the plain content colour, and that's deliberate.** It is the
-  sheet from the cold open and the un-edited one, so the column that changed
-  nothing is the column still in `content` yellow.
-- **No `render` label under the arrows** — repetitions of a word the previous
-  slide just taught. Same rule as `#loop`: anything inside a repeated unit is
-  paid for per copy.
-- These two SVGs use **no ids and no markers** — arrowheads are explicit
-  triangles — so they add nothing to the document-wide id namespace. Keep it
-  that way if you copy the pattern.
-
-Mechanics: pure inline SVG in a ```` ```{=html} ```` block + reveal fragments — no
-anime.js, no CDN, nothing to vendor. **Both figure slides carry the identical
-`viewBox="0 77 1240 553"`** (slide 1's three rows are centred on y = 175 / 361 /
-547), and each carries **its own `<defs>`**, including its own `<clipPath>`
-(`artifactClip` / `artifactClip2`); they deliberately do *not* share one `<use>`
-across slides, because reveal puts non-current slides in `display:none` and
-cross-slide `<use>` resolution is unreliable there. SVG ids are unique across the
-whole document (`ahDark`/`ahDark2` etc.) — keep them that way. **The shared
-viewBox is what registers the two slides** and it also means both render at the
-same scale, so a box on slide 2 is physically the same size as the matching box
-on slide 1. Don't shrink slide 1's width to close up its margins: it would break
-the mirroring *and* it would shrink the height budget, since the figure is laid
-out to fill the 1420 px of usable slide width.
-
-**The viewBox top is a crop, not layout.** It doesn't start at y=0: the headings
-moved out to lexis lines and the `min-y` reclaims the space their `<text>` held.
-Every coordinate *inside* both SVGs is unchanged and unshifted — do not renumber
-them to make the boxes start at zero. Slide 1 sits 40 units below the top and 25
-above the bottom; slide 2 needs the extra top room because its `.qmd` label
-(baseline y=101) is the highest thing on either slide.
-
-**All four arrowhead markers use `refX="5.5"`, not `7`.** `markerUnits` defaults
-to `strokeWidth`, so the head scales with the line. Putting refX on the tip (7)
-parks the point exactly at the path end, and near that point the triangle is
-narrower than the stroke is thick — so the line's butt-cap pokes out through the
-tip. Backing refX off by 1.5 marker units slides the head forward until the
-stroke ends where the triangle is already wider than it. Consequence: **the
-visible tip lands 1.5 × stroke-width beyond the path end**, so path endpoints are
-written with that overhang already subtracted (e.g. the connectors stop at
-y=322/508 to land ~3 units above the `me` boxes at y=329/515). If you ever change
-a stroke width, re-check the arrow's landing gap.
-
-**Not yet visually vetted.** Coordinates are computed, not eyeballed — every
-`<use>` and transform is resolved by script, each dot and block is checked to
-sit wholly inside the page and clear of the fold, both SVGs are checked to parse
-as XML, and `#doc`/`#docOut`/`#docOutEdited` are checked byte-for-byte — but
-nothing here has ever been rendered.
-Text-on-fill contrast is no longer a worry: every pairing was measured when the
-palette moved to minou (see Palette), and the labels were flipped to navy
-wherever white failed.
-
-What to look at on the first render:
-
-- **Does the whole thing fit?** This is the live risk. Slide 1 now renders ~633
-  px tall in a 795 px box that the heading already takes ~100 px of, so the
-  slack is ~60 px. If it clips, the knob is the row spacing (186) — not the
-  viewBox width, which would make it worse.
-- **Does the page read as a page?** The dog-ear is 22 units on a 90-wide page,
-  so ~25 px rendered. If it's too subtle to register, enlarge the fold before
-  reaching for anything else — the label is not supposed to be doing that work.
-- **The `.pdf` labels.** Four of them on screen across the two slides. Confirm
-  they read as labels-on-the-thing and not as clutter, and that on slide 1 the
-  three of them don't turn the right-hand column into a list.
-- **Is 90 wide enough?** The artifact lost 110 units. Check the dots and blocks
-  are still legible from the back at three columns rather than seven.
-- **`max-height:80vh`** has still never been observed binding. On a short, wide
-  browser window it now could, at which point the figure just scales down
-  whole — graceful, not broken.
-
-Slide 1's aspect (1240 × 553) is still wider than 16:9, so **width** binds the
-scale, but **height is what binds the design** — see the arithmetic in the
-registration note. To make its type bigger, raise the font sizes; narrowing the
-viewBox is ruled out by the shared-viewBox rule above and by the height budget.
-
-**The old me/agent asymmetry is resolved.** Slide 1's and slide 2's `me` /
-`LLM agent` boxes were once 110/180 and 96/156 at different x. They are now the
-same boxes at the same coordinates (me x=285, agent x=485), which is what makes
-the at-rest registration byte-for-byte rather than approximate.
+- **What carries it is what doesn't vary.** Same 190×124 `.qmd` box, teal `yaml`
+  band byte-identical in both columns. Only the content block differs. Keep the
+  two SVGs verified-identical apart from that.
+- ❌ Was three columns (pokemon / minecraft green / mario red). Mario is cut and
+  green retired from the deck. Don't "fix" minecraft back to green.
+- ❌ No `render` label under the arrows — the previous slide just taught it.
+- These SVGs use **no ids and no markers** (explicit triangle arrowheads), so
+  they add nothing to the id namespace. Keep it that way.
 
 ## The "one paragraph, three sources" slides (Act 3 lead-in)
 
-Two slides that make token efficiency *visible* before the numbers arrive. They
-replaced a bare `Token efficiency slide` placeholder and sit immediately after
-the "✅ Token efficient" build.
+Make token efficiency visible before the numbers arrive. Sit after the
+"✅ Token efficient" build; `fig-tokens.png` now follows them immediately.
 
-**Slide A — "One paragraph. Three sources."** A **rendered** paragraph in a
-bordered card across the top, then three columns of the source that produces it:
-markdown, LaTeX, HTML, with an exact character count under each.
+**Slide A — "One paragraph. Three sources."** A rendered paragraph in a bordered
+card across the top, then three columns of source: `.qmd`, LaTeX, HTML, with an
+exact character count under each. **The card is the referent** — without it the
+columns are three unrelated code blocks. Hand-written HTML, styled to read as a
+document excerpt, not a slide callout.
 
-**The card is the referent, and it is why the slide works.** Without it the three
-columns are three unrelated code blocks; with it they are three ways to say one
-thing, and the eye has somewhere to return to. It is hand-written HTML in a
-```` ```{=html} ```` block — white, 2px navy border, Georgia, `max-width: 46%`,
-centred — deliberately styled to look like a **document excerpt**, not a slide
-element. It is not a lexis callout because it should read as output, not as
-emphasis.
+**Slide B — "Then there's Word."** Same paragraph as `word/document.xml`, plus
+the note that it's one file in a zip that also needs `[Content_Types].xml`,
+`_rels/.rels`, `word/_rels/document.xml.rels`, `styles.xml`.
 
-**Column order is smallest → biggest** (64 · 207 · 336), John's call. The
-escalation is the argument, and it continues onto slide B (622) and then into
-the token chart, which now follows immediately.
-
-**Slide B — "Then there's Word."** The same paragraph as `word/document.xml`
-OOXML, 60/40 columns, plus the line that it is one file in a zip that also needs
-`[Content_Types].xml`, `_rels/.rels`, `word/_rels/document.xml.rels`,
-`styles.xml`.
-
-The paragraph is fixed and must stay identical across all four:
+The paragraph is fixed and identical in all four:
 
 ```
 ## EV Sales
@@ -777,80 +287,83 @@ The paragraph is fixed and must stay identical across all four:
 Sales of **electric vehicles** grew *42%* in 2025.
 ```
 
-| Source | chars | × markdown | formatting chars |
+| Source | chars | × `.qmd` | formatting |
 |---|---:|---:|---:|
 | the paragraph itself | 52 | — | 0 |
-| markdown | 64 | 1× | 12 |
-| LaTeX | 207 | 3.2× | 155 |
-| HTML | 336 | 5.2× | 284 |
-| OOXML (`document.xml` only) | 622 | 9.7× | 570 |
+| `.qmd` (with `format: pdf`) | 85 | 1× | 33 |
+| LaTeX | 207 | 2.4× | 155 |
+| HTML | 336 | 4.0× | 284 |
+| OOXML (`document.xml` only) | 622 | 7.3× | 570 |
 
-**These counts are measured, not estimated** — `wc -c` on the exact strings in
-the deck, trailing newline included. **If you edit a single character in any
-code block, recount all of them.** Hand-adjusted numbers on a slide whose whole
-argument is "the values are recomputed, not typed" would be the deck
-contradicting itself on stage.
+- **Counts are measured** (`wc -c`), not estimated. **Edit one character in any
+  block and recount all of them** — hand-adjusted numbers on this slide would
+  contradict the talk.
+- **Column order is smallest → biggest**, and it's the same order as the token
+  data (Markdown 1,267 · PDF 1,992 · HTML 4,046 · Word 8,097). The character
+  slides *predict* the chart. **HTML costing more than LaTeX is not a bug.**
+- **Column 1 is a real `.qmd`, YAML and all** — otherwise the other two carry a
+  preamble and it doesn't, which is an open objection. The answer if it comes
+  up: the styling moved into the renderer. ❌ Don't "even things up" by stripping
+  the LaTeX and HTML columns; minimal-valid HTML would gut the slide.
+- ❌ Don't add a second `.qmd` column showing `format: html` — that spends Act
+  6's callback early.
+- **PDF is shown as LaTeX**, labelled `PDF (via LaTeX)`. Raw PDF object syntax
+  is a strawman; an agent asked for a PDF writes LaTeX.
+- **Colors are `plots.R`'s:** teal (`.blue`) = the Quarto path, red = asking for
+  the format directly. ❌ Don't reach for the content/format chips here — this
+  slide is about cost, not entanglement.
+- **`.font45` wraps only the code block, inside a `:::: {.col}`.** `.fontNN`
+  divs **compound**, so a `.font140` count line inside a `.font45` column would
+  render at 63%.
+- **All three columns share one type size** — the lengths are the argument. If
+  slide A overflows, take all three down together (HTML is tallest at 17 lines).
+- ❌ Don't moralize about the syntax. HTML and LaTeX are good formats; the claim
+  is only that the agent pays for every character.
 
-**Why the counts land in that order, and why that's the point:** smallest →
-biggest here is the *same order* as the token data (Markdown 1,267 · PDF 1,992 ·
-HTML 4,046 · Word 8,097). The character slides *predict* the token chart, which
-is why the chart was moved to sit immediately after slide B — the three slides
-now run one continuous escalation, source characters into measured tokens. So
-**HTML costing more than LaTeX is not a bug to "fix"**: it matches the measured
-data, and reordering the columns would break the rhyme.
+## The dashboard case study (Act 4)
 
-**`images/fig-tokens.png` moved with that argument**, from after the Africa
-slides to directly after slide B. Its `# Quarto is _token efficient_` divider
-was **deleted**, not moved: the ✅ build three slides earlier
-("✅ Disentangles content and format" / "✅ Token efficient") already opens the
-section, and stranding the divider after the chart would have announced a point
-the deck had just finished making. Restore it above the chart if the run feels
-like it needs a breath.
+**vehicletrends.us** — source at `/Users/jhelvy/gh/vehicletrends/dashboard`. A
+real, multi-page, self-updating Quarto site over 10M+ listings. Draw principles
+from the real repo, never invented ones.
 
-- **Colors are `plots.R`'s, not the figure's:** teal (`.blue`) = the Quarto
-  path, red = asking for the format directly. Do **not** reach for the
-  content/format yellow-teal vocabulary here — this slide is about cost, not
-  entanglement, and reusing the chips would claim a link that isn't there.
-- **PDF is shown as LaTeX and labelled `PDF (via LaTeX)`.** Raw PDF object
-  syntax is more dramatic and is a strawman: an agent asked for a PDF writes
-  LaTeX. Don't swap it in.
-- **`.font45` wraps only the code block, inside a `:::: {.col}`** — not the
-  column itself. `font-size: 45%` is relative to its parent, so `.fontNN`
-  divs **compound**: a `.font140` count line inside a `.font45` column renders
-  at 63%, i.e. smaller than body text, which is the opposite of what it's for.
-  Hence the four-colon outer fence.
-- **All three columns share one type size**, and must. The lengths are the
-  argument; per-column sizing to make them fit would erase it. If slide A
-  overflows, take all three down together — the HTML block is the tallest at 17
-  lines and is what binds.
-- **Don't moralize about the syntax in the notes or on the slide.** HTML and
-  LaTeX are good formats. The claim is only that the agent pays for every
-  character and none of them are what you asked for.
+1. **Same move, at scale.** Agent writes the `.qmd` + small R chunks; **data
+   lives in an external R package** (`vehicletrends`) the pages read at render
+   (`setup.R`). Weekly GitHub Action re-renders, so nothing goes stale.
+2. **Shiny asks for the artifact; Quarto asks for the source.** THE objection to
+   pre-empt in this room. Shiny = UI + inputs/outputs + server + reactivity.
+   Quarto = markdown + a chunk returning a self-contained JS widget. Honest
+   concession: server-side compute over browser-too-big data is Shiny's turf.
+3. **Isolate heavy components behind an iframe.** The MapLibre + PMTiles map is
+   a separate repo (`hhi-map`), dropped in with 6 lines. Same for Shinylive.
+4. **Small pieces have small context windows.** Efficiency made architectural.
+5. **It's just static files.** Charts, map, even the Shiny app (Shinylive →
+   WASM) run client-side. No server to run, secure, or pay for.
+
+Tech: `echarts4r`, `reactable`, MapLibre GL JS + PMTiles (Cloudflare R2,
+Tippecanoe via `{pmtiles}`), Shinylive/webR, GitHub Actions, GitHub
+Pages/Netlify. **Don't invent pitfalls** — get real ones from John.
 
 ## Styling
 
-`index.qmd` uses the **`lexis-revealjs` format extension**
-(`_extensions/lexis/`, from `jhelvy/quarto-lexis`) — the packaged port of John's
-xaringan "lexis" theme. **Authoring paradigm differs from stock Quarto reveal:**
+`index.qmd` uses the **`lexis-revealjs` extension** (`_extensions/lexis/`, from
+`jhelvy/quarto-lexis`). Authoring differs from stock Quarto reveal:
 
-- **`---` starts every slide.** `#`/`##`/`###` are text sizes *within* a slide,
-  never slide breaks (`slide-level: 0`).
+- **`---` starts every slide.** `#`/`##`/`###` are text sizes *within* a slide
+  (`slide-level: 0`).
 - **Slide modifiers are shortcodes:** `{{< inverse >}}` `{{< center >}}`
   `{{< middle >}}` `{{< bg-color >}}` `{{< bg-image >}}` `{{< no-slide-number >}}`.
-  Statement/divider slides are the inverse+center+middle stack + a `#` heading.
-- **Columns are consecutive `::: {.col}` divs**, no outer wrapper. Uneven splits
-  via `width="55%"` on one column. (The old float classes `.leftcol`/`.rightcol`
-  are gone — lexis doesn't ship them.)
-- **No auto title slide** — it's hand-authored as the first `---` slide using
-  `{{< meta title >}}` etc.
-- **Utility classes** come from the extension: colors (`.blue .red .green
-  .darkgreen .orange .purple .gray` …), sizes (`.small .large
-  `.font10`–`.font200`), `.fancy`, `.fira`, image helpers (`.border .circle
-  .polaroid .thumbnail`), `::: {.panel-tabset}`.
-- **Full authoring reference: the `/lexis` skill.** Use it before editing the
-  deck's structure. `/lexis-clean` audits an existing deck.
+  Divider slides = inverse+center+middle + a `#` heading.
+- **Columns are consecutive `::: {.col}` divs**, no wrapper. Uneven via
+  `width="55%"`. Nest with `::::` when a column contains its own div.
+- **No auto title slide** — hand-authored using `{{< meta title >}}`.
+- **Utility classes:** colors, `.small .large .font10`–`.font200`, `.fancy`,
+  `.fira`, image helpers (`.border .circle .polaroid .thumbnail`),
+  `::: {.panel-tabset}`.
+- **Full reference: the `/lexis` skill.** `/lexis-clean` audits a deck.
 
-One local stylesheet, `custom.css`, loaded via the **nested** format key:
+`custom.css` is loaded via the **nested** format key — this is load-bearing, and
+for a long time the key was absent so every rule in the file was silently dead.
+If a class "doesn't work," check this YAML first:
 
 ```yaml
 format:
@@ -858,84 +371,30 @@ format:
     css: custom.css
 ```
 
-That nesting is load-bearing. `format: lexis-revealjs` as a bare scalar has no
-place to hang `css:`, and for a long time the key was simply absent — so
-`custom.css` never loaded and every rule in it was silently dead. If a class
-defined there "doesn't work," **check this YAML first**, before touching CSS.
-
-`custom.css` holds only what lexis does not ship — plus the palette, which is
-the one thing in there that deliberately *overrides* lexis rather than adding to
-it. It opens with a comment block restating the whole Palette section above;
-keep the two in sync. Contents:
-
-- **The semantic colors.** `.amber` is ours (the ink yellow `#A77400`, since it
-  is only ever text); `.blue` / `.red` / `.green` override lexis's defaults so a
-  `[word]{.blue}` on a slide is the same teal as the format band in the figure.
-- **`.contentchip` / `.formatchip`** — the vocabulary chips. See Palette for why
-  these exist rather than more colored text.
-- `.amberborder` / `.blueborder` — colored image borders following lexis's own
-  wrapper-div pattern (`.treatment img`), so they go on a **wrapping div**, not in
-  the image's attribute block: `::: {.col .blueborder}`. Used on the "I want
-  *this* layout, with *these* sentences" slide to tie each colored word to an
-  image. **Fills, matching the chips** — the border is the chip's echo, so the
-  eye connects word to sheet. 10px rather than lexis's 6 because the yellow is
-  light and needs the area to read; that number is the knob if it looks faint.
-- **A commented-out `.lift` rule** — the removed slide-up on entanglement figure slide 1, kept with its arithmetic in case it is ever wanted back.
-
-`custom.scss` is still on disk but is now **dead** — it was the pre-extension
-hand-port, and its last consumer was the standalone figure document, which no
-longer exists. No `.qmd` in the repo loads it; the only remaining references are
-prose lines in `README.md` and this file. Safe to delete whenever John wants to.
-
-## Hard rules
-
-- **Never run `quarto render`** or any render command. Make changes, report done,
-  let John render in his own terminal.
-- **Never run `git` commands.** John commits/pushes himself.
-- Simplicity first; surgical changes; match existing style.
-- Paraphrase external sources; no long quotes.
-- Section dividers are **statements, not labels.** Never put "Act 3" or a category
-  name on a slide — that reintroduces the taxonomy problem.
+`custom.css` holds only what lexis doesn't ship, plus the palette overrides:
+`.amber`, the `.blue`/`.red`/`.green` repoints, `.contentchip`/`.formatchip`,
+`.amberborder`/`.blueborder` (wrapper-div pattern — `::: {.col .blueborder}`,
+not an image attribute block), `.openleft`/`.openright`, and a commented-out
+`.lift`. Its header comment restates the palette; keep the two in sync.
 
 ## Open / to do
 
-- **Visually vet the entanglement figure.** It's written and in the deck, but has
-  never been rendered — coordinates are computed by script, not eyeballed. See
-  "What to look at on the first render" in the figure section. The live risk is
-  **whether slide 1 fits**: it renders ~633 px tall with ~60 px of slack under
-  the heading, and the knob is the 186-unit row spacing. Also check both slides'
-  fragment steps build the way they're meant to, that the ±140 glide reads as
-  the chain *opening* rather than as things scattering, that the folded corner
-  registers at 22 units, and that the four `.pdf` labels read as labels rather
-  than clutter.
-- **Say one sentence defining Quarto**, out loud, while figure slide 2 is up and
-  the row reads `.qmd` → render → `.pdf`: plain-text document, markdown with
-  code in it, `quarto render` turns it into a PDF or a site or these slides.
-  ~8 seconds, no slide. The room doesn't need it; the recording does. ❌ Decided
-  against a dedicated explainer slide — 30 seconds spent teaching a Posit
-  dashboards room what Quarto is walks straight into the "we already knew that"
-  problem the whole deck is built to dodge.
-- **Produce remaining demo assets.** The handwriting-sheet images exist; these
-  slots are still marked with `> **[BRACKETED]**` blockquote placeholders in
-  `index.qmd`:
-  - silent dashboard screen recording (~75s) for Act 4
-  - a screenshot of the MapLibre map on `market-concentration.qmd`
-  - the live inline interactive chart for Act 5
-  - the multi-turn token chart for Act 3 (see below — needs real numbers)
-- **Refresh `README.md`** — it still names `custom.scss` as the theme and doesn't
-  mention the lexis extension at all.
-- **Optional "what bit me" slide** — only if John supplies real, lived pitfalls
-  from building the dashboard. Never fabricate them.
-- **Multi-turn token data** — Act 3's SECOND slide ("And that's just the first
-  turn") is a placeholder. The single-shot table IS in the deck already (Word
-  8097→1121, HTML 4046→1022, PDF 1992→1123, Markdown 1267→1282, from the blog
-  post). The multi-turn/agentic cost-growth section is NOT yet published on the
-  blog. Needs John's numbers. Never invent them. Frame it as the *measured*
-  version of the Act 1 anecdote (one edit → full regeneration → full price), not a
-  second benchmark.
-- **Verify hosting claim.** Slides say GitHub Pages (matching John's framing), but
-  the dashboard's `tech-stack.qmd` says Netlify while its `claude.md` says GitHub
-  Pages. Confirm what actually serves vehicletrends.us before presenting.
-- Optional: email the three co-speakers to compare notes (Blake's talk is also
-  AI-adjacent — his angle is data made *consumable by* AI, this one is AI
-  *producing* artifacts; complementary, but check the setup slides don't collide).
+- **Visually vet the entanglement figure** — see the checklist above.
+- **Say one sentence defining Quarto out loud** while figure slide 2 is up:
+  plain-text document, markdown with code, `quarto render` turns it into a PDF
+  or a site or these slides. ~8 seconds. ❌ No dedicated explainer slide.
+- **Build Act 6's *change one word* slide** — `format: pdf` → `format: html`,
+  content unchanged. Not built.
+- **Produce remaining demo assets** (still `> **[BRACKETED]**` in `index.qmd`):
+  silent dashboard screen recording (~75s); MapLibre map screenshot; the live
+  inline interactive chart; the multi-turn token chart.
+- **Multi-turn token data** — placeholder. The single-shot table is in the deck
+  (Word 8097→1121, HTML 4046→1022, PDF 1992→1123, Markdown 1267→1282). The
+  multi-turn numbers aren't published yet. **Never invent them.** Frame as the
+  measured version of the Act 1 anecdote, not a second benchmark.
+- **Verify hosting claim** — deck says GitHub Pages; the dashboard's
+  `tech-stack.qmd` says Netlify. Confirm before presenting.
+- **Refresh `README.md`** — still names `custom.scss`, doesn't mention lexis.
+- **Optional "what bit me" slide** — only with real pitfalls from John.
+- Optional: compare notes with the three co-speakers (Blake's talk is also
+  AI-adjacent; check the setup slides don't collide).

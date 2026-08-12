@@ -1440,7 +1440,8 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<h2>One paragraph. Three sources.</h2>
+<section class="lexis-slide-title center middle">
+<h1 class="lexis-slide-title"></h1>
 <div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
             background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
             font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
@@ -1449,33 +1450,54 @@ built-in one.
   <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
   vehicles</strong> grew <em>42%</em> in 2025.</div>
 </div>
+</section>
+</section>
+<section class="slide level0">
+
+<div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
+            background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
+            font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
+            text-align: left;">
+  <div style="font-size: 0.95em; font-weight: 700; margin-bottom: 0.25em;">EV Sales</div>
+  <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
+  vehicles</strong> grew <em>42%</em> in 2025.</div>
+</div>
+<p><br></p>
 <div class="cols-row">
-<div class="col">
-<p><span class="blue"><strong>Markdown</strong></span></p>
+<div class="col fragment">
+<p><span class="blue"><strong>Quarto</strong></span> (<code>.qmd</code>)</p>
 <div class="font45">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href=""></a><span class="fu">## EV Sales</span></span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a>Sales of **electric vehicles**</span>
-<span id="cb1-4"><a href=""></a>grew *42%* in 2025.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href=""></a><span class="co">---</span></span>
+<span id="cb1-2"><a href=""></a><span class="an">format:</span><span class="co"> pdf</span></span>
+<span id="cb1-3"><a href=""></a><span class="co">---</span></span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a><span class="fu">## EV Sales</span></span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a>Sales of **electric vehicles**</span>
+<span id="cb1-8"><a href=""></a>grew *42%* in 2025.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span class="blue font140"><strong>64</strong> characters</span></p>
+<p><span class="blue font140"><strong>85</strong> characters</span></p>
 </div>
-<div class="col">
+<div class="col fragment">
 <p><span class="red"><strong>PDF</strong></span> (via LaTeX)</p>
 <div class="font45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource latex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb2-1"><a href=""></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
 <span id="cb2-2"><a href=""></a><span class="bu">\usepackage</span>[T1]{<span class="ex">fontenc</span>}</span>
 <span id="cb2-3"><a href=""></a><span class="bu">\usepackage</span>{<span class="ex">geometry</span>}</span>
 <span id="cb2-4"><a href=""></a><span class="fu">\geometry</span>{margin=1in}</span>
-<span id="cb2-5"><a href=""></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb2-6"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
-<span id="cb2-7"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles}</span>
-<span id="cb2-8"><a href=""></a>grew <span class="fu">\emph</span>{42<span class="fu">\%</span>} in 2025.</span>
-<span id="cb2-9"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a href=""></a></span>
+<span id="cb2-6"><a href=""></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb2-7"><a href=""></a></span>
+<span id="cb2-8"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
+<span id="cb2-9"><a href=""></a></span>
+<span id="cb2-10"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles}</span>
+<span id="cb2-11"><a href=""></a>grew <span class="fu">\emph</span>{42<span class="fu">\%</span>} in 2025.</span>
+<span id="cb2-12"><a href=""></a></span>
+<span id="cb2-13"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="red font140"><strong>207</strong> characters</span></p>
 </div>
-<div class="col">
+<div class="col fragment">
 <p><span class="red"><strong>HTML</strong></span></p>
 <div class="font45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
@@ -1499,6 +1521,12 @@ built-in one.
 <p><span class="red font140"><strong>336</strong> characters</span></p>
 </div>
 </div>
+</section>
+<section class="slide level0">
+
+<section id="and-then-theres-microsoft-word" class="inverse">
+<h2>…and then there’s Microsoft Word</h2>
+</section>
 </section>
 <section class="slide level0">
 

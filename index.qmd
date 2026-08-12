@@ -806,7 +806,8 @@ moved" — nothing. That's the promise a regenerated document can't make.
 
 ---
 
-## One paragraph. Three sources.
+{{< center >}}
+{{< middle >}}
 
 ```{=html}
 <div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
@@ -819,22 +820,41 @@ moved" — nothing. That's the promise a regenerated document can't make.
 </div>
 ```
 
-:::: {.col}
-[**Markdown**]{.blue}
+---
+
+```{=html}
+<div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
+            background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
+            font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
+            text-align: left;">
+  <div style="font-size: 0.95em; font-weight: 700; margin-bottom: 0.25em;">EV Sales</div>
+  <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
+  vehicles</strong> grew <em>42%</em> in 2025.</div>
+</div>
+```
+
+<br>
+
+:::: {.col .fragment}
+[**Quarto**]{.blue} (`.qmd`)
 
 ::: {.font45}
-```markdown
+````markdown
+---
+format: pdf
+---
+
 ## EV Sales
 
 Sales of **electric vehicles**
 grew *42%* in 2025.
-```
+````
 :::
 
-[**64** characters]{.blue .font140}
+[**85** characters]{.blue .font140}
 ::::
 
-:::: {.col}
+:::: {.col .fragment}
 [**PDF**]{.red} (via LaTeX)
 
 ::: {.font45}
@@ -843,10 +863,14 @@ grew *42%* in 2025.
 \usepackage[T1]{fontenc}
 \usepackage{geometry}
 \geometry{margin=1in}
+
 \begin{document}
+
 \section*{EV Sales}
+
 Sales of \textbf{electric vehicles}
 grew \emph{42\%} in 2025.
+
 \end{document}
 ```
 :::
@@ -854,7 +878,7 @@ grew \emph{42\%} in 2025.
 [**207** characters]{.red .font140}
 ::::
 
-:::: {.col}
+:::: {.col .fragment}
 [**HTML**]{.red}
 
 ::: {.font45}
@@ -881,6 +905,12 @@ grew <em>42%</em> in 2025.</p>
 
 [**336** characters]{.red .font140}
 ::::
+
+---
+
+{{< inverse >}}
+
+## ...and then there's Microsoft Word
 
 ---
 
