@@ -441,6 +441,12 @@ example must be **category filtering via the interactive legend** — that's the
 thing people build Shiny for. This is the deck's only render-time R dependency
 besides `plots.R`: `{dplyr}`, `{echarts4r}`, `{vehicletrends}`.
 
+⚠️ **`listing_year` must be `as.character()` and the x-axis `type = "category"`.**
+It's numeric in the package, and left numeric echarts builds a *value* axis
+running 0–2,500 — the eight years collapse into a vertical smear at x≈2020 and
+the chart looks broken. Same idiom `percent-listings.qmd` uses on the real site.
+`arrange()` before `group_by()` or the line order is undefined.
+
 ❌ **Don't name the host on a slide.** The workflow publishes to `gh-pages`;
 `tech-stack.qmd` and `README.md` say Netlify; there is no `netlify.toml`,
 `_publish.yml`, or `CNAME` anywhere, including on `gh-pages`. The filesystem

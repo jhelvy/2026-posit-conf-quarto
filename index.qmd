@@ -1330,6 +1330,10 @@ percent_listings |>
   ) |>
   mutate(
     share = round(100 * p, 2),
+    # listing_year MUST be character. Left numeric, echarts builds a `value`
+    # x-axis running 0-2500 and the eight years collapse into a smear at ~2020.
+    # Pairs with type = "category" below; same idiom the real site uses.
+    listing_year = as.character(listing_year),
     group_level = recode(
       group_level,
       "Battery Electric (BEV)" = "BEV",
@@ -1338,13 +1342,14 @@ percent_listings |>
       "Flex Fuel (E85)" = "Flex Fuel"
     )
   ) |>
+  arrange(listing_year) |>
   group_by(group_level) |>
   e_charts(listing_year, height = "460px") |>
-  e_line(share) |>
+  e_line(share, symbol = "circle", symbolSize = 8) |>
   e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
   e_tooltip(trigger = "axis") |>
   e_y_axis(name = "% of new listings", nameLocation = "middle", nameGap = 50) |>
-  e_x_axis(name = "Listing year") |>
+  e_x_axis(name = "Listing year", type = "category") |>
   e_grid(left = 90, right = 40, top = 30, bottom = 90)
 ```
 :::
