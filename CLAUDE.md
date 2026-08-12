@@ -1,15 +1,11 @@
 # CLAUDE.md
 
-Project instructions for this repo. **This file is the single source of truth.**
-It is also the only surviving record of *why* the talk is shaped this way — the
-old `HANDOFF.md` and `talk-framing-decision.qmd` are both gone, so the "Reversed
-decisions" section below is the whole rationale. Don't delete it to save space.
-
-## What this repo is
+What this repo is. 
 
 The slide deck for a **20-minute posit::conf 2026 talk**:
 **"The Unreasonable Effectiveness of Quarto"** (canonical title + abstract in
-`abstract.md` — already published in the program). Audience is Quarto-literate.
+`abstract.md` — already published in the program).
+
 **No live demos** — everything is pre-rendered, screenshotted, or embedded
 directly in the slides (embedded interactive HTML is itself evidence the approach
 works).
@@ -22,60 +18,43 @@ the session's shared vocabulary.
 
 ## The thesis
 
-**Spine sentence, said 3× in the deck:**
+**Spine sentence:**
+
 > **Agents should write the source, not the artifact.**
 
 - **Entanglement** is defined *operationally*, never metaphorically:
   **the content has no address.** In a generated document there is no file, no
   line, no cell that *is* a given sentence — it's smeared across one probabilistic
-  pass. To change it you regenerate everything and hope. The audience test is
-  "can you point at it?"
-- **Disentanglement = give the content an address.** A CSV row is an address. The
+  pass. To change it you regenerate everything and hope.
+- **Disentanglement = give the content an address.** The
   agent writes the `.qmd` (structure/logic); content that must be exact lives in
   data files and renders deterministically.
 - **You can't prompt your way to correctness. You architect it.**
-- **The turn (Act 3): reproducibility used to be a tax; now it's the discount.**
-  Token efficiency is *evidence for this*, never a standalone pillar. The virtuous
-  path became the lazy path.
 - **Two tiers, and don't blur them.** Prose stays in the `.qmd` — its address is a
   line number and a readable **diff**. Only *values that must be exact* live in
   data + code, where they're **recomputed** rather than typed. The move is
   **"stop asking for the artifact,"** never "extract everything."
 - The **handwriting-sheet-for-my-6-year-old** PDF is the emotional/legible center.
   Keep it — but note its sentences genuinely *are* data (a list of items to
-  typeset). **Never generalize from it to "put your prose in a CSV"** — nobody
-  writes that way and the room will reject it. `index.qmd` has a slide that
-  pre-empts exactly this objection; don't delete it.
-- **Rhetorical rule, used throughout: name the objection first.** Act 1 pre-empts
-  "we already knew that"; Act 5 pre-empts "why not just ask for HTML?"
+  typeset). 
+
+Previous framing:
+- **Three-pillar framing** ("Correctness / Efficiency / Trust"). Not sure if will use or not 
 
 ### Reversed decisions — do not reintroduce
 
-- ❌ **No three-pillar framing** ("Correctness / Efficiency / Trust"). A benefits
-  list has no tension and reads as a recap to a room that already loves Quarto.
-  Those three ideas survive as *earned consequences* (problem → turn → mechanism),
-  not as announced categories.
+
 - ❌ **Never name Thariq or reference "The Unreasonable Effectiveness of HTML."**
   Can't assume the room has read it, and naming an unknown rival costs exposition
   and makes the talk dependent on someone else's post. The title is a genre
   (Wigner, 1960) and stands alone — **never explain the title.** Make the HTML
   case in JP's own voice as the objection, at full strength, then turn.
-- ❌ **No stale-report slide** ("the numbers changed and the report didn't"). That's
-  the knitr elevator pitch since 2012 — the single most "we already knew that"
-  moment available. Cut.
 - ❌ **Don't argue for content/format separation.** Show it. The room grants it
   instantly; arguing for it is what makes the talk feel like a recap.
 
-## Structure (six acts, ~18 min of content)
-
-| Time | Act | Content |
-|---|---|---|
-| 0:00–2:30 | **1. The problem, unnamed** | Handwriting sheet cold open. No thesis, no agenda. It drifted; fixing one sentence regenerated everything. → *"Where is the sentence?"* → the defusing line |
-| 2:30–5:30 | **2. The move** | Entanglement = no address. The figure (2 slides). The payoff slide. Spine sentence (1/3). *Architect, don't prompt* |
-| 5:30–7:30 | **3. The turn** ⭐ | *"And here's what I didn't expect — it's also cheaper."* Token table as evidence. **Tax → discount** |
-| 7:30–13:30 | **4. Scale it** ⭐ | The **vehicletrends.us** dashboard, 6 min, mid-deck so overrun can't reach it. Recording → "handwriting sheet at scale" (agent wrote source, never the data) → **"why not Shiny?"** (Shiny = build the artifact; Quarto = write source, browser renders) → iframe isolation / small context windows → "it's just static files" → spine (2/3) |
-| 13:30–16:00 | **5. Why it converges** | "So why not just ask for HTML?" — steelman it, live inline chart, *this deck is a `.qmd`*, then: **HTML can't tell you it's broken; `.qmd` has a compile step.** Checkable by machine + human. Caveat |
-| 16:00–18:00 | **6. Close** | Change one word. Monday practicum (3 lines). *Software solved this decades ago.* Spine (3/3). Hand off to the session |
+## Structure
+ 
+Read the outilne.md for the outline
 
 ## Files
 
@@ -314,21 +293,22 @@ light slide.
 
 ```
 SLIDE 1 —  content/data ENTANGLED WITH structure/format   (one loop, stacked 3×)
-   [ me ] ──▶ [ agent ] ═══▶  (▓▒▓▒▒▓)          stripes in an OVAL
-      ▲          (dashed)
+                                            .pdf
+   [ me ] ──▶ [ agent ] ═══▶  [▓▒▓▒▒▓/]     horizontal BANDS in a PAGE
+      ▲          (dashed)                   (folded corner, 90×116)
       └──── review & re-prompt ──┐
-   [ me ] ──▶ [ agent ] ═══▶  (∴∵∴∵∴)           dots
+   [ me ] ──▶ [ agent ] ═══▶  [∴∵∴∵∴/]      dots
       ▲                                           same loop,
       └──── review & re-prompt ──┐                different weave
-   [ me ] ──▶ [ agent ] ═══▶  (▪▫▪▫▫)           blocks
+   [ me ] ──▶ [ agent ] ═══▶  [▪▫▪▫▫/]      blocks
 
 SLIDE 2 —  Quarto DISENTANGLES Content and Format
    at rest — identical to slide 1's row 1, in the same place on screen:
-   [ me ] ──▶ [ agent ] ═══▶  (▓▒▓▒▒▓)
+   [ me ] ──▶ [ agent ] ═══▶  [▓▒▓▒▒▓/]
 
    click 1 — the chain opens ±140 and the .qmd drops into the gap:
-                                     ┌ .qmd ──────┐
-   [ me ] ──▶ [ agent ] ──writes───▶ │ ▒▒ yaml ▒▒ │ ──render──▶ (▓▒▓▒▒▓)
+                                     ┌ .qmd ──────┐              .pdf
+   [ me ] ──▶ [ agent ] ──writes───▶ │ ▒▒ yaml ▒▒ │ ──render──▶ [▓▒▓▒▒▓/]
       │          (dashed)            │ ▓▓content▓▓│
       └──── you edit directly ─────▶ └─────▲──────┘   click 2: PURPLE arrow
                     (click 2)         [▓ data ▓]      click 3: yellow→RED,
@@ -397,26 +377,48 @@ the back, and it duplicated in miniature what step 2 already says at full size.
 
 Design rules, in force:
 
-- **THE ARTIFACT IS AN OVAL, and the shape is doing work.** Three shapes, three
-  kinds of thing: **rounded rects are actors** (`me`, the agent), **a rect is a
-  file** (the `.qmd`), and the artifact is **neither**. In flowchart grammar an
-  oval is the terminator — the end of the line — which is exactly what a
-  rendered artifact is, and it also draws the thesis: a shape with no corners
-  and no edges has nothing to index against, so *you cannot point into it*.
-  **Hold this shape constant across both figure slides**; it is
-  `200 × 116`, an `<ellipse cx=100 cy=58 rx=100 ry=58>`, drawn 1:1 in parent
-  units (**no `scale()` on the `<use>` any more**). It replaced a 240×64 def at
-  `scale(1.7)` — 408×109, nearly four times wider than tall, which John read as
-  "a pretty long and big rectangle" rather than as a thing. Same height, half
-  the width.
+- **THE ARTIFACT IS A PAGE WITH A FOLDED CORNER, labelled `.pdf`.** It is the
+  thing it stands for: the rendered handwriting sheet from Act 1, and the same
+  portrait sheet the payoff slide puts on screen two slides later. `90 × 116` —
+  US Letter proportions — drawn 1:1 in parent units (**no `scale()` on the
+  `<use>`**), outline
+  `M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z` with the fold triangle
+  `M 68 0 L 90 22 L 68 22 Z` in white on top. The dog-ear is the universal
+  document glyph, so it reads from the back of the room without the label doing
+  the work. **Hold this shape constant across both figure slides.**
+  It is deliberately **not** a rounded rect — that is the actor shape (`me`, the
+  agent). It **is** the same rect family as the `.qmd`, and that is the point:
+  same two colours, same kind of box, and the only thing that differs is
+  **whether the bands have places.** One variable, and it is the address
+  argument.
+  ❌ **Reversed decision, do not reintroduce: the oval.** It was `200 × 116`,
+  an `<ellipse cx=100 cy=58 rx=100 ry=58>`, justified as the flowchart
+  terminator plus "no corners, nothing to index against." That logic only ever
+  resolved for whoever drew it; at distance the room saw a blob, and it
+  disagreed with the real portrait sheets on the payoff slide. Height is
+  unchanged at 116, so **no row spacing or height-budget arithmetic moved** —
+  only the width came down, 200 → 90, and the chain shifted 55 right to stay
+  centred.
 - **Never draw the OUTPUT as content nested inside a format box.** Containment
   implies the two are already separate and in their own places, which is the
-  visual opposite of entanglement. The artifact is always **irregular stripes,
-  content and format interleaved, no boundaries** — now clipped to the oval via
-  a `<clipPath>`, which leaves thin crescents at each end. That is correct:
-  they are stripes, not objects. (Scope matters: nesting inside the **`.qmd`**
-  on slide 2 is not a violation, it is the claim — see below. The rule is about
-  the artifact, not the source.)
+  visual opposite of entanglement. The artifact is always **irregular bands,
+  content and format interleaved, no boundaries**, bleeding edge to edge and
+  clipped to the page via a `<clipPath>` so the fold notch stays clean. (Scope
+  matters: nesting inside the **`.qmd`** on slide 2 is not a violation, it is
+  the claim — see below. The rule is about the artifact, not the source.)
+- **The bands are HORIZONTAL, not vertical stripes.** On a page, horizontal
+  reads as lines of a document, and it makes the comparison with the `.qmd`'s
+  two stacked bands direct rather than cross-axis. The 11 heights are slide 1's
+  old stripe *widths* scaled 200 → 116, so the weave kept its rhythm; they sum
+  to 116 and are contiguous, and the bleed to both edges is what keeps it from
+  reading as a box inside a box.
+- **The `.pdf` label is the one piece of text inside a repeated unit**, and it
+  is worth paying for 3×. It makes slide 2 read `.qmd` → render → `.pdf`, which
+  is the whole of what Quarto *is* for anyone watching the recording who doesn't
+  already know — an explainer slide's worth of work for no slide. It also
+  removes any question about which rect is which once the `.qmd` arrives. This
+  is a deliberate exception to the "anything in `#loop` costs 3×" rule; the bar
+  was high and one mono word cleared it.
 - **Color vocabulary (never break it):** yellow = **content**, teal =
   **format/structure**, purple = **human's direct action**, red = **content that
   changed**. Purple and red appear on slide 2 only. Exact hexes and the fill/ink split
@@ -446,22 +448,32 @@ beneath it; click 2 adds run 3.
   probabilistic pass" above and "woven here" below; stacked three deep that was
   six lines of repeated text. Both are now spoken, not drawn. Anything added to
   `#loop` costs 3×, so the bar for putting text in there is high.
-- **The three documents differ in MOTIF, not in proportion:** `#doc` (stripes,
-  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same oval, same two colors,
-  unmistakably different weave. Do not "unify" them back into three stripe
+- **The three documents differ in MOTIF, not in proportion:** `#doc` (bands,
+  run 1), `#docDots` (run 2), `#docBlocks` (run 3). Same page, same two colors,
+  unmistakably different weave. Do not "unify" them back into three band
   patterns — legibility at distance is the whole reason they exist. Only the
-  stripes are clipped; **every dot and block is placed to sit wholly inside the
-  oval** so nothing is sliced in half at the rim (a clipped half-dot reads as a
-  rendering bug, a clipped stripe doesn't). `r=10` and side 14–18 keep them the
-  physical size they had at `scale(1.7)`. The rows are
+  bands are clipped; **every dot and block is placed to sit wholly inside the
+  page and clear of the folded corner** (`x ≥ 68` and `y ≤ 22`), so nothing is
+  sliced at an edge (a clipped half-dot reads as a rendering bug, a clipped band
+  doesn't). `r=10` and side 14–18 keep them the physical size they had before
+  the page narrowed — three columns instead of seven, four rows instead of
+  three, 11 marks each. The rows are
   **unlabelled**: no "run 1 / run 2 / run 3". Three documents falling out of one
   identical loop already says it, and the numbers only invited reading the stack
   as progress.
-- **A known imperfection, considered and kept.** "Format as little dots" is a bit
-  odd — arguably the format *is* the box, and only the content should vary. But
-  an agent re-draws the wording too, not just the layout, so both really do move
-  between runs. Holding one motif fixed would quietly claim otherwise. If this
-  ever gets revisited, that's the trade being made.
+- **Both content AND format are redrawn on every pass. ❌ Do not "hold the
+  content constant and vary only the format."** It was proposed and rejected:
+  the cold open is pokemon sentences drifting into *minecraft* sentences, so a
+  figure that keeps the yellow fixed claims the content survived the re-prompt —
+  the opposite of the story just told — and it would leave the payoff slide's
+  content-turns-red click answering a problem the figure never showed. The
+  residual oddity ("format as little dots" — arguably the format *is* the box)
+  is the price, and it is the cheaper one: an agent re-draws the wording as well
+  as the layout, so both really do move between runs.
+  **Where that instinct does belong: Act 6's *change one word*.** Same content,
+  `format: pdf` → `format: html`, and the *shape of the output* changes while
+  the content doesn't — the exact mirror of slide 2's click 3, four acts later.
+  Shape-as-format pays off there, where it is true. Not yet built.
 - **Nothing points from one document to the next.** The only route between rows
   is the dashed *review & re-prompt* connector, and it lands on `me`, never on
   the document. Run 2 is not an edit of run 1; run 1 is discarded and the whole
@@ -484,19 +496,22 @@ beneath it; click 2 adds run 3.
 - **Both arrows in `#loop` are identical** — `stroke-width="2.5"`, an **80-unit**
   run, an 8-unit gap before whatever they land on. me→agent and agent→artifact
   are the same kind of step and should not be weighted differently; the second
-  one was once a 274-unit, 6-wide slab. They were 50 until the artifact
-  narrowed: the oval gave back 208 units of width, and 30 of that went into each
-  arrow so the chain still spans the slide. **80 is now the only arrow length in
-  the whole figure** — slide 1's two and slide 2's three — which retires the old
-  50-vs-80 split. Row: me x=285, agent x=485, artifact x=755, ending at 955,
-  centred with 285 units of margin either side.
+  one was once a 274-unit, 6-wide slab. **80 is the only arrow length in the
+  whole figure** — slide 1's two and slide 2's three — which retires the old
+  50-vs-80 split. Row: me x=340, agent x=540, artifact x=810, ending at 900,
+  centred with 340 units of margin either side. (Everything shifted 55 right
+  when the page replaced the oval: the artifact is 110 narrower, so half of that
+  went to each margin and **the artifact's centre stayed at x=855** — which is
+  why the `review & re-prompt` connectors needed no new x, only a new landing
+  point on `me` at 395.)
 - **The rows are 186 apart** (was 165), i.e. **70 units of clear air** between
   one artifact and the next, against 56 before. John's read was that "the lines
   feel a little cramped," and the measurable version is the `review &
   re-prompt` label: it used to clear the next row's document by **2 units** and
-  now clears it by **15**. The oval is 7 units taller than the bar it replaced,
-  so all of the extra spacing came out of the height budget above — see the
-  1600×900 arithmetic in the registration note before adding any more.
+  now clears it by **15**. The artifact is 116 tall — the oval's height, kept
+  exactly when the page replaced it — so none of this arithmetic moved with the
+  shape change. See the 1600×900 arithmetic in the registration note before
+  adding any more.
 
 **Slide 2 ends in ONE output, and it is byte-identical to slide 1's run 1.**
 `#docOut` is a hand-kept copy of `#doc` — **if you edit one, edit both.** The
@@ -519,11 +534,12 @@ gone from both slides too.
   `yaml`; don't annotate further than that. **The file is not meant to be read**,
   only to show that each half has a place.
 - **The `.qmd` and the artifact carry the same two colours on purpose.** In the
-  file they sit in labelled blocks; in the oval they interleave with no
+  file they sit in labelled blocks; in the page they interleave with no
   boundary. That contrast is the whole address argument, so the two must stay on
-  screen together — don't move the artifact off this slide. The **shapes** say
-  it a second time now: the file is a rect you can point into, the artifact is
-  an oval you can't.
+  screen together — don't move the artifact off this slide. Now that both are
+  rects, the comparison is clean: **same colours, same kind of box, and the only
+  variable is whether the bands have places.** The two labels finish it —
+  `.qmd` on the source, `.pdf` on the output.
 - **`data` is yellow, lives outside, and feeds the `.qmd` — not render.** Data *is*
   content; what differs is the kind of address (a row, not a line number), which
   is why it doesn't get a colour of its own. Routing it into the `.qmd` is both
@@ -538,9 +554,10 @@ gone from both slides too.
   the file, not on either block, because both halves inside it are yours to edit.
   There were two; the second pointed at `data`, which reversed the tier-2 story
   (you don't hand-type exact values, you recompute them). An even earlier version
-  ended *beside* the `data` box, pointing up past it at nothing. It enters at
-  x=635 — inside the `.qmd`'s left edge (615) but left of the `data` box, which
-  stays **centred on the `.qmd` at x=710**.
+  ended *beside* the `data` box, pointing up past it at nothing. It leaves `me`
+  at its opened-out centre (x=255) and enters at x=690 — inside the `.qmd`'s
+  left edge (670) but left of the `data` box, which stays **centred on the
+  `.qmd` at x=765**.
   Arrows get out of each other's way; boxes don't go off-axis to make room.
 - **Every arrow in the figure is `stroke-width="2.5"`.** `markerUnits` is
   `strokeWidth`, so a fatter line silently means a fatter head: the edit arrow
@@ -562,24 +579,28 @@ chain 280 units longer, so it grows **symmetrically** — `me`+agent glide 140
 left, the artifact glides 140 right — and the row stays centred. Two CSS rules
 (`.openleft` / `.openright` on `fragment custom` groups) do the gliding; **they
 are not optional**, unlike the old `.lift`, because without them the boxes stay
-put and the `.qmd` lands on top of the artifact. 140 = (950 − 670) / 2. Opened,
-the chain runs me 145 · agent 345 · `.qmd` 615 · artifact 895–1095, with 145
-units of margin either side and a uniform 90-unit gap at every step.
+put and the `.qmd` lands on top of the artifact. 140 = 280 / 2, and it is
+**independent of the artifact's width** — inserting the `.qmd` always adds 280 —
+which is why narrowing the artifact from 200 to 90 left both CSS rules
+untouched. Opened, the chain runs me 200 · agent 400 · `.qmd` 670 ·
+artifact 950–1040, with 200 units of margin either side and a uniform 90-unit
+gap at every step. Closed it runs me 340 · agent 540 · artifact 810–900, 340
+either side.
 
 **Every arrow in the figure is 80 units** — there is no longer a special case
 around the `.qmd`. It used to be 80 there and 50 everywhere else, so that
 `writes` and `render` weren't wedged against the boxes; when the artifact
 narrowed, slide 1's arrows went to 80 too and the split retired. `writes` and
 `render` are consequently the **same font size** now (20). General rule:
-**shift = 75 + L**, and usefully the `.qmd` lands at x=615 *whatever* L is, so
+**shift = 75 + L**, and usefully the `.qmd` lands at x=670 *whatever* L is, so
 the data box, its arrow and the edit arrow's landing point never have to be
 recomputed when the arrows change. The direct agent→artifact arrow is nested
 *inside* `.openleft` so it travels with the agent while it fades — the one line
 that says "entangled" leaves as the file that fixes it arrives.
 
 **Click 3: the content changes and the format doesn't.** The yellow `content`
-block in the `.qmd` and every yellow stripe in the artifact turn **red**
-together, in place; the teal stripes are byte-identical and **do not move**.
+block in the `.qmd` and every yellow band in the artifact turn **red**
+together, in place; the teal bands are byte-identical and **do not move**.
 That stillness is the argument — a regenerated document can never promise it.
 
 Red is `#d1495b`, and the payoff slide two slides later uses **that exact red,
@@ -599,10 +620,11 @@ the *changed content*. There is no colour link from hand to band and there
 doesn't need to be — the arrow is labelled.
 
 - `#docOutEdited` is `#docOut` with every `#edae49` → `#d1495b` and **nothing
-  else changed** — same rects, same widths, same order. Edit one, edit both, or
-  the click stops meaning "only the content changed." (Generate it, don't
-  hand-copy: `body.replace('#edae49','#d1495b')`.)
-- The at-rest oval is still byte-identical to slide 1's `#doc` (modulo the
+  else changed** — same rects, same heights, same order, same fold, same `.pdf`
+  label. Edit one, edit both, or the click stops meaning "only the content
+  changed." (Generate it, don't hand-copy:
+  `body.replace('#edae49','#d1495b')`.)
+- The at-rest page is still byte-identical to slide 1's `#doc` (modulo the
   per-slide clip id). The rule covers the artifact *before* the click; the red
   state is a third thing.
 - **Mechanism is now an overlay, not a swap.** The red versions are drawn
@@ -684,8 +706,10 @@ y=322/508 to land ~3 units above the `me` boxes at y=329/515). If you ever chang
 a stroke width, re-check the arrow's landing gap.
 
 **Not yet visually vetted.** Coordinates are computed, not eyeballed — every
-`<use>` and transform is resolved by script, and each dot and block is checked
-to sit wholly inside the oval — but nothing here has ever been rendered.
+`<use>` and transform is resolved by script, each dot and block is checked to
+sit wholly inside the page and clear of the fold, both SVGs are checked to parse
+as XML, and `#doc`/`#docOut`/`#docOutEdited` are checked byte-for-byte — but
+nothing here has ever been rendered.
 Text-on-fill contrast is no longer a worry: every pairing was measured when the
 palette moved to minou (see Palette), and the labels were flipped to navy
 wherever white failed.
@@ -696,8 +720,14 @@ What to look at on the first render:
   px tall in a 795 px box that the heading already takes ~100 px of, so the
   slack is ~60 px. If it clips, the knob is the row spacing (186) — not the
   viewBox width, which would make it worse.
-- **The stripe crescents.** The two end stripes of the oval taper to slivers at
-  the rim. Intended, but worth confirming they don't read as a rendering fault.
+- **Does the page read as a page?** The dog-ear is 22 units on a 90-wide page,
+  so ~25 px rendered. If it's too subtle to register, enlarge the fold before
+  reaching for anything else — the label is not supposed to be doing that work.
+- **The `.pdf` labels.** Four of them on screen across the two slides. Confirm
+  they read as labels-on-the-thing and not as clutter, and that on slide 1 the
+  three of them don't turn the right-hand column into a list.
+- **Is 90 wide enough?** The artifact lost 110 units. Check the dots and blocks
+  are still legible from the back at three columns rather than seven.
 - **`max-height:80vh`** has still never been observed binding. On a short, wide
   browser window it now could, at which point the figure just scales down
   whole — graceful, not broken.
@@ -790,8 +820,16 @@ prose lines in `README.md` and this file. Safe to delete whenever John wants to.
   **whether slide 1 fits**: it renders ~633 px tall with ~60 px of slack under
   the heading, and the knob is the 186-unit row spacing. Also check both slides'
   fragment steps build the way they're meant to, that the ±140 glide reads as
-  the chain *opening* rather than as things scattering, and that the oval's end
-  stripes don't look like a clipping bug.
+  the chain *opening* rather than as things scattering, that the folded corner
+  registers at 22 units, and that the four `.pdf` labels read as labels rather
+  than clutter.
+- **Say one sentence defining Quarto**, out loud, while figure slide 2 is up and
+  the row reads `.qmd` → render → `.pdf`: plain-text document, markdown with
+  code in it, `quarto render` turns it into a PDF or a site or these slides.
+  ~8 seconds, no slide. The room doesn't need it; the recording does. ❌ Decided
+  against a dedicated explainer slide — 30 seconds spent teaching a Posit
+  dashboards room what Quarto is walks straight into the "we already knew that"
+  problem the whole deck is built to dodge.
 - **Produce remaining demo assets.** The handwriting-sheet images exist; these
   slots are still marked with `> **[BRACKETED]**` blockquote placeholders in
   `index.qmd`:

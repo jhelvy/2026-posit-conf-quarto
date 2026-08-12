@@ -804,8 +804,12 @@ built-in one.
   The three loops are byte-identical to each other — literally one <use> of
   #loop — so the only thing that differs down the column is the document that
   falls out the end. That is the whole argument, and it has to be legible from
-  the back of the room, which is why the three documents differ in SHAPE
-  (stripes / dots / blocks) and not merely in stripe widths.
+  the back of the room, which is why the three documents differ in MOTIF
+  (bands / dots / blocks) and not merely in band heights.
+
+  The artifact is a PAGE with a folded corner, labelled `.pdf` — the thing it
+  actually stands for, and the same portrait sheet the payoff slide shows for
+  real. See the note on #doc for why it isn't an oval any more.
 
   The connectors matter: run 2 is not an edit of run 1, it is another full pass
   reached only by re-prompting. Nothing points from one document to the next.
@@ -844,133 +848,142 @@ built-in one.
 <svg viewbox="0 77 1240 553" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
   <defs>
-    <!-- The oval every artifact in this figure is cut to. userSpaceOnUse
+    <!-- The page every artifact in this figure is cut to. userSpaceOnUse
          (the default) resolves in the <use>d group's own local space, so
          one clip serves every motif. -->
     <clippath id="artifactClip">
-      <ellipse cx="100" cy="58" rx="100" ry="58"></ellipse>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z"></path>
     </clippath>
 
-    <!-- THE ARTIFACT. An OVAL — not a rectangle, and not a rounded box like
-         `me` and the agent. Three shapes, three kinds of thing: rounded rects
-         are actors, the .qmd on the next slide is a file, and this is neither.
-         In flowchart grammar an oval is the terminator, the end of the line,
-         which is exactly what a rendered artifact is. It also happens to draw
-         the claim: a shape with no corners and no edges has nothing to index
-         against — you cannot point INTO it.
+    <!-- THE ARTIFACT. A PAGE — 90 x 116, US Letter proportions, with a folded
+         corner. It is the thing it stands for: the rendered handwriting sheet
+         from Act 1, and the same portrait sheet the payoff slide puts on screen
+         two slides later. The dog-ear is the universal document glyph, so the
+         shape reads instantly from the back of the room with no label doing the
+         work.
 
-         Teal and yellow interleaved, irregular, clipped to the oval: content
-         and format fused. Never drawn as a box inside a box — containment
-         would imply they are already separate, which is the visual opposite of
-         entanglement. The two end stripes come out as thin crescents; that is
-         right, they are stripes, not objects.
+         It is deliberately NOT a rounded rect — that is the actor shape (`me`,
+         the agent). It IS the same rect family as the .qmd on the next slide,
+         and that is the point: same two colours, same kind of box, and the ONLY
+         thing that differs is whether the bands have places. That single
+         variable is the address argument. (This replaced an oval, whose
+         "no corners, nothing to index" logic only ever resolved for whoever
+         drew it; at distance it read as a blob, and it disagreed with the real
+         sheets on the payoff slide.)
 
-         200 x 116 in PARENT units, drawn 1:1 — no scale() on the <use>. It was
-         a 240x64 def at scale(1.7), i.e. 408 x 109: almost four times wider
-         than tall, which read as a long bar rather than as a thing. Same
-         height now, half the width. This shape is held constant across both
-         figure slides. -->
+         Teal and yellow interleaved, irregular, bleeding edge to edge and
+         clipped to the page: content and format fused. Never drawn as a box
+         inside a box — containment would imply they are already separate,
+         which is the visual opposite of entanglement. Horizontal bands, not
+         vertical stripes: on a page, horizontal reads as lines of a document,
+         and it makes the comparison with the .qmd's two stacked bands direct.
+
+         Band heights are slide-1's old stripe widths scaled 200 -> 116, so the
+         weave has the same rhythm it always had. 90 x 116 in PARENT units,
+         drawn 1:1 — no scale() on the <use>. Height is UNCHANGED from the oval
+         (116), so the row spacing and the whole height budget are untouched;
+         only the width came down, 200 -> 90.
+
+         The `.pdf` label is the one piece of text inside a repeated unit, and
+         it is worth the 3x: it makes slide 2 read `.qmd` -[render]- `.pdf`,
+         which is the entire explanation of what Quarto is for anyone watching
+         the recording who doesn't already know. It also removes any question
+         about which rect is which once the .qmd arrives. -->
     <g id="doc">
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
       <g clip-path="url(#artifactClip)">
-        <rect x="0" y="0" width="15" height="116" fill="#00798c"></rect>
-        <rect x="15" y="0" width="22" height="116" fill="#edae49"></rect>
-        <rect x="37" y="0" width="12" height="116" fill="#00798c"></rect>
-        <rect x="49" y="0" width="27" height="116" fill="#edae49"></rect>
-        <rect x="76" y="0" width="17" height="116" fill="#00798c"></rect>
-        <rect x="93" y="0" width="13" height="116" fill="#edae49"></rect>
-        <rect x="106" y="0" width="23" height="116" fill="#00798c"></rect>
-        <rect x="129" y="0" width="20" height="116" fill="#edae49"></rect>
-        <rect x="149" y="0" width="10" height="116" fill="#00798c"></rect>
-        <rect x="159" y="0" width="23" height="116" fill="#edae49"></rect>
-        <rect x="182" y="0" width="18" height="116" fill="#00798c"></rect>
+        <rect x="0" y="0" width="90" height="9" fill="#00798c"></rect>
+        <rect x="0" y="9" width="90" height="13" fill="#edae49"></rect>
+        <rect x="0" y="22" width="90" height="7" fill="#00798c"></rect>
+        <rect x="0" y="29" width="90" height="16" fill="#edae49"></rect>
+        <rect x="0" y="45" width="90" height="10" fill="#00798c"></rect>
+        <rect x="0" y="55" width="90" height="7" fill="#edae49"></rect>
+        <rect x="0" y="62" width="90" height="13" fill="#00798c"></rect>
+        <rect x="0" y="75" width="90" height="12" fill="#edae49"></rect>
+        <rect x="0" y="87" width="90" height="6" fill="#00798c"></rect>
+        <rect x="0" y="93" width="90" height="13" fill="#edae49"></rect>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"></rect>
       </g>
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="none" stroke="#2e4057" stroke-width="2.5"></ellipse>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
     </g>
 
-    <!-- Runs 2 and 3: same prompt, different draw. Same oval, same two colors,
-         a completely different weave. The motif changes (stripes -> dots ->
+    <!-- Runs 2 and 3: same prompt, different draw. Same page, same two colors,
+         a completely different weave. The motif changes (bands -> dots ->
          blocks) rather than just the proportions, because from row 10 a
-         re-shuffled stripe pattern reads as "the same picture again."
+         re-shuffled band pattern reads as "the same picture again."
+
+         Both content AND format are redrawn on every pass, and that is
+         deliberate: the cold open is pokemon sentences drifting into minecraft
+         sentences, so holding the yellow fixed would claim the content
+         survived the re-prompt. It didn't.
 
          Dots and blocks are placed, not clipped: every one is verified to sit
-         wholly inside the oval, so nothing is sliced in half at the rim. r=10
-         and side 14-18 keep them the physical size they were at scale(1.7). -->
+         wholly inside the page and clear of the folded corner (x >= 68 and
+         y <= 22), so nothing is sliced at an edge. r=10 and side 14-18 keep
+         them the physical size they had before the page narrowed; three
+         columns instead of seven, four rows instead of three. -->
     <g id="docDots">
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="#FFFFFF"></ellipse>
-      <circle cx="28" cy="34" r="10" fill="#00798c"></circle>
-      <circle cx="52" cy="34" r="10" fill="#edae49"></circle>
-      <circle cx="76" cy="34" r="10" fill="#edae49"></circle>
-      <circle cx="100" cy="34" r="10" fill="#00798c"></circle>
-      <circle cx="124" cy="34" r="10" fill="#edae49"></circle>
-      <circle cx="148" cy="34" r="10" fill="#00798c"></circle>
-      <circle cx="172" cy="34" r="10" fill="#edae49"></circle>
-      <circle cx="16" cy="58" r="10" fill="#edae49"></circle>
-      <circle cx="40" cy="58" r="10" fill="#00798c"></circle>
-      <circle cx="64" cy="58" r="10" fill="#edae49"></circle>
-      <circle cx="88" cy="58" r="10" fill="#edae49"></circle>
-      <circle cx="112" cy="58" r="10" fill="#00798c"></circle>
-      <circle cx="136" cy="58" r="10" fill="#edae49"></circle>
-      <circle cx="160" cy="58" r="10" fill="#00798c"></circle>
-      <circle cx="184" cy="58" r="10" fill="#edae49"></circle>
-      <circle cx="28" cy="82" r="10" fill="#edae49"></circle>
-      <circle cx="52" cy="82" r="10" fill="#00798c"></circle>
-      <circle cx="76" cy="82" r="10" fill="#edae49"></circle>
-      <circle cx="100" cy="82" r="10" fill="#edae49"></circle>
-      <circle cx="124" cy="82" r="10" fill="#00798c"></circle>
-      <circle cx="148" cy="82" r="10" fill="#edae49"></circle>
-      <circle cx="172" cy="82" r="10" fill="#00798c"></circle>
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="none" stroke="#2e4057" stroke-width="2.5"></ellipse>
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"></path>
+      <circle cx="22" cy="20" r="10" fill="#00798c"></circle>
+      <circle cx="45" cy="20" r="10" fill="#edae49"></circle>
+      <circle cx="22" cy="44" r="10" fill="#edae49"></circle>
+      <circle cx="45" cy="44" r="10" fill="#edae49"></circle>
+      <circle cx="68" cy="44" r="10" fill="#00798c"></circle>
+      <circle cx="22" cy="68" r="10" fill="#edae49"></circle>
+      <circle cx="45" cy="68" r="10" fill="#00798c"></circle>
+      <circle cx="68" cy="68" r="10" fill="#edae49"></circle>
+      <circle cx="22" cy="92" r="10" fill="#00798c"></circle>
+      <circle cx="45" cy="92" r="10" fill="#edae49"></circle>
+      <circle cx="68" cy="92" r="10" fill="#00798c"></circle>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
     </g>
 
     <g id="docBlocks">
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="#FFFFFF"></ellipse>
-      <rect x="25" y="26" width="16" height="16" fill="#edae49"></rect>
-      <rect x="52" y="27" width="14" height="14" fill="#00798c"></rect>
-      <rect x="77" y="26" width="16" height="16" fill="#edae49"></rect>
-      <rect x="102" y="25" width="18" height="18" fill="#00798c"></rect>
-      <rect x="130" y="27" width="14" height="14" fill="#edae49"></rect>
-      <rect x="155" y="26" width="16" height="16" fill="#edae49"></rect>
-      <rect x="12" y="50" width="16" height="16" fill="#edae49"></rect>
-      <rect x="35" y="49" width="18" height="18" fill="#00798c"></rect>
-      <rect x="61" y="51" width="14" height="14" fill="#edae49"></rect>
-      <rect x="84" y="50" width="16" height="16" fill="#00798c"></rect>
-      <rect x="107" y="49" width="18" height="18" fill="#edae49"></rect>
-      <rect x="133" y="51" width="14" height="14" fill="#00798c"></rect>
-      <rect x="156" y="50" width="16" height="16" fill="#edae49"></rect>
-      <rect x="25" y="74" width="16" height="16" fill="#00798c"></rect>
-      <rect x="50" y="73" width="18" height="18" fill="#edae49"></rect>
-      <rect x="78" y="75" width="14" height="14" fill="#00798c"></rect>
-      <rect x="103" y="74" width="16" height="16" fill="#edae49"></rect>
-      <rect x="128" y="73" width="18" height="18" fill="#00798c"></rect>
-      <rect x="156" y="75" width="14" height="14" fill="#edae49"></rect>
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="none" stroke="#2e4057" stroke-width="2.5"></ellipse>
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"></path>
+      <rect x="14" y="12" width="16" height="16" fill="#edae49"></rect>
+      <rect x="38" y="13" width="14" height="14" fill="#00798c"></rect>
+      <rect x="13" y="35" width="18" height="18" fill="#edae49"></rect>
+      <rect x="38" y="37" width="14" height="14" fill="#00798c"></rect>
+      <rect x="60" y="36" width="16" height="16" fill="#edae49"></rect>
+      <rect x="15" y="61" width="14" height="14" fill="#00798c"></rect>
+      <rect x="36" y="59" width="18" height="18" fill="#edae49"></rect>
+      <rect x="60" y="60" width="16" height="16" fill="#edae49"></rect>
+      <rect x="14" y="84" width="16" height="16" fill="#00798c"></rect>
+      <rect x="38" y="85" width="14" height="14" fill="#edae49"></rect>
+      <rect x="59" y="83" width="18" height="18" fill="#00798c"></rect>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
     </g>
 
     <!-- THE LOOP, drawn once and <use>d three times so the rows are provably
          identical. Local coords: the row's centerline is y = 0. -->
-    <!-- The row is centred in the 1240-wide box: 285 units of margin either
-         side. Both arrows are identical — same weight, same 80-unit run, same
-         8-unit landing gap — because they are the same kind of step. They used
-         to be 50; the oval is 208 units narrower than the bar it replaced, and
-         30 of that went back into each arrow so the chain still spans the
-         slide. 80 is also what slide 2 uses either side of the .qmd, so every
-         arrow in the figure is now one length. -->
+    <!-- The row is centred in the 1240-wide box: me 340 .. artifact 900 is 560
+         wide, so 340 units of margin either side. (It was 285 when the artifact
+         was 200 wide; the page is 110 narrower, so the whole chain moved 55
+         right to stay centred. Nothing else about the row changed.) Both arrows
+         are identical — same weight, same 80-unit run, same 8-unit landing gap
+         — because they are the same kind of step. 80 is also what slide 2 uses
+         either side of the .qmd, so every arrow in the figure is one length. -->
     <g id="loop">
-      <rect x="285" y="-32" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
-      <text x="340" y="9" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+      <rect x="340" y="-32" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
+      <text x="395" y="9" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
 
-      <path d="M 397 0 L 477 0" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark)"></path>
+      <path d="M 452 0 L 532 0" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark)"></path>
 
       <!-- agent. dashed = the stochastic component. Same box in both slides:
            the agent is not what changes between them. -->
-      <rect x="485" y="-32" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5" stroke-dasharray="7 5"></rect>
-      <text x="575" y="9" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+      <rect x="540" y="-32" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+      <text x="630" y="9" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
 
       <!-- One jump, no intermediate, and deliberately unlabelled: the row
            repeats three times, so any text here repeats three times too. The
            emptiness under this arrow is exactly the space Quarto fills on the
            next slide — say "one probabilistic pass" out loud instead. -->
-      <path d="M 667 0 L 747 0" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark)"></path>
+      <path d="M 722 0 L 802 0" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark)"></path>
     </g>
 
     <!-- refX=5.5, not 7 (the tip). markerUnits defaults to strokeWidth, so the
@@ -993,35 +1006,38 @@ built-in one.
        is a motion the audience has to parse before the point lands. Rows 2 and
        3 now simply arrive underneath it.
 
-       Rows are 186 apart (was 165). The oval is 116 tall against the old bar's
-       109, so the extra 21 all went into the GAP: 70 units of clear air between
-       one artifact and the next, against 56 before. What that buys is where it
-       was needed — the `review & re-prompt` label used to clear the next row's
-       document by 2 units, and now clears it by 16. -->
+       Rows are 186 apart (was 165), giving 70 units of clear air between one
+       artifact and the next, against 56 before. The page is 116 tall, exactly
+       what the oval was, so none of this arithmetic moved when the shape
+       changed — only the width did.
+
+       The artifact sits at x=810 (was 755): the page is 110 narrower than the
+       oval, so the chain shifted 55 right and its centre stayed put. Its centre
+       is still x=855, which is why the connectors below need no new x. -->
   <g transform="translate(0 175)">
     <use href="#loop"></use>
-    <g transform="translate(755 -58)"><use href="#doc"></use></g>
+    <g transform="translate(810 -58)"><use href="#doc"></use></g>
   </g>
 
   <!-- RUN 2. The connector is the only route from one row to the next, and it
        lands on `me` — not on the document. You don't get to touch run 1; you
        get to ask again. -->
   <g class="fragment" data-fragment-index="1">
-    <path d="M 855 236 L 855 248 Q 855 260 841 260 L 354 260 Q 340 260 340 272 L 340 322" fill="none" stroke="#606771" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
-    <text x="597" y="282" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
+    <path d="M 855 236 L 855 248 Q 855 260 841 260 L 409 260 Q 395 260 395 272 L 395 322" fill="none" stroke="#606771" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
+    <text x="625" y="282" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 361)">
       <use href="#loop"></use>
-      <g transform="translate(755 -58)"><use href="#docDots"></use></g>
+      <g transform="translate(810 -58)"><use href="#docDots"></use></g>
     </g>
   </g>
 
   <!-- RUN 3. -->
   <g class="fragment" data-fragment-index="2">
-    <path d="M 855 422 L 855 434 Q 855 446 841 446 L 354 446 Q 340 446 340 458 L 340 508" fill="none" stroke="#606771" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
-    <text x="597" y="468" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
+    <path d="M 855 422 L 855 434 Q 855 446 841 446 L 409 446 Q 395 446 395 458 L 395 508" fill="none" stroke="#606771" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#ahGray)"></path>
+    <text x="625" y="468" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 547)">
       <use href="#loop"></use>
-      <g transform="translate(755 -58)"><use href="#docBlocks"></use></g>
+      <g transform="translate(810 -58)"><use href="#docBlocks"></use></g>
     </g>
   </g>
 
@@ -1077,50 +1093,60 @@ built-in one.
 <svg viewbox="0 77 1240 553" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
   <defs>
-    <!-- The oval every artifact in this figure is cut to. userSpaceOnUse
+    <!-- The page every artifact in this figure is cut to. userSpaceOnUse
          (the default) resolves in the <use>d group's own local space, so
          one clip serves every motif. -->
     <clippath id="artifactClip2">
-      <ellipse cx="100" cy="58" rx="100" ry="58"></ellipse>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z"></path>
     </clippath>
 
-    <!-- Byte-identical to #doc on the previous slide, oval and all. If you edit
-         one, edit both — the whole point is that the output did not change. -->
+    <!-- Byte-identical to #doc on the previous slide, page and fold and `.pdf`
+         label and all. If you edit one, edit both — the whole point is that the
+         output did not change.
+
+         The `.pdf` label earns its keep here: with the .qmd on screen the row
+         reads `.qmd` -[render]- `.pdf`, which is the whole of what Quarto does,
+         stated without a slide spent on it. It also makes the two rects
+         unmistakable — one is the source, one is the output. -->
     <g id="docOut">
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
       <g clip-path="url(#artifactClip2)">
-        <rect x="0" y="0" width="15" height="116" fill="#00798c"></rect>
-        <rect x="15" y="0" width="22" height="116" fill="#edae49"></rect>
-        <rect x="37" y="0" width="12" height="116" fill="#00798c"></rect>
-        <rect x="49" y="0" width="27" height="116" fill="#edae49"></rect>
-        <rect x="76" y="0" width="17" height="116" fill="#00798c"></rect>
-        <rect x="93" y="0" width="13" height="116" fill="#edae49"></rect>
-        <rect x="106" y="0" width="23" height="116" fill="#00798c"></rect>
-        <rect x="129" y="0" width="20" height="116" fill="#edae49"></rect>
-        <rect x="149" y="0" width="10" height="116" fill="#00798c"></rect>
-        <rect x="159" y="0" width="23" height="116" fill="#edae49"></rect>
-        <rect x="182" y="0" width="18" height="116" fill="#00798c"></rect>
+        <rect x="0" y="0" width="90" height="9" fill="#00798c"></rect>
+        <rect x="0" y="9" width="90" height="13" fill="#edae49"></rect>
+        <rect x="0" y="22" width="90" height="7" fill="#00798c"></rect>
+        <rect x="0" y="29" width="90" height="16" fill="#edae49"></rect>
+        <rect x="0" y="45" width="90" height="10" fill="#00798c"></rect>
+        <rect x="0" y="55" width="90" height="7" fill="#edae49"></rect>
+        <rect x="0" y="62" width="90" height="13" fill="#00798c"></rect>
+        <rect x="0" y="75" width="90" height="12" fill="#edae49"></rect>
+        <rect x="0" y="87" width="90" height="6" fill="#00798c"></rect>
+        <rect x="0" y="93" width="90" height="13" fill="#edae49"></rect>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"></rect>
       </g>
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="none" stroke="#2e4057" stroke-width="2.5"></ellipse>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
     </g>
 
-    <!-- Byte-identical to #docOut except every yellow stripe is red. Same
-         rects, same widths, same order — if you touch one, touch both, or the
-         click stops meaning "only the content changed". -->
+    <!-- Byte-identical to #docOut except every yellow band is red. Same rects,
+         same heights, same order — if you touch one, touch both, or the click
+         stops meaning "only the content changed". -->
     <g id="docOutEdited">
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
       <g clip-path="url(#artifactClip2)">
-        <rect x="0" y="0" width="15" height="116" fill="#00798c"></rect>
-        <rect x="15" y="0" width="22" height="116" fill="#d1495b"></rect>
-        <rect x="37" y="0" width="12" height="116" fill="#00798c"></rect>
-        <rect x="49" y="0" width="27" height="116" fill="#d1495b"></rect>
-        <rect x="76" y="0" width="17" height="116" fill="#00798c"></rect>
-        <rect x="93" y="0" width="13" height="116" fill="#d1495b"></rect>
-        <rect x="106" y="0" width="23" height="116" fill="#00798c"></rect>
-        <rect x="129" y="0" width="20" height="116" fill="#d1495b"></rect>
-        <rect x="149" y="0" width="10" height="116" fill="#00798c"></rect>
-        <rect x="159" y="0" width="23" height="116" fill="#d1495b"></rect>
-        <rect x="182" y="0" width="18" height="116" fill="#00798c"></rect>
+        <rect x="0" y="0" width="90" height="9" fill="#00798c"></rect>
+        <rect x="0" y="9" width="90" height="13" fill="#d1495b"></rect>
+        <rect x="0" y="22" width="90" height="7" fill="#00798c"></rect>
+        <rect x="0" y="29" width="90" height="16" fill="#d1495b"></rect>
+        <rect x="0" y="45" width="90" height="10" fill="#00798c"></rect>
+        <rect x="0" y="55" width="90" height="7" fill="#d1495b"></rect>
+        <rect x="0" y="62" width="90" height="13" fill="#00798c"></rect>
+        <rect x="0" y="75" width="90" height="12" fill="#d1495b"></rect>
+        <rect x="0" y="87" width="90" height="6" fill="#00798c"></rect>
+        <rect x="0" y="93" width="90" height="13" fill="#d1495b"></rect>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"></rect>
       </g>
-      <ellipse cx="100" cy="58" rx="100" ry="58" fill="none" stroke="#2e4057" stroke-width="2.5"></ellipse>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
     </g>
 
     <!-- refX=5.5 for the same reason as slide 1's markers: at 7 the tip sits on
@@ -1131,12 +1157,12 @@ built-in one.
     <marker id="ahEdit2" markerwidth="9" markerheight="9" refx="5.5" refy="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"></path></marker>
   </defs>
   <!-- ── AT REST: the picture from slide 1, unchanged ────────────────────
-       me -> agent -> document, at slide 1's own coordinates (me x=211,
-       agent x=381, document x=621, row centred on y=175), at the same box
-       sizes and the same 50-unit arrows. The viewBox below is tuned so this
-       lands at the SAME SCREEN POSITION as slide 1's row 1, so arriving on
-       this slide changes nothing at all until you click. That stillness is
-       the setup: same me, same agent, same document.
+       me -> agent -> document, at slide 1's own coordinates (me x=340,
+       agent x=540, document x=810, row centred on y=175), at the same box
+       sizes and the same 80-unit arrows. The viewBox is identical to slide 1's
+       so this lands at the SAME SCREEN POSITION as slide 1's row 1, and
+       arriving on this slide changes nothing at all until you click. That
+       stillness is the setup: same me, same agent, same document.
 
        No "prompt once" label any more — at rest this slide must not claim
        anything slide 1 didn't.
@@ -1152,42 +1178,43 @@ built-in one.
        lift on slide 1, which degraded safely). -->
 
   <g class="fragment custom openleft" data-fragment-index="1">
-    <rect x="285" y="143" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
-    <text x="340" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
-    <path d="M 397 175 L 477 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+    <rect x="340" y="143" width="110" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
+    <text x="395" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+    <path d="M 452 175 L 532 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
 
     <!-- agent. STILL dashed — still probabilistic. That's the honest part: the
          agent didn't get better, the thing it writes did. -->
-    <rect x="485" y="143" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5" stroke-dasharray="7 5"></rect>
-    <text x="575" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+    <rect x="540" y="143" width="180" height="64" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5" stroke-dasharray="7 5"></rect>
+    <text x="630" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
 
     <!-- The direct agent -> document arrow: the whole of slide 1's claim in one
          line. It rides along with the agent as the chain opens and fades out
          as the .qmd takes its place. Nested inside this group on purpose, so
          it stays attached to the agent while it goes. -->
     <g class="fragment fade-out" data-fragment-index="1">
-      <path d="M 667 175 L 747 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+      <path d="M 722 175 L 802 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
     </g>
   </g>
 
-  <!-- The artifact. Byte-identical to run 1 on slide 1, same oval, same 1:1
+  <!-- The artifact. Byte-identical to run 1 on slide 1, same page, same 1:1
        size: the argument is NOT "this makes a better document", it's that the
        weaving moved somewhere you can reach. Same two colours as the .qmd box —
        but here they interleave with no boundary, and there they each have a
        place. That contrast IS the address argument, so keep both on screen
-       together. The shapes say it too: the file is a rect you can point into,
-       the artifact is an oval you can't.
+       together, and it is now a clean comparison: two rects of the same family,
+       one whose bands have places and one whose bands don't. Labels finish the
+       job — `.qmd` on the source, `.pdf` on the output.
 
-       CLICK 3 paints #docOutEdited over it: the same oval with the yellow
-       stripes turned red. The teal stripes are byte-identical and do NOT move —
+       CLICK 3 paints #docOutEdited over it: the same page with the yellow
+       bands turned red. The teal bands are byte-identical and do NOT move —
        you changed the content, so only the content changed. Every stripe stayed
        exactly where it was, which is the thing a regenerated document can never
        promise. It is an overlay rather than a swap because the two have
        identical geometry, so the red simply covers the yellow. -->
   <g class="fragment custom openright" data-fragment-index="1">
-    <g transform="translate(755 117)"><use href="#docOut"></use></g>
+    <g transform="translate(810 117)"><use href="#docOut"></use></g>
     <g class="fragment" data-fragment-index="3">
-      <g transform="translate(755 117)"><use href="#docOutEdited"></use></g>
+      <g transform="translate(810 117)"><use href="#docOutEdited"></use></g>
     </g>
   </g>
 
@@ -1207,20 +1234,20 @@ built-in one.
        `writes` and `render` are now the same font size, because their arrows
        are now the same length as every other arrow in the figure (80). -->
   <g class="fragment" data-fragment-index="1">
-    <text x="567" y="161" font-size="20" fill="#2e4057" text-anchor="middle">writes</text>
-    <path d="M 527 175 L 607 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+    <text x="622" y="161" font-size="20" fill="#2e4057" text-anchor="middle">writes</text>
+    <path d="M 582 175 L 662 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
 
-    <text x="710" y="101" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
-    <rect x="615" y="113" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
-    <rect x="631" y="129" width="158" height="36" fill="#00798c"></rect>
-    <text x="710" y="154" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-    <rect x="631" y="177" width="158" height="44" fill="#edae49"></rect>
-    <text x="710" y="206" font-size="20" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+    <text x="765" y="101" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+    <rect x="670" y="113" width="190" height="124" rx="6" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></rect>
+    <rect x="686" y="129" width="158" height="36" fill="#00798c"></rect>
+    <text x="765" y="154" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+    <rect x="686" y="177" width="158" height="44" fill="#edae49"></rect>
+    <text x="765" y="206" font-size="20" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
 
     <!-- One input, one output. `quarto render` takes the .qmd; the data is
          pulled in by it. -->
-    <text x="847" y="161" font-size="20" fill="#2e4057" text-anchor="middle">render</text>
-    <path d="M 807 175 L 887 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+    <text x="902" y="161" font-size="20" fill="#2e4057" text-anchor="middle">render</text>
+    <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
 
     <!-- data = the exact values, living OUTSIDE in a file of their own. Drawn
          EXACTLY like the `content` block above it — solid #edae49, navy text —
@@ -1232,12 +1259,12 @@ built-in one.
          (the darker ink one, which a 2.5-unit line would need) would have been
          a second yellow on screen for no gain.
          No arrow reaches data from the agent, and none from me either: data
-         comes from the world. Centred under the .qmd at x=710; the purple arrow
+         comes from the world. Centred under the .qmd at x=765; the purple arrow
          gets out of its way by entering further left, not by pushing this
          off-axis. -->
-    <rect x="650" y="295" width="120" height="56" rx="6" fill="#edae49"></rect>
-    <text x="710" y="332" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">data</text>
-    <path d="M 710 291 L 710 245" fill="none" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
+    <rect x="705" y="295" width="120" height="56" rx="6" fill="#edae49"></rect>
+    <text x="765" y="332" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">data</text>
+    <path d="M 765 291 L 765 245" fill="none" stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahDark2)"></path>
   </g>
 
   <!-- ── CLICK 2: the payoff ─────────────────────────────────────────────
@@ -1253,13 +1280,14 @@ built-in one.
        hue region (306 deg) the palette leaves empty — every other colour here
        is 59 deg or more away. It is the single most saturated thing on the
        slide, which is right: it is the one line that is YOU. It leaves from
-       `me` at its opened-out position (x=200) and enters at x=635, left of the
-       data box, so the two arrows into the .qmd don't collide.
+       `me` at its opened-out centre (x=255) and enters at x=690, inside the
+       .qmd's left edge (670) but left of the data box (705), so the two arrows
+       into the .qmd don't collide.
        stroke-width 2.5 like every other arrow on both slides: markerUnits is
        strokeWidth, so a fatter line also means a fatter head. -->
   <g class="fragment" data-fragment-index="2">
-    <path d="M 200 211 L 200 265 Q 200 277 212 277 L 623 277 Q 635 277 635 265 L 635 245" fill="none" stroke="#852f88" stroke-width="2.5" marker-end="url(#ahEdit2)"></path>
-    <text x="417" y="303" font-size="20" fill="#852f88" text-anchor="middle">you edit directly</text>
+    <path d="M 255 211 L 255 265 Q 255 277 267 277 L 678 277 Q 690 277 690 265 L 690 245" fill="none" stroke="#852f88" stroke-width="2.5" marker-end="url(#ahEdit2)"></path>
+    <text x="472" y="303" font-size="20" fill="#852f88" text-anchor="middle">you edit directly</text>
   </g>
 
   <!-- CLICK 3: the content changes and the format doesn't. Painted over the
@@ -1273,11 +1301,28 @@ built-in one.
        legibility one: flipping the text as well as the fill makes the block
        read as a STATE CHANGE and not just a recolour. -->
   <g class="fragment" data-fragment-index="3">
-    <rect x="631" y="177" width="158" height="44" fill="#d1495b"></rect>
-    <text x="710" y="206" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
+    <rect x="686" y="177" width="158" height="44" fill="#d1495b"></rect>
+    <text x="765" y="206" font-size="20" text-anchor="middle" fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
   </g>
 
 </svg>
+<aside class="notes">
+<p>Click 1. Same me, same agent — still dashed, it did not get better. What changed is what it writes: a <code>.qmd</code>. Plain text, markdown with code in it, and <code>quarto render</code> turns it into that PDF — or a website, or these slides.</p>
+<p>(That sentence is for whoever watches the recording. Say it once, while the row is on screen, and move on — the room already knows.)</p>
+<p>The two boxes carry the same two colours. In the file they have places: yaml here, content there. In the PDF they’re smeared together. That’s the whole argument — one of these you can point into.</p>
+<p>Click 2. And because it has places, I can reach in myself. Not re-prompt — edit.</p>
+<p>Click 3. The content changed. Look at the format: nothing moved. Not “barely moved” — nothing. That’s the promise a regenerated document can’t make.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 </section>
 <section class="slide level0">
@@ -1354,9 +1399,48 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="ask-for-a-.qmd-file-not-an-artifact" class="inverse center middle">
-<h1><span class="font150">Ask for a <span class="yellow">.qmd</span> file,<br>not an <span class="red">artifact</span></span></h1>
+<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf" class="inverse middle">
+<h1><span class="center"><span class="font150">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></span></h1>
 </section>
+</section>
+<section class="slide level0">
+
+<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf-1" class="inverse middle">
+<h1><span class="center">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></h1>
+<div class="cols-row">
+<div class="col" style="flex:0 1 15%;width:15%">
+
+</div>
+<div class="col">
+<div id="disentangles-content-and-format" class="h2">
+✅ Disentangles content and format
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf-2" class="inverse middle">
+<h1><span class="center">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></h1>
+<div class="cols-row">
+<div class="col" style="flex:0 1 15%;width:15%">
+
+</div>
+<div class="col">
+<div id="disentangles-content-and-format-1" class="h2">
+✅ Disentangles content and format
+</div>
+<div id="token-efficient" class="h2">
+✅ Token efficient
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="slide level0">
+
+<p>Token efficiency slide</p>
 </section>
 <section class="slide level0">
 
@@ -1366,8 +1450,22 @@ built-in one.
 </section>
 <section class="slide level0">
 
+<section class="lexis-slide-title middle">
+<h1 class="lexis-slide-title"></h1>
+<center>
+<img src="images/africa-bad.png" width="80%">
+</center>
+</section>
+</section>
+<section class="slide level0">
 
-<img data-src="images/africa-bad.jpeg" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
+<section class="lexis-slide-title middle">
+<h1 class="lexis-slide-title"></h1>
+<center>
+<img src="images/africa-good.png" width="40%">
+</center>
+</section>
+</section>
 <section class="slide level0">
 
 <section id="quarto-is-token-efficient" class="inverse center middle">
