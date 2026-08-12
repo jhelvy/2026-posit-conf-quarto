@@ -24,7 +24,7 @@ Next time:
 
 Instead, if you ask for a .qmd file, every piece of data has a source that you **control**, which also turns out to also enable **correct** outputs that scale to real data products like dashboards
 
-**The escalation**: Stakes climb from a kid's worksheet → a government slide with every country wrong → a live dashboard over 10M records.
+**The escalation**: Stakes climb from a kid's worksheet → a government slide with every country wrong → a live dashboard over 169 million records.
 
 ---
 
@@ -68,8 +68,8 @@ HTML can't tell you it's broken. A `.qmd` has a compile step
 
 ## Act 4 — Scaling to bigger artifacts: data websites
 
-- vehicletrends.us — real, multi-page, self-updating Quarto site over 10M+
-  vehicle listings.
+- vehicletrends.us — real, multi-page, self-updating Quarto site over
+  169,552,665 vehicle listings.
 - Agent never touched the data — it lives in an R package the
   pages read at render, so every number has an address and nothing goes stale.
 - "But why not just build a Shiny app?"** — You can! It's fine. I just wanted to keep it serverless. **It's just static files.** Charts, map, even the Shiny app (Shinylive → WASM) all run client-side. No server to run, secure, or pay for.

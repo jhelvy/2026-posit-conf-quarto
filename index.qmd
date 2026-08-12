@@ -1046,7 +1046,7 @@ sales globally.</p>
 - `[Content_Types].xml`
 - `_rels/.rels`
 - `word/_rels/document.xml.rels`
-- `styles.xml`l
+- `styles.xml`
 :::
 
 ---
@@ -1091,93 +1091,55 @@ An edit to a `.qmd` is a **diff.**
 
 ---
 
-[Left off here]
-
-
-
-
-
-
-
-
----
-
-{{< middle >}}
-
-<center>
-<img src="images/africa-bad.png" width=80%>
-</center>
-
----
-
-{{< middle >}}
-
-<center>
-<img src="images/africa-good.png" width=40%>
-</center>
-
----
-
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 
-# Easy to deploy (serverless)
+# Control is one thing.<br>Correct is another.
+
 
 ---
 
-## Need something heavier? Put it in a box
+{{< middle >}}
+
+<center>
+<img src="images/africa-bad.png" height="620">
+
+[A real slide, at a real conference.]{.small}
+</center>
+
+---
+
+{{< middle >}}
+
+<center>
+<img src="images/africa-good.png" height="660">
+
+[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
+</center>
+
+---
+
+## That map rendered fine
 
 ::: {.col}
-The census-tract map is the hardest thing on the site.
+[**Ask for the map**]{.red}
 
-It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
-in isolation, then dropped in:
+The shapes were **drawn**.
 
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", width = "100%"
-)
-```
+A wrong shape looks exactly like a right one. It renders. It ships. Nobody
+catches it.
 :::
 
----
+::: {.col}
+[**Ask for the source**]{.blue}
 
-## Small pieces have small context windows
+The shapes are **joined** — country names to a shapefile.
 
-Isolate a component →
-
-- the agent holds **all of it** in one context
-- you iterate on it **without touching the site**
-- it drops back in as an `iframe`
-
-[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
-
-::: {.notes}
-This is the efficiency argument made architectural. Composition isn't just clean
-engineering — it's what keeps each AI interaction cheap and each component
-individually correct. The map, the Shinylive app, each page: all small.
+A wrong name doesn't render. It **fails**.
 :::
 
----
-
-## It's just static files
-
-Everything here runs in the browser and deploys to GitHub Pages — **for free.**
-
-- charts → ECharts (JS), rendered client-side
-- the map → PMTiles on a CDN, instant
-- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
-
-[No server to run. No server to secure. No server to pay for.]{.font120}
-
-::: {.notes}
-The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via
-WASM. A "dashboard" that is entirely static files is faster, cheaper, and simpler
-to keep alive than anything server-backed — and the agent helped build every
-piece of it.
-:::
+[The artifact had no failure mode. That's the whole problem.]{.font120}
 
 ---
 
@@ -1227,6 +1189,241 @@ not the document.
 
 ::: {.notes}
 Both halves matter. git revert is a one-command undo for any agent mistake.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Same move.<br>Bigger artifact.
+
+---
+
+{{< bg-color "#000000" >}}
+{{< middle >}}
+{{< center >}}
+
+<br>
+![](images/vehicletrends.gif){fig-align="center" width=100%}
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# [vehicletrends.us]{.font150}
+
+[**169,552,665** listings · 100,000+ dealerships · 2018–2025]{.font120}
+
+[Nobody typed that number. The page computes it at render.]{.font120 .orange}
+
+---
+
+## It's a Quarto website
+
+:::: {.col}
+::: {.font45}
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - depreciation.qmd
+      - percent-listings.qmd
+      - market-concentration.qmd
+      - registrations.qmd
+```
+:::
+::::
+
+::: {.col}
+**15 pages. ~2,900 lines of markdown.**
+
+The agent writes the `.qmd`.
+
+The data lives in an R package the pages load at render:
+
+```r
+library(vehicletrends)
+```
+
+It never touches the numbers.
+:::
+
+---
+
+## Every page gets a URL
+
+- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
+- the back button works
+- search engines index it
+- 10 pages in the sidebar, 10 addresses
+
+[A Shiny app is one URL. The state lives in a session.]{.font120}
+
+---
+
+## No UI. No server.
+
+::: {.col}
+[**Shiny**]{.red}
+
+- a UI
+- a server function
+- a reactive graph
+- a process that has to be running
+
+You maintain an **application**.
+:::
+
+::: {.col}
+[**Quarto**]{.blue}
+
+- markdown
+- a chunk that returns a widget
+
+You maintain a **document**.
+:::
+
+[Real compute over data too big for a browser is Shiny's job. This isn't that.]{.font120}
+
+---
+
+## "But I need users to filter it"
+
+::: {.col width="40%"}
+::: {.font45}
+```r
+percent_listings |>
+  group_by(group_level) |>
+  e_charts(listing_year) |>
+  e_line(share) |>
+  e_legend()
+```
+:::
+
+[Click a category in the legend →]{.font110}
+
+[No input. No server. No reactive.]{.font110 .blue}
+:::
+
+::: {.col width="60%"}
+```{r}
+suppressMessages({
+  library(dplyr)
+  library(echarts4r)
+  library(vehicletrends)
+})
+
+percent_listings |>
+  filter(
+    group_var == "powertrain",
+    is.na(category_var),
+    inventory_type == "New"
+  ) |>
+  mutate(
+    share = round(100 * p, 2),
+    group_level = recode(
+      group_level,
+      "Battery Electric (BEV)" = "BEV",
+      "Plug-In Hybrid Electric (PHEV)" = "PHEV",
+      "Hybrid Electric (HEV)" = "Hybrid",
+      "Flex Fuel (E85)" = "Flex Fuel"
+    )
+  ) |>
+  group_by(group_level) |>
+  e_charts(listing_year, height = "460px") |>
+  e_line(share) |>
+  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
+  e_tooltip(trigger = "axis") |>
+  e_y_axis(name = "% of new listings", nameLocation = "middle", nameGap = 50) |>
+  e_x_axis(name = "Listing year") |>
+  e_grid(left = 90, right = 40, top = 30, bottom = 90)
+```
+:::
+
+---
+
+## Need something heavier? Put it in a box
+
+::: {.col}
+The census-tract map is the hardest thing on the site: **276 lines** of
+hand-written MapLibre and **1.64 GB** of map tiles on a CDN.
+
+It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
+in isolation, then dropped in:
+
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", width = "100%"
+)
+```
+:::
+
+---
+
+## Or drop a whole Shiny app in the page
+
+Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
+the reader's browser:
+
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+```
+````
+
+[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
+
+---
+
+## Small pieces have small context windows
+
+Isolate a component →
+
+- the agent holds **all of it** in one context
+- you iterate on it **without touching the site**
+- it drops back in as an `iframe`
+
+The agent opens **one page** — 200 to 600 lines. Never the site.
+
+[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
+
+::: {.notes}
+This is the efficiency argument made architectural. Composition isn't just clean
+engineering — it's what keeps each AI interaction cheap and each component
+individually correct. The map, the Shinylive app, each page: all small.
+:::
+
+---
+
+## It's just static files
+
+Everything here runs in the browser, and the whole site is files — **hosted for free.**
+
+- charts → ECharts (JS), rendered client-side
+- the map → PMTiles on a CDN, instant
+- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
+
+A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
+cached, so nothing goes stale.
+
+[No server to run. No server to secure. No server to pay for.]{.font120}
+
+::: {.notes}
+The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via
+WASM. A "dashboard" that is entirely static files is faster, cheaper, and simpler
+to keep alive than anything server-backed — and the agent helped build every
+piece of it.
 :::
 
 ---

@@ -699,6 +699,11 @@
     whenReady(init);
   })();
   </script>
+  <script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="index_files/libs/echarts4r-4.8.0/echarts-en.min.js"></script>
+  <script src="index_files/libs/echarts4r-4.8.0/ecStat.min.js"></script>
+  <script src="index_files/libs/echarts4r-4.8.0/dataTool.min.js"></script>
+  <script src="index_files/libs/echarts4r-binding-0.4.6/echarts4r.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -1636,7 +1641,7 @@ built-in one.
 <li><code>[Content_Types].xml</code></li>
 <li><code>_rels/.rels</code></li>
 <li><code>word/_rels/document.xml.rels</code></li>
-<li><code>styles.xml</code>l</li>
+<li><code>styles.xml</code></li>
 </ul>
 </div>
 </div>
@@ -1677,14 +1682,17 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<p>[Left off here]</p>
+<section id="control-is-one-thing.-correct-is-another." class="inverse center middle">
+<h1>Control is one thing.<br>Correct is another.</h1>
+</section>
 </section>
 <section class="slide level0">
 
 <section class="lexis-slide-title middle">
 <h1 class="lexis-slide-title"></h1>
 <center>
-<img src="images/africa-bad.png" width="80%">
+<p><img src="images/africa-bad.png" height="620"></p>
+<span class="small">A real slide, at a real conference.</span>
 </center>
 </section>
 </section>
@@ -1693,75 +1701,27 @@ built-in one.
 <section class="lexis-slide-title middle">
 <h1 class="lexis-slide-title"></h1>
 <center>
-<img src="images/africa-good.png" width="40%">
+<p><img src="images/africa-good.png" height="660"></p>
+<span class="small">Source: <a href="https://www.bbc.com/news/articles/c89n0xykw2go">BBC</a></span>
 </center>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="easy-to-deploy-serverless" class="inverse center middle">
-<h1>Easy to deploy (serverless)</h1>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>Need something heavier? Put it in a box</h2>
+<h2>That map rendered fine</h2>
+<div class="cols-row">
 <div class="col">
-<p>The census-tract map is the hardest thing on the site.</p>
-<p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
-<span id="cb5-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
-<span id="cb5-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb5-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="red"><strong>Ask for the map</strong></span></p>
+<p>The shapes were <strong>drawn</strong>.</p>
+<p>A wrong shape looks exactly like a right one. It renders. It ships. Nobody catches it.</p>
 </div>
-</section>
-<section class="slide level0">
-
-<h2>Small pieces have small context windows</h2>
-<p>Isolate a component →</p>
-<ul>
-<li>the agent holds <strong>all of it</strong> in one context</li>
-<li>you iterate on it <strong>without touching the site</strong></li>
-<li>it drops back in as an <code>iframe</code></li>
-</ul>
-<p><span class="font120 green">The whole dashboard is never in scope at once. Neither is the token bill.</span></p>
-<aside class="notes">
-<p>This is the efficiency argument made architectural. Composition isn’t just clean engineering — it’s what keeps each AI interaction cheap and each component individually correct. The map, the Shinylive app, each page: all small.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>It’s just static files</h2>
-<p>Everything here runs in the browser and deploys to GitHub Pages — <strong>for free.</strong></p>
-<ul>
-<li>charts → ECharts (JS), rendered client-side</li>
-<li>the map → PMTiles on a CDN, instant</li>
-<li>the Shiny app → <strong>Shinylive</strong>, compiled to WebAssembly. No server.</li>
-</ul>
-<p><span class="font120">No server to run. No server to secure. No server to pay for.</span></p>
-<aside class="notes">
-<p>The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via WASM. A “dashboard” that is entirely static files is faster, cheaper, and simpler to keep alive than anything server-backed — and the agent helped build every piece of it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<div class="col">
+<p><span class="blue"><strong>Ask for the source</strong></span></p>
+<p>The shapes are <strong>joined</strong> — country names to a shapefile.</p>
+<p>A wrong name doesn’t render. It <strong>fails</strong>.</p>
+</div>
+</div>
+<p><span class="font120">The artifact had no failure mode. That’s the whole problem.</span></p>
 </section>
 <section class="slide level0">
 
@@ -1809,6 +1769,189 @@ built-in one.
 </div>
 <aside class="notes">
 <p>Both halves matter. git revert is a one-command undo for any agent mistake.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level0">
+
+<section id="same-move.-bigger-artifact." class="inverse center middle">
+<h1>Same move.<br>Bigger artifact.</h1>
+</section>
+</section>
+<section class="slide level0">
+
+<section class="lexis-slide-title middle center" data-background-color="#000000">
+<h1 class="lexis-slide-title"></h1>
+<p><br> <img data-src="images/vehicletrends.gif" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="vehicletrends.us" class="inverse center middle">
+<h1><span class="font150">vehicletrends.us</span></h1>
+<p><span class="font120"><strong>169,552,665</strong> listings · 100,000+ dealerships · 2018–2025</span></p>
+<p><span class="font120 orange">Nobody typed that number. The page computes it at render.</span></p>
+</section>
+</section>
+<section class="slide level0">
+
+<h2>It’s a Quarto website</h2>
+<div class="cols-row">
+<div class="col">
+<div class="font45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href=""></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb5-2"><a href=""></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="cb5-5"><a href=""></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span></span>
+<span id="cb5-6"><a href=""></a><span class="at">    </span><span class="fu">contents</span><span class="kw">:</span></span>
+<span id="cb5-7"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="cb5-8"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> vmt-daily.qmd</span></span>
+<span id="cb5-9"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> depreciation.qmd</span></span>
+<span id="cb5-10"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> percent-listings.qmd</span></span>
+<span id="cb5-11"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> market-concentration.qmd</span></span>
+<span id="cb5-12"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> registrations.qmd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="col">
+<p><strong>15 pages. ~2,900 lines of markdown.</strong></p>
+<p>The agent writes the <code>.qmd</code>.</p>
+<p>The data lives in an R package the pages load at render:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">library</span>(vehicletrends)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It never touches the numbers.</p>
+</div>
+</div>
+</section>
+<section class="slide level0">
+
+<h2>Every page gets a URL</h2>
+<ul>
+<li><code>vehicletrends.us/depreciation</code> — link it, bookmark it, send it to someone</li>
+<li>the back button works</li>
+<li>search engines index it</li>
+<li>10 pages in the sidebar, 10 addresses</li>
+</ul>
+<p><span class="font120">A Shiny app is one URL. The state lives in a session.</span></p>
+</section>
+<section class="slide level0">
+
+<h2>No UI. No server.</h2>
+<div class="cols-row">
+<div class="col">
+<p><span class="red"><strong>Shiny</strong></span></p>
+<ul>
+<li>a UI</li>
+<li>a server function</li>
+<li>a reactive graph</li>
+<li>a process that has to be running</li>
+</ul>
+<p>You maintain an <strong>application</strong>.</p>
+</div>
+<div class="col">
+<p><span class="blue"><strong>Quarto</strong></span></p>
+<ul>
+<li>markdown</li>
+<li>a chunk that returns a widget</li>
+</ul>
+<p>You maintain a <strong>document</strong>.</p>
+</div>
+</div>
+<p><span class="font120">Real compute over data too big for a browser is Shiny’s job. This isn’t that.</span></p>
+</section>
+<section class="slide level0">
+
+<h2>“But I need users to filter it”</h2>
+<div class="cols-row">
+<div class="col" style="flex:0 1 40%;width:40%">
+<div class="font45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>percent_listings <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">group_by</span>(group_level) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">e_charts</span>(listing_year) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href=""></a>  <span class="fu">e_line</span>(share) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href=""></a>  <span class="fu">e_legend</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><span class="font110">Click a category in the legend →</span></p>
+<p><span class="font110 blue">No input. No server. No reactive.</span></p>
+</div>
+<div class="col" style="flex:0 1 60%;width:60%">
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-bd350eba0daf5386801c" style="width:100%;height:460px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bd350eba0daf5386801c">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"yAxis":[{"show":true,"name":"% of new listings","nameLocation":"middle","nameGap":50}],"xAxis":[{"type":"value","name":"Listing year"}],"legend":{"data":["BEV","Flex Fuel","Fuel Cell","Gasoline","Hybrid","PHEV"],"show":true,"type":"plain","bottom":0,"textStyle":{"fontSize":18}},"series":[{"data":[{"value":[2018,0.37]},{"value":[2019,0.5]},{"value":[2020,0.5]},{"value":[2021,1.25]},{"value":[2022,2]},{"value":[2023,3.35]},{"value":[2024,4.63]},{"value":[2025,4.25]}],"yAxisIndex":0,"xAxisIndex":0,"name":"BEV","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":[2018,5.51]},{"value":[2019,4.28]},{"value":[2020,2.72]},{"value":[2021,1.4]},{"value":[2022,1.34]},{"value":[2023,1.47]},{"value":[2024,1.75]},{"value":[2025,2.5]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Flex Fuel","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":[2018,0.01]},{"value":[2019,0.01]},{"value":[2020,0.01]},{"value":[2021,0]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Fuel Cell","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":[2018,91.31]},{"value":[2019,92.14]},{"value":[2020,92.59999999999999]},{"value":[2021,91.59999999999999]},{"value":[2022,93.43000000000001]},{"value":[2023,91.04000000000001]},{"value":[2024,89.20999999999999]},{"value":[2025,88.59999999999999]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Gasoline","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":[2018,2.2]},{"value":[2019,2.63]},{"value":[2020,3.94]},{"value":[2021,5.49]},{"value":[2022,3.06]},{"value":[2023,3.99]},{"value":[2024,4.25]},{"value":[2025,4.52]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Hybrid","type":"line","coordinateSystem":"cartesian2d"},{"data":[{"value":[2018,0.61]},{"value":[2019,0.45]},{"value":[2020,0.23]},{"value":[2021,0.26]},{"value":[2022,0.17]},{"value":[2023,0.15]},{"value":[2024,0.17]},{"value":[2025,0.13]}],"yAxisIndex":0,"xAxisIndex":0,"name":"PHEV","type":"line","coordinateSystem":"cartesian2d"}],"tooltip":{"trigger":"axis"},"grid":[{"left":90,"right":40,"top":30,"bottom":90}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level0">
+
+<h2>Need something heavier? Put it in a box</h2>
+<div class="col">
+<p>The census-tract map is the hardest thing on the site: <strong>276 lines</strong> of hand-written MapLibre and <strong>1.64 GB</strong> of map tiles on a CDN.</p>
+<p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
+<span id="cb8-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
+<span id="cb8-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
+<span id="cb8-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section class="slide level0">
+
+<h2>Or drop a whole Shiny app in the page</h2>
+<p>Two pages on the site <strong>are</strong> Shiny apps — compiled to WebAssembly, running in the reader’s browser:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href=""></a><span class="in">```{shinylive-r}</span></span>
+<span id="cb9-2"><a href=""></a><span class="co">#| standalone: true</span></span>
+<span id="cb9-3"><a href=""></a><span class="co">#| viewerHeight: 800</span></span>
+<span id="cb9-4"><a href=""></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="font120">Same move. The hard thing goes in a box, and the page just says where.</span></p>
+</section>
+<section class="slide level0">
+
+<h2>Small pieces have small context windows</h2>
+<p>Isolate a component →</p>
+<ul>
+<li>the agent holds <strong>all of it</strong> in one context</li>
+<li>you iterate on it <strong>without touching the site</strong></li>
+<li>it drops back in as an <code>iframe</code></li>
+</ul>
+<p>The agent opens <strong>one page</strong> — 200 to 600 lines. Never the site.</p>
+<p><span class="font120 green">The whole dashboard is never in scope at once. Neither is the token bill.</span></p>
+<aside class="notes">
+<p>This is the efficiency argument made architectural. Composition isn’t just clean engineering — it’s what keeps each AI interaction cheap and each component individually correct. The map, the Shinylive app, each page: all small.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level0">
+
+<h2>It’s just static files</h2>
+<p>Everything here runs in the browser, and the whole site is files — <strong>hosted for free.</strong></p>
+<ul>
+<li>charts → ECharts (JS), rendered client-side</li>
+<li>the map → PMTiles on a CDN, instant</li>
+<li>the Shiny app → <strong>Shinylive</strong>, compiled to WebAssembly. No server.</li>
+</ul>
+<p>A GitHub Action re-renders and republishes it <strong>every Sunday at 5am.</strong> Nothing is cached, so nothing goes stale.</p>
+<p><span class="font120">No server to run. No server to secure. No server to pay for.</span></p>
+<aside class="notes">
+<p>The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via WASM. A “dashboard” that is entirely static files is faster, cheaper, and simpler to keep alive than anything server-backed — and the agent helped build every piece of it.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2083,6 +2226,44 @@ built-in one.
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

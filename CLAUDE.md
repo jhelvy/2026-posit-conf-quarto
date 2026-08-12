@@ -69,8 +69,9 @@ expansion (`0.14`) holds those multipliers — shrink it and `7.2×` clips.
 
 **`images/`** — flat. `handwriting-good-minecraft.png` does double duty (the
 drifted sheet in Act 1, the minecraft sheet on the payoff slide); swapping it
-changes both. `handwriting-good-mario.png`, `handwriting-practice-minecraft.pdf`
-and `africa-correct.png` are unreferenced.
+changes both. `handwriting-good-mario.png` and
+`handwriting-practice-minecraft.pdf` are unreferenced. `vehicletrends.gif` is
+used **twice** — the cold open and the Act 5 payoff; that bookend is the point.
 
 Render status: `index.qmd` has not been re-rendered since the lexis conversion.
 
@@ -360,11 +361,40 @@ slide B above the three columns — same markup, different inline sizes.
 - ❌ Don't moralize about the syntax. HTML and LaTeX are good formats; the claim
   is only that the agent pays for every character.
 
-## The dashboard case study (Act 4)
+## The correctness act (Act 4)
+
+Order is **Africa → trust → dashboard**, which is John's escalation in
+`outline.md`: worksheet → a government slide with every country wrong → a live
+dashboard. Stakes climb, so Africa must precede the dashboard, and its two
+answer slides (`But HTML can't tell you it's broken`, `Quarto is checkable
+twice`) sit directly after it — they answer the question Africa asks.
+
+❌ **Never claim who or what made that map.** No source establishes it was
+AI-generated; the BBC graphic says only "mislabels." The slide claims what it
+*demonstrates* — **a wrong artifact looks exactly like a right one.** It
+rendered, it shipped, nobody caught it. That works regardless of authorship and
+is a better setup for the compile-step slides than an authorship claim would be.
+
+- `africa-bad.png` is the artifact in the wild; `africa-good.png` is the BBC's
+  annotation of what was wrong (not a corrected map). Source credited on slide:
+  <https://www.bbc.com/news/articles/c89n0xykw2go>.
+- **Sized by height (620 / 660), not width** — one is 16:9 landscape, the other
+  3:4 portrait, so equal widths made them read as unrelated images.
+- The turn is *drawn vs. joined*: join names to a shapefile and a wrong name
+  fails; draw the shape and there is nothing to fail. That is Act 2's thesis
+  applied to data, which is why it earns its own slide rather than a caption.
+
+## The dashboard case study (Act 5)
 
 **vehicletrends.us** — source at `/Users/jhelvy/gh/vehicletrends/dashboard`. A
-real, multi-page, self-updating Quarto site over 10M+ listings. Draw principles
-from the real repo, never invented ones.
+real, multi-page, self-updating Quarto site. Draw principles from the real repo,
+never invented ones.
+
+**169,552,665 listings** (74,894,001 new + 94,658,664 used), 100,000+
+dealerships, 2018–2025; 15 pages, ~2,900 lines of `.qmd`. ❌ The old "10M+" is
+wrong by 17×. `about.qmd:11–16` computes these at render and inlines them with
+`` `r n_new` `` — the case study's own source states the thesis, so use the exact
+number, not "about 170 million."
 
 1. **Same move, at scale.** Agent writes the `.qmd` + small R chunks; **data
    lives in an external R package** (`vehicletrends`) the pages read at render
@@ -374,14 +404,33 @@ from the real repo, never invented ones.
    Quarto = markdown + a chunk returning a self-contained JS widget. Honest
    concession: server-side compute over browser-too-big data is Shiny's turf.
 3. **Isolate heavy components behind an iframe.** The MapLibre + PMTiles map is
-   a separate repo (`hhi-map`), dropped in with 6 lines. Same for Shinylive.
-4. **Small pieces have small context windows.** Efficiency made architectural.
-5. **It's just static files.** Charts, map, even the Shiny app (Shinylive →
-   WASM) run client-side. No server to run, secure, or pay for.
+   a separate repo (`hhi-map`) — 276 lines of hand-written JS, 1.64 GB of tiles
+   on Cloudflare R2 — dropped in with 6 lines.
+4. **…or drop in a whole Shiny app.** Two pages (`hhi-explained.qmd`,
+   `registrations.qmd`) are native `{shinylive-r}` chunks, WASM, client-side.
+   Same move as the iframe, so it sits right after it and resolves 2's
+   concession.
+5. **Small pieces have small context windows.** Efficiency made architectural.
+   The agent opens one 200–600 line page, never the site.
+6. **It's just static files.** Charts, map, even the Shiny app run client-side.
+   Weekly re-render is `cron: '0 5 * * 0'`; there is **no `freeze`**, so every
+   build re-executes all the R. Nothing is cached, so nothing goes stale.
+
+**The interactivity slide runs a live `echarts4r` chart** (powertrain share of
+new listings, `vehicletrends::percent_listings`). The demo IS the slide. The
+example must be **category filtering via the interactive legend** — that's the
+thing people build Shiny for. This is the deck's only render-time R dependency
+besides `plots.R`: `{dplyr}`, `{echarts4r}`, `{vehicletrends}`.
+
+❌ **Don't name the host on a slide.** The workflow publishes to `gh-pages`;
+`tech-stack.qmd` and `README.md` say Netlify; there is no `netlify.toml`,
+`_publish.yml`, or `CNAME` anywhere, including on `gh-pages`. The filesystem
+can't settle it. Say "it's files, hosted for free" until John confirms DNS.
 
 Tech: `echarts4r`, `reactable`, MapLibre GL JS + PMTiles (Cloudflare R2,
-Tippecanoe via `{pmtiles}`), Shinylive/webR, GitHub Actions, GitHub
-Pages/Netlify. **Don't invent pitfalls** — get real ones from John.
+Tippecanoe via `{pmtiles}`), Shinylive/webR, GitHub Actions. ❌ No plotly, no
+leaflet, no Quarto `format: dashboard` — it's `type: website`. **Don't invent
+pitfalls** — get real ones from John.
 
 ## Styling
 
@@ -425,15 +474,19 @@ not an image attribute block), `.openleft`/`.openright`, and a commented-out
   or a site or these slides. ~8 seconds. ❌ No dedicated explainer slide.
 - **Build Act 6's *change one word* slide** — `format: pdf` → `format: html`,
   content unchanged. Not built.
-- **Produce remaining demo assets** (still `> **[BRACKETED]**` in `index.qmd`):
-  silent dashboard screen recording (~75s); MapLibre map screenshot; the live
-  inline interactive chart; the multi-turn token chart.
+- **Produce remaining demo assets** — only the multi-turn token chart is still
+  `> **[BRACKETED]**`. The dashboard recording (`vehicletrends.gif`) and the
+  live inline chart are built.
 - **Multi-turn token data** — placeholder. The single-shot table is in the deck
   (Word 8097→1121, HTML 4046→1022, PDF 1992→1123, Markdown 1267→1282). The
   multi-turn numbers aren't published yet. **Never invent them.** Frame as the
   measured version of the Act 1 anecdote, not a second benchmark.
-- **Verify hosting claim** — deck says GitHub Pages; the dashboard's
-  `tech-stack.qmd` says Netlify. Confirm before presenting.
+- **Verify hosting** — unresolved from the filesystem, so the slide now says
+  only "hosted for free." Confirm what answers for vehicletrends.us at the DNS
+  level before naming a host.
+- **`# Close` (slide 40) is still a label divider** — same violation as the old
+  `# Easy to deploy (serverless)`. Needs a statement.
+- **Time check** — the deck is now 44 slides for 20 minutes.
 - **Refresh `README.md`** — still names `custom.scss`, doesn't mention lexis.
 - **Optional "what bit me" slide** — only with real pitfalls from John.
 - Optional: compare notes with the three co-speakers (Blake's talk is also
