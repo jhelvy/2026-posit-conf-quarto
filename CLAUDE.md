@@ -63,9 +63,28 @@ Outline: `outline.md`.
 
 `fig-tokens` differs from the blog version deliberately: Fira Sans Condensed,
 minou colors, no per-dot counts, and a bold multiplier right of each
-direct-format dot (1× 1.8× 4× 7.2×) computed from the CSV. The x-axis right
+direct-format dot (1.8× 4× 7.2×) computed from the CSV. The x-axis right
 expansion (`0.14`) holds those multipliers — shrink it and `7.2×` clips.
 `dpi = 192` gives 1920×960, matching the post.
+
+**Markdown is filtered out** (`filter(output_type != "markdown")`) — it was the
+post's control, but the `.qmd` line already makes that point on a slide. Three
+formats, three rows, three multipliers.
+
+❌ **Don't rebuild the multi-turn chart.** A `fig-turns` figure existed briefly —
+cumulative tokens over 10 editing turns, linear regime (`d × turn`). It was cut
+because `d` cancels: every line is fig-tokens' `d` times a constant, so the
+ratios are identical at turn 1 and turn 10 and the picture is fig-tokens
+rescaled. No new shape, no new information. The quadratic bound
+(`d · N(N+1)/2`) *would* be a new shape, but it's the worst case and invites
+"Claude Code edits by diff" — not worth a minute of a 20-minute talk. The point
+is now **verbal**, on the `Token tax compounds over turns` slide: 80,970 tokens
+vs. ~11,000 after ten edits, plus *the ratio never moves, the gap does* — which
+concedes the constant ratio rather than letting the room catch it.
+
+`~11,000` is a deliberate round of the real 10,220–11,230 (Quarto HTML / PDF /
+Word). The tilde is what makes it honest; ❌ don't replace it with one exact
+number, and don't pick one of the three.
 
 **`images/`** — flat. `handwriting-good-minecraft.png` does double duty (the
 drifted sheet in Act 1, the minecraft sheet on the payoff slide); swapping it
@@ -474,13 +493,9 @@ not an image attribute block), `.openleft`/`.openright`, and a commented-out
   or a site or these slides. ~8 seconds. ❌ No dedicated explainer slide.
 - **Build Act 6's *change one word* slide** — `format: pdf` → `format: html`,
   content unchanged. Not built.
-- **Produce remaining demo assets** — only the multi-turn token chart is still
-  `> **[BRACKETED]**`. The dashboard recording (`vehicletrends.gif`) and the
-  live inline chart are built.
-- **Multi-turn token data** — placeholder. The single-shot table is in the deck
-  (Word 8097→1121, HTML 4046→1022, PDF 1992→1123, Markdown 1267→1282). The
-  multi-turn numbers aren't published yet. **Never invent them.** Frame as the
-  measured version of the Act 1 anecdote, not a second benchmark.
+- **Demo assets are all built** — no `> **[BRACKETED]**` placeholders left.
+  The single-shot numbers are Word 8097→1121, HTML 4046→1022, PDF 1992→1123
+  (Markdown 1267→1282, now unused).
 - **Verify hosting** — unresolved from the filesystem, so the slide now says
   only "hosted for free." Confirm what answers for vehicletrends.us at the DNS
   level before naming a host.

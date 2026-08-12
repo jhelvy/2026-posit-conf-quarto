@@ -40,13 +40,18 @@ minou_ink <- c(yellow = "#A77400", green = "#4A6D5A")
 
 results <- read_csv("data/token_results.csv", show_col_types = FALSE)
 
+# Markdown is dropped from BOTH figures. It was the control in the post — proof
+# that .qmd is essentially markdown — but on a slide the .qmd line already says
+# that, and the row spends space arguing a point the deck has made twice by now.
+# Three formats, three rows, three multipliers.
 tokens <- results |>
+  filter(output_type != "markdown") |>
   select(output_type, format_type, output_tokens) |>
   mutate(
     output_type = factor(
       output_type,
-      levels = c("word", "html", "pdf", "markdown"),
-      labels = c("Word", "HTML", "PDF", "Markdown")
+      levels = c("word", "html", "pdf"),
+      labels = c("Word", "HTML", "PDF")
     ),
     format_type = factor(
       format_type,
@@ -122,7 +127,7 @@ ggsave(
   "images/fig-tokens.png",
   fig_tokens,
   width = 10,
-  height = 5,
+  height = 4, # was 5 at four rows; three rows want less, or the dots drift apart
   dpi = 192, # knitr's default (96 x fig-retina 2), so this matches the post
   bg = "white"
 )

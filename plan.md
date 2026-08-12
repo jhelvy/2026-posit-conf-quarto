@@ -146,7 +146,10 @@ vehicletrends.us at the DNS level before writing a host name.
   serverless one. Needs a statement.
 - 44 slides for 20 minutes — worth a timed run.
 - Act 6's *change one word* slide (`format: pdf` → `format: html`) is still unbuilt.
-- The multi-turn token chart is still the deck's one bracketed placeholder.
+- ~~The multi-turn token chart~~ — built, then **cut**. `d` cancels, so the chart
+  was `fig-tokens` rescaled: same ratios at turn 1 and turn 10, no new shape. The
+  point is verbal now (80,970 vs. ~11,000 after ten edits). No bracketed
+  placeholders remain in the deck.
 
 ## Verification done
 

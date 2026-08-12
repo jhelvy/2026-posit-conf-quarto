@@ -1061,18 +1061,6 @@ sales globally.</p>
 
 ---
 
-## And that's just the first turn
-
-> **[CHART or TABLE — multi-turn token cost]**
-> Cost growth across an agentic session, direct output vs. `.qmd`.
-> Author to supply — numbers from the revised blog post.
-
-Every edit to a fused artifact **regenerates the whole thing.**
-
-An edit to a `.qmd` is a **diff.**
-
----
-
 {{< bg-color "#000000" >}}
 {{< middle >}}
 {{< center >}}
