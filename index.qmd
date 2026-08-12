@@ -1012,6 +1012,18 @@ sales globally.</p>
 
 {{< middle >}}
 
+```{=html}
+<div style="max-width: 52%; margin: 0 auto 0.5em auto; padding: 0.5em 1em;
+            background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
+            font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
+            text-align: left;">
+  <div style="font-size: 0.8em; font-weight: 700; margin-bottom: 0.2em;">EV Sales</div>
+  <div style="font-size: 0.6em; line-height: 1.3;">Sales of <strong>electric
+  vehicles</strong> grew 20% in 2025, reaching over <em>20 million</em> sales
+  globally.</div>
+</div>
+```
+
 :::: {.col width="60%"}
 [**Word**]{.red} (`word/document.xml`)
 
