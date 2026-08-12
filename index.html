@@ -729,6 +729,15 @@ built-in one.
 </section>
 <section class="slide level0">
 
+<section id="handwriting-practice-sheets" class="middle center inverse">
+<h1>Handwriting practice sheets</h1>
+<center>
+<img src="images/handwriting.png" width="60%">
+</center>
+</section>
+</section>
+<section class="slide level0">
+
 <section id="prompt" class="middle center">
 <h1>Prompt:</h1>
 <h2 id="make-a-one-page-handwriting-practice-sheet-with-sentences-about-pokemon"><em>“Make a one-page handwriting practice sheet<br>with sentences about <strong>pokemon</strong>”</em></h2>
@@ -805,7 +814,14 @@ built-in one.
   #loop — so the only thing that differs down the column is the document that
   falls out the end. That is the whole argument, and it has to be legible from
   the back of the room, which is why the three documents differ in MOTIF
-  (bands / dots / blocks) and not merely in band heights.
+  (dots / blocks / bands) and not merely in band heights.
+
+  ORDER IS NOT ARBITRARY. Row 3 is the draw you kept — it carries the green
+  check, and it is the BANDS, which is the only motif that reads as lines of
+  text on a page. It is also #docOut on the next slide, so slide 2 opens on the
+  document this slide just checked. The two scattered motifs (dots, blocks) are
+  the drafts you threw away, and they go first because at distance they read as
+  "that came out wrong."
 
   The artifact is a PAGE with a folded corner, labelled `.pdf` — the thing it
   actually stands for, and the same portrait sheet the payoff slide shows for
@@ -840,8 +856,8 @@ built-in one.
   Colors are the deck's vocabulary and never change: yellow = content/data,
   teal = structure/format, purple = the human's direct action.
 
-  NOTE: #doc is duplicated as #docOut in slide 2's <defs> and the two copies must
-  stay byte-identical — that is the "you have not made a better document" point. They
+  NOTE: #doc (row 3, the kept one) is duplicated as #docOut in slide 2's <defs>
+  and #docDots (row 1) as #docDotsOut; each pair must stay byte-identical. They
   are NOT shared via one <use> across slides on purpose: reveal puts non-current
   slides in display:none, and cross-slide <use> resolution is unreliable there.
 -->
@@ -1016,7 +1032,7 @@ built-in one.
        is still x=855, which is why the connectors below need no new x. -->
   <g transform="translate(0 175)">
     <use href="#loop"></use>
-    <g transform="translate(810 -58)"><use href="#doc"></use></g>
+    <g transform="translate(810 -58)"><use href="#docDots"></use></g>
   </g>
 
   <!-- RUN 2. The connector is the only route from one row to the next, and it
@@ -1027,7 +1043,7 @@ built-in one.
     <text x="625" y="282" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 361)">
       <use href="#loop"></use>
-      <g transform="translate(810 -58)"><use href="#docDots"></use></g>
+      <g transform="translate(810 -58)"><use href="#docBlocks"></use></g>
     </g>
   </g>
 
@@ -1037,7 +1053,14 @@ built-in one.
     <text x="625" y="468" font-size="22" fill="#606771" text-anchor="middle">review &amp; re-prompt</text>
     <g transform="translate(0 547)">
       <use href="#loop"></use>
-      <g transform="translate(810 -58)"><use href="#docBlocks"></use></g>
+      <g transform="translate(810 -58)"><use href="#doc"></use></g>
+      <!-- THE ONE WE KEPT. Drawn on row 3 only, so it is deliberately NOT in
+           #loop — the rows stay provably identical and this sits beside the
+           last page rather than inside it. Green (#66a182, minou) is not used
+           anywhere else, so it reads as a verdict on the artifact and can't be
+           mistaken for content (yellow) or format (teal). It rides run 3's
+           fragment: no extra click, no motion after the page lands. -->
+      <path d="M 925 4 L 941 20 L 971 -26" fill="none" stroke="#66a182" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path>
     </g>
   </g>
 
@@ -1073,9 +1096,12 @@ built-in one.
   changed. What changed is the middle: the agent now writes structure, the
   content sits beside it, and the weave happens at render.
 
-  The output is the SAME #doc as run 1 on the previous slide, on purpose. The
-  argument is NOT "this makes a better document" — it's that the weaving moved
-  somewhere you can reach. Keep the two <defs> copies identical.
+  At rest the output is slide 1's ROW 1 — the first draft, dots — so the pair
+  starts from the same picture. On click 1 it becomes ROW 3, the page carrying
+  the green check: the document that took eight rounds to reach the last time.
+  The argument is still NOT "the .qmd is prettier"; it's that the weaving moved
+  somewhere you can reach, and that reaching it took one step instead of eight.
+  Keep each <defs> copy identical to its twin on slide 1.
 
   The heading is the lexis line ABOVE this block, matching slide 1 — same
   sentence with two words inserted, same chips. The viewBox is IDENTICAL to
@@ -1090,7 +1116,14 @@ built-in one.
      reserved space for both (reveal hides fragments with visibility:hidden,
      which still occupies layout), and moving the heading back inside the SVG
      would cost the chips. -->
-<svg viewbox="0 77 1240 553" width="100%" style="max-height:80vh;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+<!-- margin-top drops the whole box 50px so the drawn figure sits centred rather
+     than riding the heading: this slide's content only fills the top ~275 of a
+     553-unit viewBox (the rest is the dead canvas registration costs), so the
+     SVG's own centre is well below its ink. This is the ONE thing slide 2 does
+     that slide 1 doesn't, so the at-rest pictures now differ by exactly these
+     50px — remove it, or add the same to slide 1, if the stillness matters more
+     than the centring. -->
+<svg viewbox="0 77 1240 553" width="100%" style="max-height:80vh; margin-top:50px;" xmlns="http://www.w3.org/2000/svg" font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
   <defs>
     <!-- The page every artifact in this figure is cut to. userSpaceOnUse
@@ -1100,9 +1133,33 @@ built-in one.
       <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z"></path>
     </clippath>
 
-    <!-- Byte-identical to #doc on the previous slide, page and fold and `.pdf`
-         label and all. If you edit one, edit both — the whole point is that the
-         output did not change.
+    <!-- AT REST: byte-identical to #docDots — slide 1's ROW 1, the first draw.
+         This is what keeps the two slides registered: same viewBox, same row y,
+         same document, so advancing changes nothing until you click.
+         It uses no clipPath (every dot is placed inside the page), so the copy
+         is #docDots with the id renamed and nothing else. Edit one, edit both. -->
+    <g id="docDotsOut">
+      <text x="45" y="-12" font-size="22" text-anchor="middle" fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"></path>
+      <circle cx="22" cy="20" r="10" fill="#00798c"></circle>
+      <circle cx="45" cy="20" r="10" fill="#edae49"></circle>
+      <circle cx="22" cy="44" r="10" fill="#edae49"></circle>
+      <circle cx="45" cy="44" r="10" fill="#edae49"></circle>
+      <circle cx="68" cy="44" r="10" fill="#00798c"></circle>
+      <circle cx="22" cy="68" r="10" fill="#edae49"></circle>
+      <circle cx="45" cy="68" r="10" fill="#00798c"></circle>
+      <circle cx="68" cy="68" r="10" fill="#edae49"></circle>
+      <circle cx="22" cy="92" r="10" fill="#00798c"></circle>
+      <circle cx="45" cy="92" r="10" fill="#edae49"></circle>
+      <circle cx="68" cy="92" r="10" fill="#00798c"></circle>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none" stroke="#2e4057" stroke-width="2.5"></path>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"></path>
+    </g>
+
+    <!-- Byte-identical to #doc on the previous slide — ROW 3, the draw that
+         carries the green check. This is the document you actually wanted, and
+         it is what the .qmd renders to from click 1 on. If you edit one, edit
+         both.
 
          The `.pdf` label earns its keep here: with the .qmd on screen the row
          reads `.qmd` -[render]- `.pdf`, which is the whole of what Quarto does,
@@ -1196,9 +1253,9 @@ built-in one.
     </g>
   </g>
 
-  <!-- The artifact. Byte-identical to run 1 on slide 1, same page, same 1:1
-       size: the argument is NOT "this makes a better document", it's that the
-       weaving moved somewhere you can reach. Same two colours as the .qmd box —
+  <!-- The artifact. At rest byte-identical to run 1 on slide 1, same page, same
+       1:1 size; from click 1 it is run 3's page, the checked one. Either way
+       it is entangled — a PDF is a PDF. Same two colours as the .qmd box —
        but here they interleave with no boundary, and there they each have a
        place. That contrast IS the address argument, so keep both on screen
        together, and it is now a clean comparison: two rects of the same family,
@@ -1212,7 +1269,23 @@ built-in one.
        promise. It is an overlay rather than a swap because the two have
        identical geometry, so the red simply covers the yellow. -->
   <g class="fragment custom openright" data-fragment-index="1">
-    <g transform="translate(810 117)"><use href="#docOut"></use></g>
+    <!-- At rest: slide 1's row 1, the first draw. Fades out on click 1, when the
+         route it came from (agent -> document) fades out with it. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <g transform="translate(810 117)"><use href="#docDotsOut"></use></g>
+    </g>
+    <!-- Click 1: the document you kept — row 3's page, the one with the check.
+         Painted OVER the dots, which it fully covers (the eleven bands total
+         exactly 116 and the fold is repainted white), so this is an overlay like
+         the click-3 recolour, not a swap. The swap rides click 1 and not click 3
+         on purpose: what changes here is the ROUTE (the agent now writes source),
+         so a different document coming out is honest. Move it to
+         data-fragment-index="3" if you'd rather the edit itself be what produces
+         the kept document — one attribute, and click 3 then changes the whole
+         page instead of only its content. -->
+    <g class="fragment" data-fragment-index="1">
+      <g transform="translate(810 117)"><use href="#docOut"></use></g>
+    </g>
     <g class="fragment" data-fragment-index="3">
       <g transform="translate(810 117)"><use href="#docOutEdited"></use></g>
     </g>
@@ -1268,10 +1341,26 @@ built-in one.
   </g>
 
   <!-- ── CLICK 2: the payoff ─────────────────────────────────────────────
-       A single arrow: you reach past the agent into the source itself. Both
-       halves inside it are yours — the yaml and the content — so it lands on
-       the file, not on one block. PURPLE #852f88 = your direct action, and it
-       is the only new colour on the slide.
+       TWO arrows, one line: a single purple descent out of `me` that forks.
+       Both routes are open to you once the source exists, and the fork is the
+       point — the upper one goes back to the agent ("change the .qmd for me"),
+       the lower one goes straight into the file. Without the upper arrow the
+       slide silently claims hand-editing is the only way in, which nobody in
+       this room does; without the lower one there is no address argument.
+       Both are purple because both are YOUR action; the agent branch is still
+       you deciding what changes, it just delegates the typing.
+
+       The lower arrow lands on the file, not on one block: both halves inside
+       it are yours — the yaml and the content. PURPLE #852f88 = your direct
+       action, and it is the only new colour on the slide.
+
+       GEOMETRY. Both leave `me`'s opened-out centre (x=255) at y=211; the
+       second arrow starts at the first one's corner (255, 263) so they read as
+       one line forking rather than two lines racing. Rails at y=263 and y=309;
+       the upper rises to the agent's bottom edge (x=490, 8 units clear at 215),
+       the lower to the .qmd's (x=690, clear at 245). Labels sit clear of the
+       x=255 descent — the upper is centred at 420, not over its own rail, for
+       exactly that reason.
 
        It used to be green #4A6D5A and was too easy to miss. The reason is
        measurable: that green sat at chroma 20 against navy's 21 — same
@@ -1286,8 +1375,11 @@ built-in one.
        stroke-width 2.5 like every other arrow on both slides: markerUnits is
        strokeWidth, so a fatter line also means a fatter head. -->
   <g class="fragment" data-fragment-index="2">
-    <path d="M 255 211 L 255 265 Q 255 277 267 277 L 678 277 Q 690 277 690 265 L 690 245" fill="none" stroke="#852f88" stroke-width="2.5" marker-end="url(#ahEdit2)"></path>
-    <text x="472" y="303" font-size="20" fill="#852f88" text-anchor="middle">you edit directly</text>
+    <path d="M 255 211 L 255 251 Q 255 263 267 263 L 478 263 Q 490 263 490 251 L 490 215" fill="none" stroke="#852f88" stroke-width="2.5" marker-end="url(#ahEdit2)"></path>
+    <text x="420" y="285" font-size="20" fill="#852f88" text-anchor="middle">prompt the agent to change the .qmd</text>
+
+    <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245" fill="none" stroke="#852f88" stroke-width="2.5" marker-end="url(#ahEdit2)"></path>
+    <text x="472" y="335" font-size="20" fill="#852f88" text-anchor="middle">…or edit it directly</text>
   </g>
 
   <!-- CLICK 3: the content changes and the format doesn't. Painted over the
@@ -1310,7 +1402,7 @@ built-in one.
 <p>Click 1. Same me, same agent — still dashed, it did not get better. What changed is what it writes: a <code>.qmd</code>. Plain text, markdown with code in it, and <code>quarto render</code> turns it into that PDF — or a website, or these slides.</p>
 <p>(That sentence is for whoever watches the recording. Say it once, while the row is on screen, and move on — the room already knows.)</p>
 <p>The two boxes carry the same two colours. In the file they have places: yaml here, content there. In the PDF they’re smeared together. That’s the whole argument — one of these you can point into.</p>
-<p>Click 2. And because it has places, I can reach in myself. Not re-prompt — edit.</p>
+<p>Click 2. And because it has places, there’s somewhere to aim. I can ask the agent to change one thing in the file — or open it and change it myself. Either way I’m pointing at a line, not re-rolling a document.</p>
 <p>Click 3. The content changed. Look at the format: nothing moved. Not “barely moved” — nothing. That’s the promise a regenerated document can’t make.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1399,68 +1491,47 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf" class="inverse middle">
-<h1><span class="center"><span class="font150">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></span></h1>
+<section id="ask-for-the-source-not-the-artifact" class="inverse middle">
+<h1><span class="center"><span class="font150">Ask for the <span class="yellow">source</span>,<br>not the <span class="red">artifact</span></span></span></h1>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf-1" class="inverse middle">
-<h1><span class="center">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></h1>
-<div class="cols-row">
-<div class="col" style="flex:0 1 15%;width:15%">
-
-</div>
-<div class="col">
-<div id="disentangles-content-and-format" class="h2">
-✅ Disentangles content and format
-</div>
-</div>
-</div>
+<section id="ask-for-the-source-.qmd-not-the-artifact" class="inverse middle">
+<h1><span class="center"><span class="font150">Ask for the <span class="yellow"><del>source</del> .qmd</span>,<br>not the <span class="red">artifact</span></span></span></h1>
 </section>
 </section>
 <section class="slide level0">
 
-<section id="ask-for-the-source-.qmd-not-the-artifact-.pdf-2" class="inverse middle">
-<h1><span class="center">Ask for the <span class="yellow">source (.qmd)</span>,<br>not the <span class="red">artifact (.pdf)</span></span></h1>
-<div class="cols-row">
-<div class="col" style="flex:0 1 15%;width:15%">
-
-</div>
-<div class="col">
-<div id="disentangles-content-and-format-1" class="h2">
-✅ Disentangles content and format
-</div>
-<div id="token-efficient" class="h2">
-✅ Token efficient
-</div>
-</div>
-</div>
+<section id="quarto-is-token-efficient" class="inverse middle center">
+<h1><span class="font150">Quarto is token efficient</span></h1>
 </section>
 </section>
 <section class="slide level0">
 
 <section class="lexis-slide-title center middle">
 <h1 class="lexis-slide-title"></h1>
-<div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
+<div style="max-width: 72%; margin: 0 auto; padding: 1.2em 2em;
             background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
             font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
             text-align: left;">
-  <div style="font-size: 0.95em; font-weight: 700; margin-bottom: 0.25em;">EV Sales</div>
-  <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
-  vehicles</strong> grew <em>42%</em> in 2025.</div>
+  <div style="font-size: 1.6em; font-weight: 700; margin-bottom: 0.4em;">EV Sales</div>
+  <div style="font-size: 1.2em; line-height: 1.4;">Sales of <strong>electric
+  vehicles</strong> grew 20% in 2025, reaching over <em>20 million</em> sales
+  globally.</div>
 </div>
 </section>
 </section>
 <section class="slide level0">
 
-<div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
+<div style="max-width: 52%; margin: 0 auto 0.5em auto; padding: 0.5em 1em;
             background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
             font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
             text-align: left;">
-  <div style="font-size: 0.95em; font-weight: 700; margin-bottom: 0.25em;">EV Sales</div>
-  <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
-  vehicles</strong> grew <em>42%</em> in 2025.</div>
+  <div style="font-size: 0.8em; font-weight: 700; margin-bottom: 0.2em;">EV Sales</div>
+  <div style="font-size: 0.6em; line-height: 1.3;">Sales of <strong>electric
+  vehicles</strong> grew 20% in 2025, reaching over <em>20 million</em> sales
+  globally.</div>
 </div>
 <p><br></p>
 <div class="cols-row">
@@ -1473,10 +1544,11 @@ built-in one.
 <span id="cb1-4"><a href=""></a></span>
 <span id="cb1-5"><a href=""></a><span class="fu">## EV Sales</span></span>
 <span id="cb1-6"><a href=""></a></span>
-<span id="cb1-7"><a href=""></a>Sales of **electric vehicles**</span>
-<span id="cb1-8"><a href=""></a>grew *42%* in 2025.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href=""></a>Sales of **electric vehicles** grew</span>
+<span id="cb1-8"><a href=""></a>20% in 2025, reaching over</span>
+<span id="cb1-9"><a href=""></a>_20 million_ sales globally.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span class="blue font140"><strong>85</strong> characters</span></p>
+<p><span class="blue font140"><strong>126</strong> characters</span></p>
 </div>
 <div class="col fragment">
 <p><span class="red"><strong>PDF</strong></span> (via LaTeX)</p>
@@ -1490,12 +1562,13 @@ built-in one.
 <span id="cb2-7"><a href=""></a></span>
 <span id="cb2-8"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
 <span id="cb2-9"><a href=""></a></span>
-<span id="cb2-10"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles}</span>
-<span id="cb2-11"><a href=""></a>grew <span class="fu">\emph</span>{42<span class="fu">\%</span>} in 2025.</span>
-<span id="cb2-12"><a href=""></a></span>
-<span id="cb2-13"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-10"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles} grew</span>
+<span id="cb2-11"><a href=""></a>20<span class="fu">\%</span> in 2025, reaching over</span>
+<span id="cb2-12"><a href=""></a><span class="fu">\emph</span>{20 million} sales globally.</span>
+<span id="cb2-13"><a href=""></a></span>
+<span id="cb2-14"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span class="red font140"><strong>207</strong> characters</span></p>
+<p><span class="red font140"><strong>252</strong> characters</span></p>
 </div>
 <div class="col fragment">
 <p><span class="red"><strong>HTML</strong></span></p>
@@ -1513,12 +1586,13 @@ built-in one.
 <span id="cb3-11"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb3-12"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb3-13"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
-<span id="cb3-14"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Sales of <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>electric vehicles<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span></span>
-<span id="cb3-15"><a href=""></a>grew <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>42%<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span> in 2025.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb3-16"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb3-17"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-14"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Sales of <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>electric vehicles<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> grew</span>
+<span id="cb3-15"><a href=""></a>20% in 2025, reaching over <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>20 million<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span></span>
+<span id="cb3-16"><a href=""></a>sales globally.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-17"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-18"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><span class="red font140"><strong>336</strong> characters</span></p>
+<p><span class="red font140"><strong>377</strong> characters</span></p>
 </div>
 </div>
 </section>
@@ -1545,17 +1619,17 @@ built-in one.
 <span id="cb4-9"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
 <span id="cb4-10"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt;Sales of &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
 <span id="cb4-11"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:b</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;electric vehicles&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb4-12"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; grew &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb4-13"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:i</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;42%&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb4-14"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; in 2025.&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-12"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; grew 20% in 2025, reaching over &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-13"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:i</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;20 million&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-14"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; sales globally.&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
 <span id="cb4-15"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
 <span id="cb4-16"><a href=""></a>  &lt;/<span class="kw">w:body</span>&gt;</span>
 <span id="cb4-17"><a href=""></a>&lt;/<span class="kw">w:document</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="col">
-<p><span class="red font140"><strong>622</strong> characters</span></p>
+<p><span class="red font140"><strong>663</strong> characters</span></p>
 <p>…and this is <strong>one file</strong> in a zip that also needs <code>[Content_Types].xml</code>, <code>_rels/.rels</code>, <code>word/_rels/document.xml.rels</code>, and <code>styles.xml</code>.</p>
-<p><span class="blue">The paragraph is <strong>52</strong> characters.</span></p>
+<p><span class="blue">The paragraph is <strong>93</strong> characters.</span></p>
 </div>
 </div>
 <aside class="notes">
@@ -1585,8 +1659,17 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<section id="quarto-agents-love" class="inverse center middle">
-<h1>Quarto + Agents = Love</h1>
+<section class="lexis-slide-title middle center" data-background-color="#000000">
+<h1 class="lexis-slide-title"></h1>
+<center>
+<img src="images/its-all-markdown.png" width="100%">
+</center>
+</section>
+</section>
+<section class="slide level0">
+
+<section id="quarto-ai" class="inverse center middle">
+<h1>Quarto + AI = 🥰</h1>
 </section>
 </section>
 <section class="slide level0">

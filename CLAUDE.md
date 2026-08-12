@@ -85,7 +85,7 @@ Everything comes from `ltc::ltc("minou")` — slides, figure, `plots.R`.
 | `#d1495b` red | content that changed; also Shiny, raw HTML |
 | `#2e4057` navy | ink — every stroke, arrowhead, label |
 | `#852f88` purple | your direct action (from `ltc("hat")`, the one non-minou color) |
-| `#66a182` green | **retired** — nothing uses it |
+| `#66a182` green | verdict — **only** the run-3 checkmark on figure slide 1 |
 
 **Fill vs. ink.** Yellow is light: fine as a **fill** with dark text, invisible
 as a line or letter (1.6:1). Ink variant `#A77400` = `.amber`, used only where
@@ -125,12 +125,13 @@ SLIDE 1 — one loop, stacked 3×, three different documents fall out
    [ me ] ──▶ [ agent ] ──▶ [∴∵∴∵∴/]           dots
    [ me ] ──▶ [ agent ] ──▶ [▪▫▪▫▫/]           blocks
 
-SLIDE 2 — at rest: byte-for-byte slide 1's row 1
-   click 1: chain opens ±140, .qmd + data fade into the gap
+SLIDE 2 — at rest: byte-for-byte slide 1's row 1 (dots)
+   click 1: chain opens ±140, .qmd + data fade into the gap,
+            artifact dots → bands (row 3, the checked one)
    [ me ] ──▶ [ agent ] ─writes─▶ │ yaml / content │ ─render─▶ [▓▒▓▒▒▓/]
-      │                           └───────▲────────┘
-      └── you edit directly ──────┘   [▓ data ▓]
-   click 2: purple edit arrow.  click 3: content yellow→RED, teal doesn't move.
+      ├── prompt the agent ──┘     └───────▲────────┘
+      └── …or edit it directly ───┘    [▓ data ▓]
+   click 2: two purple arrows.  click 3: content yellow→RED, teal doesn't move.
 ```
 
 **Headings are lexis `#` lines above each SVG, and they are the whole legend:**
@@ -150,11 +151,19 @@ figure carries that same sentence across its top.
 ### Invariants
 
 - **The two slides are REGISTERED.** Both carry `viewBox="0 77 1240 553"`; slide
-  2 at rest is byte-for-byte slide 1's row 1, same coordinates. Advancing
+  2 at rest is byte-for-byte slide 1's row 1 (dots), same coordinates. Advancing
   changes nothing until you click — that stillness earns the "one picture, one
   variable" claim. Slide 2 carries ~280 units of dead canvas below its figure to
   hold this. **Changing either viewBox, either heading level, or that row's
-  geometry breaks it — recompute both.**
+  geometry breaks it — recompute both.** One deliberate exception: slide 2's SVG
+  carries `margin-top:50px` so its figure reads centred against all that dead
+  canvas, so the two at-rest pictures now sit 50px apart. Drop it, or add the
+  same to slide 1, if stillness ever matters more than centring.
+- **Motif order is dots → blocks → bands ✓, and it's load-bearing.** Bands is
+  the only motif that reads as lines of text on a page, so it's the draw you
+  keep (row 3, green check) *and* slide 2's `#docOut`. The scattered motifs are
+  the drafts you threw away. ❌ Don't reorder without moving the check and both
+  of slide 2's `<defs>` copies with it.
 - **Height is the binding constraint, not width.** Slide is 1600×900, padding
   `45px 90px 60px`, usable 1420×795; the heading eats ~100px; the figure renders
   ~633px. ~60px slack. The knob is row spacing (186), never the viewBox width.
@@ -184,6 +193,10 @@ figure carries that same sentence across its top.
 - **Nothing on slide 1 moves.** ❌ Reversed: run 1 used to slide up on click 1
   (`.lift`, kept commented in `custom.css`). Motion the room parses before the
   point lands.
+- **Row 3 carries a green ✓ to its right** — the draw you kept. Outside `#loop`
+  (rows stay provably identical), inside run 3's fragment (no extra click), and
+  the deck's only green, so it reads as a verdict and never as a third color of
+  content. It doesn't touch row 1, so registration with slide 2 is unaffected.
 - **Both content AND format are redrawn on every pass.** ❌ Do not hold content
   constant and vary only format: the cold open is pokemon drifting into
   minecraft, so content is exactly what moved. That instinct belongs in Act 6's
@@ -198,13 +211,24 @@ figure carries that same sentence across its top.
 - **`data` is yellow, sits outside, feeds the `.qmd`** — not render. Data is
   content; only the kind of address differs. **Nothing points at `data`** — it
   comes from the world, and the empty input is the point.
-- **One purple arrow**, landing on the `.qmd`'s bottom edge (the file, not
-  either block — both halves are yours to edit). Purple = the action, red = the
-  changed content; no color link between them, the arrow is labelled.
-- **`#docOut` is a hand-kept copy of `#doc`; `#docOutEdited` is `#docOut` with
-  `#edae49` → `#d1495b` and nothing else.** Edit one, edit all. Slide 2 ending
-  in the *same* document is the point — losing that turns the figure into an
-  argument for determinism.
+- **Two purple arrows, one forking line.** Both leave `me` at x=255; the second
+  starts at the first's corner so they read as one descent that splits. Upper →
+  the agent's bottom edge, *prompt the agent to change the .qmd*. Lower → the
+  `.qmd`'s bottom edge, *…or edit it directly* (the file, not either block —
+  both halves are yours). Both purple: delegating the typing is still your
+  action. ❌ Don't cut the agent branch — without it the slide claims
+  hand-editing is the only way in, which nobody in that room does. Purple = the
+  action, red = the changed content; no color link, the arrows are labelled.
+- **`#docDotsOut` is a hand-kept copy of `#docDots`; `#docOut` of `#doc`;
+  `#docOutEdited` is `#docOut` with `#edae49` → `#d1495b` and nothing else.**
+  Edit one, edit its twin.
+- **Slide 2 changes document exactly once, at click 1** — dots (row 1) → bands
+  (row 3, checked), as an overlay. It rides click 1 because that's where the
+  *route* changes, so a different document is honest. ❌ Never let click 3 change
+  the whole page: the edit must change only what you addressed, or the figure
+  becomes an argument for determinism. (Moving the swap to index 3 is one
+  attribute if John ever wants the edit itself to produce the kept document —
+  it costs exactly that claim.)
 - **Click 3 = content changes, format doesn't.** Teal bands byte-identical and
   unmoved. The `Content` chip in the heading recolours at the same index so
   legend and figure never disagree. Mechanism is an **overlay**, not a
@@ -246,6 +270,14 @@ dots/blocks legible at 3 columns; do the four `.pdf` labels read as labels
 rather than clutter; does the ±140 glide read as *opening* rather than
 scattering.
 
+Added since and also unvetted: the green ✓ beside row 3; the dots→bands overlay
+on slide 2 click 1 (does the dots page vanish completely under the bands?); the
+forked purple arrows — **the label widths are estimated, not measured**, so
+check *prompt the agent to change the .qmd* (centred x=420, y=285) clears the
+x=255 descent on its left and doesn't run into the `.qmd` box on its right, and
+that the two labels don't crowd each other at 24px apart; and whether the 50px
+top margin centres slide 2 or just shifts the problem.
+
 ## The payoff slide (right after the figure)
 
 **"Same `format`. No drift."** Two columns, each a `.qmd` box over the real
@@ -258,8 +290,9 @@ yellow `#edae49` + navy text; minecraft wears the post-click red `#d1495b` +
 - **What carries it is what doesn't vary.** Same 190×124 `.qmd` box, teal `yaml`
   band byte-identical in both columns. Only the content block differs. Keep the
   two SVGs verified-identical apart from that.
-- ❌ Was three columns (pokemon / minecraft green / mario red). Mario is cut and
-  green retired from the deck. Don't "fix" minecraft back to green.
+- ❌ Was three columns (pokemon / minecraft green / mario red). Mario is cut.
+  Don't "fix" minecraft back to green — green now means *verdict* (the run-3
+  checkmark), not a third document.
 - ❌ No `render` label under the arrows — the previous slide just taught it.
 - These SVGs use **no ids and no markers** (explicit triangle arrowheads), so
   they add nothing to the id namespace. Keep it that way.
@@ -284,16 +317,20 @@ The paragraph is fixed and identical in all four:
 ```
 ## EV Sales
 
-Sales of **electric vehicles** grew *42%* in 2025.
+Sales of **electric vehicles** grew 20% in 2025, reaching over
+_20 million_ sales globally.
 ```
 
 | Source | chars | × `.qmd` | formatting |
 |---|---:|---:|---:|
-| the paragraph itself | 52 | — | 0 |
-| `.qmd` (with `format: pdf`) | 85 | 1× | 33 |
-| LaTeX | 207 | 2.4× | 155 |
-| HTML | 336 | 4.0× | 284 |
-| OOXML (`document.xml` only) | 622 | 7.3× | 570 |
+| the paragraph itself | 93 | — | 0 |
+| `.qmd` (with `format: pdf`) | 126 | 1× | 33 |
+| LaTeX | 252 | 2.0× | 159 |
+| HTML | 377 | 3.0× | 284 |
+| OOXML (`document.xml` only) | 663 | 5.3× | 570 |
+
+The card is shown **large and centred** on slide A, then **small at the top** of
+slide B above the three columns — same markup, different inline sizes.
 
 - **Counts are measured** (`wc -c`), not estimated. **Edit one character in any
   block and recount all of them** — hand-adjusted numbers on this slide would
