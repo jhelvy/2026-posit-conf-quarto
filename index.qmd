@@ -947,7 +947,7 @@ _20 million_ sales globally.
 ::::
 
 :::: {.col .fragment}
-[**PDF**]{.red} (via LaTeX)
+[**PDF**]{.amber} (via LaTeX)
 
 ::: {.font45}
 ```latex
@@ -968,7 +968,7 @@ Sales of \textbf{electric vehicles} grew
 ```
 :::
 
-[**252** characters]{.red .font140}
+[**252** characters]{.amber .font140}
 ::::
 
 :::: {.col .fragment}
@@ -1003,16 +1003,19 @@ sales globally.</p>
 ---
 
 {{< inverse >}}
+{{< center >}}
+{{< middle >}}
 
-## ...and then there's Microsoft Word
+# ...and then there's Microsoft Word...
 
 ---
 
-## Then there's Word
+{{< middle >}}
 
-::: {.col width="60%" .font50}
-`word/document.xml`
+:::: {.col width="60%"}
+[**Word**]{.red} (`word/document.xml`)
 
+::: {.font50}
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/
@@ -1034,14 +1037,16 @@ sales globally.</p>
 ```
 :::
 
-::: {.col}
 [**663** characters]{.red .font140}
+::::
 
-…and this is **one file** in a zip that also needs
-`[Content_Types].xml`, `_rels/.rels`,
-`word/_rels/document.xml.rels`, and `styles.xml`.
+::: {.col}
+…and this is **one file** in a zip that also needs:
 
-[The paragraph is **93** characters.]{.blue}
+- `[Content_Types].xml`
+- `_rels/.rels`
+- `word/_rels/document.xml.rels`
+- `styles.xml`l
 :::
 
 ::: {.notes}
@@ -1082,7 +1087,7 @@ is expensive; you can see it.
 {{< center >}}
 {{< middle >}}
 
-# Quarto + AI = 🥰
+# [Quarto + AI Agents= 🥰]{.font150}
 
 ---
 

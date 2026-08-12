@@ -346,9 +346,12 @@ slide B above the three columns — same markup, different inline sizes.
   6's callback early.
 - **PDF is shown as LaTeX**, labelled `PDF (via LaTeX)`. Raw PDF object syntax
   is a strawman; an agent asked for a PDF writes LaTeX.
-- **Colors are `plots.R`'s:** teal (`.blue`) = the Quarto path, red = asking for
-  the format directly. ❌ Don't reach for the content/format chips here — this
-  slide is about cost, not entanglement.
+- **Colors escalate with cost:** teal (`.blue`) Quarto → amber (`.amber`, the
+  yellow ink variant — plain yellow is 1.6:1) PDF → red HTML, red Word. Label
+  and count share the column's color. ❌ Don't reach for the content/format
+  chips here — this slide is about cost, not entanglement.
+- **Slide B and the Word slide share one layout:** colored label above the code
+  block, count in the same color below it.
 - **`.font45` wraps only the code block, inside a `:::: {.col}`.** `.fontNN`
   divs **compound**, so a `.font140` count line inside a `.font45` column would
   render at 63%.
