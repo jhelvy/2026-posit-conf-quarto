@@ -742,6 +742,91 @@ viewBox is ruled out by the shared-viewBox rule above and by the height budget.
 same boxes at the same coordinates (me x=285, agent x=485), which is what makes
 the at-rest registration byte-for-byte rather than approximate.
 
+## The "one paragraph, three sources" slides (Act 3 lead-in)
+
+Two slides that make token efficiency *visible* before the numbers arrive. They
+replaced a bare `Token efficiency slide` placeholder and sit immediately after
+the "✅ Token efficient" build.
+
+**Slide A — "One paragraph. Three sources."** A **rendered** paragraph in a
+bordered card across the top, then three columns of the source that produces it:
+markdown, LaTeX, HTML, with an exact character count under each.
+
+**The card is the referent, and it is why the slide works.** Without it the three
+columns are three unrelated code blocks; with it they are three ways to say one
+thing, and the eye has somewhere to return to. It is hand-written HTML in a
+```` ```{=html} ```` block — white, 2px navy border, Georgia, `max-width: 46%`,
+centred — deliberately styled to look like a **document excerpt**, not a slide
+element. It is not a lexis callout because it should read as output, not as
+emphasis.
+
+**Column order is smallest → biggest** (64 · 207 · 336), John's call. The
+escalation is the argument, and it continues onto slide B (622) and then into
+the token chart, which now follows immediately.
+
+**Slide B — "Then there's Word."** The same paragraph as `word/document.xml`
+OOXML, 60/40 columns, plus the line that it is one file in a zip that also needs
+`[Content_Types].xml`, `_rels/.rels`, `word/_rels/document.xml.rels`,
+`styles.xml`.
+
+The paragraph is fixed and must stay identical across all four:
+
+```
+## EV Sales
+
+Sales of **electric vehicles** grew *42%* in 2025.
+```
+
+| Source | chars | × markdown | formatting chars |
+|---|---:|---:|---:|
+| the paragraph itself | 52 | — | 0 |
+| markdown | 64 | 1× | 12 |
+| LaTeX | 207 | 3.2× | 155 |
+| HTML | 336 | 5.2× | 284 |
+| OOXML (`document.xml` only) | 622 | 9.7× | 570 |
+
+**These counts are measured, not estimated** — `wc -c` on the exact strings in
+the deck, trailing newline included. **If you edit a single character in any
+code block, recount all of them.** Hand-adjusted numbers on a slide whose whole
+argument is "the values are recomputed, not typed" would be the deck
+contradicting itself on stage.
+
+**Why the counts land in that order, and why that's the point:** smallest →
+biggest here is the *same order* as the token data (Markdown 1,267 · PDF 1,992 ·
+HTML 4,046 · Word 8,097). The character slides *predict* the token chart, which
+is why the chart was moved to sit immediately after slide B — the three slides
+now run one continuous escalation, source characters into measured tokens. So
+**HTML costing more than LaTeX is not a bug to "fix"**: it matches the measured
+data, and reordering the columns would break the rhyme.
+
+**`images/fig-tokens.png` moved with that argument**, from after the Africa
+slides to directly after slide B. Its `# Quarto is _token efficient_` divider
+was **deleted**, not moved: the ✅ build three slides earlier
+("✅ Disentangles content and format" / "✅ Token efficient") already opens the
+section, and stranding the divider after the chart would have announced a point
+the deck had just finished making. Restore it above the chart if the run feels
+like it needs a breath.
+
+- **Colors are `plots.R`'s, not the figure's:** teal (`.blue`) = the Quarto
+  path, red = asking for the format directly. Do **not** reach for the
+  content/format yellow-teal vocabulary here — this slide is about cost, not
+  entanglement, and reusing the chips would claim a link that isn't there.
+- **PDF is shown as LaTeX and labelled `PDF (via LaTeX)`.** Raw PDF object
+  syntax is more dramatic and is a strawman: an agent asked for a PDF writes
+  LaTeX. Don't swap it in.
+- **`.font45` wraps only the code block, inside a `:::: {.col}`** — not the
+  column itself. `font-size: 45%` is relative to its parent, so `.fontNN`
+  divs **compound**: a `.font140` count line inside a `.font45` column renders
+  at 63%, i.e. smaller than body text, which is the opposite of what it's for.
+  Hence the four-colon outer fence.
+- **All three columns share one type size**, and must. The lengths are the
+  argument; per-column sizing to make them fit would erase it. If slide A
+  overflows, take all three down together — the HTML block is the tallest at 17
+  lines and is what binds.
+- **Don't moralize about the syntax in the notes or on the slide.** HTML and
+  LaTeX are good formats. The claim is only that the agent pays for every
+  character and none of them are what you asked for.
+
 ## Styling
 
 `index.qmd` uses the **`lexis-revealjs` format extension**

@@ -1440,7 +1440,120 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<p>Token efficiency slide</p>
+<h2>One paragraph. Three sources.</h2>
+<div style="max-width: 46%; margin: 0 auto 0.6em auto; padding: 0.7em 1.4em;
+            background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
+            font-family: Georgia, 'Times New Roman', serif; color: #2e4057;
+            text-align: left;">
+  <div style="font-size: 0.95em; font-weight: 700; margin-bottom: 0.25em;">EV Sales</div>
+  <div style="font-size: 0.72em; line-height: 1.35;">Sales of <strong>electric
+  vehicles</strong> grew <em>42%</em> in 2025.</div>
+</div>
+<div class="cols-row">
+<div class="col">
+<p><span class="blue"><strong>Markdown</strong></span></p>
+<div class="font45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href=""></a><span class="fu">## EV Sales</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>Sales of **electric vehicles**</span>
+<span id="cb1-4"><a href=""></a>grew *42%* in 2025.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><span class="blue font140"><strong>64</strong> characters</span></p>
+</div>
+<div class="col">
+<p><span class="red"><strong>PDF</strong></span> (via LaTeX)</p>
+<div class="font45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource latex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb2-1"><a href=""></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb2-2"><a href=""></a><span class="bu">\usepackage</span>[T1]{<span class="ex">fontenc</span>}</span>
+<span id="cb2-3"><a href=""></a><span class="bu">\usepackage</span>{<span class="ex">geometry</span>}</span>
+<span id="cb2-4"><a href=""></a><span class="fu">\geometry</span>{margin=1in}</span>
+<span id="cb2-5"><a href=""></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb2-6"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
+<span id="cb2-7"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles}</span>
+<span id="cb2-8"><a href=""></a>grew <span class="fu">\emph</span>{42<span class="fu">\%</span>} in 2025.</span>
+<span id="cb2-9"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><span class="red font140"><strong>207</strong> characters</span></p>
+</div>
+<div class="col">
+<p><span class="red"><strong>HTML</strong></span></p>
+<div class="font45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb3-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-4"><a href=""></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"utf-8"</span><span class="dt">&gt;</span></span>
+<span id="cb3-5"><a href=""></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb3-6"><a href=""></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb3-7"><a href=""></a>body { <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Georgia</span><span class="op">,</span> <span class="dv">serif</span><span class="op">;</span></span>
+<span id="cb3-8"><a href=""></a>       <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">em</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> }</span>
+<span id="cb3-9"><a href=""></a>h2 { <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">1.6</span><span class="dt">em</span><span class="op">;</span> }</span>
+<span id="cb3-10"><a href=""></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb3-11"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb3-12"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-13"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb3-14"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Sales of <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>electric vehicles<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span></span>
+<span id="cb3-15"><a href=""></a>grew <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>42%<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span> in 2025.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb3-16"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb3-17"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><span class="red font140"><strong>336</strong> characters</span></p>
+</div>
+</div>
+</section>
+<section class="slide level0">
+
+<h2>Then there’s Word</h2>
+<div class="cols-row">
+<div class="col font50" style="flex:0 1 60%;width:60%">
+<p><code>word/document.xml</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb4-1"><a href=""></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span> <span class="ot">standalone=</span><span class="st">"yes"</span><span class="fu">?&gt;</span></span>
+<span id="cb4-2"><a href=""></a>&lt;<span class="kw">w:document</span> <span class="ot">xmlns:w=</span><span class="st">"http://schemas.openxmlformats.org/</span></span>
+<span id="cb4-3"><a href=""></a><span class="st">                     wordprocessingml/2006/main"</span>&gt;</span>
+<span id="cb4-4"><a href=""></a>  &lt;<span class="kw">w:body</span>&gt;</span>
+<span id="cb4-5"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
+<span id="cb4-6"><a href=""></a>      &lt;<span class="kw">w:pPr</span>&gt;&lt;<span class="kw">w:pStyle</span> <span class="ot">w:val=</span><span class="st">"Heading2"</span>/&gt;&lt;/<span class="kw">w:pPr</span>&gt;</span>
+<span id="cb4-7"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span>&gt;EV Sales&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-8"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
+<span id="cb4-9"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
+<span id="cb4-10"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt;Sales of &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-11"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:b</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;electric vehicles&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-12"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; grew &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-13"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:i</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;42%&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-14"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; in 2025.&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb4-15"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
+<span id="cb4-16"><a href=""></a>  &lt;/<span class="kw">w:body</span>&gt;</span>
+<span id="cb4-17"><a href=""></a>&lt;/<span class="kw">w:document</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="col">
+<p><span class="red font140"><strong>622</strong> characters</span></p>
+<p>…and this is <strong>one file</strong> in a zip that also needs <code>[Content_Types].xml</code>, <code>_rels/.rels</code>, <code>word/_rels/document.xml.rels</code>, and <code>styles.xml</code>.</p>
+<p><span class="blue">The paragraph is <strong>52</strong> characters.</span></p>
+</div>
+</div>
+<aside class="notes">
+<p>Office Open XML. A <code>.docx</code> is a zip of about a dozen XML files, and this is the one that holds the words.</p>
+<p>Find “electric vehicles” on the screen. That’s the content. Everything around it is the agent typing a file format by hand, one angle bracket at a time — and every one of those brackets is a chance to get it wrong.</p>
+<p>This is where the next slide’s numbers come from. Nobody has to argue that this is expensive; you can see it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level0">
+
+<section class="lexis-slide-title inverse center middle">
+<h1 class="lexis-slide-title"></h1>
+<center>
+<img src="images/fig-tokens.png" width="100%">
+</center>
+</section>
 </section>
 <section class="slide level0">
 
@@ -1463,21 +1576,6 @@ built-in one.
 <h1 class="lexis-slide-title"></h1>
 <center>
 <img src="images/africa-good.png" width="40%">
-</center>
-</section>
-</section>
-<section class="slide level0">
-
-<section id="quarto-is-token-efficient" class="inverse center middle">
-<h1>Quarto is <em>token efficient</em></h1>
-</section>
-</section>
-<section class="slide level0">
-
-<section id="and-unexpectedly-its-cheaper" class="inverse center middle">
-<h1>…and, unexpectedly, it’s cheaper</h1>
-<center>
-<img src="images/fig-tokens.png" width="100%">
 </center>
 </section>
 </section>
@@ -1737,10 +1835,10 @@ built-in one.
 <div class="col">
 <p>The census-tract map is the hardest thing on the site.</p>
 <p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
-<span id="cb1-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
-<span id="cb1-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb1-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
+<span id="cb5-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
+<span id="cb5-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
+<span id="cb5-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="col">
 <blockquote>
