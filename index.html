@@ -1640,21 +1640,6 @@ built-in one.
 </ul>
 </div>
 </div>
-<aside class="notes">
-<p>Office Open XML. A <code>.docx</code> is a zip of about a dozen XML files, and this is the one that holds the words.</p>
-<p>Find “electric vehicles” on the screen. That’s the content. Everything around it is the agent typing a file format by hand, one angle bracket at a time — and every one of those brackets is a chance to get it wrong.</p>
-<p>This is where the next slide’s numbers come from. Nobody has to argue that this is expensive; you can see it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 </section>
 <section class="slide level0">
@@ -1665,6 +1650,15 @@ built-in one.
 <img src="images/fig-tokens.png" width="100%">
 </center>
 </section>
+</section>
+<section class="slide level0">
+
+<h2>And that’s just the first turn</h2>
+<blockquote>
+<p><strong>[CHART or TABLE — multi-turn token cost]</strong> Cost growth across an agentic session, direct output vs.&nbsp;<code>.qmd</code>. Author to supply — numbers from the revised blog post.</p>
+</blockquote>
+<p>Every edit to a fused artifact <strong>regenerates the whole thing.</strong></p>
+<p>An edit to a <code>.qmd</code> is a <strong>diff.</strong></p>
 </section>
 <section class="slide level0">
 
@@ -1680,6 +1674,10 @@ built-in one.
 <section id="quarto-ai-agents" class="inverse center middle">
 <h1><span class="font150">Quarto + AI Agents= 🥰</span></h1>
 </section>
+</section>
+<section class="slide level0">
+
+<p>[Left off here]</p>
 </section>
 <section class="slide level0">
 
@@ -1707,251 +1705,7 @@ built-in one.
 </section>
 <section class="slide level0">
 
-<p>[Left off here]</p>
-</section>
-<section class="slide level0">
-
-<h2>You can’t prompt your way to correctness</h2>
-<p><span class="font160 blue">You architect it.</span></p>
-<aside class="notes">
-<p>The prescription. Note what it’s NOT: better prompts, better evals, better models. Shrink the surface that has to be probabilistic at all.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="and-its-also-efficient" class="inverse center middle">
-<h1>And it’s also efficient</h1>
-<aside class="notes">
-<p>ACT 3. THE TURN. The audience is braced for a worthiness argument about correctness. Give them an argument about cost instead.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>It’s also cheaper</h2>
-<p>Same prompt, same model. Only the output target changes.</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Asked for</th>
-<th style="text-align: right;">Direct</th>
-<th style="text-align: right;">Via <code>.qmd</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Word</td>
-<td style="text-align: right;">8,097</td>
-<td style="text-align: right;"><strong>1,121</strong></td>
-</tr>
-<tr class="even">
-<td>HTML</td>
-<td style="text-align: right;">4,046</td>
-<td style="text-align: right;"><strong>1,022</strong></td>
-</tr>
-<tr class="odd">
-<td>PDF</td>
-<td style="text-align: right;">1,992</td>
-<td style="text-align: right;"><strong>1,123</strong></td>
-</tr>
-<tr class="even">
-<td>Markdown</td>
-<td style="text-align: right;">1,267</td>
-<td style="text-align: right;"><strong>1,282</strong></td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<p>Don’t read the numbers. Point at the SHAPE.</p>
-<p>Left column: wild swings — 1,267 up to 8,097 — because the agent is typing the artifact, and some artifacts are miserable to type. Office Open XML is 8,000 tokens of raw XML.</p>
-<p>Right column is FLAT. Around a thousand, every time. The agent never spends a token on the artifact — the renderer does that part for free.</p>
-<p>Note the honest row: for Markdown it’s a wash. Say so. Costs nothing, buys trust.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>And that’s just the first turn</h2>
-<blockquote>
-<p><strong>[CHART or TABLE — multi-turn token cost]</strong> Cost growth across an agentic session, direct output vs.&nbsp;<code>.qmd</code>. Author to supply — numbers from the revised blog post.</p>
-</blockquote>
-<p>Every edit to a fused artifact <strong>regenerates the whole thing.</strong></p>
-<p>An edit to a <code>.qmd</code> is a <strong>diff.</strong></p>
-<aside class="notes">
-<p>CALLBACK TO ACT 1 — make it explicit: “remember the sheet? I asked it to change one sentence and it rebuilt the entire page. That wasn’t just a correctness problem. I paid full price for it.”</p>
-<p>This is the same phenomenon as the cold open, now measured instead of narrated. The single-shot table understates the case, because nobody generates once — you iterate. The gap doesn’t stay at 7×; it compounds with every turn.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="this-is-how-you-build-anything" class="inverse center middle">
-<h1>This is how you build anything</h1>
-<aside class="notes">
-<p>ACT 4. THE DASHBOARD. ~6 minutes. The most concrete material in the talk, deliberately mid-deck where running long can’t reach it.</p>
-<p>This is a REAL product: vehicletrends.us. 10M+ vehicle listings, multi-page, interactive, updates itself weekly. Built with exactly the workflow from Act 1–3.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>A real one: vehicletrends.us</h2>
-<blockquote>
-<p><strong>[RECORDING — silent screen capture, ~75s]</strong> Multi-page Quarto site. ECharts line charts + boxplots, a MapLibre census-tract map, a Shinylive app — all client-side. 10M+ listings.</p>
-</blockquote>
-<aside class="notes">
-<p>No audio. Narrate lightly. Don’t tour features — this is evidence.</p>
-<p>Say “data product.” It’s this session’s shared vocabulary, and it’s literally what this is: data + a package + a site, not a one-off report.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>The handwriting sheet, forty pages over</h2>
-<div class="cols-row">
-<div class="col">
-<p><span class="blue"><strong>The agent wrote:</strong></span></p>
-<ul>
-<li>the <code>.qmd</code> for each page — prose + layout</li>
-<li>small R chunks that <em>emit</em> charts</li>
-<li>the <code>_quarto.yml</code>, the glue</li>
-</ul>
-</div>
-<div class="col">
-<p><span class="amber"><strong>The agent never touched:</strong></span></p>
-<ul>
-<li>the data — it lives in an R package</li>
-<li>the numbers — recomputed at render</li>
-<li>the map, the app — separate projects</li>
-</ul>
-</div>
-</div>
-<p><span class="font140 green">Same move. Bigger artifact.</span></p>
-<aside class="notes">
-<p>The scale changed; the move didn’t. The data isn’t in the repo — it’s an external package the pages read at render (setup.R pulls CSVs). Every number on every page has an address. A weekly GitHub Action re-renders; the site is never stale, and nobody regenerates anything.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="but-why-not-just-build-a-shiny-app" class="inverse center middle">
-<h1>“But why not just build<br>a Shiny app?”</h1>
-<aside class="notes">
-<p>NAME THE OBJECTION FIRST. This is THE elephant in a Posit dashboards session — everyone is thinking it. Say it out loud.</p>
-<p>Shiny is great. This isn’t an attack. It’s about what you have to hand the agent.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>Shiny feels like asking the agent for the artifact</h2>
-<div class="cols-row">
-<div class="col" style="flex:0 1 55%;width:55%">
-<p><span class="red"><strong>Shiny</strong></span></p>
-<p>To get one chart on screen: define the UI, wire an input, wire an output, write the server, manage reactivity.</p>
-<p>The interactivity is a <strong>machine you assemble</strong> — and the agent writes all of it, then you run a server to hold it up.</p>
-</div>
-<div class="col" style="flex:0 1 45%;width:45%">
-<p><span class="blue"><strong>Quarto</strong></span></p>
-<p>Write markdown. Drop a code chunk that returns an ECharts widget.</p>
-<p>The interactivity ships <strong>inside the widget</strong>, in the browser. Nothing to wire, no server to run.</p>
-</div>
-</div>
-<aside class="notes">
-<p>This is the PDF problem again, one level up. A Shiny UI is an artifact you must fully specify — lots of writing, lots of wiring, lots of tokens, and a server at the end. Quarto lets the agent write source and lets the browser do the rest.</p>
-<p>Honest concession available here: if you genuinely need server-side compute over data too big for the browser, that’s Shiny’s home turf. Take it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
 <h2>Need something heavier? Put it in a box</h2>
-<div class="cols-row">
 <div class="col">
 <p>The census-tract map is the hardest thing on the site.</p>
 <p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
@@ -1960,26 +1714,6 @@ built-in one.
 <span id="cb5-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
 <span id="cb5-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="col">
-<blockquote>
-<p><strong>[SCREENSHOT — the MapLibre map on market-concentration.qmd]</strong></p>
-</blockquote>
-</div>
-</div>
-<aside class="notes">
-<p>The map is MapLibre + PMTiles — genuinely complex. Building it inside the dashboard would mean holding the whole site in context to work on one component.</p>
-<p>Instead: separate project, small surface, iterate fast with the agent, then a six-line iframe. It loads instantly — PMTiles on a CDN — and it’s on GitHub Pages. No server.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section class="slide level0">
 
@@ -2028,53 +1762,6 @@ built-in one.
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section>
-<section class="slide level0">
-
-<section id="so-why-not-just-ask-for-html" class="inverse center middle">
-<h1>“So why not just<br>ask for HTML?”</h1>
-<aside class="notes">
-<p>ACT 5. Name the objection before the audience can. Do NOT reference anyone else’s post — this is your objection, in your voice.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-</section>
-<section class="slide level0">
-
-<h2>Honestly — the case for HTML is good</h2>
-<ul>
-<li>Rich, structured, immediately viewable</li>
-<li>No toolchain, no render step, opens anywhere</li>
-<li>Infinitely more useful than a wall of Markdown</li>
-<li>Agents are <em>very</em> good at it</li>
-</ul>
-<aside class="notes">
-<p>Make this case generously and at full strength. Steelman it. You lose nothing by being fair here and you gain the room’s trust for the turn.</p>
-<p>The throwaway-editor concession is genuine — say it and mean it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>HTML is great for Isolated subcomponents, but not the whole thing</h2>
 </section>
 <section class="slide level0">
 
