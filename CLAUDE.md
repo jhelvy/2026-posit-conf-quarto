@@ -380,6 +380,28 @@ slide B above the three columns — same markup, different inline sizes.
 - ❌ Don't moralize about the syntax. HTML and LaTeX are good formats; the claim
   is only that the agent pays for every character.
 
+## The experiment figure (right before `fig-tokens.png`)
+
+**"Two ways to ask for the same document."** Inline SVG. Top: three asks, agent →
+`.pdf` / `.html` / `.docx`. Click 1: rule + bottom half — same agent *writes* one
+`.qmd`, *render* fans to the same three outputs.
+
+- **The agent box is at the same x (170..350) in both halves** — registration is
+  the argument. ❌ Don't recentre either half; the top block ending at x=578
+  while the bottom runs to x=912 is deliberate.
+- **Icons are Font Awesome webfont glyphs in `<text>`**, not paths — `Font
+  Awesome 6 Free` 900 for `\f1c1` pdf / `\f1c2` word, `Font Awesome 6 Brands`
+  400 for `\f13b` html5 / `\f60f` markdown. Loaded only because the
+  character-count slides use `{{< fa >}}`; every icon carries a text label so it
+  degrades to meaning, not tofu.
+- **Colors are the character slides' cost escalation** (teal / amber / red /
+  red), same order as fig-tokens. ❌ Not the content/format chips — this slide is
+  about what was measured.
+- Marker id `ahExp` (unique document-wide). Arrows follow the deck's one
+  convention: 2.5 stroke, 80 units, 2-unit gap off the source box, `refX="5.5"`.
+- **Not visually vetted** — check the glyphs resolve, the fan's 12-unit corners
+  read as one split, and the figure clears ~695px of usable height.
+
 ## The correctness act (Act 4)
 
 Order is **Africa → trust → dashboard**, which is John's escalation in

@@ -644,7 +644,10 @@ $progress-color: $color-blue;
 // lexis.lua prepends an empty `.lexis-slide-title` heading to a modified
 // slide that doesn't already open with one (see its comment for why). Purely
 // structural — never shown.
-.reveal .lexis-slide-title { display: none; }
+// Scoped to the heading itself: Pandoc hoists a promoted slide's leading
+// heading classes onto the <section> too, so a bare `.lexis-slide-title`
+// selector would hide the whole slide.
+.reveal :is(h1, h2, h3, h4, h5, h6).lexis-slide-title { display: none; }
 
 // ---- Heading-as-text classes ----------------------------------------------
 // The lexis.lua filter rewrites headings nested inside Divs (columns, etc.)
