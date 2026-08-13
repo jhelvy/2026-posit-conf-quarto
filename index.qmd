@@ -46,12 +46,6 @@ library(vehicletrends)
 {{< middle >}}
 {{< no-slide-number >}}
 
-<!-- The mark, not a decoration: the talk's subject gets to sit above its own
-     title. The `quarto` shortcode always paints the brand #74aadb, which is why
-     the card is the deck's navy rather than the inverse black — that blue has
-     nothing to sit against on black. `bg-color` + `inverse` is exactly the
-     pairing the guarded card rule in lexis.scss exists for: light text, chosen
-     ground. -->
 {{< quarto size=3x >}}
 
 <br>
@@ -433,25 +427,6 @@ posit::conf(2026)<br>Houston, TX
 </svg>
 ```
 
-::: {.notes}
-Generalize what they just watched — don't re-explain it.
-
-Same two things, same two colors. By the time I see the document they're fused —
-one probabilistic pass wove them together, right there in the middle. Note the
-dashed box: that step is a draw, not a computation.
-
-Click 1. Same prompt, same model, same loop — line it up, it's the identical
-picture — and look what comes out the end. Click 2. Again.
-
-And notice what the arrow connects to. It never reaches the document above it.
-It goes back to me. The second one isn't an edit of the first — the first is
-thrown away and the whole thing is rewoven from scratch. Eight rounds of that is
-how I lost the pokemon sentences.
-
-So when a sentence is wrong, there's nothing to reach into. All I can do is
-review, ask again, and take another draw.
-:::
-
 ---
 
 {{< center >}}
@@ -794,26 +769,6 @@ review, ask again, and take another draw.
 
 </svg>
 ```
-
-::: {.notes}
-Click 1. Same me, same agent — still dashed, it did not get better. What changed
-is what it writes: a `.qmd`. Plain text, markdown with code in it, and
-`quarto render` turns it into that PDF — or a website, or these slides.
-
-(That sentence is for whoever watches the recording. Say it once, while the row
-is on screen, and move on — the room already knows.)
-
-The two boxes carry the same two colours. In the file they have places: yaml
-here, content there. In the PDF they're smeared together. That's the whole
-argument — one of these you can point into.
-
-Click 2. And because it has places, there's somewhere to aim. I can ask the
-agent to change one thing in the file — or open it and change it myself. Either
-way I'm pointing at a line, not re-rolling a document.
-
-Click 3. The content changed. Look at the format: nothing moved. Not "barely
-moved" — nothing. That's the promise a regenerated document can't make.
-:::
 
 ---
 
@@ -1343,7 +1298,7 @@ sales globally.</p>
 
 {{< center >}}
 
-# This map has no failure mode
+# This map has no automated failure mode
 
 <center>
 <img src="images/africa-bad.png" height="560">
@@ -1360,13 +1315,28 @@ sales globally.</p>
 
 ### `quarto render` is a compile step
 
-### Failures are loud and specific
+<pre class="specimen errcard">
+<span style="color:#8d96a3;">Quitting from index.qmd:12-30 [africa-map]</span>
+<span style="color:#d1495b; font-weight:bold;">Error:</span>
+<span style="color:#d1495b;">! all(funding$name %in% africa$name) is not TRUE</span>
+Execution halted
+</pre>
+
 :::
 
 ::: {.col}
 ## [**By human**]{.darkgreen}
 
-### Plain text means the agent's edit is a **diff**
+### Plain text means the edit is a **diff**
+
+<pre class="specimen diffcard">
+  ## EV Sales
+
+  Sales of **electric vehicles** grew 20% in 2025,
+<span style="color:#8d96a3;">- reaching over _20 million_ sales globally.</span>
+<span style="background:#fbe9eb; color:#d1495b; font-weight:700;">+ reaching nearly _20 million_ sales globally.</span>
+</pre>
+
 :::
 
 ---
@@ -1607,12 +1577,6 @@ The agent opens **one page** — 200 to 600 lines. Never the site.
 
 [The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
 
-::: {.notes}
-This is the efficiency argument made architectural. Composition isn't just clean
-engineering — it's what keeps each AI interaction cheap and each component
-individually correct. The map, the Shinylive app, each page: all small.
-:::
-
 ---
 
 ## It's just static files
@@ -1627,13 +1591,6 @@ A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing i
 cached, so nothing goes stale.
 
 [No server to run. No server to secure. No server to pay for.]{.font120}
-
-::: {.notes}
-The payoff. Even the Shiny app has no server — Shinylive runs R in the browser via
-WASM. A "dashboard" that is entirely static files is faster, cheaper, and simpler
-to keep alive than anything server-backed — and the agent helped build every
-piece of it.
-:::
 
 ---
 
@@ -1650,10 +1607,6 @@ piece of it.
 Change **one word** in your prompt.
 
 [Ask for the `.qmd`.]{.font160 .blue}
-
-::: {.notes}
-The accessibility close. This is for everyone in the room, not just power users.
-:::
 
 ---
 

@@ -505,6 +505,17 @@ is a better setup for the compile-step slides than an authorship claim would be.
   labels and leaders are navy ink.
 - **Sized by height (660 bad / 620 map), not width** — one is 16:9 landscape,
   the other near-square, so equal widths made them read as unrelated images.
+- **`Quarto is checkable twice` carries a specimen under each column** — hand-written
+  HTML, no images. Left: the dark terminal card is the previous slide's
+  `stopifnot()` firing, so the error is a callback rather than a new example.
+  Right: the character-count paragraph with `over` → `nearly`, one word that
+  compiles cleanly and inverts the claim — the machine has nothing to say, a
+  person catches it instantly. Red `+` (content that changed), grey `−`; ❌ not
+  diff green, which means verdict here. ❌ **Both cards must be `<pre>`, never
+  `<div>`** — pandoc's `native_divs` parses markdown inside a div, so `**`/`_`
+  render and the diff's `-` line becomes a bullet whose `<li>` eats the closing
+  `:::`. `<pre>` is raw. Chrome is `.specimen` + `.errcard`/`.diffcard` in
+  `custom.css`, overriding reveal's own `pre` rule.
 - The turn is *drawn vs. joined*: join names to a shapefile and a wrong name
   fails; draw the shape and there is nothing to fail. That is Act 2's thesis
   applied to data, which is why it earns its own slide rather than a caption.

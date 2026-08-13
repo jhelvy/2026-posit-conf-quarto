@@ -146,6 +146,46 @@
 .reveal .dims { transition: color 400ms ease; }
 .reveal .dims.visible { color: #8d96a3; }
 
+/* ── SPECIMEN CARDS: `Quarto is checkable twice` ────────────────────────────
+   One card under each column, showing the kind of check that column claims.
+   Left is machine output, right is a diff a person reads, and the two grounds
+   are the split: a dark terminal card is recognisable as something a computer
+   printed from the back of the room, a light card as something you sit and
+   read. Same type size and line height in both, because the parallel is the
+   point.
+
+   They are `<pre>` elements in index.qmd rather than divs, and that is not a
+   style choice — pandoc parses markdown inside a `<div>`, which turned the
+   diff's `-` line into a bullet list and broke the column fence. `<pre>` is
+   raw. See the comment on that slide.
+
+   Everything here is an override of reveal's own `pre` rule (0.55em, a box
+   shadow, its own padding), so the two cards are sized against each other and
+   not against the theme's code blocks. `white-space: pre` plus `overflow-x`
+   keeps a long error line from wrapping into a second line and unbalancing the
+   columns; if either card is too wide for its half, `font-size` is the knob.
+   Colours are the deck's: navy ground, red for the error and for the `+` line
+   (red is "content that changed", which is exactly what a `+` is), grey for
+   the `-` line. NOT diff green — green means verdict in this deck and nothing
+   else. */
+.reveal pre.specimen {
+  display: block;
+  width: 100%;
+  margin: 0.4em 0 0 0;
+  padding: 0.7em 0.9em;
+  border-radius: 6px;
+  box-shadow: none;
+  font-size: 0.5em;
+  line-height: 1.6;
+  text-align: left;
+  white-space: pre;
+  word-wrap: normal;
+  overflow-x: auto;
+}
+.reveal pre.errcard  { background: #2e4057; color: #FFFFFF; border: none; }
+.reveal pre.diffcard { background: #f4f5f7; color: #2e4057;
+                       border: 1px solid #d8dbe0; }
+
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.
    but no color variants; these follow its own wrapper-div pattern, so they go
