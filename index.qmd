@@ -927,6 +927,8 @@ moved" — nothing. That's the promise a regenerated document can't make.
 <br>
 
 :::: {.col .fragment}
+[{{< fa brands markdown size=2x >}}]{.blue}
+
 [**Quarto**]{.blue} (`.qmd`)
 
 ::: {.font45}
@@ -947,6 +949,8 @@ _20 million_ sales globally.
 ::::
 
 :::: {.col .fragment}
+[{{< fa file-pdf size=2x >}}]{.amber}
+
 [**PDF**]{.amber} (via LaTeX)
 
 ::: {.font45}
@@ -972,6 +976,8 @@ Sales of \textbf{electric vehicles} grew
 ::::
 
 :::: {.col .fragment}
+[{{< fa brands html5 size=2x >}}]{.red}
+
 [**HTML**]{.red}
 
 ::: {.font45}
@@ -1002,14 +1008,7 @@ sales globally.</p>
 
 ---
 
-{{< inverse >}}
 {{< center >}}
-{{< middle >}}
-
-# ...and then there's Microsoft Word...
-
----
-
 {{< middle >}}
 
 ```{=html}
@@ -1024,7 +1023,8 @@ sales globally.</p>
 </div>
 ```
 
-:::: {.col width="60%"}
+[{{< fa file-word size=2x >}}]{.red}
+
 [**Word**]{.red} (`word/document.xml`)
 
 ::: {.font50}
@@ -1050,16 +1050,8 @@ sales globally.</p>
 :::
 
 [**663** characters]{.red .font140}
-::::
 
-::: {.col}
-…and this is **one file** in a zip that also needs:
-
-- `[Content_Types].xml`
-- `_rels/.rels`
-- `word/_rels/document.xml.rels`
-- `styles.xml`
-:::
+[(…and this is just **one** of many files inside the `.docx` zip)]{.small}
 
 ---
 
