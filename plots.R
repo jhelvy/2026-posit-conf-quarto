@@ -32,11 +32,34 @@ ink <- unname(minou["navy"]) # the figure's ink, for anything that isn't coded
 # `[word]{.amber}` on a slide.
 minou_ink <- c(yellow = "#A77400", green = "#4A6D5A")
 
+# The cost slides colour each format by its identity — Quarto blue, amber PDF,
+# red HTML, Word blue — matching `.qmdblue` / `.amber` / `.red` / `.wordblue` in
+# custom.css. Only the Quarto blue is needed here; the other three reach this
+# figure as icons, not as colour. Quarto's brand blue is #74aadb, which is 2.5:1
+# on white, so a dot or a letter uses the darker twin.
+qmd_blue <- "#3d7fb5"
+
+# Font Awesome, so the y-axis row names can carry the same file icons the
+# character-count slides and the experiment figure use. The extension ships the
+# webfonts and the .ttf files register fine; nothing here is installed
+# system-wide, so this is what makes them available to the plot. Rendering goes
+# through `ragg::agg_png` below for the same reason — the default quartz device
+# does not see a font registered this way.
+fa_dir <- "_extensions/quarto-ext/fontawesome/assets/webfonts"
+systemfonts::register_font("FA Solid", plain = file.path(fa_dir, "fa-solid-900.ttf"))
+systemfonts::register_font(
+  "FA Brands",
+  plain = file.path(fa_dir, "FontAwesome6Brands-Regular-400.ttf")
+)
+
 # fig-tokens: output tokens, Quarto vs. direct format ------------------------
-# teal = Quarto, red = direct format. 208 deg apart in hue, both dark enough to
-# work as text on a white panel, and the good/costly reading comes for free.
-# Teal is the deck's "format/structure" color, which is the right echo: Quarto
-# is the thing that handles the format for you.
+# Quarto blue = Quarto, red = direct format. The dumbbell's whole argument is
+# one dot against the other, so colour here stays a TWO-level encoding. The row
+# names carry a file ICON rather than the format's colour: colouring them put a
+# blue `Word` label on the same row as the blue Quarto dot, which is exactly the
+# confusion the two-level encoding exists to avoid. Icons are ink, like the
+# text. The Quarto dot moved off the deck's format teal because this figure
+# lands seconds after the cost slides, and that echo is the nearer one.
 
 results <- read_csv("data/token_results.csv", show_col_types = FALSE)
 
@@ -71,10 +94,38 @@ multipliers <- tokens |>
     label = paste0(sub("\\.0$", "", format(ratio, trim = TRUE)), "×")
   )
 
+# The row's file icon, drawn beside the tick label rather than folded into it.
+# ggtext's `element_markdown()` does not resolve a font registered this way — a
+# `font-family` span comes out as tofu — but `geom_text(family = )` does. So the
+# glyph is a layer: `x = -Inf` parks it at the panel's left edge, `hjust` pushes
+# it out into the margin in multiples of its own width, and `clip = "off"` plus
+# the wider `plot.margin` are what let it show. Two layers because html5 is a
+# Brands glyph and the file icons are Free Solid. Ink, like the text.
+row_icons <- tibble(
+  output_type = factor(
+    c("Word", "HTML", "PDF"),
+    levels = levels(tokens$output_type)
+  ),
+  glyph = c("\uf1c2", "\uf13b", "\uf1c1"),
+  family = c("FA Solid", "FA Brands", "FA Solid")
+)
+
 fig_tokens <- tokens |>
   ggplot(aes(x = output_tokens, y = output_type, color = format_type)) +
   geom_line(aes(group = output_type), color = "grey70", linewidth = 1) +
   geom_point(size = 4) +
+  geom_text(
+    data = filter(row_icons, family == "FA Solid"),
+    aes(x = -Inf, y = output_type, label = glyph),
+    inherit.aes = FALSE, family = "FA Solid",
+    hjust = 4.2, size = 5.5, color = ink
+  ) +
+  geom_text(
+    data = filter(row_icons, family == "FA Brands"),
+    aes(x = -Inf, y = output_type, label = glyph),
+    inherit.aes = FALSE, family = "FA Brands",
+    hjust = 4.2, size = 5.5, color = ink
+  ) +
   # The multiplier is the only annotation. Per-dot token counts were here too
   # and were cut: the axis already gives the magnitudes, and "7.2x" is the
   # sentence you actually say out loud.
@@ -92,7 +143,7 @@ fig_tokens <- tokens |>
   scale_color_manual(
     values = c(
       "Direct format" = unname(minou["red"]),
-      "Quarto (.qmd)" = unname(minou["teal"])
+      "Quarto (.qmd)" = qmd_blue
     )
   ) +
   scale_x_continuous(
@@ -104,12 +155,13 @@ fig_tokens <- tokens |>
     y = NULL,
     color = NULL,
     title = paste0(
-      "<span style='color: ", minou["teal"], ";'>Quarto (.qmd)</span>",
+      "<span style='color: ", qmd_blue, ";'>Quarto (.qmd)</span>",
       " vs. ",
       "<span style='color: ", minou["red"], ";'>Direct format</span>",
       " output tokens"
     )
   ) +
+  coord_cartesian(clip = "off") +
   theme_minimal_vgrid(font_family = font, font_size = 16) +
   theme(
     legend.position = "none",
@@ -117,6 +169,8 @@ fig_tokens <- tokens |>
     panel.grid.minor = element_blank(),
     plot.title.position = "plot",
     plot.title = element_markdown(),
+    axis.text.y = element_text(color = ink),
+    plot.margin = margin(5.5, 5.5, 5.5, 26),
     axis.line.y = element_blank(),
     axis.ticks.y = element_blank(),
     panel.background = element_rect(fill = "white", color = NA),
@@ -129,5 +183,6 @@ ggsave(
   width = 10,
   height = 4, # was 5 at four rows; three rows want less, or the dots drift apart
   dpi = 192, # knitr's default (96 x fig-retina 2), so this matches the post
-  bg = "white"
+  bg = "white",
+  device = ragg::agg_png # sees the fonts registered above; quartz does not
 )

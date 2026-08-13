@@ -60,6 +60,28 @@
 .reveal .red   { color: #d1495b; }
 .reveal .green { color: #4A6D5A; }
 
+/* ── THE COST RAMP ──────────────────────────────────────────────────────────
+   The four cost slides (one paragraph / three sources, then Word, then the
+   experiment figure) colour each format by its identity, not by the
+   content/format vocabulary: Quarto blue, PDF amber, HTML red, Word blue.
+   Red used to carry both HTML and Word, which made the two most expensive
+   columns look like one thing.
+
+   `.qmdblue` is Quarto's own blue. The brand value #74aadb is what the
+   `quarto` shortcode paints its icon, and it is 2.5:1 on white — same
+   fill-vs-ink problem the yellow has, so the icon wears the brand value and
+   every letter wears this darker twin (4.3:1, same hue).
+
+   `.wordblue` is Word's blue. It is 12 deg from the Quarto blue in hue, so
+   what separates the two columns is lightness plus the icon and the file
+   extension beside it — not hue. It clears the deck's navy ink on chroma
+   (0.12 vs 0.046), which is the axis that matters here.
+
+   Scoped to the cost slides on purpose. Everywhere else `[word]{.blue}` is
+   still the figure's teal, because there teal means FORMAT, not Quarto. */
+.reveal .qmdblue  { color: #3d7fb5; }
+.reveal .wordblue { color: #2B579A; }
+
 /* ── CHIPS ──────────────────────────────────────────────────────────────────
    The two slides before the entanglement figure exist to teach its color
    vocabulary, so the word has to be the same visual object the figure shows —

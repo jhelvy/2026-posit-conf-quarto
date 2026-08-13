@@ -67,6 +67,25 @@ direct-format dot (1.8× 4× 7.2×) computed from the CSV. The x-axis right
 expansion (`0.14`) holds those multipliers — shrink it and `7.2×` clips.
 `dpi = 192` gives 1920×960, matching the post.
 
+**Dot color stays a two-level encoding** — Quarto blue `#3d7fb5` vs red. ❌ Don't
+colour the direct dots by format: the Word row would then be blue against blue,
+and that is the 7.2× row. ❌ Colouring the **tick labels** was tried and cut for
+the same reason — a blue `Word` label sat on the row with the blue Quarto dot.
+What ties the figure to the cost slides is the **file icon left of each row
+name**, in navy ink like the text. The Quarto dot moved off the deck's format
+teal because fig-tokens lands seconds after the cost slides and that echo is the
+nearer one.
+
+**The icons are a `geom_text` layer, not part of the tick label.** ggtext's
+`element_markdown()` will not resolve a font registered with
+`systemfonts::register_font()` — a `font-family` span renders as tofu or
+nothing — but `geom_text(family = )` does. So: `x = -Inf` with `hjust = 4.2`
+parks the glyph out in the margin, and `coord_cartesian(clip = "off")` plus
+`plot.margin`'s 26pt left are what let it show. Two layers, because html5 is a
+Brands glyph and the file icons are Free Solid. **`ggsave()` must keep
+`device = ragg::agg_png`** — quartz doesn't see the registered fonts. The `.ttf`
+files come from the fontawesome extension; nothing is installed system-wide.
+
 **Markdown is filtered out** (`filter(output_type != "markdown")`) — it was the
 post's control, but the `.qmd` line already makes that point on a slide. Three
 formats, three rows, three multipliers.
@@ -104,8 +123,15 @@ Everything comes from `ltc::ltc("minou")` — slides, figure, `plots.R`.
 | `#00798c` teal | format / structure |
 | `#d1495b` red | content that changed; also Shiny, raw HTML |
 | `#2e4057` navy | ink — every stroke, arrowhead, label |
-| `#852f88` purple | your direct action (from `ltc("hat")`, the one non-minou color) |
+| `#852f88` purple | your direct action (from `ltc("hat")`, non-minou) |
 | `#66a182` green | verdict — **only** the run-3 checkmark on figure slide 1 |
+| `#74aadb` / `#3d7fb5` | Quarto's brand blue and its ink twin — **cost slides only** |
+| `#2B579A` | Word's blue — **cost slides only** |
+
+The two blues are the other non-minou exception. They are brand colors, so they
+belong to the four cost slides where the coloring is by file-format identity;
+everywhere else `[word]{.blue}` is still the figure's teal, which means *format*,
+not *Quarto*.
 
 **Fill vs. ink.** Yellow is light: fine as a **fill** with dark text, invisible
 as a line or letter (1.6:1). Ink variant `#A77400` = `.amber`, used only where
@@ -366,10 +392,23 @@ slide B above the three columns — same markup, different inline sizes.
   6's callback early.
 - **PDF is shown as LaTeX**, labelled `PDF (via LaTeX)`. Raw PDF object syntax
   is a strawman; an agent asked for a PDF writes LaTeX.
-- **Colors escalate with cost:** teal (`.blue`) Quarto → amber (`.amber`, the
-  yellow ink variant — plain yellow is 1.6:1) PDF → red HTML, red Word. Label
-  and count share the column's color. ❌ Don't reach for the content/format
-  chips here — this slide is about cost, not entanglement.
+- **One color per format, by identity:** Quarto blue (`.qmdblue`) → amber
+  (`.amber`, the yellow ink variant — plain yellow is 1.6:1) PDF → red HTML →
+  Word blue (`.wordblue`). Label and count share the column's color. Red used to
+  carry both HTML and Word, which made the two priciest columns read as one
+  thing. ❌ Don't reach for the content/format chips here — this slide is about
+  cost, not entanglement.
+- **Quarto's mark comes from the iconify extension** — `{{< quarto size=2x >}}`,
+  which hardcodes the brand `#74aadb`. `iconify-preload.json` is committed and
+  wired via `extensions.iconify.preload` in the YAML, so the Web Component
+  renders **offline**; without it the icon is a CDN fetch at presentation time.
+  ❌ Don't drop the preload.
+- **`.qmdblue` is the ink twin of `#74aadb`, not the brand value.** The brand
+  blue is 2.5:1 on white — a fill, like the yellow. The icon wears `#74aadb`,
+  every letter wears `#3d7fb5`.
+- **`.wordblue` `#2B579A` is 12° from the Quarto blue in hue**, so lightness plus
+  the icon and the extension are what separate those two columns. It clears the
+  navy ink on chroma (0.12 vs 0.046), not on hue.
 - **Slide B and the Word slide share one layout:** colored label above the code
   block, count in the same color below it.
 - **`.font45` wraps only the code block, inside a `:::: {.col}`.** `.fontNN`
@@ -389,14 +428,19 @@ slide B above the three columns — same markup, different inline sizes.
 - **The agent box is at the same x (170..350) in both halves** — registration is
   the argument. ❌ Don't recentre either half; the top block ending at x=578
   while the bottom runs to x=912 is deliberate.
-- **Icons are Font Awesome webfont glyphs in `<text>`**, not paths — `Font
-  Awesome 6 Free` 900 for `\f1c1` pdf / `\f1c2` word, `Font Awesome 6 Brands`
-  400 for `\f13b` html5 / `\f60f` markdown. Loaded only because the
-  character-count slides use `{{< fa >}}`; every icon carries a text label so it
-  degrades to meaning, not tofu.
-- **Colors are the character slides' cost escalation** (teal / amber / red /
-  red), same order as fig-tokens. ❌ Not the content/format chips — this slide is
-  about what was measured.
+- **The three output icons are Font Awesome webfont glyphs in `<text>`**, not
+  paths — `Font Awesome 6 Free` 900 for `\f1c1` pdf / `\f1c2` word, `Font Awesome
+  6 Brands` 400 for `\f13b` html5. Loaded only because the character-count slides
+  use `{{< fa >}}`; every icon carries a text label so it degrades to meaning,
+  not tofu.
+- **The `.qmd` is Quarto's mark as a path**, `simple-icons:quarto` copied in at
+  24×24 and scaled 1.667 to 40 units, top-left at (462, −20) so it centres on
+  x=482 like the glyphs above it. The iconify extension emits a Web Component,
+  which can't live inside an SVG — hence the copy. Edit it and the
+  character-slide icon together.
+- **Colors are the character slides' ramp** (Quarto blue `#74aadb` mark /
+  `#3d7fb5` letters, amber, red, Word blue `#2B579A`), same order as fig-tokens.
+  ❌ Not the content/format chips — this slide is about what was measured.
 - Marker id `ahExp` (unique document-wide). Arrows follow the deck's one
   convention: 2.5 stroke, 80 units, 2-unit gap off the source box, `refX="5.5"`.
 - **Not visually vetted** — check the glyphs resolve, the fan's 12-unit corners
