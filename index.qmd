@@ -13,6 +13,29 @@ execute:
   message: false
 ---
 
+```{r}
+#| label: setup
+#| include: false
+
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.path = "figs/",
+  fig.width = 7.252,
+  fig.height = 4,
+  comment = "#>",
+  fig.retina = 3
+)
+
+sp <- function(gap = 2, unit = "em") {
+  sprintf('<div style="height: %s%s;"></div>', gap, unit)
+}
+
+library(dplyr)
+library(echarts4r)
+library(vehicletrends)
+```
+
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
@@ -924,7 +947,8 @@ moved" — nothing. That's the promise a regenerated document can't make.
 </div>
 ```
 
-<br>
+`r sp(0.2)`
+<hr>
 
 :::: {.col .fragment}
 [{{< fa brands markdown size=2x >}}]{.blue}
@@ -1008,9 +1032,6 @@ sales globally.</p>
 
 ---
 
-{{< center >}}
-{{< middle >}}
-
 ```{=html}
 <div style="max-width: 52%; margin: 0 auto 0.5em auto; padding: 0.5em 1em;
             background: #FFFFFF; border: 2px solid #2e4057; border-radius: 6px;
@@ -1023,6 +1044,13 @@ sales globally.</p>
 </div>
 ```
 
+`r sp(0.2)`
+<hr>
+
+::: {.col width="20%"}
+:::
+
+::: {.col width="55%"}
 [{{< fa file-word size=2x >}}]{.red}
 
 [**Word**]{.red} (`word/document.xml`)
@@ -1050,8 +1078,11 @@ sales globally.</p>
 :::
 
 [**663** characters]{.red .font140}
+:::
 
-[(…and this is just **one** of many files inside the `.docx` zip)]{.small}
+---
+
+Fig here
 
 ---
 
@@ -1065,9 +1096,14 @@ sales globally.</p>
 
 ---
 
+{{< bg-image "images/its-all-markdown.png" >}}
+
+---
+
 {{< bg-color "#000000" >}}
-{{< middle >}}
 {{< center >}}
+
+`r sp(2)`
 
 <center>
 <img src="images/its-all-markdown.png" width=100%>
@@ -1309,12 +1345,6 @@ depreciation |>
 
 ::: {.col width="60%"}
 ```{r}
-suppressMessages({
-  library(dplyr)
-  library(echarts4r)
-  library(vehicletrends)
-})
-
 smooth_group <- function(df) {
   fit <- loess(rr ~ age_years, data = df, span = 0.5)
   df$rr_smooth <- predict(fit)
