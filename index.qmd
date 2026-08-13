@@ -40,10 +40,21 @@ library(echarts4r)
 library(vehicletrends)
 ```
 
+{{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 {{< no-slide-number >}}
+
+<!-- The mark, not a decoration: the talk's subject gets to sit above its own
+     title. The `quarto` shortcode always paints the brand #74aadb, which is why
+     the card is the deck's navy rather than the inverse black — that blue has
+     nothing to sit against on black. `bg-color` + `inverse` is exactly the
+     pairing the guarded card rule in lexis.scss exists for: light text, chosen
+     ground. -->
+{{< quarto size=3x >}}
+
+<br>
 
 # {{< meta title >}}
 
@@ -51,7 +62,7 @@ library(vehicletrends)
 
 [{{< meta author >}}]{.large}
 
-September 15, 2026
+posit::conf(2026)<br>Houston, TX
 
 ---
 
@@ -64,6 +75,7 @@ September 15, 2026
 
 ---
 
+{{< bg-color "#2e4057" >}}
 {{< middle >}}
 {{< center >}}
 {{< inverse >}}
@@ -85,7 +97,7 @@ September 15, 2026
 
 ---
 
-{{< inverse >}}
+{{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
 
@@ -99,7 +111,7 @@ September 15, 2026
 
 ---
 
-{{< inverse >}}
+{{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="800"}
 
@@ -478,14 +490,21 @@ review, ask again, and take another draw.
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 ```{=html}
-<!-- margin-top drops the whole box 50px so the drawn figure sits centred rather
-     than riding the heading: this slide's content only fills the top ~275 of a
+<!-- The 50px drop is `position:relative; top`, NEVER margin-top, and there is
+     no <br> above this block. Both slides are `{{< middle >}}`, i.e. a flex
+     COLUMN, so the SVG is a flex item and anything that adds height above it
+     (a <br>'s paragraph, a top margin) is taken back out of the SVG by
+     flex-shrink — the figure rendered visibly smaller than slide 1's, which
+     breaks registration. `top` moves it without occupying layout, so the boxes
+     stay exactly slide 1's size.
+
+     The drop exists because this slide's ink only fills the top ~170 of a
      553-unit viewBox (the rest is the dead canvas registration costs), so the
-     SVG's own centre is well below its ink. This is the ONE thing slide 2 does
-     that slide 1 doesn't, so the at-rest pictures now differ by exactly these
-     50px — remove it, or add the same to slide 1, if the stillness matters more
-     than the centring. -->
-<svg viewBox="0 77 1240 553" width="100%" style="max-height:80vh; margin-top:50px;"
+     SVG's own centre sits well below its figure. It is the ONE thing slide 2
+     does that slide 1 doesn't — remove it, or add the same to slide 1, if the
+     stillness matters more than the centring. -->
+<svg viewBox="0 77 1240 553" width="100%"
+     style="max-height:80vh; position:relative; top:50px;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -703,30 +722,10 @@ review, ask again, and take another draw.
     <text x="765" y="206" font-size="20" text-anchor="middle"
           fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
 
-    <!-- One input, one output. `quarto render` takes the .qmd; the data is
-         pulled in by it. -->
+    <!-- One input, one output. `quarto render` takes the .qmd. -->
     <text x="902" y="161" font-size="20" fill="#2e4057"
           text-anchor="middle">render</text>
     <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5"
-          marker-end="url(#ahDark2)"/>
-
-    <!-- data = the exact values, living OUTSIDE in a file of their own. Drawn
-         EXACTLY like the `content` block above it — solid #edae49, navy text —
-         because data IS content; the only thing that differs is the kind of
-         address (a row, not a line number). Same fill, so the eye pairs them
-         without a word being spent on it. Its arrow is navy like every other
-         structural connector here: the yellow block at one end and the yellow
-         stripes at the other already say "content flows in", and a third yellow
-         (the darker ink one, which a 2.5-unit line would need) would have been
-         a second yellow on screen for no gain.
-         No arrow reaches data from the agent, and none from me either: data
-         comes from the world. Centred under the .qmd at x=765; the purple arrow
-         gets out of its way by entering further left, not by pushing this
-         off-axis. -->
-    <rect x="705" y="295" width="120" height="56" rx="6" fill="#edae49"/>
-    <text x="765" y="332" font-size="22" text-anchor="middle"
-          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">data</text>
-    <path d="M 765 291 L 765 245" fill="none" stroke="#2e4057" stroke-width="2.5"
           marker-end="url(#ahDark2)"/>
   </g>
 
@@ -759,9 +758,8 @@ review, ask again, and take another draw.
        hue region (306 deg) the palette leaves empty — every other colour here
        is 59 deg or more away. It is the single most saturated thing on the
        slide, which is right: it is the one line that is YOU. It leaves from
-       `me` at its opened-out centre (x=255) and enters at x=690, inside the
-       .qmd's left edge (670) but left of the data box (705), so the two arrows
-       into the .qmd don't collide.
+       `me` at its opened-out centre (x=255) and enters at x=690, just inside
+       the .qmd's left edge (670).
        stroke-width 2.5 like every other arrow on both slides: markerUnits is
        strokeWidth, so a fatter line also means a fatter head. -->
   <g class="fragment" data-fragment-index="2">

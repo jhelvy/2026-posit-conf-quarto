@@ -434,7 +434,30 @@ $progress-color: $color-blue;
 // mode (where reveal forces this itself) a section is only as tall as its
 // content, not the full 900px card, so without it a short inverse slide
 // left a gap of `.slides`'s own light background showing beneath the text.
-.reveal .slides section.inverse { background-color: $color-black; height: 100%; }
+// The paint is GUARDED, the height is not. `{{< inverse >}}` does two separable
+// jobs — flip the text light, and darken the card — and combining it with
+// `{{< bg-color >}}` / `{{< bg-image >}}` should keep the first while letting the
+// author choose the second:
+//
+//     {{< bg-color "#2e4057" >}}
+//     {{< inverse >}}
+//
+// Without the guard that slide renders black: the background shortcodes paint
+// reveal's `.backgrounds` layer, which sits BEHIND the section, so an opaque
+// section painted on top hides it completely and the shortcode reads as a
+// no-op. Keying off the attributes rather than reveal's own
+// `has-dark-background` class is deliberate — reveal derives that class from
+// the color's brightness, so a light `{{< bg-color >}}` wouldn't clear the
+// black, and it flags image backgrounds not at all.
+//
+// `height: 100%` still applies to every inverse slide, guard or no guard: it is
+// what stops a short slide from showing `.slides`'s own light background
+// beneath its text, and that is just as true when the color came from a
+// shortcode.
+.reveal .slides section.inverse:not([data-background-color]):not([data-background-image]) {
+  background-color: $color-black;
+}
+.reveal .slides section.inverse { height: 100%; }
 
 // Explicit full-bleed slides ({{< bg-color >}} / {{< bg-image >}}) DO use
 // reveal's own edge-to-edge background layer (behind `.slides`); drop the

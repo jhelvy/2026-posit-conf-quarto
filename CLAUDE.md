@@ -48,7 +48,9 @@ Outline: `outline.md`.
   Styling before editing; the syntax is not stock Quarto reveal. Both
   entanglement figure slides live in here as inline SVG.
 - `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
-- `_extensions/lexis/` — the lexis extension. Don't hand-edit.
+- `_extensions/lexis/` — the lexis extension. Don't hand-edit. One exception,
+  pending upstream: the guarded `.inverse` card paint in `lexis.scss` — see
+  Styling.
 - `custom.css` — the only local stylesheet.
 - `custom.scss` — **dead**, safe to delete.
 - `plots.R` — regenerates `images/fig-tokens.png` and `images/africa-map.png`
@@ -179,8 +181,8 @@ SLIDE 2 — at rest: byte-for-byte slide 1's row 1 (dots)
    click 1: chain opens ±140, .qmd + data fade into the gap,
             artifact dots → bands (row 3, the checked one)
    [ me ] ──▶ [ agent ] ─writes─▶ │ yaml / content │ ─render─▶ [▓▒▓▒▒▓/]
-      ├── prompt the agent ──┘     └───────▲────────┘
-      └── …or edit it directly ───┘    [▓ data ▓]
+      ├── prompt the agent ──┘
+      └── …or edit it directly ───┘
    click 2: two purple arrows.  click 3: content yellow→RED, teal doesn't move.
 ```
 
@@ -206,9 +208,13 @@ figure carries that same sentence across its top.
   variable" claim. Slide 2 carries ~280 units of dead canvas below its figure to
   hold this. **Changing either viewBox, either heading level, or that row's
   geometry breaks it — recompute both.** One deliberate exception: slide 2's SVG
-  carries `margin-top:50px` so its figure reads centred against all that dead
-  canvas, so the two at-rest pictures now sit 50px apart. Drop it, or add the
-  same to slide 1, if stillness ever matters more than centring.
+  carries `position:relative; top:50px` so its figure reads centred against all
+  that dead canvas, so the two at-rest pictures now sit 50px apart. Drop it, or
+  add the same to slide 1, if stillness ever matters more than centring.
+  ❌ **Never `margin-top`, and never a `<br>` above the SVG.** Both slides are
+  `{{< middle >}}` = a flex column, so the SVG is a flex item: anything adding
+  height above it is taken back out of the figure by flex-shrink, and slide 2
+  renders visibly smaller than slide 1. `top` doesn't occupy layout.
 - **Motif order is dots → blocks → bands ✓, and it's load-bearing.** Bands is
   the only motif that reads as lines of text on a page, so it's the draw you
   keep (row 3, green check) *and* slide 2's `#docOut`. The scattered motifs are
@@ -258,9 +264,9 @@ figure carries that same sentence across its top.
   only box in the deck where the two colors nest.
 - **The teal band is the YAML**, and it's what Act 6's *change one word*
   changes. The file is not meant to be read.
-- **`data` is yellow, sits outside, feeds the `.qmd`** — not render. Data is
-  content; only the kind of address differs. **Nothing points at `data`** — it
-  comes from the world, and the empty input is the point.
+- ❌ **No `data` box.** A yellow `data` block fed the `.qmd` from below; cut
+  because the deck never leverages it and the slide is about the two colors
+  having places.
 - **Two purple arrows, one forking line.** Both leave `me` at x=255; the second
   starts at the first's corner so they read as one descent that splits. Upper →
   the agent's bottom edge, *prompt the agent to change the .qmd*. Lower → the
@@ -300,8 +306,8 @@ Opened (slide 2, click 1): me 200 · agent 400 · `.qmd` 670 · artifact
 `.openright` CSS rules glide ±140 and **are not optional** — without them the
 `.qmd` lands on top of the artifact. 140 = half the 280 the `.qmd` inserts, and
 is **independent of the artifact's width**. General rule: shift = 75 + L; the
-`.qmd` lands at x=670 whatever L is, so `data` (centred at 765) and the purple
-arrow's landing point (690) never need recomputing.
+`.qmd` lands at x=670 whatever L is, so the purple arrow's landing point (690)
+never needs recomputing.
 
 The agent→artifact arrow is nested inside `.openleft` so the one line that says
 "entangled" leaves as the file that fixes it arrives.
@@ -574,8 +580,20 @@ format:
 `custom.css` holds only what lexis doesn't ship, plus the palette overrides:
 `.amber`, the `.blue`/`.red`/`.green` repoints, `.contentchip`/`.formatchip`,
 `.amberborder`/`.blueborder` (wrapper-div pattern — `::: {.col .blueborder}`,
-not an image attribute block), `.openleft`/`.openright`, and a commented-out
-`.lift`. Its header comment restates the palette; keep the two in sync.
+not an image attribute block), `.openleft`/`.openright`, the title slide's navy
+card, and a commented-out `.lift`. Its header comment restates the palette; keep
+the two in sync.
+
+**The title slide** is `{{< bg-color "#2e4057" >}}` + `{{< inverse >}}`, so the
+`{{< quarto >}}` mark above the title has its own hue family to sit on instead
+of black. That pairing needs a **patched `lexis.scss`**: the `.inverse` card
+paint is guarded with
+`:not([data-background-color]):not([data-background-image])` so a background
+shortcode wins the ground while `.inverse` keeps the text light. ⚠️ The patch
+lives in this repo's `_extensions/lexis/` and is **not yet upstream in
+`jhelvy/quarto-lexis`** — re-installing the extension reverts it and the title
+slide goes black. The line under the author is `posit::conf(2026)` /
+`Houston, TX`, not a date.
 
 ## Open / to do
 
