@@ -916,9 +916,15 @@ moved" — nothing. That's the promise a regenerated document can't make.
 {{< middle >}}
 {{< center >}}
 
-# [Control]{.font150}
+<!-- The spine. Control is white and alone while you say "we've already talked
+     about control"; it hands off to grey at the same click that brings Cost in,
+     so the room watches the convention get taught once. Every later appearance
+     can then rely on it: grey = an act you've already had, white = the one
+     coming next. Both fragments carry the same `data-fragment-index`, so the
+     dim and the arrival are one beat, not two. -->
+# [Control]{.font150 .fragment .custom .dims data-fragment-index="1"}
 
-::: {.fragment}
+::: {.fragment data-fragment-index="1"}
 # [Cost]{.font150}
 :::
 
@@ -1290,12 +1296,15 @@ sales globally.</p>
 {{< center >}}
 {{< middle >}}
 
-# [Control]{.font150}
+<!-- Two acts behind you, so both words are grey from the start — no motion here,
+     the previous ladder slide already taught what grey means. Only the new word
+     is lit. -->
+# [Control]{.font150 .earned}
 
-# [Cost]{.font150}
+# [Cost]{.font150 .earned}
 
 ::: {.fragment}
-# [Correct]{.font150}
+# [Correctness]{.font150}
 :::
 
 ---
@@ -1332,30 +1341,37 @@ sales globally.</p>
 
 ---
 
-## That map rendered fine
+{{< center >}}
 
-::: {.col}
-[**Ask for the map**]{.red}
+# This map has no failure mode
 
-The shapes were **drawn**.
+<center>
+<img src="images/africa-bad.png" height="560">
 
-A wrong shape looks exactly like a right one. It renders. It ships. Nobody
-catches it.
-:::
-
-::: {.col}
-[**Ask for the source**]{.blue}
-
-The shapes are **joined** — country names to a shapefile.
-
-A wrong name doesn't render. It **fails**.
-:::
-
-[The artifact had no failure mode. That's the whole problem.]{.font120}
+[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
+</center>
 
 ---
 
-## But HTML can't tell you it's broken
+# [Quarto is checkable twice]{.center}
+
+::: {.col}
+## [**By machine**]{.darkgreen}
+
+### `quarto render` is a compile step
+
+### Failures are loud and specific
+:::
+
+::: {.col}
+## [**By human**]{.darkgreen}
+
+### Plain text means the agent's edit is a **diff**
+:::
+
+---
+
+## HTML is good, but it can't tell you if it's broken
 
 ::: {.col}
 [**HTML**]{.red}
@@ -1375,54 +1391,18 @@ Bad cross-reference, failed chunk, invalid YAML → **loud, deterministic error.
 The agent reads it and fixes it — without you.
 :::
 
-::: {.notes}
-THE KILL SHOT of Act 5. This is the sharpest thing in the talk.
-
-Documents just got a compile step. Code has had one for decades. Documents get
-one exactly at the moment their authors became probabilistic.
-:::
-
 ---
 
-## Quarto is checkable twice
-
-::: {.col}
-[**By machine**]{.darkgreen}
-
-`quarto render` is a compile step. Failures are loud and specific.
-:::
-
-::: {.col}
-[**By human**]{.darkgreen}
-
-Plain text means the agent's edit is a **diff**. Review scales with the change,
-not the document.
-:::
-
-::: {.notes}
-Both halves matter. git revert is a one-command undo for any agent mistake.
-:::
+Diffs image showing html diffs vs qmd
 
 ---
 
 {{< bg-color "#000000" >}}
-{{< middle >}}
-{{< center >}}
 
-<br>
-![](images/vehicletrends.gif){fig-align="center" width=100%}
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# [vehicletrends.us]{.font150}
-
-[**169,552,665** listings · 100,000+ dealerships · 2018–2025]{.font120}
-
-[Nobody typed that number. The page computes it at render.]{.font120 .orange}
+## [Building a Dashboard with Quarto: [vehicletrends.us]{.yellow}]{.font90 .center}
+<center>
+<img src="images/vehicletrends.gif" width=80%>
+</center>
 
 ---
 

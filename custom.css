@@ -6,7 +6,7 @@
 
      #edae49  yellow  CONTENT / data      #d1495b  red    CHANGED content
      #00798c  teal    FORMAT / structure  #2e4057  navy   ink — strokes, labels
-     #66a182  green   VERDICT (run-3 check)  #8d96a3  grey  (unused)
+     #66a182  green   VERDICT (run-3 check)  #8d96a3  grey   SPINE, already earned
 
    Plus ONE deliberate outsider:
 
@@ -118,6 +118,33 @@
   background-color: #d1495b;
   color: #FFFFFF;
 }
+
+/* ── THE SPINE: Control / Cost / Correct ────────────────────────────────────
+   Two inverse slides carry the running list of what Quarto affords, one word
+   per act, each arriving just before the act that earns it. Grey means "you
+   have already had this one", white means "this is next", so the room's eye is
+   always on the new word and the finished ones stay legible without competing.
+
+   #8d96a3 is minou's grey — the one role in the palette nothing else uses, and
+   "structural, inactive" is exactly its job. On the inverse card it is about
+   6:1, so it reads from the back of the room; white is 17:1, so the gap between
+   them is unmistakable. NOT a lower opacity on white: that would wash toward the
+   card's own color and read as a rendering artifact rather than a choice.
+
+   Two classes because the two slides do different work. `.earned` is static —
+   by the second ladder slide the convention is known, so the words are simply
+   grey at rest. `.dims` is the one that TEACHES it: `Control` starts white and
+   alone, and turns grey on the same `data-fragment-index` that brings `Cost`
+   in, so the handoff is one beat and you see it happen once.
+
+   `fragment custom` means reveal leaves the word visible at rest and only
+   toggles `.visible`, so the colour change is ours and the heading never moves
+   or reflows. Both rules target the SPAN; lexis paints the h1 white at
+   `.reveal .inverse h1`, and an inherited colour loses to any rule that matches
+   the element directly, so specificity is not in play here. */
+.reveal .earned { color: #8d96a3; }
+.reveal .dims { transition: color 400ms ease; }
+.reveal .dims.visible { color: #8d96a3; }
 
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.

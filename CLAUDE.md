@@ -119,6 +119,19 @@ used **twice** — the cold open and the Act 5 payoff; that bookend is the point
 
 Render status: `index.qmd` has not been re-rendered since the lexis conversion.
 
+## The spine
+
+Two inverse slides run **Control → Cost → Correct**, one word per act, each
+arriving just before the act that earns it. Grey `#8d96a3` = already had it,
+white = next. Slide 1 teaches the convention (`Control` white and alone, then
+`.dims` to grey on the same `data-fragment-index` that brings `Cost` in); slide
+2 relies on it (`.earned`, static, no motion). ❌ No icons beside the words —
+each word appears *before* its act, so an icon would preview, not recall; the
+cost act has no honest glyph (a dollar sign says money, the act is about
+tokens); and `Correct` has no colour left that doesn't already mean something.
+The spine stops at Act 4 — the dashboard act calls back to all three in speech,
+but carries no ladder slide of its own.
+
 ## The palette
 
 Everything comes from `ltc::ltc("minou")` — slides, figure, `plots.R`.
@@ -131,6 +144,7 @@ Everything comes from `ltc::ltc("minou")` — slides, figure, `plots.R`.
 | `#2e4057` navy | ink — every stroke, arrowhead, label |
 | `#852f88` purple | your direct action (from `ltc("hat")`, non-minou) |
 | `#66a182` green | verdict — **only** the run-3 checkmark on figure slide 1 |
+| `#8d96a3` grey | spine — a `Control`/`Cost`/`Correct` word you've already earned |
 | `#74aadb` / `#3d7fb5` | Quarto's brand blue and its ink twin — **cost slides only** |
 | `#2B579A` | Word's blue — **cost slides only** |
 
@@ -501,11 +515,29 @@ is a better setup for the compile-step slides than an authorship claim would be.
 real, multi-page, self-updating Quarto site. Draw principles from the real repo,
 never invented ones.
 
+**The seam is additive, not a mapping.** The act is *"those three things are
+great about Quarto — and it also happens to be great for dashboards."* Some
+points call back to the spine; several (serverless, free hosting) map to none of
+it, and that's fine. ❌ Never frame the transition as *here's how Control / Cost
+/ Correct apply* — that promises a 1:1 the act doesn't deliver. Three beats: the
+gif returns carrying *See? I told you I'd get to the dashboard eventually* (the
+joke does the structural work — it concedes the last twelve minutes and closes
+the first argument without claiming this one proves it); then `vehicletrends.us`
++ *I built this with Quarto* — **provenance, not proof**, and ❌ never the word
+*artifact*, which the thesis line spends on the opposite meaning; then the turn,
+**`It's not an app. It's a website.`** That turn is the act's own spine — URLs,
+no server, the iframe, Shinylive, static files, free hosting all fall out of it,
+which is what frees the act from the spine above.
+
 **169,552,665 listings** (74,894,001 new + 94,658,664 used), 100,000+
 dealerships, 2018–2025; 15 pages, ~2,900 lines of `.qmd`. ❌ The old "10M+" is
 wrong by 17×. `about.qmd:11–16` computes these at render and inlines them with
 `` `r n_new` `` — the case study's own source states the thesis, so use the exact
-number, not "about 170 million."
+number, not "about 170 million." The big number is **off the title card** — its
+size was never the point, and leading with it made the site sound like a serious
+application seconds before the turn deflates it to a website. What survives
+there is the load-bearing half: *every number is computed at render, I typed
+none of them.*
 
 1. **Same move, at scale.** Agent writes the `.qmd` + small R chunks; **data
    lives in an external R package** (`vehicletrends`) the pages read at render
