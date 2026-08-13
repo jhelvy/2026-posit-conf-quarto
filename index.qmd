@@ -1356,6 +1356,42 @@ percent_listings |>
 
 ---
 
+## [Have a heavier artifact? Put it in a box!]{.center}
+
+::: {.col width="65%"}
+
+```{r}
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px",
+  width = "100%",
+  style = "border: none;"
+)
+```
+
+:::
+
+::: {.col width="35%"}
+
+::: {.font60}
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", 
+  width = "100%"
+)
+```
+:::
+
+<br>
+
+<center>
+<a href="https://vehicletrends.github.io/hhi-map/" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">View map in new tab</a>
+</center>
+:::
+
+---
+
 ## Need something heavier? Put it in a box
 
 ::: {.col}
