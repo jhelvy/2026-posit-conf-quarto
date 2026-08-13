@@ -5,6 +5,7 @@ author: "John Paul Helveston"
 format:
   lexis-revealjs:
     css: custom.css
+    code-block-height: "660px"
 extensions:
   iconify:
     preload: iconify-preload.json
@@ -1306,18 +1307,30 @@ sales globally.</p>
 {{< middle >}}
 
 <center>
-<img src="images/africa-bad.png" height="700">
+<img src="images/africa-bad.png" height="660">
+
+[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
 
 ---
 
-{{< middle >}}
+## [Same map from source]{.center}
 
+::: {.col width="55%" .font45}
+
+```{r}
+#| file: africa-map.R
+#| eval: false
+#| echo: true
+```
+
+:::
+
+::: {.col width="45%"}
 <center>
-<img src="images/africa-good.png" height="660">
-
-[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
+<img src="images/africa-map.png" height="620">
 </center>
+:::
 
 ---
 

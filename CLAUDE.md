@@ -51,8 +51,12 @@ Outline: `outline.md`.
 - `_extensions/lexis/` — the lexis extension. Don't hand-edit.
 - `custom.css` — the only local stylesheet.
 - `custom.scss` — **dead**, safe to delete.
-- `plots.R` — regenerates `images/fig-tokens.png` (the only generated image).
-  `Rscript plots.R`. Everything else in `images/` is a screenshot or export.
+- `plots.R` — regenerates `images/fig-tokens.png` and `images/africa-map.png`
+  (the only generated images). `Rscript plots.R`. Everything else in `images/`
+  is a screenshot or export.
+- `africa-map.R` — the map on the `Same map, from source` slide. Displayed
+  verbatim on that slide, so keep it clean; see the correctness act.
+- `data/africa-funding.csv` — that map's amounts and label offsets.
 - `data/token_results.csv` — verbatim copy of the blog post's data. Numbers on
   the token slide are computed from it. Change the CSV and re-run; never
   hand-edit the PNG.
@@ -460,11 +464,27 @@ AI-generated; the BBC graphic says only "mislabels." The slide claims what it
 rendered, it shipped, nobody caught it. That works regardless of authorship and
 is a better setup for the compile-step slides than an authorship claim would be.
 
-- `africa-bad.png` is the artifact in the wild; `africa-good.png` is the BBC's
-  annotation of what was wrong (not a corrected map). Source credited on slide:
-  <https://www.bbc.com/news/articles/c89n0xykw2go>.
-- **Sized by height (620 / 660), not width** — one is 16:9 landscape, the other
-  3:4 portrait, so equal widths made them read as unrelated images.
+- `africa-bad.png` is the artifact in the wild, credited to the BBC on the
+  slide: <https://www.bbc.com/news/articles/c89n0xykw2go>. `africa-good.png`
+  (the BBC's annotation of what was wrong) is now **unreferenced** — the slide
+  that held it is the code slide below.
+- **`Same map, from source`** — `africa-map.R` on the left, the image it makes
+  on the right. The code column is `#| file: africa-map.R` with `eval: false`,
+  so what the room reads *is* the script, and it can't drift from the picture.
+  ❌ Nothing may go in `africa-map.R` that the slide shouldn't show: the file
+  returns the plot and `plots.R` does the `ggsave`. Nothing is executed at
+  render — sf and rnaturalearth are `Rscript plots.R` dependencies only.
+- **`stopifnot(all(funding$name %in% africa$name))` is the point of the slide.**
+  A mistyped country stops the render. Keep it visible.
+- Amounts and the label offsets (`dx`, `dy`) live in `data/africa-funding.csv` —
+  values in data, code in code, which is also what shortens the block enough to
+  fit. Offsets are hand-placed on purpose: ggrepel was tried and cut, because it
+  is stochastic and its leader lines were too short to say which label belongs
+  to which country — the exact failure the previous slide mocks.
+- Fills are the deck's teal (`#00798c`, *ask for the source*) against grey90;
+  labels and leaders are navy ink.
+- **Sized by height (660 bad / 620 map), not width** — one is 16:9 landscape,
+  the other near-square, so equal widths made them read as unrelated images.
 - The turn is *drawn vs. joined*: join names to a shapefile and a wrong name
   fails; draw the shape and there is nothing to fail. That is Act 2's thesis
   applied to data, which is why it earns its own slide rather than a caption.
@@ -573,6 +593,9 @@ not an image attribute block), `.openleft`/`.openright`, and a commented-out
   level before naming a host.
 - **`# Close` (slide 40) is still a label divider** — same violation as the old
   `# Easy to deploy (serverless)`. Needs a statement.
+- **Check `Same map, from source` fits** — 33 lines of code at `.font45`. The
+  clip at line 29 was Quarto's 500px code-block cap, now `code-block-height:
+  660` in the YAML; the other knob is the font class.
 - **Time check** — the deck is now 44 slides for 20 minutes.
 - **Refresh `README.md`** — still names `custom.scss`, doesn't mention lexis.
 - **Optional "what bit me" slide** — only with real pitfalls from John.

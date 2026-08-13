@@ -46,7 +46,10 @@ qmd_blue <- "#3d7fb5"
 # through `ragg::agg_png` below for the same reason — the default quartz device
 # does not see a font registered this way.
 fa_dir <- "_extensions/quarto-ext/fontawesome/assets/webfonts"
-systemfonts::register_font("FA Solid", plain = file.path(fa_dir, "fa-solid-900.ttf"))
+systemfonts::register_font(
+  "FA Solid",
+  plain = file.path(fa_dir, "fa-solid-900.ttf")
+)
 systemfonts::register_font(
   "FA Brands",
   plain = file.path(fa_dir, "FontAwesome6Brands-Regular-400.ttf")
@@ -117,14 +120,20 @@ fig_tokens <- tokens |>
   geom_text(
     data = filter(row_icons, family == "FA Solid"),
     aes(x = -Inf, y = output_type, label = glyph),
-    inherit.aes = FALSE, family = "FA Solid",
-    hjust = 4.2, size = 5.5, color = ink
+    inherit.aes = FALSE,
+    family = "FA Solid",
+    hjust = 4.2,
+    size = 5.5,
+    color = ink
   ) +
   geom_text(
     data = filter(row_icons, family == "FA Brands"),
     aes(x = -Inf, y = output_type, label = glyph),
-    inherit.aes = FALSE, family = "FA Brands",
-    hjust = 4.2, size = 5.5, color = ink
+    inherit.aes = FALSE,
+    family = "FA Brands",
+    hjust = 4.2,
+    size = 5.5,
+    color = ink
   ) +
   # The multiplier is the only annotation. Per-dot token counts were here too
   # and were cut: the axis already gives the magnitudes, and "7.2x" is the
@@ -155,9 +164,13 @@ fig_tokens <- tokens |>
     y = NULL,
     color = NULL,
     title = paste0(
-      "<span style='color: ", qmd_blue, ";'>Quarto (.qmd)</span>",
+      "<span style='color: ",
+      qmd_blue,
+      ";'>Quarto (.qmd)</span>",
       " vs. ",
-      "<span style='color: ", minou["red"], ";'>Direct format</span>",
+      "<span style='color: ",
+      minou["red"],
+      ";'>Direct format</span>",
       " output tokens"
     )
   ) +
@@ -185,4 +198,20 @@ ggsave(
   dpi = 192, # knitr's default (96 x fig-retina 2), so this matches the post
   bg = "white",
   device = ragg::agg_png # sees the fonts registered above; quartz does not
+)
+
+# africa-map: the correctness slide's map ------------------------------------
+# The plot itself lives in africa-map.R, alone, because that file is what the
+# slide displays — the code column is `readLines()` of it, so the audience is
+# reading the exact script that made the image beside it. Nothing may be added
+# to that file that the slide shouldn't show, which is why the ggsave is here
+# and the script only returns the plot.
+ggsave(
+  "images/africa-map.png",
+  source("africa-map.R")$value,
+  width = 6,
+  height = 5.5,
+  dpi = 192,
+  bg = "white",
+  device = ragg::agg_png
 )
