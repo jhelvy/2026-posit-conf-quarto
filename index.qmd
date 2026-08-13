@@ -1293,10 +1293,11 @@ You maintain a **document**.
 ::: {.col width="40%"}
 ::: {.font45}
 ```r
-percent_listings |>
-  group_by(group_level) |>
-  e_charts(listing_year) |>
-  e_line(share) |>
+depreciation |>
+  filter(powertrain == "Gasoline") |>
+  group_by(vehicle_type) |>
+  e_charts(age_years) |>
+  e_line(rr_smooth) |>
   e_legend()
 ```
 :::
@@ -1314,34 +1315,23 @@ suppressMessages({
   library(vehicletrends)
 })
 
-percent_listings |>
-  filter(
-    group_var == "powertrain",
-    is.na(category_var),
-    inventory_type == "New"
-  ) |>
-  mutate(
-    share = round(100 * p, 2),
-    # listing_year MUST be character. Left numeric, echarts builds a `value`
-    # x-axis running 0-2500 and the eight years collapse into a smear at ~2020.
-    # Pairs with type = "category" below; same idiom the real site uses.
-    listing_year = as.character(listing_year),
-    group_level = recode(
-      group_level,
-      "Battery Electric (BEV)" = "BEV",
-      "Plug-In Hybrid Electric (PHEV)" = "PHEV",
-      "Hybrid Electric (HEV)" = "Hybrid",
-      "Flex Fuel (E85)" = "Flex Fuel"
-    )
-  ) |>
-  arrange(listing_year) |>
-  group_by(group_level) |>
-  e_charts(listing_year, height = "460px") |>
-  e_line(share, symbol = "circle", symbolSize = 8) |>
+smooth_group <- function(df) {
+  fit <- loess(rr ~ age_years, data = df, span = 0.5)
+  df$rr_smooth <- predict(fit)
+  df
+}
+
+depreciation |>
+  filter(powertrain == "Gasoline", quantile == 50) |>
+  mutate(age_years = age_bin / 12) |>
+  group_by(vehicle_type) |>
+  group_modify(~ smooth_group(.x)) |>
+  e_charts(age_years, height = "460px") |>
+  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
   e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
   e_tooltip(trigger = "axis") |>
-  e_y_axis(name = "% of new listings", nameLocation = "middle", nameGap = 50) |>
-  e_x_axis(name = "Listing year", type = "category") |>
+  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
+  e_x_axis(name = "Age (years)") |>
   e_grid(left = 90, right = 40, top = 30, bottom = 90)
 ```
 :::
