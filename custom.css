@@ -161,30 +161,55 @@
 
    Everything here is an override of reveal's own `pre` rule (0.55em, a box
    shadow, its own padding), so the two cards are sized against each other and
-   not against the theme's code blocks. `white-space: pre` plus `overflow-x`
-   keeps a long error line from wrapping into a second line and unbalancing the
-   columns; if either card is too wide for its half, `font-size` is the knob.
-   Colours are the deck's: navy ground, red for the error and for the `+` line
-   (red is "content that changed", which is exactly what a `+` is), grey for
-   the `-` line. NOT diff green — green means verdict in this deck and nothing
-   else. */
+   not against the theme's code blocks. If either card is too wide for its half,
+   `font-size` is the knob; lines never wrap, so the columns can't unbalance.
+
+   EVERY LINE IS ITS OWN `<span>`, and that is what makes the diff read. A row's
+   tint has to bleed to the card's edge, which an inline span can't do — it
+   paints only the width of its own text, which is what made the first version
+   look like a highlighter rather than a diff. So the spans are `display: block`
+   and carry the card's horizontal padding themselves, while the card keeps only
+   its vertical padding. The card is then `white-space: normal` so the newlines
+   BETWEEN those blocks are collapsed away instead of rendering as blank rows,
+   and each span is `white-space: pre` so the text inside it keeps its leading
+   spaces. Both properties are load-bearing; swapping either one doubles the
+   line count or eats the indents.
+
+   The diff is the real red/green convention, deliberately: it is an object the
+   room can read on sight, and that is worth more here than the deck's rule that
+   green means verdict — a `+` row is not going to be mistaken for the figure's
+   checkmark. The hues are still palette values (#d1495b red, #4A6D5A the green
+   ink variant); only the two pale row tints are new. Note that green reads as
+   "good" while the edit shown is a bad one — that is the joke, and the point:
+   green means ADDED, and only a person can tell you it shouldn't have been. */
 .reveal pre.specimen {
   display: block;
   width: 100%;
   margin: 0.4em 0 0 0;
-  padding: 0.7em 0.9em;
+  padding: 0.7em 0;
   border-radius: 6px;
   box-shadow: none;
   font-size: 0.5em;
   line-height: 1.6;
   text-align: left;
-  white-space: pre;
+  white-space: normal;
   word-wrap: normal;
   overflow-x: auto;
+}
+.reveal pre.specimen > span {
+  display: block;
+  white-space: pre;
+  padding: 0 0.9em;
 }
 .reveal pre.errcard  { background: #2e4057; color: #FFFFFF; border: none; }
 .reveal pre.diffcard { background: #f4f5f7; color: #2e4057;
                        border: 1px solid #d8dbe0; }
+
+.reveal pre.errcard .sp-dim { color: #8d96a3; }
+.reveal pre.errcard .sp-err { color: #d1495b; }
+
+.reveal pre.diffcard .sp-del { background: #fbe9eb; color: #d1495b; }
+.reveal pre.diffcard .sp-add { background: #e4efe9; color: #4A6D5A; }
 
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.

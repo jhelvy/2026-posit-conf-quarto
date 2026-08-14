@@ -1098,7 +1098,7 @@ sales globally.</p>
 -->
 
 ```{=html}
-<svg viewBox="0 75 1085 505" width="100%" style="max-height:80vh;"
+<svg viewBox="0 75 1085 520" width="100%" style="max-height:80vh;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -1175,7 +1175,17 @@ sales globally.</p>
 
       <!-- The one .qmd, wearing Quarto's own mark. 24x24 artwork scaled 1.667
            to 40 units and hung on the row's centreline: translate puts its top
-           left at (462, -20), so it is centred on x=482 like the glyphs above. -->
+           left at (462, -20), so it is centred on x=482 like the glyphs above.
+
+           It sits in the entanglement figure's box — same white fill, same navy
+           2.5 stroke, same rx=6 — because it is the same object: a FILE, not a
+           format, which is why the container is neutral rather than teal. The
+           box is also what stops the source from reading as a fourth output
+           icon in a row of three. Its right edge at 602 leaves the deck's
+           2-unit gap before the render line starts at 604; the left edge at 446
+           clears the incoming arrowhead, which lands ~436. -->
+      <rect x="446" y="-32" width="156" height="64" rx="6"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
       <g transform="translate(462 -20) scale(1.66667)">
         <path fill="#74aadb" d="M12.65 12.854V24c6.042-.325 10.923-5.105 11.33-11.125H12.65Zm-1.504 0H.02c.427 5.94 5.166 10.699 11.105 11.105V12.854Zm1.505-1.505H24C23.675 5.247 18.753.325 12.65 0Zm-1.505 0V0C5.106.427.326 5.308 0 11.35Z"/>
       </g>
@@ -1189,18 +1199,25 @@ sales globally.</p>
       <path d="M 604 0 L 682 0" fill="none" stroke="#2e4057" stroke-width="2.5"/>
       <text x="643" y="-16" font-size="21" text-anchor="middle" fill="#2e4057">render</text>
 
-      <path d="M 682 0 L 682 -38 Q 682 -50 694 -50 L 762 -50" fill="none"
+      <!-- Fan spread is 64 units, up from 50: at 50 the three glyphs read as a
+           single block of icons rather than three separate outputs, which is
+           the opposite of what the fan is for. The corner radius stays 12, so
+           each elbow runs to (spread - 12) before the quad. The viewBox height
+           grew to 520 to hold the bottom row — the .docx glyph now centres at
+           y=564 and reaches ~587 against a floor of 595. Change the spread and
+           that floor has to be rechecked. -->
+      <path d="M 682 0 L 682 -52 Q 682 -64 694 -64 L 762 -64" fill="none"
             stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
       <path d="M 682 0 L 762 0" fill="none"
             stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
-      <path d="M 682 0 L 682 38 Q 682 50 694 50 L 762 50" fill="none"
+      <path d="M 682 0 L 682 52 Q 682 64 694 64 L 762 64" fill="none"
             stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
 
       <!-- Same three icons, same three colors, same order as above. -->
-      <text x="800" y="-50" font-size="46" text-anchor="middle"
+      <text x="800" y="-64" font-size="46" text-anchor="middle"
             dominant-baseline="central" fill="#A77400"
             font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c1;</text>
-      <text x="834" y="-50" font-size="26" dominant-baseline="central"
+      <text x="834" y="-64" font-size="26" dominant-baseline="central"
             fill="#A77400" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
 
       <text x="800" y="0" font-size="46" text-anchor="middle"
@@ -1209,10 +1226,10 @@ sales globally.</p>
       <text x="834" y="0" font-size="26" dominant-baseline="central"
             fill="#d1495b" font-family="SFMono-Regular, Menlo, monospace">.html</text>
 
-      <text x="800" y="50" font-size="46" text-anchor="middle"
+      <text x="800" y="64" font-size="46" text-anchor="middle"
             dominant-baseline="central" fill="#2B579A"
             font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c2;</text>
-      <text x="834" y="50" font-size="26" dominant-baseline="central"
+      <text x="834" y="64" font-size="26" dominant-baseline="central"
             fill="#2B579A" font-family="SFMono-Regular, Menlo, monospace">.docx</text>
     </g>
   </g>
@@ -1298,7 +1315,7 @@ sales globally.</p>
 
 {{< center >}}
 
-# This map has no automated failure mode
+# This map has no failure mode
 
 <center>
 <img src="images/africa-bad.png" height="560">
@@ -1310,38 +1327,40 @@ sales globally.</p>
 
 # [Quarto is checkable twice]{.center}
 
-::: {.col}
+<br>
+
+::: {.col .fragment}
 ## [**By machine**]{.darkgreen}
 
 ### `quarto render` is a compile step
 
 <pre class="specimen errcard">
-<span style="color:#8d96a3;">Quitting from index.qmd:12-30 [africa-map]</span>
-<span style="color:#d1495b; font-weight:bold;">Error:</span>
-<span style="color:#d1495b;">! all(funding$name %in% africa$name) is not TRUE</span>
-Execution halted
+<span class="sp-dim">Quitting from index.qmd:12-30 [africa-map]</span>
+<span class="sp-err">Error:</span>
+<span class="sp-err">! all(funding$name %in% africa$name) is not TRUE</span>
+<span>Execution halted</span>
 </pre>
 
 :::
 
-::: {.col}
+::: {.col .fragment}
 ## [**By human**]{.darkgreen}
 
 ### Plain text means the edit is a **diff**
 
 <pre class="specimen diffcard">
-  ## EV Sales
-
-  Sales of **electric vehicles** grew 20% in 2025,
-<span style="color:#8d96a3;">- reaching over _20 million_ sales globally.</span>
-<span style="background:#fbe9eb; color:#d1495b; font-weight:700;">+ reaching nearly _20 million_ sales globally.</span>
+<span>  ## EV Sales</span>
+<span> </span>
+<span>  Sales of **electric vehicles** grew 20% in 2025,</span>
+<span class="sp-del">- reaching over _20 million_ sales globally.</span>
+<span class="sp-add">+ reaching nearly _20 million_ sales globally.</span>
 </pre>
 
 :::
 
 ---
 
-## HTML is good, but it can't tell you if it's broken
+## [HTML is good, but it can't tell you if it's broken]{.center}
 
 ::: {.col}
 [**HTML**]{.red}

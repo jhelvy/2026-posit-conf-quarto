@@ -459,7 +459,12 @@ slide B above the three columns — same markup, different inline sizes.
   not tofu.
 - **The `.qmd` is Quarto's mark as a path**, `simple-icons:quarto` copied in at
   24×24 and scaled 1.667 to 40 units, top-left at (462, −20) so it centres on
-  x=482 like the glyphs above it. The iconify extension emits a Web Component,
+  x=482 like the glyphs above it. Mark + label sit in the **entanglement
+  figure's box** (white, navy 2.5, `rx=6`) — same object, a file not a format —
+  which also stops the source reading as a fourth output icon.
+- **Fan spread is 64**, not 50: tighter and the three outputs read as one block
+  of icons. `viewBox` height 520 exists to hold it — `.docx` centres at y=564
+  against a 595 floor, so re-check that if the spread changes. The iconify extension emits a Web Component,
   which can't live inside an SVG — hence the copy. Edit it and the
   character-slide icon together.
 - **Colors are the character slides' ramp** (Quarto blue `#74aadb` mark /
@@ -510,8 +515,12 @@ is a better setup for the compile-step slides than an authorship claim would be.
   `stopifnot()` firing, so the error is a callback rather than a new example.
   Right: the character-count paragraph with `over` → `nearly`, one word that
   compiles cleanly and inverts the claim — the machine has nothing to say, a
-  person catches it instantly. Red `+` (content that changed), grey `−`; ❌ not
-  diff green, which means verdict here. ❌ **Both cards must be `<pre>`, never
+  person catches it instantly. **Real diff colours — red `-`, green `+`, tinted
+  rows bleeding to the card edge.** The deck's one exception to *green = verdict*;
+  a diff is read on sight and worth it. Every line is its own `<span>`: the card
+  is `white-space: normal`, the spans are `display: block` + `white-space: pre`,
+  which is what lets a row tint span the full width instead of hugging the text.
+  ❌ **Both cards must be `<pre>`, never
   `<div>`** — pandoc's `native_divs` parses markdown inside a div, so `**`/`_`
   render and the diff's `-` line becomes a bullet whose `<li>` eats the closing
   `:::`. `<pre>` is raw. Chrome is `.specimen` + `.errcard`/`.diffcard` in
