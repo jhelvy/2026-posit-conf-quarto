@@ -211,6 +211,19 @@
 .reveal pre.diffcard .sp-del { background: #fbe9eb; color: #d1495b; }
 .reveal pre.diffcard .sp-add { background: #e4efe9; color: #4A6D5A; }
 
+/* Word-level highlight inside a changed row, the way GitHub paints it: the row
+   carries the light tint, and the tokens that actually differ carry a darker one
+   on top. `.w` is a grandchild of the <pre>, so the `> span` block rule above
+   does not catch it and it stays inline, hugging just those characters. */
+.reveal pre.diffcard .sp-del .w { background: #f6c3c9; }
+.reveal pre.diffcard .sp-add .w { background: #bcdcc9; }
+
+/* A whole-document diff needs more rows than the five-line cards this chrome was
+   built for. Both cards on a slide take this together — the columns must stay
+   the same type size, since the comparison is how hard the change is to find,
+   not how big the type is. */
+.reveal pre.specimen.compact { font-size: 0.4em; line-height: 1.45; }
+
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.
    but no color variants; these follow its own wrapper-div pattern, so they go

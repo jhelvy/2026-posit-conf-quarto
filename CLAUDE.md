@@ -525,6 +525,19 @@ is a better setup for the compile-step slides than an authorship claim would be.
   render and the diff's `-` line becomes a bullet whose `<li>` eats the closing
   `:::`. `<pre>` is raw. Chrome is `.specimen` + `.errcard`/`.diffcard` in
   `custom.css`, overriding reveal's own `pre` rule.
+- **`HTML is good, but it can't tell you if it's broken` is two diffs, no prose** —
+  same `.diffcard` chrome, the character slides' paragraph, one `.fragment` per
+  column. Left hand-patches `20 million` → `22 million` inside `<em>`; right
+  replaces the number with `` `r ev_sales` `` — HTML you re-type forever, `.qmd`
+  you compute once. **Left shows the whole 19-line document** so the changed row
+  has somewhere to hide; that asymmetry against the right's 6 lines is the slide.
+  ❌ Don't give the right column a `format: html` YAML block to even them up — it
+  spends Act 6's callback. Changed tokens carry a darker inner `<span class="w">`
+  (GitHub's word-level tint); `.w` is a grandchild, so `> span`'s block rule
+  misses it and it stays inline. `.compact` (0.4em/1.45) is what fits 19 rows and
+  is on **both** cards — same type size, or the comparison stops being about how
+  hard the change is to find. Both `<pre>`, so `<` must be `&lt;`, and the
+  inline-R backticks must be `&#96;` or knitr evaluates them at render.
 - The turn is *drawn vs. joined*: join names to a shapefile and a wrong name
   fails; draw the shape and there is nothing to fail. That is Act 2's thesis
   applied to data, which is why it earns its own slide rather than a caption.

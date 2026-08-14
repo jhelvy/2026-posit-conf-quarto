@@ -1352,8 +1352,8 @@ sales globally.</p>
 <span>  ## EV Sales</span>
 <span> </span>
 <span>  Sales of **electric vehicles** grew 20% in 2025,</span>
-<span class="sp-del">- reaching over _20 million_ sales globally.</span>
-<span class="sp-add">+ reaching nearly _20 million_ sales globally.</span>
+<span class="sp-del">- reaching <span class="w">over</span> _20 million_ sales globally.</span>
+<span class="sp-add">+ reaching <span class="w">nearly</span> _20 million_ sales globally.</span>
 </pre>
 
 :::
@@ -1362,27 +1362,52 @@ sales globally.</p>
 
 ## [HTML is good, but it can't tell you if it's broken]{.center}
 
-::: {.col}
-[**HTML**]{.red}
+<br>
 
-No compile step.
+::: {.col .fragment}
+[**HTML** - _manual_ numbers]{.red}
 
-Malformed output still renders as *something*.
-
-The agent cannot tell whether it succeeded.
+::: {.font140}
+<pre class="specimen diffcard compact">
+<span>  &lt;!DOCTYPE html&gt;</span>
+<span>  &lt;html lang="en"&gt;</span>
+<span>  &lt;head&gt;</span>
+<span>  &lt;meta charset="utf-8"&gt;</span>
+<span>  &lt;title&gt;EV Sales&lt;/title&gt;</span>
+<span>  &lt;style&gt;</span>
+<span>  body { font-family: Georgia, serif;</span>
+<span>         max-width: 40em; margin: 3em auto; }</span>
+<span>  h2 { font-size: 1.6em; }</span>
+<span>  &lt;/style&gt;</span>
+<span>  &lt;/head&gt;</span>
+<span>  &lt;body&gt;</span>
+<span>  &lt;h2&gt;EV Sales&lt;/h2&gt;</span>
+<span>  &lt;p&gt;Sales of &lt;strong&gt;electric vehicles&lt;/strong&gt; grew</span>
+<span class="sp-del">- 20% in 2025, reaching over &lt;em&gt;<span class="w">18 million</span>&lt;/em&gt;</span>
+<span class="sp-add">+ 20% in 2025, reaching over &lt;em&gt;<span class="w">20 million</span>&lt;/em&gt;</span>
+<span>  sales globally.&lt;/p&gt;</span>
+<span>  &lt;/body&gt;</span>
+<span>  &lt;/html&gt;</span>
+</pre>
 :::
 
-::: {.col}
-[**`.qmd`**]{.blue}
-
-Bad cross-reference, failed chunk, invalid YAML → **loud, deterministic error.**
-
-The agent reads it and fixes it — without you.
 :::
 
----
+::: {.col .fragment}
+[**`.qmd`** - _computed_ numbers]{.blue}
 
-Diffs image showing html diffs vs qmd
+::: {.font140}
+<pre class="specimen diffcard compact">
+<span>  ## EV Sales</span>
+<span> </span>
+<span>  Sales of **electric vehicles** grew</span>
+<span>  20% in 2025, reaching over</span>
+<span class="sp-del">- _<span class="w">20 million</span>_ sales globally.</span>
+<span class="sp-add">+ _<span class="w">&#96;r ev_sales&#96; million</span>_ sales globally.</span>
+</pre>
+:::
+
+:::
 
 ---
 
