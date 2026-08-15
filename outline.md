@@ -86,3 +86,11 @@ You don't need to know Quarto to start. Change one word - **Ask for the `.qmd`.*
 - Put *"always run `quarto render` before finishing"* in `CLAUDE.md`
 - Have the agent work on a branch so edits arrive as diffs;
 - keep data in files the `.qmd` reads, never in the prompt.
+
+---
+
+On correctness:
+
+Without Quarto: Agent writes probabilistic output; numbers might be wrong
+
+With Quarto: Agent writes structure and code; data flows through code, numbers are computed.

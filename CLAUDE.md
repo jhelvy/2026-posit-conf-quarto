@@ -65,6 +65,8 @@ Outline: `outline.md`.
 - `abstract.md` — canonical title/abstract/bio.
 - `submission.md`, `outline.qmd`, `outline-long.md`, `outline.pptx` —
   historical. Don't take design direction from them.
+- `outline/Slide1-3.png` — John's mockup of the two-halves build. Rebuilt
+  natively in `index.qmd`; the PNGs are not referenced by the deck.
 - `README.md` — **stale**; still names `custom.scss`.
 
 `fig-tokens` differs from the blog version deliberately: Fira Sans Condensed,
@@ -118,6 +120,26 @@ changes both. `handwriting-good-mario.png` and
 used **twice** — the cold open and the Act 5 payoff; that bookend is the point.
 
 Render status: `index.qmd` has not been re-rendered since the lexis conversion.
+
+## The two halves
+
+Three slides right after the cold-open gif, on the title slide's ground
+(`{{< bg-color "#2e4057" >}}` + `{{< inverse >}}`, `{{< quarto size=3x >}}`): the
+mark alone, then the mark left of `Dashboards`, then `Agentic workflows` added
+above it. They promise the talk's shape — Quarto is unreasonably effective at a
+lot of things, two of them get a half each — and license the twelve non-dashboard
+minutes that follow.
+
+- **They sit after the gif, not before it.** The gif keeps its cold open and
+  becomes the referent for `Dashboards`.
+- **The list order is the talk order** (agents first), so `Agentic workflows`
+  goes on top and arrives second. `Dashboards` shifting down as it does is the
+  slot opening, and it's in John's mockup.
+- ❌ **No text on slide 1** — the "unreasonably effective at so many things" line
+  is spoken over the bare mark. Never explain the title.
+- ❌ **Don't list Control / Cost / Correct here.** That spends the spine's reveal;
+  the three C's are a sub-ladder under the first half.
+- The mark is `{{< quarto >}}` from iconify, not `outline/Slide*.png`.
 
 ## The spine
 
@@ -679,7 +701,10 @@ slide goes black. The line under the author is `posit::conf(2026)` /
 - **Check `Same map, from source` fits** — 33 lines of code at `.font45`. The
   clip at line 29 was Quarto's 500px code-block cap, now `code-block-height:
   660` in the YAML; the other knob is the font class.
-- **Time check** — the deck is now 44 slides for 20 minutes.
+- **Time check** — the deck is now 47 slides for 20 minutes.
+- **Vet the two-halves slides on first render** — does the mark jumping from
+  centre to the left column read as making room; do the 38/62 columns land the
+  mark and the words where the mockup has them; is one `<br>` enough gap.
 - **Refresh `README.md`** — still names `custom.scss`, doesn't mention lexis.
 - **Optional "what bit me" slide** — only with real pitfalls from John.
 - Optional: compare notes with the three co-speakers (Blake's talk is also
