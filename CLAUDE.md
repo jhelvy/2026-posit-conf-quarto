@@ -511,7 +511,7 @@ is a better setup for the compile-step slides than an authorship claim would be.
 - **Sized by height (660 bad / 620 map), not width** — one is 16:9 landscape,
   the other near-square, so equal widths made them read as unrelated images.
 - **`Quarto is checkable twice` carries a specimen under each column** — hand-written
-  HTML, no images. Left: the dark terminal card is the previous slide's
+  HTML, no images. Left: the white error card is the previous slide's
   `stopifnot()` firing, so the error is a callback rather than a new example.
   Right: the character-count paragraph with `over` → `nearly`, one word that
   compiles cleanly and inverts the claim — the machine has nothing to say, a
