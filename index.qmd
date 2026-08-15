@@ -58,6 +58,12 @@ library(vehicletrends)
 
 [posit::conf(2026)<br>Houston, TX]{.font120}
 
+::: {.notes}
+The Unreasonable Effectiveness of Quarto.
+
+Don't explain the thesis yet — let them wonder what makes it "unreasonable."
+:::
+
 ---
 
 {{< bg-color "#000000" >}}
@@ -66,6 +72,12 @@ library(vehicletrends)
 
 <br>
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
+
+::: {.notes}
+This is the kind of thing I love making with Quarto.
+
+Let it run. Don't explain how it works — that's the whole back half of the talk.
+:::
 
 ---
 
@@ -76,6 +88,12 @@ library(vehicletrends)
 `r sp(6)`
 
 # {{< quarto size=5x >}}
+
+::: {.notes}
+Quarto is unreasonably effective at a lot of things.
+
+Spoken over the bare mark. Never explain the title.
+:::
 
 ---
 
@@ -93,9 +111,26 @@ library(vehicletrends)
 <img src="images/ai-chip.png" width=55%>
 :::
 
+::: {.notes}
+And now we have something that can build these things with us.
+
+Careful here: the claim is *not* that AI can't build dashboards. Of course it
+can. The interesting question is what happens when the AI owns the finished
+artifact.
+:::
+
 ---
 
 {{< bg-image "images/dashboards.png" size="contain" >}}
+
+::: {.notes}
+So — epic dashboards.
+
+*Pause.* Don't narrate the picture.
+
+Then the pivot: "But before I show you how to build one, I want to start with a
+much simpler problem."
+:::
 
 ---
 
@@ -110,6 +145,14 @@ library(vehicletrends)
 <img src="images/handwriting.png" width=60%>
 </center>
 
+::: {.notes}
+Let's ask an AI to make a handwriting practice sheet.
+
+Say out loud that we're deliberately leaving dashboards behind for a few
+minutes — because the interesting problem here has nothing to do with
+dashboards.
+:::
+
 ---
 
 {{< middle >}}
@@ -119,11 +162,21 @@ library(vehicletrends)
 
 ## *"Make a one-page handwriting practice sheet<br>with sentences about **pokemon**"*
 
+::: {.notes}
+Read the prompt. That's the whole ask.
+:::
+
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
+
+::: {.notes}
+Not bad.
+
+But not what I wanted.
+:::
 
 ---
 
@@ -133,11 +186,24 @@ library(vehicletrends)
 
 # Eight rounds later...
 
+::: {.notes}
+Eight rounds later.
+
+Every one of those rounds was another full pass — not an edit.
+:::
+
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="800"}
+
+::: {.notes}
+This is the one I kept.
+
+Note what moved: I started with pokemon and ended with minecraft. The content is
+exactly the thing that drifted.
+:::
 
 ---
 
@@ -151,6 +217,15 @@ library(vehicletrends)
 
 ::: {.col .blueborder}
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="600"}
+:::
+
+::: {.notes}
+Here's the problem with asking a model for a document.
+
+I didn't want *a* handwriting sheet. I wanted **these words** in **this layout**.
+
+Those are two different things — and when I ask for the finished document, I've
+asked the model to generate both of them at the same time.
 :::
 
 ---
@@ -470,6 +545,18 @@ library(vehicletrends)
 </svg>
 ```
 
+::: {.notes}
+What actually happened across those eight rounds?
+
+Every time I re-prompted, I wasn't changing the thing I didn't like. I was
+rolling the dice on the entire document again.
+
+The model isn't editing a document. It's generating another document.
+
+Don't say "LLMs are bad at formatting" — too easy to rebut. The argument is
+that generation is probabilistic and rendering is deterministic.
+:::
+
 ---
 
 {{< center >}}
@@ -491,10 +578,23 @@ library(vehicletrends)
   Keep each <defs> copy identical to its twin on slide 1.
 
   The heading is the lexis line ABOVE this block, matching slide 1 — same
-  sentence with two words inserted, same chips. The viewBox is IDENTICAL to
-  slide 1's ("170 77 900 553") and so is the row's y (175): that is the whole
-  registration mechanism, and it costs ~280 units of dead canvas below this
-  figure. Coordinates inside are otherwise unchanged.
+  sentence with two words inserted, same chips.
+
+  ⚠️ THE PIXEL REGISTRATION WITH SLIDE 1 IS GONE, deliberately (2026-08-15).
+  Both slides used to carry viewBox "170 77 900 553" so slide 2's at-rest row
+  landed on slide 1's row 1 exactly and advancing changed nothing until you
+  clicked. The price was ~280 units of dead canvas under this figure, which made
+  it HEIGHT-bound: it rendered at scale 1.17 with wide side gaps and boxes
+  visibly smaller than the Act 5 figure's. Cropped to its own ink
+  ("185 78 870 272") it is WIDTH-bound at scale 1.63 — 39% bigger — and fills
+  the slide. Coordinates inside are UNCHANGED, so the drawing is still slide 1's
+  drawing; only the crop and therefore the on-screen scale differ. Advancing
+  from slide 1 now grows the picture. If the stillness ever matters more than
+  the size, restore "170 77 900 553" here and the two are registered again.
+
+  The crop is the OPENED extent, not the at-rest one: me reaches x=200 and the
+  artifact x=1040 once `.openleft`/`.openright` fire, and the lower purple label
+  descends to ~341. Cropping to the at-rest row instead would clip click 1.
 -->
 
 <!-- The Content chip turns red on click 3, with the content block inside the
@@ -508,21 +608,19 @@ library(vehicletrends)
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 ```{=html}
-<!-- The 50px drop is `position:relative; top`, NEVER margin-top, and there is
-     no <br> above this block. Both slides are `{{< middle >}}`, i.e. a flex
-     COLUMN, so the SVG is a flex item and anything that adds height above it
-     (a <br>'s paragraph, a top margin) is taken back out of the SVG by
-     flex-shrink — the figure rendered visibly smaller than slide 1's, which
-     breaks registration. `top` moves it without occupying layout, so the boxes
-     stay exactly slide 1's size.
+<!-- `margin-top` IS SAFE HERE NOW, and it was not before. The old warning stood
+     because this slide was height-bound: it is a `{{< middle >}}` flex column,
+     so the SVG is a flex item, and any height added above it was taken straight
+     back out of the figure by flex-shrink. Since the crop made the figure
+     WIDTH-bound there is vertical slack to spare (~445px of figure in ~635px of
+     room), so a top margin opens the gap under the heading instead of shrinking
+     the drawing. If the viewBox ever goes back to 553 tall, this margin has to
+     go with it.
 
-     The drop exists because this slide's ink only fills the top ~170 of a
-     553-unit viewBox (the rest is the dead canvas registration costs), so the
-     SVG's own centre sits well below its figure. It is the ONE thing slide 2
-     does that slide 1 doesn't — remove it, or add the same to slide 1, if the
-     stillness matters more than the centring. -->
-<svg viewBox="170 77 900 553" width="100%"
-     style="max-height:85vh; position:relative; top:50px;"
+     The old `position:relative; top:50px` is gone too — it existed only to
+     re-centre the figure against the dead canvas that the crop removed. -->
+<svg viewBox="185 78 870 272" width="100%"
+     style="max-height:85vh; margin-top:70px;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -785,7 +883,7 @@ library(vehicletrends)
           fill="none" stroke="#852f88" stroke-width="2.5"
           marker-end="url(#ahEdit2)"/>
     <text x="420" y="285" font-size="20" fill="#852f88"
-          text-anchor="middle">prompt the agent to change the .qmd</text>
+          text-anchor="middle">prompt the agent to change the .qmd...</text>
 
     <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245"
           fill="none" stroke="#852f88" stroke-width="2.5"
@@ -812,6 +910,15 @@ library(vehicletrends)
 
 </svg>
 ```
+
+::: {.notes}
+Define Quarto out loud here, about eight seconds: it's a plain-text
+document — markdown with code in it — and `quarto render` turns it into a PDF,
+or a website, or these slides.
+
+The point isn't that the .qmd is prettier. It's that the weaving moved somewhere
+I can reach, and reaching it took one step instead of eight.
+:::
 
 ---
 
@@ -846,11 +953,23 @@ library(vehicletrends)
   No `render` label under the arrows: two of them would be two repetitions of a
   word the previous slide just taught. Same rule as `#loop` on slide 1 —
   anything in a repeated unit is paid for per copy.
+
+  SIZING. The two `.qmd` graphics were 216x180 on a "0 0 240 200" viewBox, which
+  carried 50 units of unused width and rendered the box at 0.9 scale — too small
+  to read from the back. They are now "21 2 198 195" at 218x215: the viewBox is
+  cropped to the actual ink (x 25..215, y 5.6..192.5, 4 units of margin all
+  round) and the element is 35px taller, which together put the box up ~22%.
+  The SHEETS ARE UNTOUCHED at height 530 — this slide's whole argument is that
+  only the content block differs, so the two photographs must not move.
+  ⚠️ 180+530 already nearly fills the 795px of usable slide height; +35 was
+  sized to fit the remaining slack. Going bigger means taking it out of the
+  sheets, which costs more than it buys. Keep the two SVGs byte-identical apart
+  from the content block's fill and its word.
 -->
 
 ::: {.col .center}
 ```{=html}
-<svg viewBox="0 0 240 200" width="216" height="180"
+<svg viewBox="21 2 198 195" width="218" height="215"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
   <text x="120" y="20" font-size="20" text-anchor="middle"
@@ -873,7 +992,7 @@ library(vehicletrends)
 
 ::: {.col .center}
 ```{=html}
-<svg viewBox="0 0 240 200" width="216" height="180"
+<svg viewBox="21 2 198 195" width="218" height="215"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
   <text x="120" y="20" font-size="20" text-anchor="middle"
@@ -894,6 +1013,13 @@ library(vehicletrends)
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="530"}
 :::
 
+::: {.notes}
+Same format. No drift.
+
+One word changed. Everything else held — same layout, same margins, same
+everything.
+:::
+
 ---
 
 {{< inverse >}}
@@ -901,12 +1027,691 @@ library(vehicletrends)
 
 # [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
 
+::: {.notes}
+So here's the trick. Stop asking the model for the artifact.
+
+Ask it for the source.
+:::
+
 ---
 
 {{< inverse >}}
 {{< middle >}}
 
-# [[Ask for the [~~source~~ .qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+# [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+
+::: {.notes}
+And in Quarto, the source is a `.qmd`.
+
+The agent writes the structure. Quarto takes responsibility for producing the
+artifact.
+:::
+
+---
+
+{{< bg-color "#000000" >}}
+{{< middle >}}
+{{< center >}}
+
+<br>
+![](images/vehicletrends.gif){fig-align="center" width=100%}
+
+::: {.notes}
+A handwriting worksheet is a pretty trivial example. So why am I
+talking about it at a session about dashboards?
+
+Because a dashboard is just a document with a lot more that can go wrong: it has
+layout, text, data, code, JavaScript, interaction. And I don't want a
+model regenerating all of that every time I change one sentence.
+
+I built this with Quarto.
+:::
+
+---
+
+{{< center >}}
+{{< middle >}}
+
+<!--
+  THE DASHBOARD FIGURE — entanglement figure slide 2, redrawn at site scale.
+
+  IT OPENS ACT 2, right after the gif returns, and that placement is the point:
+  figure 2 was three slides ago, so the echo is still in the room's head. It
+  used to sit in Act 5, ~28 slides later, where the callback had decayed to the
+  point of needing reconstruction. Moving it here also resolved a duplication —
+  Act 5's `It looks like an application. It isn't.` says the same thing in
+  bullets, and now reads as the recap of this rather than a second first pass.
+  The move cost the map feeder, which had to go: see the note where it used to
+  be. Two clicks now, not three.
+
+  It is a CALLBACK, not a new picture. The left half is byte-identical to figure
+  2's opened state — me at 200, agent at 400, the same 110x64 and 180x64 boxes,
+  the same dashed agent, the same 80-unit arrows, the same `writes` label at
+  y=161 — and the .qmd's front card is figure 2's .qmd box at its exact
+  coordinates (670,113,190,124) with the same teal `yaml` and yellow `content`
+  bands inside it. Everything the room already learned is free; only the two
+  ends changed.
+
+  THE viewBox IS "185 68 935 342". Coordinates inside are figure 2's, so every
+  box sits at the same place in the drawing and the callback survives; what
+  differs is the CROP. It is tuned to the real ink (x 200..1104, y 74..400): at
+  553 tall — the height figure 2 used to carry — this figure had ~200 units of
+  dead canvas and was HEIGHT-bound, so it rendered small and floated high with
+  wide side gaps. At 342 the aspect is 2.7 against the frame's ~2.2, so it is
+  WIDTH-bound and fills the slide. That is the whole reason the boxes read
+  bigger here, and it is the same fix figure 2 has now had. y=68 is what stops
+  `.qmd x 15` from being clipped: a 22px baseline at y=90 has its ascender
+  near 74. Restoring the map feeder would push the ink to y=422 and the height
+  back to 364.
+
+  ⚠️ The width is 935, not 895, and the 40 units are the price of CENTRING
+  `vehicletrends.us` on the window: the label is ~192 units wide against a
+  115-wide window, so it overhangs to x=1104. That costs ~4% of scale — the
+  whole figure renders slightly smaller so the label can sit where it belongs.
+  Shrinking the label's font is the lever if that trade ever stops being worth
+  it; anchoring it `end` again is not, since that is the bug this fixed.
+
+  WHAT CHANGED, and it is the whole slide:
+    * one .qmd became a STACK of them, and the agent's arrow still lands on ONE
+      card. That is the small-context claim, drawn rather than asserted.
+    * the .pdf page became a BROWSER WINDOW. This is the deck's one departure
+      from "the artifact is a page with a folded corner" and it is deliberate:
+      the artifact here is a site, and the window is what makes `It's not an
+      app, it's a website` visible. Its content area still carries the
+      interleaved teal/yellow bands, because a rendered artifact is still
+      entangled — that never was the problem.
+    * two feeders arrive on click. Both point INTO the chain from outside, which
+      is the composition claim: the data and the heavy component are things the
+      page refers to, not things the agent wrote.
+
+  THE STACK IS FLUSH RIGHT AT x=860 and fans left-and-up (686/678/670, tops
+  97/105/113, widths 174/182/190). That is not decoration — it is what keeps the
+  `render` arrow at figure 2's exact 862..942. Offset the cards the usual
+  down-right way and the back card collides with the arrow, and the whole right
+  half has to be renumbered. Back cards are drawn FIRST so the front covers
+  them; each shows as an 8-unit strip along its top edge.
+
+  Yellow appears only as the data box's FILL and the content band's, never as a
+  line or a letter — the palette rule. Text on yellow is navy.
+
+  Marker id `ahDash` is unique document-wide; reveal display:none's non-current
+  slides, so ids may not be shared across them.
+
+  VETTED ONCE (2026-08-15) and fixed: the stack reads as sheets, the browser
+  reads as a browser, `vehicletrends.us` clears the right edge. Three things
+  were wrong and are corrected above — the clipped top label, ~200px of dead
+  canvas, and click 1's arrow drawn straight through a caption centred on the
+  stack. Still unvetted: the re-cropped viewBox, and the caption in its new
+  place under the agent.
+-->
+
+```{=html}
+<svg viewBox="185 68 935 342" width="100%" style="max-height:85vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <marker id="ahDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+    <marker id="ahEditDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"/></marker>
+  </defs>
+
+  <!-- ── AT REST: I asked for the website ─────────────────────────────────
+       me -> agent -> the site, one arrow, no source anywhere. This is figure
+       slide 1's claim wearing a dashboard: I asked for the artifact and the
+       agent handed me the artifact.
+
+       CLICK 1 opens the chain and drops the fifteen .qmd into the gap — the
+       identical mechanism figure 2 uses, down to the same ±140. That is not a
+       coincidence and it is worth checking if these coordinates ever change:
+       closed, the agent's right edge is 580+140=720 and the site's left is
+       950-140=810, leaving 90 = 2 gap + 80 arrow + 8 landing. Solve
+       370-2s = 90 and s is 140. Both shifts are CSS transforms on
+       `fragment custom` groups (`.openleft` / `.openright` in custom.css);
+       reveal's `:not(.custom)` rule leaves them visible at rest and only
+       toggles `.visible`. ⚠️ If that CSS is ever lost the boxes simply stay
+       closed and the stack lands on top of the site — these two rules are NOT
+       optional. -->
+
+  <g class="fragment custom openleft" data-fragment-index="1">
+    <rect x="340" y="143" width="110" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="395" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+
+    <path d="M 452 175 L 532 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+
+    <!-- Still dashed. Nothing about the agent improved between figure 2 and
+         here; what improved is the shape of what it writes into. -->
+    <rect x="540" y="143" width="180" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+          stroke-dasharray="7 5"/>
+    <text x="630" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+
+    <!-- The direct agent -> site arrow: "make me a dashboard," and out comes a
+         dashboard. It rides along with the agent as the chain opens and fades
+         as the .qmd take its place — nested here on purpose so it stays
+         attached to the agent while it goes. Same move as figure 2. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <path d="M 722 175 L 802 175" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDash)"/>
+    </g>
+  </g>
+
+  <!-- ❌ NOTHING goes above the agent. A caption there ("one page in context",
+       "opens one page at a time") was tried and cut: the arrow already lands on
+       exactly one card, which says it without a line of type, and the claim is
+       John's to make out loud. Under the stack and under the agent are both
+       occupied anyway — by click 2's feeder and by the purple fork. -->
+
+  <!-- ── CLICK 1: the stack arrives. Back cards first, flush right at 860. ──
+       Drawn at OPENED coordinates and never moved — it is the thing the gap
+       opens for, so it fades in where it belongs rather than gliding. -->
+  <g class="fragment" data-fragment-index="1">
+    <text x="622" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">writes</text>
+    <path d="M 582 175 L 662 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+
+    <text x="765" y="90" font-size="22" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd &#215; 15</text>
+
+    <rect x="686" y="97" width="174" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="678" y="105" width="182" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+
+    <!-- The front card IS figure 2's .qmd — same box, same two bands, same
+         coordinates. The arrow lands here and only here. -->
+    <rect x="670" y="113" width="190" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="686" y="129" width="158" height="36" fill="#00798c"/>
+    <text x="765" y="154" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+    <rect x="686" y="177" width="158" height="44" fill="#edae49"/>
+    <text x="765" y="206" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+    <text x="902" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">render</text>
+    <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+  </g>
+
+  <!-- ── The site. Glides RIGHT as the chain opens. ─────────────────────────
+       Drawn 140 left of its opened home, so every x here is (opened - 140):
+       the window at 810 lands at 950, and the label's centre 867.5 lands at
+       1007.5, which is the window's own centre. ⚠️ The label is `text-anchor
+       middle` on the WINDOW's centre, not `end` on its right edge — it used to
+       be the latter and hung visibly off to the right. That centring is what
+       sets the viewBox width: "vehicletrends.us" is 16 mono characters at 20px,
+       so ~192 units wide, and it overhangs the 115-wide window by ~38 units on
+       each side. -->
+  <g class="fragment custom openright" data-fragment-index="1">
+    <text x="867" y="98" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">vehicletrends.us</text>
+
+    <rect x="810" y="110" width="115" height="130" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <path d="M 810 132 L 925 132" stroke="#2e4057" stroke-width="2"/>
+    <circle cx="822" cy="121" r="3" fill="#2e4057"/>
+    <circle cx="833" cy="121" r="3" fill="#2e4057"/>
+    <circle cx="844" cy="121" r="3" fill="#2e4057"/>
+
+    <!-- The sidebar is the navigation Quarto wrote, not the agent. -->
+    <path d="M 844 132 L 844 240" stroke="#2e4057" stroke-width="2"/>
+    <rect x="816" y="144" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="157" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="170" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="183" width="20" height="5" fill="#2e4057"/>
+
+    <!-- Still interleaved. The OUTPUT was never the thing that had to change. -->
+    <rect x="852" y="140" width="64" height="10" fill="#00798c"/>
+    <rect x="852" y="154" width="64" height="14" fill="#edae49"/>
+    <rect x="852" y="172" width="64" height="8"  fill="#00798c"/>
+    <rect x="852" y="184" width="64" height="16" fill="#edae49"/>
+    <rect x="852" y="204" width="64" height="10" fill="#00798c"/>
+    <rect x="852" y="218" width="64" height="8"  fill="#edae49"/>
+  </g>
+
+  <!-- ── CLICK 2: the data comes from outside, at render ───────────────── -->
+  <!-- `library(vehicletrends)` executing during `quarto render`: the data flows
+       through the code and the numbers are baked into the output. It lands on
+       the STACK because that is literally where it goes. -->
+  <g class="fragment" data-fragment-index="2">
+    <path d="M 765 330 L 765 250" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+    <rect x="670" y="332" width="190" height="64" rx="6"
+          fill="#edae49" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="765" y="356" font-size="19" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">{vehicletrends}</text>
+    <text x="765" y="380" font-size="18" text-anchor="middle"
+          fill="#2e4057">R data package</text>
+  </g>
+
+  <!-- ❌ NO MAP FEEDER. A second box hung under the browser — an arrow up into
+       the site, `<iframe>` / map / `</iframe>` — was drawn and cut once this
+       figure moved to open Act 2: the `Put it in a box` slides are still ahead
+       of it here, so the box previewed rather than recalled, and the figure had
+       to be talked around instead of read. The box slides make the point on
+       their own. Restoring it costs a fragment index, a taller box (90 not 64,
+       to hold three lines, top at y=332 to stay level with the data box), and
+       ~20 units of viewBox height.
+
+       If it ever comes back: ❌ its arrow must point at the BROWSER, never at
+       the stack. The .qmd holds six lines that emit `<iframe src=...>`; the
+       render copies that URL and stops. The 276 lines of MapLibre and the
+       1.64 GB of tiles are fetched from another origin by the READER's browser,
+       so the map never enters the .qmd, the render, or the built site. -->
+
+  <!-- ── CLICK 3: and I can still reach in ─────────────────────────────── -->
+  <!-- Figure 2's forked purple descent, unchanged and on purpose: same x=255
+       origin out of `me`, same rails at y=263 and y=309, same landings 8 units
+       under the agent (490,215) and under the .qmd (690,245). The front card is
+       at figure 2's coordinates, so the lower arrow's landing point needed no
+       recomputing at all — which is the payoff for keeping the box where it was.
+
+       It comes LAST here, not second as it does in figure 2. There the fork is
+       the answer to "the content now has an address"; here it is the answer to
+       everything already on screen — fifteen pages and a data package feeding
+       them, and I can still change any of it. Purple is still YOUR action, and
+       both branches are yours: delegating the typing to the agent is a choice
+       you make.
+
+       It is OUTSIDE `.openleft`, at `me`'s opened x=255, because it only ever
+       appears after the chain has opened. The rails clear everything: the upper
+       spans x 267..478, the lower 267..678, and click 2's feeder comes up at
+       x=765, right of both. -->
+  <g class="fragment" data-fragment-index="3">
+    <path d="M 255 211 L 255 251 Q 255 263 267 263 L 478 263 Q 490 263 490 251 L 490 215"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEditDash)"/>
+    <text x="420" y="285" font-size="20" fill="#852f88"
+          text-anchor="middle">prompt the agent to edit a .qmd...</text>
+
+    <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEditDash)"/>
+    <text x="472" y="335" font-size="20" fill="#852f88"
+          text-anchor="middle">…or edit it directly</text>
+  </g>
+
+</svg>
+```
+
+::: {.notes}
+This is the same picture from earlier, at site scale. Same me, same agent, same
+`.qmd` — one of them is still literally the same box.
+
+At rest this is the picture from the very beginning of the talk: I asked for the
+thing, and the agent handed me the thing. Only now the thing is a website.
+
+Click 1 — but that's not what I asked for. I asked for the `.qmd`. Fifteen of
+them. And notice where the arrow lands: on one page, not on the site.
+
+Click 2: the data comes from outside. `library(vehicletrends)` runs during the
+render, so the numbers get computed and baked in. The agent didn't write any of
+them — it wrote one page.
+
+Click 3: and I can still reach in. Prompt the agent to change a page, or open it
+and change it myself. Same two arrows as three slides ago — that's the point,
+they still work at fifteen pages.
+:::
+
+---
+
+## [vehicletrends.us: a Quarto website]{.center}
+
+::: {.col}
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - depreciation.qmd
+      - percent-listings.qmd
+      - market-concentration.qmd
+      - registrations.qmd
+```
+:::
+
+::: {.col}
+**15 pages. ~2,900 lines of markdown.**
+
+The agent writes the `.qmd`.
+
+The data lives in an R package the pages load at render:
+
+```r
+library(vehicletrends)
+```
+
+It never touches the numbers.
+:::
+
+::: {.notes}
+This isn't a 3,000-line dashboard. It's 15 small documents.
+
+That distinction matters enormously once an agent is working on it.
+
+The agent writes the `.qmd`. The data lives in a package the pages load at
+render — I typed none of the numbers.
+:::
+
+---
+
+## Every page gets a URL
+
+- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
+- the back button works
+- search engines index it
+- 10 pages in the sidebar, 10 addresses
+
+[A Shiny app is one URL. The state lives in a session.]{.font120}
+
+::: {.notes}
+It's a dashboard that behaves like a website.
+
+Link it, bookmark it, send it. The back button works. Search engines index it.
+
+A Shiny app is one URL, and the state lives in a session.
+:::
+
+---
+
+## No UI. No server.
+
+::: {.col}
+[**Shiny**]{.red}
+
+- a UI
+- a server function
+- a reactive graph
+- a process that has to be running
+
+You maintain an **application**.
+:::
+
+::: {.col}
+[**Quarto**]{.blue}
+
+- markdown
+- a chunk that returns a widget
+
+You maintain a **document**.
+:::
+
+[Real compute over data too big for a browser is Shiny's job. This isn't that.]{.font120}
+
+::: {.notes}
+This isn't an application. It's a document.
+
+Not an anti-Shiny argument: real server-side compute over data too big for a
+browser is exactly Shiny's job. Most dashboards aren't that.
+:::
+
+---
+
+## "But I need users to filter it"
+
+::: {.col width="40%"}
+::: {.font45}
+```r
+depreciation |>
+  filter(powertrain == "Gasoline") |>
+  group_by(vehicle_type) |>
+  e_charts(age_years) |>
+  e_line(rr_smooth) |>
+  e_legend()
+```
+:::
+
+[Click a category in the legend →]{.font110}
+
+[No input. No server. No reactive.]{.font110 .blue}
+:::
+
+::: {.col width="60%"}
+```{r}
+smooth_group <- function(df) {
+  fit <- loess(rr ~ age_years, data = df, span = 0.5)
+  df$rr_smooth <- predict(fit)
+  df
+}
+
+depreciation |>
+  filter(powertrain == "Gasoline", quantile == 50) |>
+  mutate(age_years = age_bin / 12) |>
+  group_by(vehicle_type) |>
+  group_modify(~ smooth_group(.x)) |>
+  e_charts(age_years, height = "460px") |>
+  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
+  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
+  e_tooltip(trigger = "axis") |>
+  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
+  e_x_axis(name = "Age (years)") |>
+  e_grid(left = 90, right = 40, top = 30, bottom = 90)
+```
+:::
+
+::: {.notes}
+The point is not "Quarto supports JavaScript."
+
+The point is that I can put an interactive widget in a document without building
+the application around it.
+
+Click a category in the legend — live. No input, no server, no reactive.
+:::
+
+---
+
+## Because it's a document,<br>the layout comes for free
+
+:::: {.col}
+[**in `_quarto.yml`**]{.blue}
+
+::: {.font45}
+```yaml
+website:
+  sidebar:
+    style: docked
+    search: true
+
+format:
+  html:
+    page-layout: full
+    toc: true
+    toc-location: right
+```
+:::
+::::
+
+:::: {.col}
+[**in the page**]{.blue}
+
+::: {.font45}
+````markdown
+::: {.panel-tabset}
+## New
+## Used
+:::
+
+::: {.grid}
+:::
+````
+:::
+::::
+
+[I never built the navigation. I declared it.]{.font120}
+
+::: {.notes}
+Don't dwell — this is the demoted slide.
+
+Sidebar, search, a table of contents on every page, tabsets, a grid. I didn't
+build a navigation system; I'm using the layout primitives the document format
+already gives me.
+
+Nobody needs to remember that Quarto has tabsets. They need to remember that I
+built a dashboard without building a dashboard application.
+:::
+
+---
+
+## [Have a heavier artifact? Put it in a box!]{.center}
+
+<center>
+```{r}
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "500px",
+  width = "900px",
+  style = "border: none;"
+)
+```
+</center>
+
+::: {.col .font60}
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", 
+  width = "100%"
+)
+```
+:::
+
+::: {.col}
+<center>
+<a href="https://vehicletrends.github.io/hhi-map/" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">View map in new tab</a>
+</center>
+:::
+
+::: {.notes}
+This is the hardest thing on the entire site.
+
+So it isn't in the dashboard.
+:::
+
+---
+
+## Need something heavier? Put it in a box
+
+::: {.col}
+The census-tract map is the hardest thing on the site: **276 lines** of
+hand-written MapLibre and **1.64 GB** of map tiles on a CDN.
+
+It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
+in isolation, then dropped in:
+
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", width = "100%"
+)
+```
+:::
+
+::: {.notes}
+276 lines of hand-written MapLibre and 1.64 GB of tiles. Its own
+repo, built and iterated in isolation, dropped in with six lines.
+
+Quarto doesn't need to be the thing that does everything. It needs to be the
+thing that composes everything.
+:::
+
+---
+
+## Or drop a whole Shiny app in the page
+
+Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
+the reader's browser:
+
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+```
+````
+
+[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
+
+::: {.notes}
+Same move. The hard thing goes in a box, and the page just says
+where.
+
+Two pages on the site are Shiny apps compiled to WebAssembly, running in the
+reader's browser.
+:::
+
+---
+
+## Small pieces have small context windows
+
+Isolate a component →
+
+- the agent holds **all of it** in one context
+- you iterate on it **without touching the site**
+- it drops back in as an `iframe`
+
+The agent opens **one page** — 200 to 600 lines. Never the site.
+
+[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
+
+::: {.notes}
+This is the strongest AI-specific point in the whole section.
+
+The agent opens one page — 200 to 600 lines. Never the site. The whole dashboard
+is never in scope at once.
+
+Same move as the handwriting sheet, at a much larger scale: separate the thing
+you're changing from the thing you're preserving.
+:::
+
+---
+
+## It's just static files
+
+Everything here runs in the browser, and the whole site is files — **hosted for free.**
+
+- charts → ECharts (JS), rendered client-side
+- the map → PMTiles on a CDN, instant
+- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
+
+A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
+cached, so nothing goes stale.
+
+[No server to run. No server to secure. No server to pay for.]{.font120}
+
+::: {.notes}
+Say "static files," not "serverless" — serverless drags in Lambda
+and edge functions and backends. This is simpler than that.
+
+At the end of the day it's a folder of files a browser can read. So I can host
+it for free.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Quarto composes things that<br>don't need to understand each other.
+
+::: {.notes}
+Quarto lets me compose a dashboard out of things that don't need
+to understand each other.
+
+And that turns out to be really useful when one of the things building it is an
+AI.
+
+That's the bridge into cost.
+:::
 
 ---
 
@@ -926,6 +1731,12 @@ library(vehicletrends)
 # [Cost]{.font150}
 :::
 
+::: {.notes}
+Control is behind us — that was the handwriting sheet.
+
+Cost is next. Don't over-explain the ladder; they'll pick it up.
+:::
+
 ---
 
 {{< center >}}
@@ -942,6 +1753,11 @@ library(vehicletrends)
   globally.</div>
 </div>
 ```
+
+::: {.notes}
+One paragraph. Look at it — the next slides are this same paragraph
+written four different ways.
+:::
 
 ---
 
@@ -1040,6 +1856,16 @@ sales globally.</p>
 [**377** characters]{.red .font140}
 ::::
 
+::: {.notes}
+Same paragraph, three sources, smallest to biggest.
+
+The counts are measured, not estimated. HTML costing more than LaTeX is not a
+bug.
+
+If anyone asks why column one has no preamble: the styling moved into the
+renderer.
+:::
+
 ---
 
 ```{=html}
@@ -1088,6 +1914,11 @@ sales globally.</p>
 :::
 
 [**663** characters 😱]{.wordblue .font140} 
+:::
+
+::: {.notes}
+And then there's Word. 663 characters for one paragraph — and that's
+one file inside a zip that also needs four more.
 :::
 
 ---
@@ -1280,6 +2111,13 @@ sales globally.</p>
 </svg>
 ```
 
+::: {.notes}
+Two ways to ask for the same document.
+
+Top: three separate asks, three finished artifacts, and that's the end of the
+chain. Bottom: same agent, one `.qmd`, and render fans out to the same three.
+:::
+
 ---
 
 {{< inverse >}}
@@ -1289,6 +2127,13 @@ sales globally.</p>
 <center>
 <img src="images/fig-tokens.png" width=100%>
 </center>
+
+::: {.notes}
+The agent pays for every character.
+
+And it compounds over turns: about 81,000 tokens versus about 11,000 after ten
+edits. The ratio never moves — the gap does.
+:::
 
 ---
 
@@ -1300,6 +2145,10 @@ sales globally.</p>
 <center>
 <img src="images/its-all-markdown.png" width=100%>
 </center>
+
+::: {.notes}
+One source, many outputs.
+:::
 
 ---
 
@@ -1318,6 +2167,13 @@ sales globally.</p>
 # [Correctness]{.font150}
 :::
 
+::: {.notes}
+Control and cost are behind us.
+
+Correctness is the one that matters most the moment there's data in the
+document.
+:::
+
 ---
 
 {{< inverse >}}
@@ -1329,6 +2185,31 @@ sales globally.</p>
 
 [Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
+
+::: {.notes}
+This went out.
+
+Don't claim who or what made it — no source establishes that. The claim is what
+it demonstrates: a wrong artifact looks exactly like a right one.
+:::
+
+---
+
+{{< center >}}
+
+# This map has no failure mode
+
+<center>
+<img src="images/africa-bad.png" height="560">
+
+[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
+</center>
+
+::: {.notes}
+It rendered. It shipped. Nobody caught it.
+
+A generative pass has nothing in it that can fail.
+:::
 
 ---
 
@@ -1350,17 +2231,13 @@ sales globally.</p>
 </center>
 :::
 
----
+::: {.notes}
+`stopifnot(all(funding$name %in% africa$name))` is the whole point of
+this slide. Mistype a country and the render stops.
 
-{{< center >}}
-
-# This map has no failure mode
-
-<center>
-<img src="images/africa-bad.png" height="560">
-
-[Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
-</center>
+Values live in data, code lives in code. And the turn: if you *join* names to a
+shapefile a wrong name fails; if you *draw* the shape there's nothing to fail.
+:::
 
 ---
 
@@ -1395,6 +2272,14 @@ sales globally.</p>
 <span class="sp-add">+ reaching <span class="w">nearly</span> _20 million_ sales globally.</span>
 </pre>
 
+:::
+
+::: {.notes}
+By machine: `quarto render` is a compile step, and an assertion can
+fail the build.
+
+By human: plain text means the edit is a diff. Review scales with the change,
+not with the document.
 :::
 
 ---
@@ -1448,240 +2333,47 @@ sales globally.</p>
 
 :::
 
----
+::: {.notes}
+Why not just ask for HTML? Agents are very good at it.
 
-{{< bg-color "#000000" >}}
+Because malformed HTML still renders as *something*, so the agent can't tell
+whether it succeeded.
 
-## [Building a Dashboard with Quarto: [vehicletrends.us]{.yellow}]{.font90 .center}
-<center>
-<img src="images/vehicletrends.gif" width=80%>
-</center>
-
----
-
-## It's a Quarto website
-
-:::: {.col}
-::: {.font45}
-```yaml
-project:
-  type: website
-
-website:
-  sidebar:
-    contents:
-      - about.qmd
-      - vmt-daily.qmd
-      - depreciation.qmd
-      - percent-listings.qmd
-      - market-concentration.qmd
-      - registrations.qmd
-```
-:::
-::::
-
-::: {.col}
-**15 pages. ~2,900 lines of markdown.**
-
-The agent writes the `.qmd`.
-
-The data lives in an R package the pages load at render:
-
-```r
-library(vehicletrends)
-```
-
-It never touches the numbers.
+Left: nineteen lines, and the changed row has somewhere to hide. Right: compute
+it once and never re-type it.
 :::
 
 ---
 
-## Every page gets a URL
+## [It looks like an application. It isn't.]{.center}
 
-- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
-- the back button works
-- search engines index it
-- 10 pages in the sidebar, 10 addresses
-
-[A Shiny app is one URL. The state lives in a session.]{.font120}
-
----
-
-## No UI. No server.
+<br>
 
 ::: {.col}
-[**Shiny**]{.red}
-
-- a UI
-- a server function
-- a reactive graph
-- a process that has to be running
-
-You maintain an **application**.
+- each page is a **`.qmd`**
+- the data lives in an **R package**
+- the charts are **JS widgets**
 :::
 
 ::: {.col}
-[**Quarto**]{.blue}
-
-- markdown
-- a chunk that returns a widget
-
-You maintain a **document**.
-:::
-
-[Real compute over data too big for a browser is Shiny's job. This isn't that.]{.font120}
-
----
-
-## "But I need users to filter it"
-
-::: {.col width="40%"}
-::: {.font45}
-```r
-depreciation |>
-  filter(powertrain == "Gasoline") |>
-  group_by(vehicle_type) |>
-  e_charts(age_years) |>
-  e_line(rr_smooth) |>
-  e_legend()
-```
-:::
-
-[Click a category in the legend →]{.font110}
-
-[No input. No server. No reactive.]{.font110 .blue}
-:::
-
-::: {.col width="60%"}
-```{r}
-smooth_group <- function(df) {
-  fit <- loess(rr ~ age_years, data = df, span = 0.5)
-  df$rr_smooth <- predict(fit)
-  df
-}
-
-depreciation |>
-  filter(powertrain == "Gasoline", quantile == 50) |>
-  mutate(age_years = age_bin / 12) |>
-  group_by(vehicle_type) |>
-  group_modify(~ smooth_group(.x)) |>
-  e_charts(age_years, height = "460px") |>
-  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
-  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
-  e_tooltip(trigger = "axis") |>
-  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
-  e_x_axis(name = "Age (years)") |>
-  e_grid(left = 90, right = 40, top = 30, bottom = 90)
-```
-:::
-
----
-
-## [Have a heavier artifact? Put it in a box!]{.center}
-
-::: {.col width="65%"}
-
-```{r}
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px",
-  width = "100%",
-  style = "border: none;"
-)
-```
-
-:::
-
-::: {.col width="35%"}
-
-::: {.font60}
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", 
-  width = "100%"
-)
-```
+- the navigation comes from **Quarto**
+- the map is **its own repo**
+- the Shiny app is **WebAssembly**
 :::
 
 <br>
 
-<center>
-<a href="https://vehicletrends.github.io/hhi-map/" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">View map in new tab</a>
-</center>
+[No piece has to understand the whole thing. Neither does the agent.]{.font120}
+
+::: {.notes}
+So let's look at that dashboard again.
+
+It looks like an application. It isn't — it's a composition of pieces that don't
+know about each other. And no single component ever needs to understand the
+whole system.
+
+Neither does the agent.
 :::
-
----
-
-## Need something heavier? Put it in a box
-
-::: {.col}
-The census-tract map is the hardest thing on the site: **276 lines** of
-hand-written MapLibre and **1.64 GB** of map tiles on a CDN.
-
-It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
-in isolation, then dropped in:
-
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", width = "100%"
-)
-```
-:::
-
----
-
-## Or drop a whole Shiny app in the page
-
-Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
-the reader's browser:
-
-````markdown
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
-```
-````
-
-[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
-
----
-
-## Small pieces have small context windows
-
-Isolate a component →
-
-- the agent holds **all of it** in one context
-- you iterate on it **without touching the site**
-- it drops back in as an `iframe`
-
-The agent opens **one page** — 200 to 600 lines. Never the site.
-
-[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
-
----
-
-## It's just static files
-
-Everything here runs in the browser, and the whole site is files — **hosted for free.**
-
-- charts → ECharts (JS), rendered client-side
-- the map → PMTiles on a CDN, instant
-- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
-
-A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
-cached, so nothing goes stale.
-
-[No server to run. No server to secure. No server to pay for.]{.font120}
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Close
 
 ---
 
@@ -1691,6 +2383,11 @@ Change **one word** in your prompt.
 
 [Ask for the `.qmd`.]{.font160 .blue}
 
+::: {.notes}
+You don't need to know Quarto to start. Change one word in your
+prompt.
+:::
+
 ---
 
 ## Make this work Monday
@@ -1698,6 +2395,10 @@ Change **one word** in your prompt.
 1. Put *"always run `quarto render` before finishing"* in your `CLAUDE.md`
 2. Have the agent work on a branch, so edits arrive as diffs
 3. Keep data in files the `.qmd` reads — never in the prompt
+
+::: {.notes}
+Three things you can do Monday.
+:::
 
 ---
 
@@ -1710,6 +2411,13 @@ Change **one word** in your prompt.
 [Source and artifact. Documents are only getting there now —]{.font120}
 [right when the authors became probabilistic.]{.font120 .orange}
 
+::: {.notes}
+Source and artifact. Software solved this decades ago.
+
+Documents are only getting there now — right when the authors became
+probabilistic.
+:::
+
 ---
 
 {{< inverse >}}
@@ -1717,3 +2425,7 @@ Change **one word** in your prompt.
 {{< middle >}}
 
 # Agents should write the source,<br>not the artifact.
+
+::: {.notes}
+That's the talk.
+:::

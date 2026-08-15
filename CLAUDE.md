@@ -9,7 +9,8 @@ products**. Use that phrase; it's the session's shared vocabulary.
 
 ## Rules for agents
 
-- **No speaker notes.** Never add `::: {.notes}` blocks. John doesn't use them.
+- **Speaker notes are now in.** Every slide carries a `::: {.notes}` block of
+  talking points; keep them when you move a slide. (Reversed 2026-08-15.)
 - **Keep edits to this file minimal.** A design decision gets one line, not a
   paragraph. Don't narrate the reasoning behind small changes here.
 - **Never run `quarto render`** or any render command. Report done; John renders.
@@ -40,7 +41,11 @@ strength, then turn.
 ❌ **Don't argue for content/format separation. Show it.** Arguing makes the
 talk feel like a recap.
 
-Outline: `outline.md`.
+Outline: `quarto_talk_detailed_outline.md` (canonical since 2026-08-15);
+`outline.md` is the superseded one. **Act order is now problem → dashboards →
+cost → correctness → payoff**: the dashboard act moved up to Act 2 so it lands
+as the *first application* of the thesis, and cost/correctness became the
+evidence behind it rather than a detour before it.
 
 ## Files
 
@@ -125,10 +130,12 @@ Render status: `index.qmd` has not been re-rendered since the lexis conversion.
 
 Three slides right after the cold-open gif, on the title slide's ground
 (`{{< bg-color "#2e4057" >}}` + `{{< inverse >}}`, `{{< quarto size=3x >}}`): the
-mark alone, then the mark left of `Dashboards`, then `Agentic workflows` added
-above it. They promise the talk's shape — Quarto is unreasonably effective at a
-lot of things, two of them get a half each — and license the twelve non-dashboard
-minutes that follow.
+mark alone, then the mark beside the AI chip, then `dashboards.png` full-bleed.
+They promise the talk's shape — Quarto is unreasonably effective at a lot of
+things, two of them get a half each. ⚠️ Their old job was licensing twelve
+non-dashboard minutes; the 2026-08-15 reorg moved the dashboard act to Act 2, so
+what they now buy is the deliberate *zoom out* to the handwriting sheet. The
+third slide is the playful promise you pivot away from, not an explainer.
 
 - **They sit after the gif, not before it.** The gif keeps its cold open and
   becomes the referent for `Dashboards`.
@@ -238,35 +245,44 @@ figure carries that same sentence across its top.
 
 ### Invariants
 
-- **The two slides are REGISTERED.** Both carry `viewBox="170 77 900 553"`; slide
-  2 at rest is byte-for-byte slide 1's row 1 (dots), same coordinates. The x
-  window is a crop tuned to the real content (both slides centre on x=620; the
-  tightest boxes are slide 2's opened me at 200 and artifact at 1040), so the
-  figure is height-bound and fills the frame instead of floating with wide side
-  gaps. Widening the crop only re-centres, never shrinks; y stays 77..630. Advancing
-  changes nothing until you click — that stillness earns the "one picture, one
-  variable" claim. Slide 2 carries ~280 units of dead canvas below its figure to
-  hold this. **Changing either viewBox, either heading level, or that row's
-  geometry breaks it — recompute both.** One deliberate exception: slide 2's SVG
-  carries `position:relative; top:50px` so its figure reads centred against all
-  that dead canvas, so the two at-rest pictures now sit 50px apart. Drop it, or
-  add the same to slide 1, if stillness ever matters more than centring.
-  ❌ **Never `margin-top`, and never a `<br>` above the SVG.** Both slides are
-  `{{< middle >}}` = a flex column, so the SVG is a flex item: anything adding
-  height above it is taken back out of the figure by flex-shrink, and slide 2
-  renders visibly smaller than slide 1. `top` doesn't occupy layout.
+- **The two slides share COORDINATES but no longer share a viewBox.** Slide 2 at
+  rest is still byte-for-byte slide 1's row 1 (dots) at the same coordinates —
+  the drawing is unchanged, so all the geometry notes below hold for both. What
+  changed on 2026-08-15 is the CROP: slide 1 keeps `viewBox="170 77 900 553"`,
+  slide 2 is cropped to its own opened ink, `"185 78 870 272"`. ⚠️ **That ends
+  the pixel registration**, and it was a real trade: the shared viewBox meant
+  advancing changed nothing until you clicked, which earned the "one picture,
+  one variable" claim, but it cost slide 2 ~280 units of dead canvas and left it
+  height-bound at scale 1.17 — visibly smaller than the Act 5 figure. Cropped, it
+  is width-bound at 1.63, 39% bigger, and fills the slide. Advancing now grows
+  the picture. Restore `"170 77 900 553"` on slide 2 (and drop its margin) to get
+  the stillness back.
+  Slide 2's crop is the **opened** extent — me at x=200 and the artifact at
+  x=1040 after `.openleft`/`.openright`, purple label descending to ~341.
+  Cropping to the at-rest row clips click 1.
+  ❌ **Never `margin-top` or a `<br>` above a HEIGHT-BOUND figure** — these are
+  `{{< middle >}}` flex columns, so the SVG is a flex item and added height is
+  taken straight back out of the figure by flex-shrink. Slide 1 is still
+  height-bound, so this still binds there. Slide 2 is now width-bound with
+  ~190px of vertical slack, which is the only reason its `margin-top:70px` opens
+  a gap under the heading instead of shrinking the drawing. Its old
+  `position:relative; top:50px` is gone — that existed only to re-centre against
+  the dead canvas the crop removed.
 - **Motif order is dots → blocks → bands ✓, and it's load-bearing.** Bands is
   the only motif that reads as lines of text on a page, so it's the draw you
   keep (row 3, green check) *and* slide 2's `#docOut`. The scattered motifs are
   the drafts you threw away. ❌ Don't reorder without moving the check and both
   of slide 2's `<defs>` copies with it.
-- **Height is the binding constraint, not width.** Slide is 1600×900, padding
-  `45px 90px 60px`, usable 1420×795; the heading eats ~100px, leaving ~695px. The
-  x-crop (viewBox "170 77 900 553") makes the figure height-bound, so it now fills
-  toward that ~695px — near-zero slack. It was ~633px with ~60px vertical slack
-  when the wide "0 .. 1240" viewBox left it width-bound. The knob for *more*
-  height is row spacing (186); the viewBox width only re-centres, it no longer
-  changes size (see the registration invariant).
+- **Slide 1 is height-bound and AT ITS CEILING.** Slide is 1600×900, padding
+  `45px 90px 60px`, usable 1420×795; the `#` heading eats ~150px, leaving ~640px.
+  Its ink (631×516) already fills 93% of the viewBox height, so cropping tighter
+  buys **~5%** and nothing else does: on-screen scale is `min(1420/vbW,
+  640/vbH)`, and `vbH` can't go below the ink. The three real levers, all with a
+  price — drop a row (that's the argument), drop the `.pdf` labels, or take both
+  headings from `#` to `##` (~+9%, and they must move together). ❌ Widening the
+  viewBox only re-centres; it never enlarges. This is why slide 1 stayed small
+  when slide 2 got 39% bigger — slide 2 had dead canvas to reclaim and slide 1
+  has none.
 - **The artifact is a PAGE with a folded corner, labelled `.pdf`.** 90×116 (US
   Letter), drawn 1:1, outline `M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z`, fold
   triangle `M 68 0 L 90 22 L 68 22 Z` in white. Same rect family as the `.qmd`,
@@ -505,13 +521,13 @@ slide B above the three columns — same markup, different inline sizes.
 - **Not visually vetted** — check the glyphs resolve, the fan's 12-unit corners
   read as one split, and the figure clears ~695px of usable height.
 
-## The correctness act (Act 4)
+## The correctness act (now Act 4, last before the payoff)
 
-Order is **Africa → trust → dashboard**, which is John's escalation in
-`outline.md`: worksheet → a government slide with every country wrong → a live
-dashboard. Stakes climb, so Africa must precede the dashboard, and its two
-answer slides (`But HTML can't tell you it's broken`, `Quarto is checkable
-twice`) sit directly after it — they answer the question Africa asks.
+Order is **Africa → trust**, and its two answer slides (`Quarto is checkable
+twice`, `HTML is good, but it can't tell you if it's broken`) sit directly after
+it — they answer the question Africa asks. The dashboard no longer follows it
+(that act moved to Act 2), so the escalation to a live dashboard is now carried
+by the Act 5 payoff instead.
 
 ❌ **Never claim who or what made that map.** No source establishes it was
 AI-generated; the BBC graphic says only "mislabels." The slide claims what it
@@ -572,20 +588,39 @@ is a better setup for the compile-step slides than an authorship claim would be.
   fails; draw the shape and there is nothing to fail. That is Act 2's thesis
   applied to data, which is why it earns its own slide rather than a caption.
 
-## The dashboard case study (Act 5)
+## The dashboard case study (now Act 2)
 
 **vehicletrends.us** — source at `/Users/jhelvy/gh/vehicletrends/dashboard`. A
 real, multi-page, self-updating Quarto site. Draw principles from the real repo,
 never invented ones.
 
-**The seam is additive, not a mapping.** The act is *"those three things are
-great about Quarto — and it also happens to be great for dashboards."* Some
-points call back to the spine; several (serverless, free hosting) map to none of
-it, and that's fine. ❌ Never frame the transition as *here's how Control / Cost
-/ Correct apply* — that promises a 1:1 the act doesn't deliver. Three beats: the
-gif returns carrying *See? I told you I'd get to the dashboard eventually* (the
-joke does the structural work — it concedes the last twelve minutes and closes
-the first argument without claiming this one proves it); then `vehicletrends.us`
+**`Same picture. Bigger artifact.` opens the act**, right after the gif returns
+and before the `_quarto.yml` slide — figure : receipt, the deck's usual order.
+It is entanglement figure 2 redrawn at site scale and echoes it horizontally:
+same x window, same `me` / agent / `writes` coordinates, and the stack's front
+card is figure 2's `.qmd` box unchanged. ❌ Don't move it back to Act 5; three
+slides after figure 2 the callback is free, twenty-eight slides later it isn't.
+Two clicks: the data package feeding the stack, then figure 2's purple fork.
+❌ **No map feeder.** One was drawn and cut — at this position the `Put it in a
+box` slides are still ahead, so an `<iframe>` box previewed instead of recalled
+and the figure had to be talked around. Those slides carry the map alone. Its viewBox is cropped tighter vertically (`170 68 900 342`) so
+it fills the frame — ❌ don't "restore" figure 2's 553 height, that's what left
+it small with 200px of dead canvas. Its invariants live in its own comment block
+in `index.qmd`. Two worth knowing here: the artifact is a **browser window**, the deck's one
+exception to *the artifact is a page with a folded corner* (the artifact really
+is a site, and the window is what makes `It's not an app, it's a website`
+visible); and the stack is **flush right at x=860**, which is the only reason
+the `render` arrow keeps figure 2's coordinates.
+
+**The act is now the thesis's first application, not its payoff.** It arrives
+directly after *ask for the `.qmd`* and answers *"why does this matter for
+dashboards?"* — so cost and correctness read as evidence for an architecture the
+room has already seen. It closes on the statement divider **`Quarto composes
+things that don't need to understand each other`**, which is the bridge into
+cost. ❌ The old *See? I told you I'd get to the dashboard eventually* joke is
+gone with the twelve-minute delay that earned it; don't reinstate it here.
+❌ Never frame the act as *here's how Control / Cost / Correct apply* — the spine
+hasn't been laid yet, and it was never a 1:1. Opening beat is `vehicletrends.us`
 + *I built this with Quarto* — **provenance, not proof**, and ❌ never the word
 *artifact*, which the thesis line spends on the opposite meaning; then the turn,
 **`It's not an app. It's a website.`** That turn is the act's own spine — URLs,
@@ -715,12 +750,26 @@ slide goes black. The line under the author is `posit::conf(2026)` /
 - **Verify hosting** — unresolved from the filesystem, so the slide now says
   only "hosted for free." Confirm what answers for vehicletrends.us at the DNS
   level before naming a host.
-- **`# Close` (slide 40) is still a label divider** — same violation as the old
-  `# Easy to deploy (serverless)`. Needs a statement.
+- **`# Close` is gone** — the label divider was dropped in the reorg rather than
+  restated.
+- **Two slides in the reorg are new and thin** — the Act 2 synthesis divider and
+  the Act 5 `It looks like an application. It isn't.` peel-apart. Both are built
+  only from lines already in the deck; rewrite them in John's voice.
+- **`Because it's a document, the layout comes for free`** is built and
+  deliberately **demoted** — one slide, no dwelling. The YAML and the tabset /
+  grid are copied from the real `_quarto.yml` and pages, not invented. The
+  audience should remember *I built a dashboard without building a dashboard
+  application*, not that Quarto has tabsets.
 - **Check `Same map, from source` fits** — 33 lines of code at `.font45`. The
   clip at line 29 was Quarto's 500px code-block cap, now `code-block-height:
   660` in the YAML; the other knob is the font class.
 - **Time check** — the deck is now 47 slides for 20 minutes.
+- **The peel-apart slide is now Act 5's recap of Act 2's figure**, not a rival to
+  it — moving the figure to open Act 2 resolved the duplication. Re-read the two
+  together once before deciding either needs cutting.
+- **Re-vet the dashboard figure** — first render fixed three things (clipped top
+  label, dead canvas, an arrow through a caption); the new crop and the caption's
+  new home under the agent are still unseen.
 - **Vet the two-halves slides on first render** — does the mark jumping from
   centre to the left column read as making room; do the 38/62 columns land the
   mark and the words where the mockup has them; is one `<br>` enough gap.
