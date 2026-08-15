@@ -721,7 +721,7 @@ built-in one.
 -->
 <section class="slide level0">
 
-<section class="lexis-slide-title inverse center middle" data-state="no-slide-number" data-background-color="#2e4057">
+<section class="lexis-slide-title inverse center middle" data-background-color="#2e4057" data-state="no-slide-number">
 <h1 class="lexis-slide-title"></h1>
 <div id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2071756172746f2073697a653d3278203e7d7d" class="h1">
 <iconify-icon role="img" inline="" icon="simple-icons:quarto" style="color:#74aadb;;font-size: 2em;" aria-label="Quarto icon" title="Quarto icon"></iconify-icon>
@@ -834,7 +834,7 @@ The Unreasonable Effectiveness of Quarto
 </section>
 <section class="slide level0">
 
-<section class="lexis-slide-title" data-background-image="images/dashboards.png" data-background-size="contain">
+<section class="lexis-slide-title" data-background-size="contain" data-background-image="images/dashboards.png">
 <h1 class="lexis-slide-title"></h1>
 <aside class="notes">
 <p>So — epic dashboards.</p>
@@ -2058,35 +2058,41 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 </section>
 <section class="slide level0">
 
-<h1><span class="center"><strong>vehicletrends.us</strong></span></h1>
+<h2>It’s not a 3,000-line dashboard.<br>It’s 15 small documents.</h2>
 <div class="cols-row">
-<div class="col">
-<p>A Quarto website:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href=""></a><span class="fu">project</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href=""></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a><span class="fu">website</span><span class="kw">:</span></span>
-<span id="cb1-5"><a href=""></a><span class="at">  </span><span class="fu">sidebar</span><span class="kw">:</span></span>
-<span id="cb1-6"><a href=""></a><span class="at">    </span><span class="fu">contents</span><span class="kw">:</span></span>
-<span id="cb1-7"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
-<span id="cb1-8"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> vmt-daily.qmd</span></span>
-<span id="cb1-9"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> depreciation.qmd</span></span>
-<span id="cb1-10"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> percent-listings.qmd</span></span>
-<span id="cb1-11"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> market-concentration.qmd</span></span>
-<span id="cb1-12"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> registrations.qmd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="col" style="flex:0 1 42%;width:42%">
+<div class="font55">
+<pre><code>vehicletrends.us/
+├── index.qmd
+├── about.qmd
+├── vmt-daily.qmd
+├── vmt-age.qmd
+├── depreciation.qmd
+├── percent-listings.qmd
+├── percent-dealers.qmd
+├── market-concentration.qmd
+├── hhi-explained.qmd
+├── registrations.qmd
+├── nearest-vehicles.qmd
+├── tech-stack.qmd
+├── cite.qmd
+├── LICENSE.qmd
+└── 404.qmd</code></pre>
 </div>
-<div class="col">
+</div>
+<div class="col" style="flex:0 1 58%;width:58%">
 <p><br></p>
-<p><strong>15 .qmd files</strong></p>
-<p><strong>~3,000 lines of code + markdown</strong></p>
+<p><strong>~3,000 lines</strong> of markdown and code — and not one file over a few hundred.</p>
 <p><br></p>
-<p><strong>Data loads at render</strong>: <code>library(vehicletrends)</code></p>
+<p>The data loads at render:</p>
+<p><span class="font140 blue"><code>library(vehicletrends)</code></span></p>
+<p>I typed none of the numbers.</p>
 </div>
 </div>
 <aside class="notes">
 <p>This isn’t a 3,000-line dashboard. It’s 15 small documents.</p>
-<p>That distinction matters enormously once an agent is working on it.</p>
-<p>The agent writes the <code>.qmd</code>. The data lives in a package the pages load at render</p>
+<p>That distinction matters enormously once an agent is working on it — and it’s the same distinction as the handwriting sheet, just at a bigger scale.</p>
+<p>The agent writes the <code>.qmd</code>. The data lives in a package the pages load at render.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2109,6 +2115,7 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <li>10 pages in the sidebar, 10 addresses</li>
 </ul>
 <p><span class="font120">A Shiny app is one URL. The state lives in a session.</span></p>
+<p><span class="font150 blue">It’s not an app. It’s a website.</span></p>
 <aside class="notes">
 <p>It’s a dashboard that behaves like a website.</p>
 <p>Link it, bookmark it, send it. The back button works. Search engines index it.</p>
@@ -2127,7 +2134,7 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 </section>
 <section class="slide level0">
 
-<h2>No UI. No server.</h2>
+<h2>It’s not an application. It’s a document.</h2>
 <div class="cols-row">
 <div class="col">
 <p><span class="red"><strong>Shiny</strong></span></p>
@@ -2148,7 +2155,7 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <p>You maintain a <strong>document</strong>.</p>
 </div>
 </div>
-<p><span class="font120">Real compute over data too big for a browser is Shiny’s job. This isn’t that.</span></p>
+<p><span class="font120">No UI. No server. Real compute over data too big for a browser is still Shiny’s job.</span></p>
 <aside class="notes">
 <p>This isn’t an application. It’s a document.</p>
 <p>Not an anti-Shiny argument: real server-side compute over data too big for a browser is exactly Shiny’s job. Most dashboards aren’t that.</p>
@@ -2166,9 +2173,48 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 </section>
 <section class="slide level0">
 
-<h2>“But I need users to filter it”</h2>
+<h2>Small pieces have small context windows</h2>
+<div class="cols-row">
+<div class="col">
+<p><span class="red"><strong>The whole site</strong></span></p>
+<ul>
+<li>15 pages</li>
+<li>~3,000 lines</li>
+<li>every chart, every table, every number</li>
+</ul>
+</div>
+<div class="col">
+<p><span class="blue"><strong>What the agent opens</strong></span></p>
+<ul>
+<li>one page</li>
+<li>200 to 600 lines</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p><span class="font120">The whole dashboard is never in scope at once. Neither is the token bill.</span></p>
+<aside class="notes">
+<p>This is the strongest AI-specific point in the whole section.</p>
+<p>The agent opens one page — 200 to 600 lines. Never the site.</p>
+<p>Remember the handwriting sheet? We separated the thing I wanted to change from the thing I wanted to preserve. Same move here, at a much larger scale.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level0">
+
+<h2>Interactivity lives in the browser</h2>
 <div class="cols-row">
 <div class="col" style="flex:0 1 40%;width:40%">
+<p><em>“But I need users to filter it.”</em></p>
 <div class="font45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>depreciation <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href=""></a>  <span class="fu">filter</span>(powertrain <span class="sc">==</span> <span class="st">"Gasoline"</span>) <span class="sc">|&gt;</span></span>
@@ -2179,12 +2225,13 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 </div>
 <p><span class="font110">Click a category in the legend →</span></p>
 <p><span class="font110 blue">No input. No server. No reactive.</span></p>
+<p><span class="font120">I just put the widget in the document.</span></p>
 </div>
 <div class="col" style="flex:0 1 60%;width:60%">
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-8e6db8109011f3ef1569" style="width:100%;height:460px;" class="echarts4r html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8e6db8109011f3ef1569">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"yAxis":[{"show":true,"name":"Retention rate","nameLocation":"middle","nameGap":50}],"xAxis":[{"type":"value","name":"Age (years)"}],"legend":{"data":["All","CUV","Car","Minivan","Pickup","SUV"],"show":true,"type":"plain","bottom":0,"textStyle":{"fontSize":18}},"series":[{"data":[{"value":[1.125,0.911739034020865]},{"value":[1.375,0.89555872429759]},{"value":[1.625,0.879636545546143]},{"value":[1.875,0.8640807285633103]},{"value":[2.125,0.8489062412991383]},{"value":[2.375,0.834025541886069]},{"value":[2.625,0.8193930963944824]},{"value":[2.875,0.8049633708947588]},{"value":[3.125,0.7910012053145745]},{"value":[3.375,0.7775742096746674]},{"value":[3.625,0.7643410051850082]},{"value":[3.875,0.7509602130555683]},{"value":[4.125,0.7380384773402868]},{"value":[4.375,0.7256643916097633]},{"value":[4.625,0.7127195013489586]},{"value":[4.875,0.6988035605481399]},{"value":[5.125,0.6844644203035021]},{"value":[5.375,0.6700057717588984]},{"value":[5.625,0.6557313060581823]},{"value":[5.875,0.6413099833072529]},{"value":[6.125,0.6266173470986012]},{"value":[6.375,0.6122669638059679]},{"value":[6.625,0.5979692466060287]},{"value":[6.875,0.583359863778771]},{"value":[7.125,0.5689402643529039]},{"value":[7.375,0.5552118973571361]},{"value":[7.625,0.5420425266410387]},{"value":[7.875,0.529091027507858]},{"value":[8.125,0.5165455161668158]},{"value":[8.375,0.5045393837332951]},{"value":[8.625,0.4929845332861208]},{"value":[8.875,0.4817368489796774]},{"value":[9.125,0.4706522149683492]},{"value":[9.375,0.4599027302393859]},{"value":[9.625,0.4495585425558784]},{"value":[9.875,0.4393226092359732]},{"value":[10.125,0.429181625538034]},{"value":[10.375,0.4192919081191387]},{"value":[10.625,0.4096108463955044]},{"value":[10.875,0.4000958297833481]},{"value":[11.125,0.390576252772448]},{"value":[11.375,0.3811277676049583]},{"value":[11.625,0.3720771503256602]},{"value":[11.875,0.3633163561721831]},{"value":[12.125,0.3546761432740113]},{"value":[12.375,0.3463914920137086]},{"value":[12.625,0.3386973827738385]},{"value":[12.875,0.3315144536446666]},{"value":[13.125,0.3246754428036569]},{"value":[13.375,0.3182834807641711]},{"value":[13.625,0.3123383512327046]},{"value":[13.875,0.3067837456804703]},{"value":[14.125,0.3016386562679061]},{"value":[14.375,0.2969220751554503]},{"value":[14.625,0.2926605714892234]},{"value":[14.875,0.2888455771077624]},{"value":[15.125,0.2854433782101299]}],"yAxisIndex":0,"xAxisIndex":0,"name":"All","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.9215495945656241]},{"value":[1.375,0.9056130750720928]},{"value":[1.625,0.8897596380911462]},{"value":[1.875,0.8740967953125859]},{"value":[2.125,0.8586381101999067]},{"value":[2.375,0.8432945076108844]},{"value":[2.625,0.8280195413267424]},{"value":[2.875,0.8127667651287042]},{"value":[3.125,0.7977553541490231]},{"value":[3.375,0.7830472813239815]},{"value":[3.625,0.768360297140847]},{"value":[3.875,0.7534121520868869]},{"value":[4.125,0.7386868366336929]},{"value":[4.375,0.7242698391510134]},{"value":[4.625,0.709281156973351]},{"value":[4.875,0.6930634032039932]},{"value":[5.125,0.6760117158243872]},{"value":[5.375,0.6588248794862772]},{"value":[5.625,0.6422016788414063]},{"value":[5.875,0.6254524170885052]},{"value":[6.125,0.6082317288640821]},{"value":[6.375,0.5917548959765478]},{"value":[6.625,0.5760060872409111]},{"value":[6.875,0.5603426554853734]},{"value":[7.125,0.5450396585381351]},{"value":[7.375,0.5303721542273958]},{"value":[7.625,0.5163772895351224]},{"value":[7.875,0.5028302978380449]},{"value":[8.125,0.4896133665565081]},{"value":[8.375,0.4767655026493524]},{"value":[8.625,0.4643527266859047]},{"value":[8.875,0.4522977465022388]},{"value":[9.125,0.4405232699344286]},{"value":[9.375,0.4291327644258425]},{"value":[9.625,0.4181698729811688]},{"value":[9.875,0.407467566778462]},{"value":[10.125,0.3970163221018493]},{"value":[10.375,0.3868991343232772]},{"value":[10.625,0.3770877532525291]},{"value":[10.875,0.3675539286993884]},{"value":[11.125,0.3582406339779425]},{"value":[11.375,0.3491785077290738]},{"value":[11.625,0.3404707977527588]},{"value":[11.875,0.3321024879125109]},{"value":[12.125,0.3240247743314562]},{"value":[12.375,0.31629022319899]},{"value":[12.625,0.3089514007045074]},{"value":[12.875,0.3019966106339749]},{"value":[13.125,0.2953870885270031]},{"value":[13.375,0.2891347982034533]},{"value":[13.625,0.2832392530155512]},{"value":[13.875,0.2776935709244654]},{"value":[14.125,0.2725001226634723]},{"value":[14.375,0.2676612789658483]},{"value":[14.625,0.2631822948352186]},{"value":[14.875,0.2590630467913014]},{"value":[15.125,0.2552978378415124]}],"yAxisIndex":0,"xAxisIndex":0,"name":"CUV","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.837953978989327]},{"value":[1.375,0.8242615097228542]},{"value":[1.625,0.8108144607759026]},{"value":[1.875,0.7977366757770125]},{"value":[2.125,0.7850342472392937]},{"value":[2.375,0.7726039904109707]},{"value":[2.625,0.7604058330232563]},{"value":[2.875,0.748399702807363]},{"value":[3.125,0.7369542567645077]},{"value":[3.375,0.7261513103430699]},{"value":[3.625,0.7155205289450079]},{"value":[3.875,0.7045915779722793]},{"value":[4.125,0.6940463816376355]},{"value":[4.375,0.684022639611189]},{"value":[4.625,0.6732336804809395]},{"value":[4.875,0.6609407788877905]},{"value":[5.125,0.6477540717150035]},{"value":[5.375,0.6344101809141159]},{"value":[5.625,0.6216457284366652]},{"value":[5.875,0.6092785193806426]},{"value":[6.125,0.5968538643644997]},{"value":[6.375,0.5846996436204647]},{"value":[6.625,0.5725408661218384]},{"value":[6.875,0.5601536722286931]},{"value":[7.125,0.5479426392534125]},{"value":[7.375,0.5363123445083808]},{"value":[7.625,0.5252833072911688]},{"value":[7.875,0.514554467441569]},{"value":[8.125,0.5040480330852997]},{"value":[8.375,0.4939871350794758]},{"value":[8.625,0.4844397535189003]},{"value":[8.875,0.4750953703858221]},{"value":[9.125,0.4656434676624898]},{"value":[9.375,0.4562599408155099]},{"value":[9.625,0.4471294510153391]},{"value":[9.875,0.437954628800003]},{"value":[10.125,0.4286532414087436]},{"value":[10.375,0.4193777041735951]},{"value":[10.625,0.4101826197717709]},{"value":[10.875,0.4011225908804848]},{"value":[11.125,0.391908734593556]},{"value":[11.375,0.3825779884259228]},{"value":[11.625,0.3736736856864775]},{"value":[11.875,0.3650652828178931]},{"value":[12.125,0.3564680933863749]},{"value":[12.375,0.3481942363861134]},{"value":[12.625,0.3405558308112994]},{"value":[12.875,0.3334466207543971]},{"value":[13.125,0.326643901551064]},{"value":[13.375,0.320285119060281]},{"value":[13.625,0.3143697768650476]},{"value":[13.875,0.3088230857387101]},{"value":[14.125,0.3036710523257693]},{"value":[14.375,0.2989396832707257]},{"value":[14.625,0.2946634097649579]},{"value":[14.875,0.2908297226072868]},{"value":[15.125,0.2873942178533772]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Car","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.8906432692341812]},{"value":[1.375,0.8747181787027835]},{"value":[1.625,0.8593956195683041]},{"value":[1.875,0.8451606343831507]},{"value":[2.125,0.8321288208634487]},{"value":[2.375,0.8199181706393271]},{"value":[2.625,0.8082673171341981]},{"value":[2.875,0.7969148937714743]},{"value":[3.125,0.7867561715888362]},{"value":[3.375,0.778081176486116]},{"value":[3.625,0.7697206741799533]},{"value":[3.875,0.760505430386988]},{"value":[4.125,0.7535134768851603]},{"value":[4.375,0.7489289743382124]},{"value":[4.625,0.7412418817914872]},{"value":[4.875,0.7295308050715454]},{"value":[5.125,0.7165673929468205]},{"value":[5.375,0.7023811688754643]},{"value":[5.625,0.6870016563156288]},{"value":[5.875,0.6683546101028303]},{"value":[6.125,0.6468835068676948]},{"value":[6.375,0.6263944527610391]},{"value":[6.625,0.6059034376149924]},{"value":[6.875,0.5832805342946058]},{"value":[7.125,0.5606129735000795]},{"value":[7.375,0.5399879859316135]},{"value":[7.625,0.5203367007385259]},{"value":[7.875,0.5003795863664374]},{"value":[8.125,0.4818878824600026]},{"value":[8.375,0.4652635533254633]},{"value":[8.625,0.4495818448381602]},{"value":[8.875,0.4346239189963955]},{"value":[9.125,0.4201709377984714]},{"value":[9.375,0.4068712969731362]},{"value":[9.625,0.3947187566931825]},{"value":[9.875,0.3825125256229792]},{"value":[10.125,0.3704794540085241]},{"value":[10.375,0.3593101281534783]},{"value":[10.625,0.3484993608087066]},{"value":[10.875,0.3375419647250732]},{"value":[11.125,0.3262333582861656]},{"value":[11.375,0.3149882699078745]},{"value":[11.625,0.3042304773895185]},{"value":[11.875,0.2939290028990907]},{"value":[12.125,0.28385958087959]},{"value":[12.375,0.2741560575428437]},{"value":[12.625,0.2649522791006793]},{"value":[12.875,0.2562377109655523]},{"value":[13.125,0.2478908859097977]},{"value":[13.375,0.239879251185062]},{"value":[13.625,0.2321919623254179]},{"value":[13.875,0.224847958252422]},{"value":[14.125,0.2178593612989462]},{"value":[14.375,0.2112382937978625]},{"value":[14.625,0.2049851586712004]},{"value":[14.875,0.1990902321741718]},{"value":[15.125,0.1935504466394229]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Minivan","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,1.002763015251037]},{"value":[1.375,0.9885086702556063]},{"value":[1.625,0.9743416895310824]},{"value":[1.875,0.9602932652073158]},{"value":[2.125,0.9463709383738715]},{"value":[2.375,0.9325516266654037]},{"value":[2.625,0.9188205870293971]},{"value":[2.875,0.9051630764133364]},{"value":[3.125,0.8916586300188049]},{"value":[3.375,0.8783266224782601]},{"value":[3.625,0.8650620698854987]},{"value":[3.875,0.8517599883343172]},{"value":[4.125,0.8385980237054255]},{"value":[4.375,0.8256025522724255]},{"value":[4.625,0.8124416857184529]},{"value":[4.875,0.7991549191037068]},{"value":[5.125,0.7859217717408901]},{"value":[5.375,0.7726203916918931]},{"value":[5.625,0.7591289270186067]},{"value":[5.875,0.745267829089488]},{"value":[6.125,0.7311828416623092]},{"value":[6.375,0.7172400513829331]},{"value":[6.625,0.7031467260247506]},{"value":[6.875,0.6886707472911288]},{"value":[7.125,0.6742691227228953]},{"value":[7.375,0.6603988598608778]},{"value":[7.625,0.6468073689646999]},{"value":[7.875,0.6332164307675696]},{"value":[8.125,0.6200446085206903]},{"value":[8.375,0.6072708585632274]},{"value":[8.625,0.5946707207999108]},{"value":[8.875,0.5823576338302912]},{"value":[9.125,0.570445036253919]},{"value":[9.375,0.5587488065089627]},{"value":[9.625,0.547244866220173]},{"value":[9.875,0.5362867187669743]},{"value":[10.125,0.5258347138521302]},{"value":[10.375,0.5156812165959188]},{"value":[10.625,0.5059277535040358]},{"value":[10.875,0.4966758510821777]},{"value":[11.125,0.488093710667679]},{"value":[11.375,0.4800606379741773]},{"value":[11.625,0.4722448160718228]},{"value":[11.875,0.4647904054518267]},{"value":[12.125,0.4578720816365546]},{"value":[12.375,0.4512038002428886]},{"value":[12.625,0.4444995168877103]},{"value":[12.875,0.437850742541504]},{"value":[13.125,0.4314713373362662]},{"value":[13.375,0.4252587806311479]},{"value":[13.625,0.4192179731468693]},{"value":[13.875,0.4134045229234526]},{"value":[14.125,0.407791970299001]},{"value":[14.375,0.4023538556116178]},{"value":[14.625,0.3970608378987248]},{"value":[14.875,0.3919268048242646]},{"value":[15.125,0.3869901396661221]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Pickup","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.9768921069892699]},{"value":[1.375,0.9530155154969226]},{"value":[1.625,0.9298758603506544]},{"value":[1.875,0.9075442568201907]},{"value":[2.125,0.8860350073616933]},{"value":[2.375,0.8652941996719]},{"value":[2.625,0.8452906268814]},{"value":[2.875,0.8259930821207825]},{"value":[3.125,0.8076022106591999]},{"value":[3.375,0.7901651716083399]},{"value":[3.625,0.7734205288625946]},{"value":[3.875,0.7571068463163559]},{"value":[4.125,0.741666371891022]},{"value":[4.375,0.7271656465222105]},{"value":[4.625,0.712779673625644]},{"value":[4.875,0.6986380965063641]},{"value":[5.125,0.6851922078739922]},{"value":[5.375,0.6720994852511198]},{"value":[5.625,0.6590174061603384]},{"value":[5.875,0.6461336832124246]},{"value":[6.125,0.6336648255340647]},{"value":[6.375,0.6213115054217152]},{"value":[6.625,0.6084909043868947]},{"value":[6.875,0.5952984292125567]},{"value":[7.125,0.5824520901023105]},{"value":[7.375,0.5706698972597648]},{"value":[7.625,0.5597823009478403]},{"value":[7.875,0.5493059224543628]},{"value":[8.125,0.5394880285202994]},{"value":[8.375,0.5309710978989172]},{"value":[8.625,0.5236559308419794]},{"value":[8.875,0.5166772763381975]},{"value":[9.125,0.509169883376283]},{"value":[9.375,0.5025675064259202]},{"value":[9.625,0.497156660797179]},{"value":[9.875,0.4903512367393496]},{"value":[10.125,0.482523463622465]},{"value":[10.375,0.4751227388421688]},{"value":[10.625,0.4671787046861675]},{"value":[10.875,0.4577210034421673]},{"value":[11.125,0.4459709866817542]},{"value":[11.375,0.4328552518171228]},{"value":[11.625,0.4199613098968933]},{"value":[11.875,0.4066785015321013]},{"value":[12.125,0.3921710624543341]},{"value":[12.375,0.3776888463930406]},{"value":[12.625,0.3644817070776694]},{"value":[12.875,0.3521316371305074]},{"value":[13.125,0.3397257094600112]},{"value":[13.375,0.3277713982248836]},{"value":[13.625,0.3162561571612307]},{"value":[13.875,0.3049053546041445]},{"value":[14.125,0.2938333366108067]},{"value":[14.375,0.283154449238399]},{"value":[14.625,0.2730070024721081]},{"value":[14.875,0.2633328585404504]},{"value":[15.125,0.2539516918656025]}],"yAxisIndex":0,"xAxisIndex":0,"name":"SUV","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false}],"tooltip":{"trigger":"axis"},"grid":[{"left":90,"right":40,"top":30,"bottom":90}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-21e637211f06aa7a8f76" style="width:100%;height:460px;" class="echarts4r html-widget"></div>
+<script type="application/json" data-for="htmlwidget-21e637211f06aa7a8f76">{"x":{"theme":"","tl":false,"draw":true,"renderer":"canvas","events":[],"buttons":[],"opts":{"yAxis":[{"show":true,"name":"Retention rate","nameLocation":"middle","nameGap":50}],"xAxis":[{"type":"value","name":"Age (years)"}],"legend":{"data":["All","CUV","Car","Minivan","Pickup","SUV"],"show":true,"type":"plain","bottom":0,"textStyle":{"fontSize":18}},"series":[{"data":[{"value":[1.125,0.911739034020865]},{"value":[1.375,0.89555872429759]},{"value":[1.625,0.879636545546143]},{"value":[1.875,0.8640807285633103]},{"value":[2.125,0.8489062412991383]},{"value":[2.375,0.834025541886069]},{"value":[2.625,0.8193930963944824]},{"value":[2.875,0.8049633708947588]},{"value":[3.125,0.7910012053145745]},{"value":[3.375,0.7775742096746674]},{"value":[3.625,0.7643410051850082]},{"value":[3.875,0.7509602130555683]},{"value":[4.125,0.7380384773402868]},{"value":[4.375,0.7256643916097633]},{"value":[4.625,0.7127195013489586]},{"value":[4.875,0.6988035605481399]},{"value":[5.125,0.6844644203035021]},{"value":[5.375,0.6700057717588984]},{"value":[5.625,0.6557313060581823]},{"value":[5.875,0.6413099833072529]},{"value":[6.125,0.6266173470986012]},{"value":[6.375,0.6122669638059679]},{"value":[6.625,0.5979692466060287]},{"value":[6.875,0.583359863778771]},{"value":[7.125,0.5689402643529039]},{"value":[7.375,0.5552118973571361]},{"value":[7.625,0.5420425266410387]},{"value":[7.875,0.529091027507858]},{"value":[8.125,0.5165455161668158]},{"value":[8.375,0.5045393837332951]},{"value":[8.625,0.4929845332861208]},{"value":[8.875,0.4817368489796774]},{"value":[9.125,0.4706522149683492]},{"value":[9.375,0.4599027302393859]},{"value":[9.625,0.4495585425558784]},{"value":[9.875,0.4393226092359732]},{"value":[10.125,0.429181625538034]},{"value":[10.375,0.4192919081191387]},{"value":[10.625,0.4096108463955044]},{"value":[10.875,0.4000958297833481]},{"value":[11.125,0.390576252772448]},{"value":[11.375,0.3811277676049583]},{"value":[11.625,0.3720771503256602]},{"value":[11.875,0.3633163561721831]},{"value":[12.125,0.3546761432740113]},{"value":[12.375,0.3463914920137086]},{"value":[12.625,0.3386973827738385]},{"value":[12.875,0.3315144536446666]},{"value":[13.125,0.3246754428036569]},{"value":[13.375,0.3182834807641711]},{"value":[13.625,0.3123383512327046]},{"value":[13.875,0.3067837456804703]},{"value":[14.125,0.3016386562679061]},{"value":[14.375,0.2969220751554503]},{"value":[14.625,0.2926605714892234]},{"value":[14.875,0.2888455771077624]},{"value":[15.125,0.2854433782101299]}],"yAxisIndex":0,"xAxisIndex":0,"name":"All","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.9215495945656241]},{"value":[1.375,0.9056130750720928]},{"value":[1.625,0.8897596380911462]},{"value":[1.875,0.8740967953125859]},{"value":[2.125,0.8586381101999067]},{"value":[2.375,0.8432945076108844]},{"value":[2.625,0.8280195413267424]},{"value":[2.875,0.8127667651287042]},{"value":[3.125,0.7977553541490231]},{"value":[3.375,0.7830472813239815]},{"value":[3.625,0.768360297140847]},{"value":[3.875,0.7534121520868869]},{"value":[4.125,0.7386868366336929]},{"value":[4.375,0.7242698391510134]},{"value":[4.625,0.709281156973351]},{"value":[4.875,0.6930634032039932]},{"value":[5.125,0.6760117158243872]},{"value":[5.375,0.6588248794862772]},{"value":[5.625,0.6422016788414063]},{"value":[5.875,0.6254524170885052]},{"value":[6.125,0.6082317288640821]},{"value":[6.375,0.5917548959765478]},{"value":[6.625,0.5760060872409111]},{"value":[6.875,0.5603426554853734]},{"value":[7.125,0.5450396585381351]},{"value":[7.375,0.5303721542273958]},{"value":[7.625,0.5163772895351224]},{"value":[7.875,0.5028302978380449]},{"value":[8.125,0.4896133665565081]},{"value":[8.375,0.4767655026493524]},{"value":[8.625,0.4643527266859047]},{"value":[8.875,0.4522977465022388]},{"value":[9.125,0.4405232699344286]},{"value":[9.375,0.4291327644258425]},{"value":[9.625,0.4181698729811688]},{"value":[9.875,0.407467566778462]},{"value":[10.125,0.3970163221018493]},{"value":[10.375,0.3868991343232772]},{"value":[10.625,0.3770877532525291]},{"value":[10.875,0.3675539286993884]},{"value":[11.125,0.3582406339779425]},{"value":[11.375,0.3491785077290738]},{"value":[11.625,0.3404707977527588]},{"value":[11.875,0.3321024879125109]},{"value":[12.125,0.3240247743314562]},{"value":[12.375,0.31629022319899]},{"value":[12.625,0.3089514007045074]},{"value":[12.875,0.3019966106339749]},{"value":[13.125,0.2953870885270031]},{"value":[13.375,0.2891347982034533]},{"value":[13.625,0.2832392530155512]},{"value":[13.875,0.2776935709244654]},{"value":[14.125,0.2725001226634723]},{"value":[14.375,0.2676612789658483]},{"value":[14.625,0.2631822948352186]},{"value":[14.875,0.2590630467913014]},{"value":[15.125,0.2552978378415124]}],"yAxisIndex":0,"xAxisIndex":0,"name":"CUV","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.837953978989327]},{"value":[1.375,0.8242615097228542]},{"value":[1.625,0.8108144607759026]},{"value":[1.875,0.7977366757770125]},{"value":[2.125,0.7850342472392937]},{"value":[2.375,0.7726039904109707]},{"value":[2.625,0.7604058330232563]},{"value":[2.875,0.748399702807363]},{"value":[3.125,0.7369542567645077]},{"value":[3.375,0.7261513103430699]},{"value":[3.625,0.7155205289450079]},{"value":[3.875,0.7045915779722793]},{"value":[4.125,0.6940463816376355]},{"value":[4.375,0.684022639611189]},{"value":[4.625,0.6732336804809395]},{"value":[4.875,0.6609407788877905]},{"value":[5.125,0.6477540717150035]},{"value":[5.375,0.6344101809141159]},{"value":[5.625,0.6216457284366652]},{"value":[5.875,0.6092785193806426]},{"value":[6.125,0.5968538643644997]},{"value":[6.375,0.5846996436204647]},{"value":[6.625,0.5725408661218384]},{"value":[6.875,0.5601536722286931]},{"value":[7.125,0.5479426392534125]},{"value":[7.375,0.5363123445083808]},{"value":[7.625,0.5252833072911688]},{"value":[7.875,0.514554467441569]},{"value":[8.125,0.5040480330852997]},{"value":[8.375,0.4939871350794758]},{"value":[8.625,0.4844397535189003]},{"value":[8.875,0.4750953703858221]},{"value":[9.125,0.4656434676624898]},{"value":[9.375,0.4562599408155099]},{"value":[9.625,0.4471294510153391]},{"value":[9.875,0.437954628800003]},{"value":[10.125,0.4286532414087436]},{"value":[10.375,0.4193777041735951]},{"value":[10.625,0.4101826197717709]},{"value":[10.875,0.4011225908804848]},{"value":[11.125,0.391908734593556]},{"value":[11.375,0.3825779884259228]},{"value":[11.625,0.3736736856864775]},{"value":[11.875,0.3650652828178931]},{"value":[12.125,0.3564680933863749]},{"value":[12.375,0.3481942363861134]},{"value":[12.625,0.3405558308112994]},{"value":[12.875,0.3334466207543971]},{"value":[13.125,0.326643901551064]},{"value":[13.375,0.320285119060281]},{"value":[13.625,0.3143697768650476]},{"value":[13.875,0.3088230857387101]},{"value":[14.125,0.3036710523257693]},{"value":[14.375,0.2989396832707257]},{"value":[14.625,0.2946634097649579]},{"value":[14.875,0.2908297226072868]},{"value":[15.125,0.2873942178533772]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Car","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.8906432692341812]},{"value":[1.375,0.8747181787027835]},{"value":[1.625,0.8593956195683041]},{"value":[1.875,0.8451606343831507]},{"value":[2.125,0.8321288208634487]},{"value":[2.375,0.8199181706393271]},{"value":[2.625,0.8082673171341981]},{"value":[2.875,0.7969148937714743]},{"value":[3.125,0.7867561715888362]},{"value":[3.375,0.778081176486116]},{"value":[3.625,0.7697206741799533]},{"value":[3.875,0.760505430386988]},{"value":[4.125,0.7535134768851603]},{"value":[4.375,0.7489289743382124]},{"value":[4.625,0.7412418817914872]},{"value":[4.875,0.7295308050715454]},{"value":[5.125,0.7165673929468205]},{"value":[5.375,0.7023811688754643]},{"value":[5.625,0.6870016563156288]},{"value":[5.875,0.6683546101028303]},{"value":[6.125,0.6468835068676948]},{"value":[6.375,0.6263944527610391]},{"value":[6.625,0.6059034376149924]},{"value":[6.875,0.5832805342946058]},{"value":[7.125,0.5606129735000795]},{"value":[7.375,0.5399879859316135]},{"value":[7.625,0.5203367007385259]},{"value":[7.875,0.5003795863664374]},{"value":[8.125,0.4818878824600026]},{"value":[8.375,0.4652635533254633]},{"value":[8.625,0.4495818448381602]},{"value":[8.875,0.4346239189963955]},{"value":[9.125,0.4201709377984714]},{"value":[9.375,0.4068712969731362]},{"value":[9.625,0.3947187566931825]},{"value":[9.875,0.3825125256229792]},{"value":[10.125,0.3704794540085241]},{"value":[10.375,0.3593101281534783]},{"value":[10.625,0.3484993608087066]},{"value":[10.875,0.3375419647250732]},{"value":[11.125,0.3262333582861656]},{"value":[11.375,0.3149882699078745]},{"value":[11.625,0.3042304773895185]},{"value":[11.875,0.2939290028990907]},{"value":[12.125,0.28385958087959]},{"value":[12.375,0.2741560575428437]},{"value":[12.625,0.2649522791006793]},{"value":[12.875,0.2562377109655523]},{"value":[13.125,0.2478908859097977]},{"value":[13.375,0.239879251185062]},{"value":[13.625,0.2321919623254179]},{"value":[13.875,0.224847958252422]},{"value":[14.125,0.2178593612989462]},{"value":[14.375,0.2112382937978625]},{"value":[14.625,0.2049851586712004]},{"value":[14.875,0.1990902321741718]},{"value":[15.125,0.1935504466394229]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Minivan","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,1.002763015251037]},{"value":[1.375,0.9885086702556063]},{"value":[1.625,0.9743416895310824]},{"value":[1.875,0.9602932652073158]},{"value":[2.125,0.9463709383738715]},{"value":[2.375,0.9325516266654037]},{"value":[2.625,0.9188205870293971]},{"value":[2.875,0.9051630764133364]},{"value":[3.125,0.8916586300188049]},{"value":[3.375,0.8783266224782601]},{"value":[3.625,0.8650620698854987]},{"value":[3.875,0.8517599883343172]},{"value":[4.125,0.8385980237054255]},{"value":[4.375,0.8256025522724255]},{"value":[4.625,0.8124416857184529]},{"value":[4.875,0.7991549191037068]},{"value":[5.125,0.7859217717408901]},{"value":[5.375,0.7726203916918931]},{"value":[5.625,0.7591289270186067]},{"value":[5.875,0.745267829089488]},{"value":[6.125,0.7311828416623092]},{"value":[6.375,0.7172400513829331]},{"value":[6.625,0.7031467260247506]},{"value":[6.875,0.6886707472911288]},{"value":[7.125,0.6742691227228953]},{"value":[7.375,0.6603988598608778]},{"value":[7.625,0.6468073689646999]},{"value":[7.875,0.6332164307675696]},{"value":[8.125,0.6200446085206903]},{"value":[8.375,0.6072708585632274]},{"value":[8.625,0.5946707207999108]},{"value":[8.875,0.5823576338302912]},{"value":[9.125,0.570445036253919]},{"value":[9.375,0.5587488065089627]},{"value":[9.625,0.547244866220173]},{"value":[9.875,0.5362867187669743]},{"value":[10.125,0.5258347138521302]},{"value":[10.375,0.5156812165959188]},{"value":[10.625,0.5059277535040358]},{"value":[10.875,0.4966758510821777]},{"value":[11.125,0.488093710667679]},{"value":[11.375,0.4800606379741773]},{"value":[11.625,0.4722448160718228]},{"value":[11.875,0.4647904054518267]},{"value":[12.125,0.4578720816365546]},{"value":[12.375,0.4512038002428886]},{"value":[12.625,0.4444995168877103]},{"value":[12.875,0.437850742541504]},{"value":[13.125,0.4314713373362662]},{"value":[13.375,0.4252587806311479]},{"value":[13.625,0.4192179731468693]},{"value":[13.875,0.4134045229234526]},{"value":[14.125,0.407791970299001]},{"value":[14.375,0.4023538556116178]},{"value":[14.625,0.3970608378987248]},{"value":[14.875,0.3919268048242646]},{"value":[15.125,0.3869901396661221]}],"yAxisIndex":0,"xAxisIndex":0,"name":"Pickup","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false},{"data":[{"value":[1.125,0.9768921069892699]},{"value":[1.375,0.9530155154969226]},{"value":[1.625,0.9298758603506544]},{"value":[1.875,0.9075442568201907]},{"value":[2.125,0.8860350073616933]},{"value":[2.375,0.8652941996719]},{"value":[2.625,0.8452906268814]},{"value":[2.875,0.8259930821207825]},{"value":[3.125,0.8076022106591999]},{"value":[3.375,0.7901651716083399]},{"value":[3.625,0.7734205288625946]},{"value":[3.875,0.7571068463163559]},{"value":[4.125,0.741666371891022]},{"value":[4.375,0.7271656465222105]},{"value":[4.625,0.712779673625644]},{"value":[4.875,0.6986380965063641]},{"value":[5.125,0.6851922078739922]},{"value":[5.375,0.6720994852511198]},{"value":[5.625,0.6590174061603384]},{"value":[5.875,0.6461336832124246]},{"value":[6.125,0.6336648255340647]},{"value":[6.375,0.6213115054217152]},{"value":[6.625,0.6084909043868947]},{"value":[6.875,0.5952984292125567]},{"value":[7.125,0.5824520901023105]},{"value":[7.375,0.5706698972597648]},{"value":[7.625,0.5597823009478403]},{"value":[7.875,0.5493059224543628]},{"value":[8.125,0.5394880285202994]},{"value":[8.375,0.5309710978989172]},{"value":[8.625,0.5236559308419794]},{"value":[8.875,0.5166772763381975]},{"value":[9.125,0.509169883376283]},{"value":[9.375,0.5025675064259202]},{"value":[9.625,0.497156660797179]},{"value":[9.875,0.4903512367393496]},{"value":[10.125,0.482523463622465]},{"value":[10.375,0.4751227388421688]},{"value":[10.625,0.4671787046861675]},{"value":[10.875,0.4577210034421673]},{"value":[11.125,0.4459709866817542]},{"value":[11.375,0.4328552518171228]},{"value":[11.625,0.4199613098968933]},{"value":[11.875,0.4066785015321013]},{"value":[12.125,0.3921710624543341]},{"value":[12.375,0.3776888463930406]},{"value":[12.625,0.3644817070776694]},{"value":[12.875,0.3521316371305074]},{"value":[13.125,0.3397257094600112]},{"value":[13.375,0.3277713982248836]},{"value":[13.625,0.3162561571612307]},{"value":[13.875,0.3049053546041445]},{"value":[14.125,0.2938333366108067]},{"value":[14.375,0.283154449238399]},{"value":[14.625,0.2730070024721081]},{"value":[14.875,0.2633328585404504]},{"value":[15.125,0.2539516918656025]}],"yAxisIndex":0,"xAxisIndex":0,"name":"SUV","type":"line","coordinateSystem":"cartesian2d","symbol":"none","smooth":false}],"tooltip":{"trigger":"axis"},"grid":[{"left":90,"right":40,"top":30,"bottom":90}]},"dispose":true},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -2265,47 +2312,21 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 </div>
 </center>
 <div class="cols-row">
-<div class="col font60">
+<div class="col font80" style="flex:0 1 58%;width:58%">
+<p>The hardest thing on the site: <strong>276 lines</strong> of hand-written MapLibre and <strong>1.64 GB</strong> of tiles on a CDN. It’s <strong>not in the dashboard</strong> — it’s its own repo, built in isolation, then dropped in:</p>
+</div>
+<div class="col" style="flex:0 1 42%;width:42%">
+<div class="font55">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
 <span id="cb5-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
-<span id="cb5-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, </span>
-<span id="cb5-4"><a href=""></a>  <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb5-5"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
+<span id="cb5-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="col">
-<center>
-<a href="https://vehicletrends.github.io/hhi-map/" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">View map in new tab</a>
-</center>
 </div>
 </div>
 <aside class="notes">
-<p>This is the hardest thing on the entire site.</p>
-<p>So it isn’t in the dashboard.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>Need something heavier? Put it in a box</h2>
-<div class="col">
-<p>The census-tract map is the hardest thing on the site: <strong>276 lines</strong> of hand-written MapLibre and <strong>1.64 GB</strong> of map tiles on a CDN.</p>
-<p>It’s <strong>not in the dashboard.</strong> It’s its own repo — <code>hhi-map</code> — built and iterated in isolation, then dropped in:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(</span>
-<span id="cb6-2"><a href=""></a>  <span class="at">src =</span> <span class="st">"https://vehicletrends.github.io/hhi-map/"</span>,</span>
-<span id="cb6-3"><a href=""></a>  <span class="at">height =</span> <span class="st">"700px"</span>, <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb6-4"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<aside class="notes">
-<p>276 lines of hand-written MapLibre and 1.64 GB of tiles. Its own repo, built and iterated in isolation, dropped in with six lines.</p>
+<p>This is the hardest thing on the entire site. So it isn’t in the dashboard.</p>
+<p>276 lines of hand-written MapLibre and 1.64 GB of tiles, in its own repo, built and iterated in isolation, dropped in with six lines.</p>
 <p>Quarto doesn’t need to be the thing that does everything. It needs to be the thing that composes everything.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2323,41 +2344,14 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 
 <h2>Or drop a whole Shiny app in the page</h2>
 <p>Two pages on the site <strong>are</strong> Shiny apps — compiled to WebAssembly, running in the reader’s browser:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href=""></a><span class="in">```{shinylive-r}</span></span>
-<span id="cb7-2"><a href=""></a><span class="co">#| standalone: true</span></span>
-<span id="cb7-3"><a href=""></a><span class="co">#| viewerHeight: 800</span></span>
-<span id="cb7-4"><a href=""></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href=""></a><span class="in">```{shinylive-r}</span></span>
+<span id="cb6-2"><a href=""></a><span class="co">#| standalone: true</span></span>
+<span id="cb6-3"><a href=""></a><span class="co">#| viewerHeight: 800</span></span>
+<span id="cb6-4"><a href=""></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="font120">Same move. The hard thing goes in a box, and the page just says where.</span></p>
 <aside class="notes">
 <p>Same move. The hard thing goes in a box, and the page just says where.</p>
 <p>Two pages on the site are Shiny apps compiled to WebAssembly, running in the reader’s browser.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level0">
-
-<h2>Small pieces have small context windows</h2>
-<p>Isolate a component →</p>
-<ul>
-<li>the agent holds <strong>all of it</strong> in one context</li>
-<li>you iterate on it <strong>without touching the site</strong></li>
-<li>it drops back in as an <code>iframe</code></li>
-</ul>
-<p>The agent opens <strong>one page</strong> — 200 to 600 lines. Never the site.</p>
-<p><span class="font120 green">The whole dashboard is never in scope at once. Neither is the token bill.</span></p>
-<aside class="notes">
-<p>This is the strongest AI-specific point in the whole section.</p>
-<p>The agent opens one page — 200 to 600 lines. Never the site. The whole dashboard is never in scope at once.</p>
-<p>Same move as the handwriting sheet, at a much larger scale: separate the thing you’re changing from the thing you’re preserving.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2499,15 +2493,15 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <p><iconify-icon role="img" inline="" icon="simple-icons:quarto" style="color:#74aadb;;font-size: 2em;" aria-label="Quarto icon" title="Quarto icon"></iconify-icon></p>
 <p><span class="qmdblue"><strong>Quarto</strong></span> (<code>.qmd</code>)</p>
 <div class="font45">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href=""></a><span class="co">---</span></span>
-<span id="cb8-2"><a href=""></a><span class="an">format:</span><span class="co"> pdf</span></span>
-<span id="cb8-3"><a href=""></a><span class="co">---</span></span>
-<span id="cb8-4"><a href=""></a></span>
-<span id="cb8-5"><a href=""></a><span class="fu">## EV Sales</span></span>
-<span id="cb8-6"><a href=""></a></span>
-<span id="cb8-7"><a href=""></a>Sales of **electric vehicles** grew</span>
-<span id="cb8-8"><a href=""></a>20% in 2025, reaching over</span>
-<span id="cb8-9"><a href=""></a>_20 million_ sales globally.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href=""></a><span class="co">---</span></span>
+<span id="cb7-2"><a href=""></a><span class="an">format:</span><span class="co"> pdf</span></span>
+<span id="cb7-3"><a href=""></a><span class="co">---</span></span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a><span class="fu">## EV Sales</span></span>
+<span id="cb7-6"><a href=""></a></span>
+<span id="cb7-7"><a href=""></a>Sales of **electric vehicles** grew</span>
+<span id="cb7-8"><a href=""></a>20% in 2025, reaching over</span>
+<span id="cb7-9"><a href=""></a>_20 million_ sales globally.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="qmdblue font140"><strong>126</strong> characters</span></p>
 </div>
@@ -2515,20 +2509,20 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <p><span class="amber"><i class="fa-solid fa-file-pdf fa-2x" aria-label="file-pdf"></i></span></p>
 <p><span class="amber"><strong>PDF</strong></span> (via LaTeX)</p>
 <div class="font45">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource latex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb9-1"><a href=""></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
-<span id="cb9-2"><a href=""></a><span class="bu">\usepackage</span>[T1]{<span class="ex">fontenc</span>}</span>
-<span id="cb9-3"><a href=""></a><span class="bu">\usepackage</span>{<span class="ex">geometry</span>}</span>
-<span id="cb9-4"><a href=""></a><span class="fu">\geometry</span>{margin=1in}</span>
-<span id="cb9-5"><a href=""></a></span>
-<span id="cb9-6"><a href=""></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb9-7"><a href=""></a></span>
-<span id="cb9-8"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
-<span id="cb9-9"><a href=""></a></span>
-<span id="cb9-10"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles} grew</span>
-<span id="cb9-11"><a href=""></a>20<span class="fu">\%</span> in 2025, reaching over</span>
-<span id="cb9-12"><a href=""></a><span class="fu">\emph</span>{20 million} sales globally.</span>
-<span id="cb9-13"><a href=""></a></span>
-<span id="cb9-14"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource latex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb8-1"><a href=""></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb8-2"><a href=""></a><span class="bu">\usepackage</span>[T1]{<span class="ex">fontenc</span>}</span>
+<span id="cb8-3"><a href=""></a><span class="bu">\usepackage</span>{<span class="ex">geometry</span>}</span>
+<span id="cb8-4"><a href=""></a><span class="fu">\geometry</span>{margin=1in}</span>
+<span id="cb8-5"><a href=""></a></span>
+<span id="cb8-6"><a href=""></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb8-7"><a href=""></a></span>
+<span id="cb8-8"><a href=""></a><span class="kw">\section*</span>{EV Sales}</span>
+<span id="cb8-9"><a href=""></a></span>
+<span id="cb8-10"><a href=""></a>Sales of <span class="fu">\textbf</span>{electric vehicles} grew</span>
+<span id="cb8-11"><a href=""></a>20<span class="fu">\%</span> in 2025, reaching over</span>
+<span id="cb8-12"><a href=""></a><span class="fu">\emph</span>{20 million} sales globally.</span>
+<span id="cb8-13"><a href=""></a></span>
+<span id="cb8-14"><a href=""></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="amber font140"><strong>252</strong> characters</span></p>
 </div>
@@ -2536,24 +2530,24 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <p><span class="red"><i class="fa-brands fa-html5 fa-2x" aria-label="html5"></i></span></p>
 <p><span class="red"><strong>HTML</strong></span></p>
 <div class="font45">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb10-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb10-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
-<span id="cb10-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb10-4"><a href=""></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"utf-8"</span><span class="dt">&gt;</span></span>
-<span id="cb10-5"><a href=""></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb10-6"><a href=""></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb10-7"><a href=""></a>body { <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Georgia</span><span class="op">,</span> <span class="dv">serif</span><span class="op">;</span></span>
-<span id="cb10-8"><a href=""></a>       <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">em</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> }</span>
-<span id="cb10-9"><a href=""></a>h2 { <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">1.6</span><span class="dt">em</span><span class="op">;</span> }</span>
-<span id="cb10-10"><a href=""></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb10-11"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb10-12"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb10-13"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
-<span id="cb10-14"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Sales of <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>electric vehicles<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> grew</span>
-<span id="cb10-15"><a href=""></a>20% in 2025, reaching over <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>20 million<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span></span>
-<span id="cb10-16"><a href=""></a>sales globally.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb10-17"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb10-18"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href=""></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb9-2"><a href=""></a><span class="dt">&lt;</span><span class="kw">html</span><span class="ot"> lang</span><span class="op">=</span><span class="st">"en"</span><span class="dt">&gt;</span></span>
+<span id="cb9-3"><a href=""></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb9-4"><a href=""></a><span class="dt">&lt;</span><span class="kw">meta</span><span class="ot"> charset</span><span class="op">=</span><span class="st">"utf-8"</span><span class="dt">&gt;</span></span>
+<span id="cb9-5"><a href=""></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb9-6"><a href=""></a><span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb9-7"><a href=""></a>body { <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Georgia</span><span class="op">,</span> <span class="dv">serif</span><span class="op">;</span></span>
+<span id="cb9-8"><a href=""></a>       <span class="kw">max-width</span><span class="ch">:</span> <span class="dv">40</span><span class="dt">em</span><span class="op">;</span> <span class="kw">margin</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">em</span> <span class="bu">auto</span><span class="op">;</span> }</span>
+<span id="cb9-9"><a href=""></a>h2 { <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">1.6</span><span class="dt">em</span><span class="op">;</span> }</span>
+<span id="cb9-10"><a href=""></a><span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb9-11"><a href=""></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb9-12"><a href=""></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb9-13"><a href=""></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>EV Sales<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb9-14"><a href=""></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Sales of <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>electric vehicles<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> grew</span>
+<span id="cb9-15"><a href=""></a>20% in 2025, reaching over <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>20 million<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span></span>
+<span id="cb9-16"><a href=""></a>sales globally.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb9-17"><a href=""></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb9-18"><a href=""></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="red font140"><strong>377</strong> characters</span></p>
 </div>
@@ -2597,23 +2591,23 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <p><span class="wordblue"><i class="fa-solid fa-file-word fa-2x" aria-label="file-word"></i></span></p>
 <p><span class="wordblue"><strong>Word</strong></span> (<code>word/document.xml</code>)</p>
 <div class="font50">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb11-1"><a href=""></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span> <span class="ot">standalone=</span><span class="st">"yes"</span><span class="fu">?&gt;</span></span>
-<span id="cb11-2"><a href=""></a>&lt;<span class="kw">w:document</span> <span class="ot">xmlns:w=</span><span class="st">"http://schemas.openxmlformats.org/</span></span>
-<span id="cb11-3"><a href=""></a><span class="st">                     wordprocessingml/2006/main"</span>&gt;</span>
-<span id="cb11-4"><a href=""></a>  &lt;<span class="kw">w:body</span>&gt;</span>
-<span id="cb11-5"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
-<span id="cb11-6"><a href=""></a>      &lt;<span class="kw">w:pPr</span>&gt;&lt;<span class="kw">w:pStyle</span> <span class="ot">w:val=</span><span class="st">"Heading2"</span>/&gt;&lt;/<span class="kw">w:pPr</span>&gt;</span>
-<span id="cb11-7"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span>&gt;EV Sales&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-8"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
-<span id="cb11-9"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
-<span id="cb11-10"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt;Sales of &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-11"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:b</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;electric vehicles&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-12"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; grew 20% in 2025, reaching over &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-13"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:i</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;20 million&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-14"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; sales globally.&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
-<span id="cb11-15"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
-<span id="cb11-16"><a href=""></a>  &lt;/<span class="kw">w:body</span>&gt;</span>
-<span id="cb11-17"><a href=""></a>&lt;/<span class="kw">w:document</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource xml number-lines code-with-copy"><code class="sourceCode xml"><span id="cb10-1"><a href=""></a><span class="fu">&lt;?xml</span> <span class="ot">version=</span><span class="st">"1.0"</span> <span class="ot">encoding=</span><span class="st">"UTF-8"</span> <span class="ot">standalone=</span><span class="st">"yes"</span><span class="fu">?&gt;</span></span>
+<span id="cb10-2"><a href=""></a>&lt;<span class="kw">w:document</span> <span class="ot">xmlns:w=</span><span class="st">"http://schemas.openxmlformats.org/</span></span>
+<span id="cb10-3"><a href=""></a><span class="st">                     wordprocessingml/2006/main"</span>&gt;</span>
+<span id="cb10-4"><a href=""></a>  &lt;<span class="kw">w:body</span>&gt;</span>
+<span id="cb10-5"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
+<span id="cb10-6"><a href=""></a>      &lt;<span class="kw">w:pPr</span>&gt;&lt;<span class="kw">w:pStyle</span> <span class="ot">w:val=</span><span class="st">"Heading2"</span>/&gt;&lt;/<span class="kw">w:pPr</span>&gt;</span>
+<span id="cb10-7"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span>&gt;EV Sales&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-8"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
+<span id="cb10-9"><a href=""></a>    &lt;<span class="kw">w:p</span>&gt;</span>
+<span id="cb10-10"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt;Sales of &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-11"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:b</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;electric vehicles&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-12"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; grew 20% in 2025, reaching over &lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-13"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:i</span>/&gt;&lt;/<span class="kw">w:rPr</span>&gt;&lt;<span class="kw">w:t</span>&gt;20 million&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-14"><a href=""></a>      &lt;<span class="kw">w:r</span>&gt;&lt;<span class="kw">w:t</span> <span class="ot">xml:space=</span><span class="st">"preserve"</span>&gt; sales globally.&lt;/<span class="kw">w:t</span>&gt;&lt;/<span class="kw">w:r</span>&gt;</span>
+<span id="cb10-15"><a href=""></a>    &lt;/<span class="kw">w:p</span>&gt;</span>
+<span id="cb10-16"><a href=""></a>  &lt;/<span class="kw">w:body</span>&gt;</span>
+<span id="cb10-17"><a href=""></a>&lt;/<span class="kw">w:document</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="wordblue font140"><strong>663</strong> characters 😱</span></p>
 </div>
@@ -2936,39 +2930,39 @@ Quarto disentangles <span class="contentchip fragment custom turnsred" data-frag
 <div class="cols-row">
 <div class="col font45" style="flex:0 1 55%;width:55%">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-2"><a href=""></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb12-3"><a href=""></a><span class="fu">library</span>(sf)</span>
-<span id="cb12-4"><a href=""></a></span>
-<span id="cb12-5"><a href=""></a>funding <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/africa-funding.csv"</span>)</span>
-<span id="cb12-6"><a href=""></a></span>
-<span id="cb12-7"><a href=""></a>africa <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">continent =</span> <span class="st">"Africa"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
-<span id="cb12-8"><a href=""></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(funding<span class="sc">$</span>name <span class="sc">%in%</span> africa<span class="sc">$</span>name))</span>
-<span id="cb12-9"><a href=""></a></span>
-<span id="cb12-10"><a href=""></a>funded <span class="ot">&lt;-</span> africa <span class="sc">|&gt;</span></span>
-<span id="cb12-11"><a href=""></a>  <span class="fu">inner_join</span>(funding, <span class="at">by =</span> <span class="st">"name"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-12"><a href=""></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-13"><a href=""></a>    <span class="at">lon =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_point_on_surface</span>(geometry))[, <span class="st">"X"</span>],</span>
-<span id="cb12-14"><a href=""></a>    <span class="at">lat =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_point_on_surface</span>(geometry))[, <span class="st">"Y"</span>]</span>
-<span id="cb12-15"><a href=""></a>  )</span>
-<span id="cb12-16"><a href=""></a></span>
-<span id="cb12-17"><a href=""></a><span class="fu">ggplot</span>(africa) <span class="sc">+</span></span>
-<span id="cb12-18"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"grey90"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb12-19"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> funded, <span class="at">fill =</span> <span class="st">"#00798c"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb12-20"><a href=""></a>  <span class="fu">geom_segment</span>(</span>
-<span id="cb12-21"><a href=""></a>    <span class="at">data =</span> funded, <span class="at">color =</span> <span class="st">"#2e4057"</span>,</span>
-<span id="cb12-22"><a href=""></a>    <span class="fu">aes</span>(lon, lat, <span class="at">xend =</span> lon <span class="sc">+</span> dx, <span class="at">yend =</span> lat <span class="sc">+</span> dy)</span>
-<span id="cb12-23"><a href=""></a>  ) <span class="sc">+</span></span>
-<span id="cb12-24"><a href=""></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb12-25"><a href=""></a>    <span class="at">data =</span> funded, <span class="at">color =</span> <span class="st">"#2e4057"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">lineheight =</span> <span class="fl">0.9</span>,</span>
-<span id="cb12-26"><a href=""></a>    <span class="at">family =</span> <span class="st">"Fira Sans Condensed"</span>,</span>
-<span id="cb12-27"><a href=""></a>    <span class="fu">aes</span>(</span>
-<span id="cb12-28"><a href=""></a>      lon <span class="sc">+</span> dx, lat <span class="sc">+</span> dy, <span class="at">hjust =</span> <span class="fu">ifelse</span>(dx <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>),</span>
-<span id="cb12-29"><a href=""></a>      <span class="at">label =</span> <span class="fu">paste0</span>(name, <span class="st">"</span><span class="sc">\n</span><span class="st">$"</span>, amount, <span class="st">"M"</span>)</span>
-<span id="cb12-30"><a href=""></a>    )</span>
-<span id="cb12-31"><a href=""></a>  ) <span class="sc">+</span></span>
-<span id="cb12-32"><a href=""></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">38</span>, <span class="dv">66</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">36</span>, <span class="dv">38</span>)) <span class="sc">+</span></span>
-<span id="cb12-33"><a href=""></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-2"><a href=""></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb11-3"><a href=""></a><span class="fu">library</span>(sf)</span>
+<span id="cb11-4"><a href=""></a></span>
+<span id="cb11-5"><a href=""></a>funding <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/africa-funding.csv"</span>)</span>
+<span id="cb11-6"><a href=""></a></span>
+<span id="cb11-7"><a href=""></a>africa <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">continent =</span> <span class="st">"Africa"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb11-8"><a href=""></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(funding<span class="sc">$</span>name <span class="sc">%in%</span> africa<span class="sc">$</span>name))</span>
+<span id="cb11-9"><a href=""></a></span>
+<span id="cb11-10"><a href=""></a>funded <span class="ot">&lt;-</span> africa <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href=""></a>  <span class="fu">inner_join</span>(funding, <span class="at">by =</span> <span class="st">"name"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-13"><a href=""></a>    <span class="at">lon =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_point_on_surface</span>(geometry))[, <span class="st">"X"</span>],</span>
+<span id="cb11-14"><a href=""></a>    <span class="at">lat =</span> <span class="fu">st_coordinates</span>(<span class="fu">st_point_on_surface</span>(geometry))[, <span class="st">"Y"</span>]</span>
+<span id="cb11-15"><a href=""></a>  )</span>
+<span id="cb11-16"><a href=""></a></span>
+<span id="cb11-17"><a href=""></a><span class="fu">ggplot</span>(africa) <span class="sc">+</span></span>
+<span id="cb11-18"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"grey90"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb11-19"><a href=""></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> funded, <span class="at">fill =</span> <span class="st">"#00798c"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href=""></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb11-21"><a href=""></a>    <span class="at">data =</span> funded, <span class="at">color =</span> <span class="st">"#2e4057"</span>,</span>
+<span id="cb11-22"><a href=""></a>    <span class="fu">aes</span>(lon, lat, <span class="at">xend =</span> lon <span class="sc">+</span> dx, <span class="at">yend =</span> lat <span class="sc">+</span> dy)</span>
+<span id="cb11-23"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb11-24"><a href=""></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb11-25"><a href=""></a>    <span class="at">data =</span> funded, <span class="at">color =</span> <span class="st">"#2e4057"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">lineheight =</span> <span class="fl">0.9</span>,</span>
+<span id="cb11-26"><a href=""></a>    <span class="at">family =</span> <span class="st">"Fira Sans Condensed"</span>,</span>
+<span id="cb11-27"><a href=""></a>    <span class="fu">aes</span>(</span>
+<span id="cb11-28"><a href=""></a>      lon <span class="sc">+</span> dx, lat <span class="sc">+</span> dy, <span class="at">hjust =</span> <span class="fu">ifelse</span>(dx <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>),</span>
+<span id="cb11-29"><a href=""></a>      <span class="at">label =</span> <span class="fu">paste0</span>(name, <span class="st">"</span><span class="sc">\n</span><span class="st">$"</span>, amount, <span class="st">"M"</span>)</span>
+<span id="cb11-30"><a href=""></a>    )</span>
+<span id="cb11-31"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb11-32"><a href=""></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">38</span>, <span class="dv">66</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">36</span>, <span class="dv">38</span>)) <span class="sc">+</span></span>
+<span id="cb11-33"><a href=""></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="col" style="flex:0 1 45%;width:45%">

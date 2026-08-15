@@ -1361,48 +1361,53 @@ they still work at fifteen pages.
 
 ---
 
-# [**vehicletrends.us**]{.center}
+## It's not a 3,000-line dashboard.<br>It's 15 small documents.
 
-::: {.col}
-
-A Quarto website:
-
-```yaml
-project:
-  type: website
-
-website:
-  sidebar:
-    contents:
-      - about.qmd
-      - vmt-daily.qmd
-      - depreciation.qmd
-      - percent-listings.qmd
-      - market-concentration.qmd
-      - registrations.qmd
+:::: {.col width="42%"}
+::: {.font55}
+```
+vehicletrends.us/
+├── index.qmd
+├── about.qmd
+├── vmt-daily.qmd
+├── vmt-age.qmd
+├── depreciation.qmd
+├── percent-listings.qmd
+├── percent-dealers.qmd
+├── market-concentration.qmd
+├── hhi-explained.qmd
+├── registrations.qmd
+├── nearest-vehicles.qmd
+├── tech-stack.qmd
+├── cite.qmd
+├── LICENSE.qmd
+└── 404.qmd
 ```
 :::
+::::
 
-::: {.col}
+::: {.col width="58%"}
 <br>
 
-**15 .qmd files**
-
-**~3,000 lines of code + markdown**
+**~3,000 lines** of markdown and code — and not one file over a few hundred.
 
 <br>
 
-**Data loads at render**: `library(vehicletrends)`
+The data loads at render:
 
+[`library(vehicletrends)`]{.font140 .blue}
+
+I typed none of the numbers.
 :::
 
 ::: {.notes}
 This isn't a 3,000-line dashboard. It's 15 small documents.
 
-That distinction matters enormously once an agent is working on it.
+That distinction matters enormously once an agent is working on it — and it's
+the same distinction as the handwriting sheet, just at a bigger scale.
 
 The agent writes the `.qmd`. The data lives in a package the pages load at
-render
+render.
 :::
 
 ---
@@ -1416,6 +1421,8 @@ render
 
 [A Shiny app is one URL. The state lives in a session.]{.font120}
 
+[It's not an app. It's a website.]{.font150 .blue}
+
 ::: {.notes}
 It's a dashboard that behaves like a website.
 
@@ -1426,7 +1433,7 @@ A Shiny app is one URL, and the state lives in a session.
 
 ---
 
-## No UI. No server.
+## It's not an application. It's a document.
 
 ::: {.col}
 [**Shiny**]{.red}
@@ -1448,7 +1455,7 @@ You maintain an **application**.
 You maintain a **document**.
 :::
 
-[Real compute over data too big for a browser is Shiny's job. This isn't that.]{.font120}
+[No UI. No server. Real compute over data too big for a browser is still Shiny's job.]{.font120}
 
 ::: {.notes}
 This isn't an application. It's a document.
@@ -1459,9 +1466,43 @@ browser is exactly Shiny's job. Most dashboards aren't that.
 
 ---
 
-## "But I need users to filter it"
+## Small pieces have small context windows
+
+::: {.col}
+[**The whole site**]{.red}
+
+- 15 pages
+- ~3,000 lines
+- every chart, every table, every number
+:::
+
+::: {.col}
+[**What the agent opens**]{.blue}
+
+- one page
+- 200 to 600 lines
+:::
+
+<br>
+
+[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120}
+
+::: {.notes}
+This is the strongest AI-specific point in the whole section.
+
+The agent opens one page — 200 to 600 lines. Never the site.
+
+Remember the handwriting sheet? We separated the thing I wanted to change from
+the thing I wanted to preserve. Same move here, at a much larger scale.
+:::
+
+---
+
+## Interactivity lives in the browser
 
 ::: {.col width="40%"}
+*"But I need users to filter it."*
+
 ::: {.font45}
 ```r
 depreciation |>
@@ -1476,6 +1517,8 @@ depreciation |>
 [Click a category in the legend →]{.font110}
 
 [No input. No server. No reactive.]{.font110 .blue}
+
+[I just put the widget in the document.]{.font120}
 :::
 
 ::: {.col width="60%"}
@@ -1577,39 +1620,14 @@ htmltools::tags$iframe(
 ```
 </center>
 
-::: {.col .font60}
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", 
-  width = "100%"
-)
-```
+::: {.col width="58%" .font80}
+The hardest thing on the site: **276 lines** of hand-written MapLibre and
+**1.64 GB** of tiles on a CDN. It's **not in the dashboard** — it's its own
+repo, built in isolation, then dropped in:
 :::
 
-::: {.col}
-<center>
-<a href="https://vehicletrends.github.io/hhi-map/" target="_blank" style="display: inline-block; padding: 8px 16px; background-color: #0066cc; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 10px;">View map in new tab</a>
-</center>
-:::
-
-::: {.notes}
-This is the hardest thing on the entire site.
-
-So it isn't in the dashboard.
-:::
-
----
-
-## Need something heavier? Put it in a box
-
-::: {.col}
-The census-tract map is the hardest thing on the site: **276 lines** of
-hand-written MapLibre and **1.64 GB** of map tiles on a CDN.
-
-It's **not in the dashboard.** It's its own repo — `hhi-map` — built and iterated
-in isolation, then dropped in:
-
+::: {.col width="42%"}
+::: {.font55}
 ```r
 htmltools::tags$iframe(
   src = "https://vehicletrends.github.io/hhi-map/",
@@ -1617,10 +1635,13 @@ htmltools::tags$iframe(
 )
 ```
 :::
+:::
 
 ::: {.notes}
-276 lines of hand-written MapLibre and 1.64 GB of tiles. Its own
-repo, built and iterated in isolation, dropped in with six lines.
+This is the hardest thing on the entire site. So it isn't in the dashboard.
+
+276 lines of hand-written MapLibre and 1.64 GB of tiles, in its own repo, built
+and iterated in isolation, dropped in with six lines.
 
 Quarto doesn't need to be the thing that does everything. It needs to be the
 thing that composes everything.
@@ -1643,35 +1664,10 @@ the reader's browser:
 [Same move. The hard thing goes in a box, and the page just says where.]{.font120}
 
 ::: {.notes}
-Same move. The hard thing goes in a box, and the page just says
-where.
+Same move. The hard thing goes in a box, and the page just says where.
 
 Two pages on the site are Shiny apps compiled to WebAssembly, running in the
 reader's browser.
-:::
-
----
-
-## Small pieces have small context windows
-
-Isolate a component →
-
-- the agent holds **all of it** in one context
-- you iterate on it **without touching the site**
-- it drops back in as an `iframe`
-
-The agent opens **one page** — 200 to 600 lines. Never the site.
-
-[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120 .green}
-
-::: {.notes}
-This is the strongest AI-specific point in the whole section.
-
-The agent opens one page — 200 to 600 lines. Never the site. The whole dashboard
-is never in scope at once.
-
-Same move as the handwriting sheet, at a much larger scale: separate the thing
-you're changing from the thing you're preserving.
 :::
 
 ---
@@ -1690,8 +1686,8 @@ cached, so nothing goes stale.
 [No server to run. No server to secure. No server to pay for.]{.font120}
 
 ::: {.notes}
-Say "static files," not "serverless" — serverless drags in Lambda
-and edge functions and backends. This is simpler than that.
+Say "static files," not "serverless" — serverless drags in Lambda and edge
+functions and backends. This is simpler than that.
 
 At the end of the day it's a folder of files a browser can read. So I can host
 it for free.
@@ -1706,8 +1702,8 @@ it for free.
 # Quarto composes things that<br>don't need to understand each other.
 
 ::: {.notes}
-Quarto lets me compose a dashboard out of things that don't need
-to understand each other.
+Quarto lets me compose a dashboard out of things that don't need to understand
+each other.
 
 And that turns out to be really useful when one of the things building it is an
 AI.

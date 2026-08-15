@@ -595,7 +595,7 @@ real, multi-page, self-updating Quarto site. Draw principles from the real repo,
 never invented ones.
 
 **`Same picture. Bigger artifact.` opens the act**, right after the gif returns
-and before the `_quarto.yml` slide — figure : receipt, the deck's usual order.
+and before the file-tree slide — figure : receipt, the deck's usual order.
 It is entanglement figure 2 redrawn at site scale and echoes it horizontally:
 same x window, same `me` / agent / `writes` coordinates, and the stack's front
 card is figure 2's `.qmd` box unchanged. ❌ Don't move it back to Act 5; three
@@ -620,8 +620,8 @@ things that don't need to understand each other`**, which is the bridge into
 cost. ❌ The old *See? I told you I'd get to the dashboard eventually* joke is
 gone with the twelve-minute delay that earned it; don't reinstate it here.
 ❌ Never frame the act as *here's how Control / Cost / Correct apply* — the spine
-hasn't been laid yet, and it was never a 1:1. Opening beat is `vehicletrends.us`
-+ *I built this with Quarto* — **provenance, not proof**, and ❌ never the word
+hasn't been laid yet, and it was never a 1:1. Opening beat is the gif +
+*I built this with Quarto* — **provenance, not proof**, and ❌ never the word
 *artifact*, which the thesis line spends on the opposite meaning; then the turn,
 **`It's not an app. It's a website.`** That turn is the act's own spine — URLs,
 no server, the iframe, Shinylive, static files, free hosting all fall out of it,
@@ -637,27 +637,45 @@ application seconds before the turn deflates it to a website. What survives
 there is the load-bearing half: *every number is computed at render, I typed
 none of them.*
 
-1. **Same move, at scale.** Agent writes the `.qmd` + small R chunks; **data
-   lives in an external R package** (`vehicletrends`) the pages read at render
-   (`setup.R`). Weekly GitHub Action re-renders, so nothing goes stale.
-2. **Shiny asks for the artifact; Quarto asks for the source.** THE objection to
-   pre-empt in this room. Shiny = UI + inputs/outputs + server + reactivity.
-   Quarto = markdown + a chunk returning a self-contained JS widget. Honest
-   concession: server-side compute over browser-too-big data is Shiny's turf.
-3. **Isolate heavy components behind an iframe.** The MapLibre + PMTiles map is
-   a separate repo (`hhi-map`) — 276 lines of hand-written JS, 1.64 GB of tiles
-   on Cloudflare R2 — dropped in with 6 lines.
-4. **…or drop in a whole Shiny app.** Two pages (`hhi-explained.qmd`,
-   `registrations.qmd`) are native `{shinylive-r}` chunks, WASM, client-side.
-   Same move as the iframe, so it sits right after it and resolves 2's
-   concession.
-5. **Small pieces have small context windows.** Efficiency made architectural.
-   The agent opens one 200–600 line page, never the site.
-6. **It's just static files.** Charts, map, even the Shiny app run client-side.
-   Weekly re-render is `cron: '0 5 * * 0'`; there is **no `freeze`**, so every
-   build re-executes all the R. Nothing is cached, so nothing goes stale.
+**The act is nine slides, in this order, and the order is the outline's** — it is
+**one argument, decomposition**, not a feature tour. ❌ Never present it as "here
+are N reasons Quarto is good for dashboards"; that turns the talk into a
+catalogue, which is the failure mode the outline names by name.
 
-**The interactivity slide runs a live `echarts4r` chart** (powertrain share of
+1. **`It's not a 3,000-line dashboard. It's 15 small documents.`** The file tree
+   of all 15 `.qmd`, ~3,000 lines, and `library(vehicletrends)` at render. The
+   tree replaced a `_quarto.yml` listing on purpose: this slide is about
+   decomposition, and config belongs to slide 6. It is the **receipt** for the
+   figure before it.
+2. **`Every page gets a URL`** — ends on **`It's not an app. It's a website.`**
+3. **`It's not an application. It's a document.`** Shiny vs Quarto, two columns.
+   ⚠️ The title carries the claim so the columns read as evidence rather than as
+   a scoreboard — the outline is explicit that this must not become a
+   Quarto-beats-Shiny argument. Honest concession stays on the slide:
+   server-side compute over browser-too-big data is Shiny's turf.
+4. **`Small pieces have small context windows.`** The whole site vs. what the
+   agent opens. ⚠️ It moved **before** the box slides, so ❌ it may not mention
+   iframes — it used to end "it drops back in as an `iframe`" and that is now a
+   forward reference. Speak the handwriting callback here instead.
+5. **`Interactivity lives in the browser`** — live `echarts4r`, opening on the
+   objection *"But I need users to filter it."* Payoff: *I just put the widget
+   in the document.* ❌ Never "Quarto supports JavaScript."
+6. **`Because it's a document, the layout comes for free`** — deliberately
+   demoted, one slide, no dwelling.
+7. **`Have a heavier artifact? Put it in a box!`** The live `hhi-map` iframe,
+   with 276 lines / 1.64 GB / its own repo as a caption row underneath. ⚠️ This
+   used to be **two** near-identical slides (the live map, then the same prose
+   again); they are merged. Don't re-split them.
+8. **`Or drop a whole Shiny app in the page`** — `hhi-explained.qmd` and
+   `registrations.qmd` are native `{shinylive-r}`, WASM, client-side. Same move
+   as 7, so it sits right after it and resolves 3's concession.
+9. **`It's just static files`** — charts, map and Shiny app all client-side.
+   Weekly re-render is `cron: '0 5 * * 0'`; there is **no `freeze`**, so every
+   build re-executes all the R and nothing goes stale. Say **static files**,
+   never *serverless* — the outline is explicit: serverless drags in Lambda and
+   edge functions and is a harder claim to defend than the true, simpler one.
+
+**Slide 5's live `echarts4r` chart** (powertrain share of
 new listings, `vehicletrends::percent_listings`). The demo IS the slide. The
 example must be **category filtering via the interactive legend** — that's the
 thing people build Shiny for. This is the deck's only render-time R dependency
@@ -763,7 +781,7 @@ slide goes black. The line under the author is `posit::conf(2026)` /
 - **Check `Same map, from source` fits** — 33 lines of code at `.font45`. The
   clip at line 29 was Quarto's 500px code-block cap, now `code-block-height:
   660` in the YAML; the other knob is the font class.
-- **Time check** — the deck is now 47 slides for 20 minutes.
+- **Time check** — the deck is now 46 slides for 20 minutes.
 - **The peel-apart slide is now Act 5's recap of Act 2's figure**, not a rival to
   it — moving the figure to open Act 2 resolved the duplication. Re-read the two
   together once before deciding either needs cutting.
