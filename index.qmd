@@ -72,42 +72,30 @@ library(vehicletrends)
 {{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
-{{< middle >}}
 
-# {{< quarto size=4x >}}
+`r sp(6)`
 
----
-
-{{< bg-color "#2e4057" >}}
-{{< inverse >}}
-{{< middle >}}
-
-::: {.col width="45%" .center}
-# {{< quarto size=4x >}}
-:::
-
-::: {.col width="55%"}
-`r sp(2.8)`
-# [Dashboards]{.font120}
-:::
+# {{< quarto size=5x >}}
 
 ---
 
 {{< bg-color "#2e4057" >}}
 {{< inverse >}}
-{{< middle >}}
 
-::: {.col width="45%" .center}
-# {{< quarto size=4x >}}
+`r sp(6)`
+
+::: {.col width="50%" .center}
+`r sp(0.5)`
+# {{< quarto size=5x >}}
 :::
 
-::: {.col width="55%"}
-# [Dashboards]{.font120}
-
-`r sp(2.2)`
-
-# [Agentic Workflows]{.font120}
+::: {.col width="50%" .center}
+<img src="images/ai-chip.png" width=55%>
 :::
+
+---
+
+{{< bg-image "images/dashboards.png" >}}
 
 ---
 
