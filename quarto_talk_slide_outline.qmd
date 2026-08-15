@@ -1,0 +1,174 @@
+---
+title: "The Unreasonable Effectiveness of Quarto"
+format: revealjs
+---
+
+# Title
+
+---
+
+# Vehicletrends dashboard
+
+Show the existing vehicletrends dashboard as the visual target for the talk.
+
+---
+
+# Quarto + AI
+
+Introduce the idea that AI agents can now help create documents, websites, and dashboards.
+
+---
+
+# Epic Dashboards
+
+Use the image as a playful promise, then pivot: before dashboards, start with a much simpler artifact-generation problem.
+
+---
+
+# Handwriting practice sheet
+
+Show the AI-generated handwriting-sheet example and introduce the basic artifact-generation problem.
+
+---
+
+# Eight rounds later...
+
+Show the iteration from the initial result to the desired result.
+
+---
+
+# Content and format entanglement
+
+Show the diagram illustrating that the AI is regenerating both content and format together.
+
+---
+
+# Quarto disentangles content and format
+
+Show the source/render architecture and explain that Quarto moves the boundary to a controllable source.
+
+---
+
+# Ask for the source, not the artifact
+
+State the key principle: ask the agent for the `.qmd`, then let Quarto render the artifact.
+
+---
+
+# This is not a 3,000-line dashboard
+
+Show the vehicletrends site as a collection of small `.qmd` pages rather than one giant dashboard.
+
+---
+
+# Every page gets a URL
+
+Show individual vehicletrends page URLs and emphasize that the dashboard behaves like a website.
+
+---
+
+# No UI. No server.
+
+Contrast a traditional application architecture with a Quarto document containing client-side widgets.
+
+---
+
+# Small pieces have small context windows
+
+Show that an agent can work on one 200–600-line page instead of loading the entire dashboard into context.
+
+---
+
+# Interactivity lives in the browser
+
+Show an interactive ECharts/echarts4r/Plotly-style widget and emphasize that the browser handles the interaction.
+
+---
+
+# Document layout comes for free
+
+Briefly show tabs, TOC, columns, sidebar/navigation, and other Quarto document primitives used to organize the dashboard.
+
+---
+
+# Have a heavier artifact? Put it in a box.
+
+Show the complex census-tract map living in its own project and being embedded into the dashboard.
+
+---
+
+# It's just static files
+
+Show the browser/client-side architecture and explain that the finished site can be hosted as static files on GitHub Pages or Netlify.
+
+---
+
+# Quarto composes things that don't need to understand each other
+
+Synthesize the dashboard architecture and connect it explicitly to AI: decomposition keeps individual pieces understandable and manageable.
+
+---
+
+# Control → Cost → Correctness
+
+Reintroduce the three-part spine and transition from the architectural idea to quantitative and technical evidence.
+
+---
+
+# Token experiment
+
+Show the comparison between repeatedly generating finished artifacts and generating one `.qmd` source.
+
+---
+
+# One source, many outputs
+
+Show how one source can deterministically produce multiple rendered artifacts.
+
+---
+
+# Bad Africa map
+
+Show the plausible-but-wrong map and introduce the problem of artifacts that have no failure mode.
+
+---
+
+# Same map from source
+
+Show the source alongside the correctly rendered map.
+
+---
+
+# Quarto is checkable twice
+
+Show machine checking through `quarto render` and human checking through a plain-text diff.
+
+---
+
+# Back to the dashboard
+
+Return to the vehicletrends dashboard from the beginning and invite the audience to see it differently.
+
+---
+
+# Peel apart the dashboard
+
+Reveal that the dashboard is composed of small `.qmd` pages, separate data, widgets, navigation, and independently built heavy artifacts.
+
+---
+
+# The dashboard architecture
+
+Show a diagram connecting the agent, small `.qmd` sources, Quarto, data, widgets/external artifacts, and the browser.
+
+---
+
+# Agents should write the source, not the artifact
+
+State the final principle and connect it to control, context, cost, and correctness.
+
+---
+
+# The Unreasonable Effectiveness of Quarto
+
+Close on the broader thesis: Quarto is unusually effective for AI because it gives probabilistic agents a clean source to write and a deterministic system to render and check.

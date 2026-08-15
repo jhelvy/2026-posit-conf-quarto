@@ -238,8 +238,12 @@ figure carries that same sentence across its top.
 
 ### Invariants
 
-- **The two slides are REGISTERED.** Both carry `viewBox="0 77 1240 553"`; slide
-  2 at rest is byte-for-byte slide 1's row 1 (dots), same coordinates. Advancing
+- **The two slides are REGISTERED.** Both carry `viewBox="170 77 900 553"`; slide
+  2 at rest is byte-for-byte slide 1's row 1 (dots), same coordinates. The x
+  window is a crop tuned to the real content (both slides centre on x=620; the
+  tightest boxes are slide 2's opened me at 200 and artifact at 1040), so the
+  figure is height-bound and fills the frame instead of floating with wide side
+  gaps. Widening the crop only re-centres, never shrinks; y stays 77..630. Advancing
   changes nothing until you click — that stillness earns the "one picture, one
   variable" claim. Slide 2 carries ~280 units of dead canvas below its figure to
   hold this. **Changing either viewBox, either heading level, or that row's
@@ -257,8 +261,12 @@ figure carries that same sentence across its top.
   the drafts you threw away. ❌ Don't reorder without moving the check and both
   of slide 2's `<defs>` copies with it.
 - **Height is the binding constraint, not width.** Slide is 1600×900, padding
-  `45px 90px 60px`, usable 1420×795; the heading eats ~100px; the figure renders
-  ~633px. ~60px slack. The knob is row spacing (186), never the viewBox width.
+  `45px 90px 60px`, usable 1420×795; the heading eats ~100px, leaving ~695px. The
+  x-crop (viewBox "170 77 900 553") makes the figure height-bound, so it now fills
+  toward that ~695px — near-zero slack. It was ~633px with ~60px vertical slack
+  when the wide "0 .. 1240" viewBox left it width-bound. The knob for *more*
+  height is row spacing (186); the viewBox width only re-centres, it no longer
+  changes size (see the registration invariant).
 - **The artifact is a PAGE with a folded corner, labelled `.pdf`.** 90×116 (US
   Letter), drawn 1:1, outline `M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z`, fold
   triangle `M 68 0 L 90 22 L 68 22 Z` in white. Same rect family as the `.qmd`,
@@ -334,11 +342,11 @@ figure carries that same sentence across its top.
 
 ### Coordinates
 
-Closed row: me 340 · agent 540 · artifact 810–900, centred, 340 margin each
-side. Rows 186 apart, centred on y = 175 / 361 / 547.
+Closed row: me 340 · agent 540 · artifact 810–900, centred on x=620, 170 margin
+each side of the 170..1070 viewBox. Rows 186 apart, centred on y = 175 / 361 / 547.
 
 Opened (slide 2, click 1): me 200 · agent 400 · `.qmd` 670 · artifact
-950–1040, 200 margin each side, uniform 90-unit gaps. The `.openleft` /
+950–1040, centred on x=620, 30 margin each side, uniform 90-unit gaps. The `.openleft` /
 `.openright` CSS rules glide ±140 and **are not optional** — without them the
 `.qmd` lands on top of the artifact. 140 = half the 280 the `.qmd` inserts, and
 is **independent of the artifact's width**. General rule: shift = 75 + L; the

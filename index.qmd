@@ -203,11 +203,23 @@ library(vehicletrends)
   y=77 rather than 0, cropping the space the old <text> occupied. Coordinates
   inside are unchanged; don't renumber them.
 
-  BOTH FIGURE SLIDES NOW SHARE ONE viewBox — "0 77 1240 553" — which is what
+  BOTH FIGURE SLIDES NOW SHARE ONE viewBox — "170 77 900 553" — which is what
   registers them: same box, same row y (175), so the at-rest picture lands on
   the identical pixels and advancing to slide 2 changes nothing until you
   click. Slide 2 has ~280 units of dead canvas under its figure as the price.
   Change one viewBox and you must change the other.
+
+  The x window (170..1070, width 900) is a crop, not the drawing's frame:
+  both slides' content is centred on x=620, and the tightest outer boxes are
+  slide 2's opened me (left edge 200) and artifact (right edge 1040), so 170
+  and 1070 leave ~29 units of margin each side. It used to be "0 .. 1240": that
+  wide box was reserved for slide 2's opened state, but it left the figure
+  width-bound with big empty side gaps and ~60 units of vertical slack unused.
+  Cropping to the real content makes the figure HEIGHT-bound instead, so it
+  fills that slack and centres. Widen the crop and the figure only re-centres —
+  it does not shrink — until the box gets wide enough (aspect > ~2.0) to go
+  width-bound again. y is untouched (77..630), so vertical registration and
+  slide 2's top:50px are unaffected.
 
   Everything else that used to be labelled is now spoken: no "ASK FOR THE
   DOCUMENT" (the sentence above says it), no run 1/2/3 (the stack says it), no
@@ -226,7 +238,7 @@ library(vehicletrends)
 # [Content]{.contentchip} entangled with [Format]{.formatchip}
 
 ```{=html}
-<svg viewBox="0 77 1240 553" width="100%" style="max-height:80vh;"
+<svg viewBox="170 77 900 553" width="100%" style="max-height:85vh;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
@@ -353,8 +365,9 @@ library(vehicletrends)
 
     <!-- THE LOOP, drawn once and <use>d three times so the rows are provably
          identical. Local coords: the row's centerline is y = 0. -->
-    <!-- The row is centred in the 1240-wide box: me 340 .. artifact 900 is 560
-         wide, so 340 units of margin either side. (It was 285 when the artifact
+    <!-- The row is centred in the 900-wide viewBox (170..1070): me 340 ..
+         artifact 900 is 560 wide, centre x=620, so 170 units of margin either
+         side. (It was 285 when the artifact
          was 200 wide; the page is 110 narrower, so the whole chain moved 55
          right to stay centred. Nothing else about the row changed.) Both arrows
          are identical — same weight, same 80-unit run, same 8-unit landing gap
@@ -479,7 +492,7 @@ library(vehicletrends)
 
   The heading is the lexis line ABOVE this block, matching slide 1 — same
   sentence with two words inserted, same chips. The viewBox is IDENTICAL to
-  slide 1's ("0 77 1240 553") and so is the row's y (175): that is the whole
+  slide 1's ("170 77 900 553") and so is the row's y (175): that is the whole
   registration mechanism, and it costs ~280 units of dead canvas below this
   figure. Coordinates inside are otherwise unchanged.
 -->
@@ -508,8 +521,8 @@ library(vehicletrends)
      SVG's own centre sits well below its figure. It is the ONE thing slide 2
      does that slide 1 doesn't — remove it, or add the same to slide 1, if the
      stillness matters more than the centring. -->
-<svg viewBox="0 77 1240 553" width="100%"
-     style="max-height:80vh; position:relative; top:50px;"
+<svg viewBox="170 77 900 553" width="100%"
+     style="max-height:85vh; position:relative; top:50px;"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
 
