@@ -1361,9 +1361,12 @@ they still work at fifteen pages.
 
 ---
 
-## [vehicletrends.us: a Quarto website]{.center}
+# [**vehicletrends.us**]{.center}
 
 ::: {.col}
+
+A Quarto website:
+
 ```yaml
 project:
   type: website
@@ -1381,17 +1384,16 @@ website:
 :::
 
 ::: {.col}
-**15 pages. ~2,900 lines of markdown.**
+<br>
 
-The agent writes the `.qmd`.
+**15 .qmd files**
 
-The data lives in an R package the pages load at render:
+**~3,000 lines of code + markdown**
 
-```r
-library(vehicletrends)
-```
+<br>
 
-It never touches the numbers.
+**Data loads at render**: `library(vehicletrends)`
+
 :::
 
 ::: {.notes}
@@ -1400,7 +1402,7 @@ This isn't a 3,000-line dashboard. It's 15 small documents.
 That distinction matters enormously once an agent is working on it.
 
 The agent writes the `.qmd`. The data lives in a package the pages load at
-render — I typed none of the numbers.
+render
 :::
 
 ---
