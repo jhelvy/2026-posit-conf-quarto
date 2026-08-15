@@ -48,9 +48,9 @@ Outline: `outline.md`.
   Styling before editing; the syntax is not stock Quarto reveal. Both
   entanglement figure slides live in here as inline SVG.
 - `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
-- `_extensions/lexis/` — the lexis extension. Don't hand-edit. One exception,
-  pending upstream: the guarded `.inverse` card paint in `lexis.scss` — see
-  Styling.
+- `_extensions/lexis/` — the lexis extension. Don't hand-edit. Two exceptions,
+  both pending upstream: the guarded `.inverse` card paint in `lexis.scss`, and
+  background-only slides in `lexis.lua` — see Styling.
 - `custom.css` — the only local stylesheet.
 - `custom.scss` — **dead**, safe to delete.
 - `plots.R` — regenerates `images/fig-tokens.png` and `images/africa-map.png`
@@ -646,12 +646,23 @@ pitfalls** — get real ones from John.
 - **Slide modifiers are shortcodes:** `{{< inverse >}}` `{{< center >}}`
   `{{< middle >}}` `{{< bg-color >}}` `{{< bg-image >}}` `{{< no-slide-number >}}`.
   Divider slides = inverse+center+middle + a `#` heading.
+- **`{{< bg-image >}}` takes `size` `position` `repeat` `opacity`** —
+  `size="contain"` letterboxes the whole image (`{{< bg-color >}}` picks the bar
+  color), `opacity=0.4` dims it under text. Reveal's default is `cover`.
 - **Columns are consecutive `::: {.col}` divs**, no wrapper. Uneven via
   `width="55%"`. Nest with `::::` when a column contains its own div.
 - **No auto title slide** — hand-authored using `{{< meta title >}}`.
 - **Utility classes:** colors, `.small .large .font10`–`.font200`, `.fancy`,
   `.fira`, image helpers (`.border .circle .polaroid .thumbnail`),
   `::: {.panel-tabset}`.
+- ⚠️ **A background-only slide needs the second `lexis.lua` patch.** `lexis.lua`
+  decides a region is visible from its *content*, but markers are stripped into
+  the section's attributes — so a bare `{{< bg-image >}}` or `{{< bg-color >}}`
+  slide was silently dropped, never rendered, no warning. Patched here (the
+  `background-image`/`background-color` check just above `if visible then`) and
+  **not yet upstream in `jhelvy/quarto-lexis`** — re-installing the extension
+  reverts it and those slides vanish again. Same standing as the `.inverse` card
+  paint in `lexis.scss`.
 - **Full reference: the `/lexis` skill.** `/lexis-clean` audits a deck.
 
 `custom.css` is loaded via the **nested** format key — this is load-bearing, and

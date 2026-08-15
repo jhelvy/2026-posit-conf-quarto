@@ -11,6 +11,7 @@ xaringan's `class:`/`background-*` lines written after a `---`:
     {{< middle >}}                      center content vertically
     {{< bg-color "#909099" >}}          full-slide background color
     {{< bg-image "images/x.jpg" >}}     full-slide background image
+                                        (size / position / repeat / opacity)
     {{< no-slide-number >}}             hide the slide number on this slide
 
 Each emits an invisible marker span. The companion filter `lexis.lua` (running
@@ -41,6 +42,18 @@ local function arg(args, i)
   return args[i] and pandoc.utils.stringify(args[i]) or nil
 end
 
+-- Reveal's background knobs, all optional and all passed straight through as
+-- `lexis-bg-<name>` (see collect() in lexis.lua). Reveal's own default is
+-- `size=cover`: the image fills the slide and overflow is cropped. The others:
+--
+--   size="contain"      whole image visible, letterboxed — pair with
+--                       {{< bg-color >}} to choose the color of the bars
+--   size="100% 100%"    stretch to fit, aspect ratio not preserved
+--   position="top left" where a cropped/contained image sits
+--   repeat="repeat"     tile it (reveal defaults to no-repeat)
+--   opacity=0.4         dim the image so text on top stays readable
+local BG_IMAGE_OPTS = { "size", "position", "repeat", "opacity" }
+
 return {
   ["inverse"] = function(args, kwargs, meta) return class_marker("inverse") end,
   ["center"]  = function(args, kwargs, meta) return class_marker("center") end,
@@ -53,12 +66,9 @@ return {
 
   ["bg-image"] = function(args, kwargs, meta)
     local attrs = { ["lexis-bg-image"] = arg(args, 1) or "" }
-    -- optional: {{< bg-image "x.jpg" size=contain position="top left" >}}
-    if kwargs["size"] and #pandoc.utils.stringify(kwargs["size"]) > 0 then
-      attrs["lexis-bg-size"] = pandoc.utils.stringify(kwargs["size"])
-    end
-    if kwargs["position"] and #pandoc.utils.stringify(kwargs["position"]) > 0 then
-      attrs["lexis-bg-position"] = pandoc.utils.stringify(kwargs["position"])
+    for _, k in ipairs(BG_IMAGE_OPTS) do
+      local v = kwargs[k] and pandoc.utils.stringify(kwargs[k])
+      if v and #v > 0 then attrs["lexis-bg-" .. k] = v end
     end
     return attr_marker(attrs)
   end,

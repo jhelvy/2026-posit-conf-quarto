@@ -95,7 +95,7 @@ library(vehicletrends)
 
 ---
 
-{{< bg-image "images/dashboards.png" >}}
+{{< bg-image "images/dashboards.png" size="contain" >}}
 
 ---
 
@@ -1276,10 +1276,6 @@ sales globally.</p>
 <center>
 <img src="images/fig-tokens.png" width=100%>
 </center>
-
----
-
-{{< bg-image "images/its-all-markdown.png" >}}
 
 ---
 

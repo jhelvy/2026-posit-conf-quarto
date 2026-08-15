@@ -34,10 +34,8 @@ THE MECHANISM (verified empirically)
 
   Marker encoding (see lexis-shortcodes.lua):
     class `lexis-class-X`      -> add class X to the <section>
-    attr  `lexis-bg-color`     -> background-color      (-> data-background-color)
-    attr  `lexis-bg-image`     -> background-image      (-> data-background-image)
-    attr  `lexis-bg-size`      -> background-size
-    attr  `lexis-bg-position`  -> background-position
+    attr  `lexis-bg-<name>`    -> background-<name>     (-> data-background-<name>)
+                                  color image size position repeat opacity
     attr  `lexis-state`        -> data-state (reveal mirrors this onto `.reveal`
                                   while the slide is active; used e.g. to hide
                                   the slide number)
@@ -413,14 +411,13 @@ local function collect(blocks)
       end
     end
     for k, v in pairs(el.attributes) do
-      if k == "lexis-bg-color" then
-        if #v > 0 then attrs["background-color"] = v end
-      elseif k == "lexis-bg-image" then
-        if #v > 0 then attrs["background-image"] = v end
-      elseif k == "lexis-bg-size" then
-        attrs["background-size"] = v
-      elseif k == "lexis-bg-position" then
-        attrs["background-position"] = v
+      -- Every `lexis-bg-<name>` becomes `background-<name>` on the section, which
+      -- the reveal writer emits as `data-background-<name>`. Generic, so adding a
+      -- knob to the shortcode needs no edit here. Empty means the author omitted
+      -- it — never write the attribute, or reveal reads "" as a real value.
+      local bg = k:match("^lexis%-bg%-(.+)$")
+      if bg then
+        if #v > 0 then attrs["background-" .. bg] = v end
       elseif k == "lexis-state" then
         attrs["data-state"] = attrs["data-state"]
           and (attrs["data-state"] .. " " .. v) or v
@@ -612,6 +609,15 @@ function Pandoc(doc)
         RawBlock  = raw_visible,
         RawInline = raw_visible,
       })
+    end
+    -- A slide can also be pure BACKGROUND: `{{< bg-image >}}` on its own is a
+    -- full-bleed image slide, `{{< bg-color >}}` on its own is a blackout beat.
+    -- Those markers are stripped into `attrs`, never `blocks`, so every test
+    -- above looks at an empty region and drops the slide. The background is the
+    -- content. (`make_promotable` handles the empty body: no header, so it
+    -- leads with an empty one and the region promotes like any other.)
+    if not visible and (attrs["background-image"] or attrs["background-color"]) then
+      visible = true
     end
     if visible then
       -- Group consecutive `.col` Divs into `.cols-row` flex containers.
