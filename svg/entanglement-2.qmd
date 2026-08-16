@@ -1,0 +1,338 @@
+<!--
+  ENTANGLEMENT FIGURE, SLIDE 2 OF 2 — "ask for the source."
+
+  Deliberately the SAME left-hand composition as slide 1 (me -> agent, same
+  boxes, same positions) so the pair reads as one picture with one thing
+  changed. What changed is the middle: the agent now writes structure, the
+  content sits beside it, and the weave happens at render.
+
+  At rest the output is slide 1's ROW 1 — the first draft, dots — so the pair
+  starts from the same picture. On click 1 it becomes ROW 3, the page carrying
+  the green check: the document that took eight rounds to reach the last time.
+  The argument is still NOT "the .qmd is prettier"; it's that the weaving moved
+  somewhere you can reach, and that reaching it took one step instead of eight.
+  Keep each <defs> copy identical to its twin on slide 1.
+
+  The heading is the lexis line ABOVE this block, matching slide 1 — same
+  sentence with two words inserted, same chips.
+
+  ⚠️ THE PIXEL REGISTRATION WITH SLIDE 1 IS GONE, deliberately (2026-08-15).
+  Both slides used to carry viewBox "170 77 900 553" so slide 2's at-rest row
+  landed on slide 1's row 1 exactly and advancing changed nothing until you
+  clicked. The price was ~280 units of dead canvas under this figure, which made
+  it HEIGHT-bound: it rendered at scale 1.17 with wide side gaps and boxes
+  visibly smaller than the Act 5 figure's. Cropped to its own ink
+  ("185 78 870 272") it is WIDTH-bound at scale 1.63 — 39% bigger — and fills
+  the slide. Coordinates inside are UNCHANGED, so the drawing is still slide 1's
+  drawing; only the crop and therefore the on-screen scale differ. Advancing
+  from slide 1 now grows the picture. If the stillness ever matters more than
+  the size, restore "170 77 900 553" here and the two are registered again.
+
+  The crop is the OPENED extent, not the at-rest one: me reaches x=200 and the
+  artifact x=1040 once `.openleft`/`.openright` fire, and the lower purple label
+  descends to ~341. Cropping to the at-rest row instead would clip click 1.
+-->
+
+```{=html}
+<!-- `margin-top` IS SAFE HERE NOW, and it was not before. The old warning stood
+     because this slide was height-bound: it is a `{{< middle >}}` flex column,
+     so the SVG is a flex item, and any height added above it was taken straight
+     back out of the figure by flex-shrink. Since the crop made the figure
+     WIDTH-bound there is vertical slack to spare (~445px of figure in ~635px of
+     room), so a top margin opens the gap under the heading instead of shrinking
+     the drawing. If the viewBox ever goes back to 553 tall, this margin has to
+     go with it.
+
+     The old `position:relative; top:50px` is gone too — it existed only to
+     re-centre the figure against the dead canvas that the crop removed. -->
+<svg viewBox="185 78 870 272" width="100%"
+     style="max-height:85vh; margin-top:70px;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <!-- The page every artifact in this figure is cut to. userSpaceOnUse
+         (the default) resolves in the <use>d group's own local space, so
+         one clip serves every motif. -->
+    <clipPath id="artifactClip2">
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z"/>
+    </clipPath>
+
+    <!-- AT REST: byte-identical to #docDots — slide 1's ROW 1, the first draw.
+         This is what keeps the two slides registered: same viewBox, same row y,
+         same document, so advancing changes nothing until you click.
+         It uses no clipPath (every dot is placed inside the page), so the copy
+         is #docDots with the id renamed and nothing else. Edit one, edit both. -->
+    <g id="docDotsOut">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"/>
+      <circle cx="22" cy="20" r="10" fill="#00798c"/>
+      <circle cx="45" cy="20" r="10" fill="#edae49"/>
+      <circle cx="22" cy="44" r="10" fill="#edae49"/>
+      <circle cx="45" cy="44" r="10" fill="#edae49"/>
+      <circle cx="68" cy="44" r="10" fill="#00798c"/>
+      <circle cx="22" cy="68" r="10" fill="#edae49"/>
+      <circle cx="45" cy="68" r="10" fill="#00798c"/>
+      <circle cx="68" cy="68" r="10" fill="#edae49"/>
+      <circle cx="22" cy="92" r="10" fill="#00798c"/>
+      <circle cx="45" cy="92" r="10" fill="#edae49"/>
+      <circle cx="68" cy="92" r="10" fill="#00798c"/>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <!-- Byte-identical to #doc on the previous slide — ROW 3, the draw that
+         carries the green check. This is the document you actually wanted, and
+         it is what the .qmd renders to from click 1 on. If you edit one, edit
+         both.
+
+         The `.pdf` label earns its keep here: with the .qmd on screen the row
+         reads `.qmd` -[render]- `.pdf`, which is the whole of what Quarto does,
+         stated without a slide spent on it. It also makes the two rects
+         unmistakable — one is the source, one is the output. -->
+    <g id="docOut">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <g clip-path="url(#artifactClip2)">
+        <rect x="0" y="0"   width="90" height="9"  fill="#00798c"/>
+        <rect x="0" y="9"   width="90" height="13" fill="#edae49"/>
+        <rect x="0" y="22"  width="90" height="7"  fill="#00798c"/>
+        <rect x="0" y="29"  width="90" height="16" fill="#edae49"/>
+        <rect x="0" y="45"  width="90" height="10" fill="#00798c"/>
+        <rect x="0" y="55"  width="90" height="7"  fill="#edae49"/>
+        <rect x="0" y="62"  width="90" height="13" fill="#00798c"/>
+        <rect x="0" y="75"  width="90" height="12" fill="#edae49"/>
+        <rect x="0" y="87"  width="90" height="6"  fill="#00798c"/>
+        <rect x="0" y="93"  width="90" height="13" fill="#edae49"/>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"/>
+      </g>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <!-- Byte-identical to #docOut except every yellow band is red. Same rects,
+         same heights, same order — if you touch one, touch both, or the click
+         stops meaning "only the content changed". -->
+    <g id="docOutEdited">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <g clip-path="url(#artifactClip2)">
+        <rect x="0" y="0"   width="90" height="9"  fill="#00798c"/>
+        <rect x="0" y="9"   width="90" height="13" fill="#d1495b"/>
+        <rect x="0" y="22"  width="90" height="7"  fill="#00798c"/>
+        <rect x="0" y="29"  width="90" height="16" fill="#d1495b"/>
+        <rect x="0" y="45"  width="90" height="10" fill="#00798c"/>
+        <rect x="0" y="55"  width="90" height="7"  fill="#d1495b"/>
+        <rect x="0" y="62"  width="90" height="13" fill="#00798c"/>
+        <rect x="0" y="75"  width="90" height="12" fill="#d1495b"/>
+        <rect x="0" y="87"  width="90" height="6"  fill="#00798c"/>
+        <rect x="0" y="93"  width="90" height="13" fill="#d1495b"/>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"/>
+      </g>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <!-- refX=5.5 for the same reason as slide 1's markers: at 7 the tip sits on
+         the path end and the stroke poked out through the taper. -->
+    <marker id="ahDark2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+    <!-- The edit arrow's head. Purple #852f88 (ltc "hat"), the deck's one
+         accent: see the note on the arrow itself for why it isn't green. -->
+    <marker id="ahEdit2" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"/></marker>
+  </defs>
+  <!-- ── AT REST: the picture from slide 1, unchanged ────────────────────
+       me -> agent -> document, at slide 1's own coordinates (me x=340,
+       agent x=540, document x=810, row centred on y=175), at the same box
+       sizes and the same 80-unit arrows. The viewBox is identical to slide 1's
+       so this lands at the SAME SCREEN POSITION as slide 1's row 1, and
+       arriving on this slide changes nothing at all until you click. That
+       stillness is the setup: same me, same agent, same document.
+
+       No "prompt once" label any more — at rest this slide must not claim
+       anything slide 1 didn't.
+
+       CLICK 1 opens the chain and drops the .qmd into the gap: me+agent glide
+       140 units left, the artifact glides 140 right (symmetric, so the row
+       stays centred), and the source file fades in between them. Every arrow
+       in the figure is 80 units now, here included. Both shifts are CSS transforms on
+       `fragment custom` groups — reveal's `:not(.custom)` rule leaves them
+       visible at rest and only toggles `.visible`. If that CSS is ever lost
+       the boxes simply stay put and the .qmd lands on top of the document,
+       so the two rules in custom.css are NOT optional here (unlike the old
+       lift on slide 1, which degraded safely). -->
+
+  <g class="fragment custom openleft" data-fragment-index="1">
+    <rect x="340" y="143" width="110" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="395" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+    <path d="M 452 175 L 532 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+
+    <!-- agent. STILL dashed — still probabilistic. That's the honest part: the
+         agent didn't get better, the thing it writes did. -->
+    <rect x="540" y="143" width="180" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+          stroke-dasharray="7 5"/>
+    <text x="630" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+
+    <!-- The direct agent -> document arrow: the whole of slide 1's claim in one
+         line. It rides along with the agent as the chain opens and fades out
+         as the .qmd takes its place. Nested inside this group on purpose, so
+         it stays attached to the agent while it goes. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <path d="M 722 175 L 802 175" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDark2)"/>
+    </g>
+  </g>
+
+  <!-- The artifact. At rest byte-identical to run 1 on slide 1, same page, same
+       1:1 size; from click 1 it is run 3's page, the checked one. Either way
+       it is entangled — a PDF is a PDF. Same two colours as the .qmd box —
+       but here they interleave with no boundary, and there they each have a
+       place. That contrast IS the address argument, so keep both on screen
+       together, and it is now a clean comparison: two rects of the same family,
+       one whose bands have places and one whose bands don't. Labels finish the
+       job — `.qmd` on the source, `.pdf` on the output.
+
+       CLICK 3 paints #docOutEdited over it: the same page with the yellow
+       bands turned red. The teal bands are byte-identical and do NOT move —
+       you changed the content, so only the content changed. Every stripe stayed
+       exactly where it was, which is the thing a regenerated document can never
+       promise. It is an overlay rather than a swap because the two have
+       identical geometry, so the red simply covers the yellow. -->
+  <g class="fragment custom openright" data-fragment-index="1">
+    <!-- At rest: slide 1's row 1, the first draw. Fades out on click 1, when the
+         route it came from (agent -> document) fades out with it. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <g transform="translate(810 117)"><use href="#docDotsOut"/></g>
+    </g>
+    <!-- Click 1: the document you kept — row 3's page, the one with the check.
+         Painted OVER the dots, which it fully covers (the eleven bands total
+         exactly 116 and the fold is repainted white), so this is an overlay like
+         the click-3 recolour, not a swap. The swap rides click 1 and not click 3
+         on purpose: what changes here is the ROUTE (the agent now writes source),
+         so a different document coming out is honest. Move it to
+         data-fragment-index="3" if you'd rather the edit itself be what produces
+         the kept document — one attribute, and click 3 then changes the whole
+         page instead of only its content. -->
+    <g class="fragment" data-fragment-index="1">
+      <g transform="translate(810 117)"><use href="#docOut"/></g>
+    </g>
+    <g class="fragment" data-fragment-index="3">
+      <g transform="translate(810 117)"><use href="#docOutEdited"/></g>
+    </g>
+  </g>
+
+  <!-- ── CLICK 1: the .qmd arrives ───────────────────────────────────────
+       A NEUTRAL container, navy-stroked, holding both halves in named places.
+       This is the one box in the deck where content may sit inside format's
+       colour scheme, and it is legal precisely because the container is not
+       teal: it is a file, not a format. Nesting here is the truth (a .qmd
+       really does hold both), which is the opposite of the artifact, where
+       nesting would be a lie.
+
+       The teal is the YAML, and saying so is worth the ink: it makes "format"
+       a thing this room can point at, and it is what Act 6's "change one word"
+       changes. Two solid blocks, no further annotation — the file's job here is
+       to show that each half has a PLACE, not to be read.
+
+       `writes` and `render` are now the same font size, because their arrows
+       are now the same length as every other arrow in the figure (80). -->
+  <g class="fragment" data-fragment-index="1">
+    <text x="622" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">writes</text>
+    <path d="M 582 175 L 662 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+
+    <text x="765" y="101" font-size="22" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+    <rect x="670" y="113" width="190" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="686" y="129" width="158" height="36" fill="#00798c"/>
+    <text x="765" y="154" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+    <rect x="686" y="177" width="158" height="44" fill="#edae49"/>
+    <text x="765" y="206" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+    <!-- One input, one output. `quarto render` takes the .qmd. -->
+    <text x="902" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">render</text>
+    <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDark2)"/>
+  </g>
+
+  <!-- ── CLICK 2: the payoff ─────────────────────────────────────────────
+       TWO arrows, one line: a single purple descent out of `me` that forks.
+       Both routes are open to you once the source exists, and the fork is the
+       point — the upper one goes back to the agent ("change the .qmd for me"),
+       the lower one goes straight into the file. Without the upper arrow the
+       slide silently claims hand-editing is the only way in, which nobody in
+       this room does; without the lower one there is no address argument.
+       Both are purple because both are YOUR action; the agent branch is still
+       you deciding what changes, it just delegates the typing.
+
+       The lower arrow lands on the file, not on one block: both halves inside
+       it are yours — the yaml and the content. PURPLE #852f88 = your direct
+       action, and it is the only new colour on the slide.
+
+       GEOMETRY. Both leave `me`'s opened-out centre (x=255) at y=211; the
+       second arrow starts at the first one's corner (255, 263) so they read as
+       one line forking rather than two lines racing. Rails at y=263 and y=309;
+       the upper rises to the agent's bottom edge (x=490, 8 units clear at 215),
+       the lower to the .qmd's (x=690, clear at 245). Labels sit clear of the
+       x=255 descent — the upper is centred at 420, not over its own rail, for
+       exactly that reason.
+
+       It used to be green #4A6D5A and was too easy to miss. The reason is
+       measurable: that green sat at chroma 20 against navy's 21 — same
+       saturation, similar darkness, so at a glance it read as just another
+       structural line. #852f88 is chroma 62 and 7.6:1 on white, in the one
+       hue region (306 deg) the palette leaves empty — every other colour here
+       is 59 deg or more away. It is the single most saturated thing on the
+       slide, which is right: it is the one line that is YOU. It leaves from
+       `me` at its opened-out centre (x=255) and enters at x=690, just inside
+       the .qmd's left edge (670).
+       stroke-width 2.5 like every other arrow on both slides: markerUnits is
+       strokeWidth, so a fatter line also means a fatter head. -->
+  <g class="fragment" data-fragment-index="2">
+    <path d="M 255 211 L 255 251 Q 255 263 267 263 L 478 263 Q 490 263 490 251 L 490 215"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEdit2)"/>
+    <text x="420" y="285" font-size="20" fill="#852f88"
+          text-anchor="middle">prompt the agent to change the .qmd...</text>
+
+    <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEdit2)"/>
+    <text x="472" y="335" font-size="20" fill="#852f88"
+          text-anchor="middle">…or edit it directly</text>
+  </g>
+
+  <!-- CLICK 3: the content changes and the format doesn't. Painted over the
+       yellow block above — same rect, same text position, RED fill (#d1495b,
+       minecraft's colour on the payoff slide two slides later). Note the arrow
+       one click earlier is PURPLE: purple is the ACTION ("you edit directly"),
+       red is the RESULT.
+
+       WHITE text here, not the navy the yellow block uses. Both clear on red
+       (4.4:1 white, 4.3:1 navy), so this is a deliberate call rather than a
+       legibility one: flipping the text as well as the fill makes the block
+       read as a STATE CHANGE and not just a recolour. -->
+  <g class="fragment" data-fragment-index="3">
+    <rect x="686" y="177" width="158" height="44" fill="#d1495b"/>
+    <text x="765" y="206" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">content</text>
+  </g>
+
+</svg>
+```

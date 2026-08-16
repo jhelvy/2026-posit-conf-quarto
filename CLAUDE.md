@@ -74,8 +74,15 @@ They're navigation for us, not content; keep them in sync when slides move.
 ## Files
 
 - `index.qmd` — the deck. Canonical, repo root. `format: lexis-revealjs` — read
-  Styling before editing; the syntax is not stock Quarto reveal. Both
-  entanglement figure slides live in here as inline SVG.
+  Styling before editing; the syntax is not stock Quarto reveal.
+- `svg/` — the four big inline-SVG figures, one `.qmd` partial each
+  (`entanglement-1`, `entanglement-2`, `dashboard`, `experiment`), pulled in
+  with `{{< include svg/….qmd >}}`. Each file is its invariants comment plus one
+  ```` ```{=html} ```` block; the slide's heading and `.notes` stay in
+  `index.qmd`. The payoff slide's two 16-line `.qmd` boxes stay inline — they
+  must be verified byte-identical apart from two lines, which is easier side by
+  side. ⚠️ If a `_quarto.yml` is ever added, list `index.qmd` under
+  `project: render:` or these partials become renderable inputs.
 - `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
 - `_extensions/lexis/` — the lexis extension. Don't hand-edit. Two exceptions,
   both pending upstream: the guarded `.inverse` card paint in `lexis.scss`, and
@@ -259,7 +266,8 @@ nice." When picking an accent, **chroma is the axis that matters, not hue.**
 
 ## The entanglement figure
 
-Two slides of inline SVG in `index.qmd` (Act 1, Control's first movement).
+Two slides of inline SVG, `svg/entanglement-1.qmd` and
+`svg/entanglement-2.qmd` (Act 1, Control's first movement).
 Neither is `{{< inverse >}}` — the SVG needs a light slide.
 
 ```
@@ -562,7 +570,7 @@ slide B above the three columns — same markup, different inline sizes.
 
 ## The experiment figure (right before `fig-tokens.png`)
 
-**"Two ways to ask for the same document."** Inline SVG. Top: three asks, agent →
+**"Two ways to ask for the same document."** Inline SVG, `svg/experiment.qmd`. Top: three asks, agent →
 `.pdf` / `.html` / `.docx`. Click 1: rule + bottom half — same agent *writes* one
 `.qmd`, *render* fans to the same three outputs.
 
@@ -703,8 +711,7 @@ Two clicks: the data package feeding the stack, then figure 2's purple fork.
 box` slides are still ahead, so an `<iframe>` box previewed instead of recalled
 and the figure had to be talked around. Those slides carry the map alone. Its viewBox is cropped tighter vertically (`170 68 900 342`) so
 it fills the frame — ❌ don't "restore" figure 2's 553 height, that's what left
-it small with 200px of dead canvas. Its invariants live in its own comment block
-in `index.qmd`. Two worth knowing here: the artifact is a **browser window**, the deck's one
+it small with 200px of dead canvas. Its invariants live in the head of `svg/dashboard.qmd`. Two worth knowing here: the artifact is a **browser window**, the deck's one
 exception to *the artifact is a page with a folded corner* (the artifact really
 is a site, and the window is what makes `It's not an app, it's a website`
 visible); and the stack is **flush right at x=860**, which is the only reason

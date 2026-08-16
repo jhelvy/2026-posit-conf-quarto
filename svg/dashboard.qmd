@@ -1,0 +1,267 @@
+<!--
+  THE DASHBOARD FIGURE — entanglement figure slide 2, redrawn at site scale.
+
+  IT OPENS ACT 2, right after the gif returns, and that placement is the point:
+  figure 2 was three slides ago, so the echo is still in the room's head. It
+  used to sit in Act 5, ~28 slides later, where the callback had decayed to the
+  point of needing reconstruction. Moving it here also resolved a duplication —
+  Act 5's `It looks like an application. It isn't.` says the same thing in
+  bullets, and now reads as the recap of this rather than a second first pass.
+  The move cost the map feeder, which had to go: see the note where it used to
+  be. Two clicks now, not three.
+
+  It is a CALLBACK, not a new picture. The left half is byte-identical to figure
+  2's opened state — me at 200, agent at 400, the same 110x64 and 180x64 boxes,
+  the same dashed agent, the same 80-unit arrows, the same `writes` label at
+  y=161 — and the .qmd's front card is figure 2's .qmd box at its exact
+  coordinates (670,113,190,124) with the same teal `yaml` and yellow `content`
+  bands inside it. Everything the room already learned is free; only the two
+  ends changed.
+
+  THE viewBox IS "185 68 935 342". Coordinates inside are figure 2's, so every
+  box sits at the same place in the drawing and the callback survives; what
+  differs is the CROP. It is tuned to the real ink (x 200..1104, y 74..400): at
+  553 tall — the height figure 2 used to carry — this figure had ~200 units of
+  dead canvas and was HEIGHT-bound, so it rendered small and floated high with
+  wide side gaps. At 342 the aspect is 2.7 against the frame's ~2.2, so it is
+  WIDTH-bound and fills the slide. That is the whole reason the boxes read
+  bigger here, and it is the same fix figure 2 has now had. y=68 is what stops
+  `.qmd x 15` from being clipped: a 22px baseline at y=90 has its ascender
+  near 74. Restoring the map feeder would push the ink to y=422 and the height
+  back to 364.
+
+  ⚠️ The width is 935, not 895, and the 40 units are the price of CENTRING
+  `vehicletrends.us` on the window: the label is ~192 units wide against a
+  115-wide window, so it overhangs to x=1104. That costs ~4% of scale — the
+  whole figure renders slightly smaller so the label can sit where it belongs.
+  Shrinking the label's font is the lever if that trade ever stops being worth
+  it; anchoring it `end` again is not, since that is the bug this fixed.
+
+  WHAT CHANGED, and it is the whole slide:
+    * one .qmd became a STACK of them, and the agent's arrow still lands on ONE
+      card. That is the small-context claim, drawn rather than asserted.
+    * the .pdf page became a BROWSER WINDOW. This is the deck's one departure
+      from "the artifact is a page with a folded corner" and it is deliberate:
+      the artifact here is a site, and the window is what makes `It's not an
+      app, it's a website` visible. Its content area still carries the
+      interleaved teal/yellow bands, because a rendered artifact is still
+      entangled — that never was the problem.
+    * two feeders arrive on click. Both point INTO the chain from outside, which
+      is the composition claim: the data and the heavy component are things the
+      page refers to, not things the agent wrote.
+
+  THE STACK IS FLUSH RIGHT AT x=860 and fans left-and-up (686/678/670, tops
+  97/105/113, widths 174/182/190). That is not decoration — it is what keeps the
+  `render` arrow at figure 2's exact 862..942. Offset the cards the usual
+  down-right way and the back card collides with the arrow, and the whole right
+  half has to be renumbered. Back cards are drawn FIRST so the front covers
+  them; each shows as an 8-unit strip along its top edge.
+
+  Yellow appears only as the data box's FILL and the content band's, never as a
+  line or a letter — the palette rule. Text on yellow is navy.
+
+  Marker id `ahDash` is unique document-wide; reveal display:none's non-current
+  slides, so ids may not be shared across them.
+
+  VETTED ONCE (2026-08-15) and fixed: the stack reads as sheets, the browser
+  reads as a browser, `vehicletrends.us` clears the right edge. Three things
+  were wrong and are corrected above — the clipped top label, ~200px of dead
+  canvas, and click 1's arrow drawn straight through a caption centred on the
+  stack. Still unvetted: the re-cropped viewBox, and the caption in its new
+  place under the agent.
+-->
+
+```{=html}
+<svg viewBox="185 68 935 342" width="100%" style="max-height:85vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <marker id="ahDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+    <marker id="ahEditDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"/></marker>
+  </defs>
+
+  <!-- ── AT REST: I asked for the website ─────────────────────────────────
+       me -> agent -> the site, one arrow, no source anywhere. This is figure
+       slide 1's claim wearing a dashboard: I asked for the artifact and the
+       agent handed me the artifact.
+
+       CLICK 1 opens the chain and drops the fifteen .qmd into the gap — the
+       identical mechanism figure 2 uses, down to the same ±140. That is not a
+       coincidence and it is worth checking if these coordinates ever change:
+       closed, the agent's right edge is 580+140=720 and the site's left is
+       950-140=810, leaving 90 = 2 gap + 80 arrow + 8 landing. Solve
+       370-2s = 90 and s is 140. Both shifts are CSS transforms on
+       `fragment custom` groups (`.openleft` / `.openright` in custom.css);
+       reveal's `:not(.custom)` rule leaves them visible at rest and only
+       toggles `.visible`. ⚠️ If that CSS is ever lost the boxes simply stay
+       closed and the stack lands on top of the site — these two rules are NOT
+       optional. -->
+
+  <g class="fragment custom openleft" data-fragment-index="1">
+    <rect x="340" y="143" width="110" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="395" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+
+    <path d="M 452 175 L 532 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+
+    <!-- Still dashed. Nothing about the agent improved between figure 2 and
+         here; what improved is the shape of what it writes into. -->
+    <rect x="540" y="143" width="180" height="64" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+          stroke-dasharray="7 5"/>
+    <text x="630" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+
+    <!-- The direct agent -> site arrow: "make me a dashboard," and out comes a
+         dashboard. It rides along with the agent as the chain opens and fades
+         as the .qmd take its place — nested here on purpose so it stays
+         attached to the agent while it goes. Same move as figure 2. -->
+    <g class="fragment fade-out" data-fragment-index="1">
+      <path d="M 722 175 L 802 175" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDash)"/>
+    </g>
+  </g>
+
+  <!-- ❌ NOTHING goes above the agent. A caption there ("one page in context",
+       "opens one page at a time") was tried and cut: the arrow already lands on
+       exactly one card, which says it without a line of type, and the claim is
+       John's to make out loud. Under the stack and under the agent are both
+       occupied anyway — by click 2's feeder and by the purple fork. -->
+
+  <!-- ── CLICK 1: the stack arrives. Back cards first, flush right at 860. ──
+       Drawn at OPENED coordinates and never moved — it is the thing the gap
+       opens for, so it fades in where it belongs rather than gliding. -->
+  <g class="fragment" data-fragment-index="1">
+    <text x="622" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">writes</text>
+    <path d="M 582 175 L 662 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+
+    <text x="765" y="90" font-size="22" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd &#215; 15</text>
+
+    <rect x="686" y="97" width="174" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="678" y="105" width="182" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+
+    <!-- The front card IS figure 2's .qmd — same box, same two bands, same
+         coordinates. The arrow lands here and only here. -->
+    <rect x="670" y="113" width="190" height="124" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <rect x="686" y="129" width="158" height="36" fill="#00798c"/>
+    <text x="765" y="154" font-size="20" text-anchor="middle"
+          fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+    <rect x="686" y="177" width="158" height="44" fill="#edae49"/>
+    <text x="765" y="206" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+    <text x="902" y="161" font-size="20" fill="#2e4057"
+          text-anchor="middle">render</text>
+    <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+  </g>
+
+  <!-- ── The site. Glides RIGHT as the chain opens. ─────────────────────────
+       Drawn 140 left of its opened home, so every x here is (opened - 140):
+       the window at 810 lands at 950, and the label's centre 867.5 lands at
+       1007.5, which is the window's own centre. ⚠️ The label is `text-anchor
+       middle` on the WINDOW's centre, not `end` on its right edge — it used to
+       be the latter and hung visibly off to the right. That centring is what
+       sets the viewBox width: "vehicletrends.us" is 16 mono characters at 20px,
+       so ~192 units wide, and it overhangs the 115-wide window by ~38 units on
+       each side. -->
+  <g class="fragment custom openright" data-fragment-index="1">
+    <text x="867" y="98" font-size="20" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">vehicletrends.us</text>
+
+    <rect x="810" y="110" width="115" height="130" rx="6"
+          fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+    <path d="M 810 132 L 925 132" stroke="#2e4057" stroke-width="2"/>
+    <circle cx="822" cy="121" r="3" fill="#2e4057"/>
+    <circle cx="833" cy="121" r="3" fill="#2e4057"/>
+    <circle cx="844" cy="121" r="3" fill="#2e4057"/>
+
+    <!-- The sidebar is the navigation Quarto wrote, not the agent. -->
+    <path d="M 844 132 L 844 240" stroke="#2e4057" stroke-width="2"/>
+    <rect x="816" y="144" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="157" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="170" width="20" height="5" fill="#2e4057"/>
+    <rect x="816" y="183" width="20" height="5" fill="#2e4057"/>
+
+    <!-- Still interleaved. The OUTPUT was never the thing that had to change. -->
+    <rect x="852" y="140" width="64" height="10" fill="#00798c"/>
+    <rect x="852" y="154" width="64" height="14" fill="#edae49"/>
+    <rect x="852" y="172" width="64" height="8"  fill="#00798c"/>
+    <rect x="852" y="184" width="64" height="16" fill="#edae49"/>
+    <rect x="852" y="204" width="64" height="10" fill="#00798c"/>
+    <rect x="852" y="218" width="64" height="8"  fill="#edae49"/>
+  </g>
+
+  <!-- ── CLICK 2: the data comes from outside, at render ───────────────── -->
+  <!-- `library(vehicletrends)` executing during `quarto render`: the data flows
+       through the code and the numbers are baked into the output. It lands on
+       the STACK because that is literally where it goes. -->
+  <g class="fragment" data-fragment-index="2">
+    <path d="M 765 330 L 765 250" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahDash)"/>
+    <rect x="670" y="332" width="190" height="64" rx="6"
+          fill="#edae49" stroke="#2e4057" stroke-width="2.5"/>
+    <text x="765" y="356" font-size="19" text-anchor="middle"
+          fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">{vehicletrends}</text>
+    <text x="765" y="380" font-size="18" text-anchor="middle"
+          fill="#2e4057">R data package</text>
+  </g>
+
+  <!-- ❌ NO MAP FEEDER. A second box hung under the browser — an arrow up into
+       the site, `<iframe>` / map / `</iframe>` — was drawn and cut once this
+       figure moved to open Act 2: the `Put it in a box` slides are still ahead
+       of it here, so the box previewed rather than recalled, and the figure had
+       to be talked around instead of read. The box slides make the point on
+       their own. Restoring it costs a fragment index, a taller box (90 not 64,
+       to hold three lines, top at y=332 to stay level with the data box), and
+       ~20 units of viewBox height.
+
+       If it ever comes back: ❌ its arrow must point at the BROWSER, never at
+       the stack. The .qmd holds six lines that emit `<iframe src=...>`; the
+       render copies that URL and stops. The 276 lines of MapLibre and the
+       1.64 GB of tiles are fetched from another origin by the READER's browser,
+       so the map never enters the .qmd, the render, or the built site. -->
+
+  <!-- ── CLICK 3: and I can still reach in ─────────────────────────────── -->
+  <!-- Figure 2's forked purple descent, unchanged and on purpose: same x=255
+       origin out of `me`, same rails at y=263 and y=309, same landings 8 units
+       under the agent (490,215) and under the .qmd (690,245). The front card is
+       at figure 2's coordinates, so the lower arrow's landing point needed no
+       recomputing at all — which is the payoff for keeping the box where it was.
+
+       It comes LAST here, not second as it does in figure 2. There the fork is
+       the answer to "the content now has an address"; here it is the answer to
+       everything already on screen — fifteen pages and a data package feeding
+       them, and I can still change any of it. Purple is still YOUR action, and
+       both branches are yours: delegating the typing to the agent is a choice
+       you make.
+
+       It is OUTSIDE `.openleft`, at `me`'s opened x=255, because it only ever
+       appears after the chain has opened. The rails clear everything: the upper
+       spans x 267..478, the lower 267..678, and click 2's feeder comes up at
+       x=765, right of both. -->
+  <g class="fragment" data-fragment-index="3">
+    <path d="M 255 211 L 255 251 Q 255 263 267 263 L 478 263 Q 490 263 490 251 L 490 215"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEditDash)"/>
+    <text x="420" y="285" font-size="20" fill="#852f88"
+          text-anchor="middle">prompt the agent to edit a .qmd...</text>
+
+    <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245"
+          fill="none" stroke="#852f88" stroke-width="2.5"
+          marker-end="url(#ahEditDash)"/>
+    <text x="472" y="335" font-size="20" fill="#852f88"
+          text-anchor="middle">…or edit it directly</text>
+  </g>
+
+</svg>
+```

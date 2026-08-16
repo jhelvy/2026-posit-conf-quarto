@@ -1,0 +1,309 @@
+<!--
+  ENTANGLEMENT FIGURE, SLIDE 1 OF 2 — "ask for the document."
+
+  Its job here is GENERALIZATION, not explanation: the handwriting sheet already
+  taught the idea, so this only has to show the same shape without pokemon in it.
+
+  The claim: the weaving happens inside one probabilistic pass, so the only lever
+  you have on the content is to re-prompt and take another draw.
+
+  BUILD. At rest, one loop, ALREADY in the top third at its final y=175 —
+  nothing slides. Click 1: run 2 arrives under it. Click 2: run 3.
+  Rows sit 186 apart, which is 70 units of clear air between one artifact and
+  the next (it was 56, and the connector labels were visibly cramped).
+  The three loops are byte-identical to each other — literally one <use> of
+  #loop — so the only thing that differs down the column is the document that
+  falls out the end. That is the whole argument, and it has to be legible from
+  the back of the room, which is why the three documents differ in MOTIF
+  (dots / blocks / bands) and not merely in band heights.
+
+  ORDER IS NOT ARBITRARY. Row 3 is the draw you kept — it carries the green
+  check, and it is the BANDS, which is the only motif that reads as lines of
+  text on a page. It is also #docOut on the next slide, so slide 2 opens on the
+  document this slide just checked. The two scattered motifs (dots, blocks) are
+  the drafts you threw away, and they go first because at distance they read as
+  "that came out wrong."
+
+  The artifact is a PAGE with a folded corner, labelled `.pdf` — the thing it
+  actually stands for, and the same portrait sheet the payoff slide shows for
+  real. See the note on #doc for why it isn't an oval any more.
+
+  The connectors matter: run 2 is not an edit of run 1, it is another full pass
+  reached only by re-prompting. Nothing points from one document to the next.
+
+  NO LEGEND, on purpose. The two previous slides teach the color vocabulary —
+  one concretely (this layout / these sentences), one by naming it — so all this
+  slide needs is the closing sentence from that second slide, carried across the
+  top in the same two colors. A swatch legend said the same thing in 17px type
+  nobody could read from the back.
+
+  That sentence is the lexis heading ABOVE this block, not SVG text, so its two
+  words are the same `.contentchip` / `.formatchip` the previous slides taught —
+  the same object, not merely the same hue. Consequence: the viewBox starts at
+  y=77 rather than 0, cropping the space the old <text> occupied. Coordinates
+  inside are unchanged; don't renumber them.
+
+  BOTH FIGURE SLIDES NOW SHARE ONE viewBox — "170 77 900 553" — which is what
+  registers them: same box, same row y (175), so the at-rest picture lands on
+  the identical pixels and advancing to slide 2 changes nothing until you
+  click. Slide 2 has ~280 units of dead canvas under its figure as the price.
+  Change one viewBox and you must change the other.
+
+  The x window (170..1070, width 900) is a crop, not the drawing's frame:
+  both slides' content is centred on x=620, and the tightest outer boxes are
+  slide 2's opened me (left edge 200) and artifact (right edge 1040), so 170
+  and 1070 leave ~29 units of margin each side. It used to be "0 .. 1240": that
+  wide box was reserved for slide 2's opened state, but it left the figure
+  width-bound with big empty side gaps and ~60 units of vertical slack unused.
+  Cropping to the real content makes the figure HEIGHT-bound instead, so it
+  fills that slack and centres. Widen the crop and the figure only re-centres —
+  it does not shrink — until the box gets wide enough (aspect > ~2.0) to go
+  width-bound again. y is untouched (77..630), so vertical registration and
+  slide 2's top:50px are unaffected.
+
+  Everything else that used to be labelled is now spoken: no "ASK FOR THE
+  DOCUMENT" (the sentence above says it), no run 1/2/3 (the stack says it), no
+  summary caption (three different documents off one identical loop IS the
+  caption).
+
+  Colors are the deck's vocabulary and never change: yellow = content/data,
+  teal = structure/format, purple = the human's direct action.
+
+  NOTE: #doc (row 3, the kept one) is duplicated as #docOut in slide 2's <defs>
+  and #docDots (row 1) as #docDotsOut; each pair must stay byte-identical. They
+  are NOT shared via one <use> across slides on purpose: reveal puts non-current
+  slides in display:none, and cross-slide <use> resolution is unreliable there.
+-->
+
+```{=html}
+<svg viewBox="170 77 900 553" width="100%" style="max-height:85vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <!-- The page every artifact in this figure is cut to. userSpaceOnUse
+         (the default) resolves in the <use>d group's own local space, so
+         one clip serves every motif. -->
+    <clipPath id="artifactClip">
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z"/>
+    </clipPath>
+
+    <!-- THE ARTIFACT. A PAGE — 90 x 116, US Letter proportions, with a folded
+         corner. It is the thing it stands for: the rendered handwriting sheet
+         from Act 1, and the same portrait sheet the payoff slide puts on screen
+         two slides later. The dog-ear is the universal document glyph, so the
+         shape reads instantly from the back of the room with no label doing the
+         work.
+
+         It is deliberately NOT a rounded rect — that is the actor shape (`me`,
+         the agent). It IS the same rect family as the .qmd on the next slide,
+         and that is the point: same two colours, same kind of box, and the ONLY
+         thing that differs is whether the bands have places. That single
+         variable is the address argument. (This replaced an oval, whose
+         "no corners, nothing to index" logic only ever resolved for whoever
+         drew it; at distance it read as a blob, and it disagreed with the real
+         sheets on the payoff slide.)
+
+         Teal and yellow interleaved, irregular, bleeding edge to edge and
+         clipped to the page: content and format fused. Never drawn as a box
+         inside a box — containment would imply they are already separate,
+         which is the visual opposite of entanglement. Horizontal bands, not
+         vertical stripes: on a page, horizontal reads as lines of a document,
+         and it makes the comparison with the .qmd's two stacked bands direct.
+
+         Band heights are slide-1's old stripe widths scaled 200 -> 116, so the
+         weave has the same rhythm it always had. 90 x 116 in PARENT units,
+         drawn 1:1 — no scale() on the <use>. Height is UNCHANGED from the oval
+         (116), so the row spacing and the whole height budget are untouched;
+         only the width came down, 200 -> 90.
+
+         The `.pdf` label is the one piece of text inside a repeated unit, and
+         it is worth the 3x: it makes slide 2 read `.qmd` -[render]- `.pdf`,
+         which is the entire explanation of what Quarto is for anyone watching
+         the recording who doesn't already know. It also removes any question
+         about which rect is which once the .qmd arrives. -->
+    <g id="doc">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <g clip-path="url(#artifactClip)">
+        <rect x="0" y="0"   width="90" height="9"  fill="#00798c"/>
+        <rect x="0" y="9"   width="90" height="13" fill="#edae49"/>
+        <rect x="0" y="22"  width="90" height="7"  fill="#00798c"/>
+        <rect x="0" y="29"  width="90" height="16" fill="#edae49"/>
+        <rect x="0" y="45"  width="90" height="10" fill="#00798c"/>
+        <rect x="0" y="55"  width="90" height="7"  fill="#edae49"/>
+        <rect x="0" y="62"  width="90" height="13" fill="#00798c"/>
+        <rect x="0" y="75"  width="90" height="12" fill="#edae49"/>
+        <rect x="0" y="87"  width="90" height="6"  fill="#00798c"/>
+        <rect x="0" y="93"  width="90" height="13" fill="#edae49"/>
+        <rect x="0" y="106" width="90" height="10" fill="#00798c"/>
+      </g>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <!-- Runs 2 and 3: same prompt, different draw. Same page, same two colors,
+         a completely different weave. The motif changes (bands -> dots ->
+         blocks) rather than just the proportions, because from row 10 a
+         re-shuffled band pattern reads as "the same picture again."
+
+         Both content AND format are redrawn on every pass, and that is
+         deliberate: the cold open is pokemon sentences drifting into minecraft
+         sentences, so holding the yellow fixed would claim the content
+         survived the re-prompt. It didn't.
+
+         Dots and blocks are placed, not clipped: every one is verified to sit
+         wholly inside the page and clear of the folded corner (x >= 68 and
+         y <= 22), so nothing is sliced at an edge. r=10 and side 14-18 keep
+         them the physical size they had before the page narrowed; three
+         columns instead of seven, four rows instead of three. -->
+    <g id="docDots">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"/>
+      <circle cx="22" cy="20" r="10" fill="#00798c"/>
+      <circle cx="45" cy="20" r="10" fill="#edae49"/>
+      <circle cx="22" cy="44" r="10" fill="#edae49"/>
+      <circle cx="45" cy="44" r="10" fill="#edae49"/>
+      <circle cx="68" cy="44" r="10" fill="#00798c"/>
+      <circle cx="22" cy="68" r="10" fill="#edae49"/>
+      <circle cx="45" cy="68" r="10" fill="#00798c"/>
+      <circle cx="68" cy="68" r="10" fill="#edae49"/>
+      <circle cx="22" cy="92" r="10" fill="#00798c"/>
+      <circle cx="45" cy="92" r="10" fill="#edae49"/>
+      <circle cx="68" cy="92" r="10" fill="#00798c"/>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <g id="docBlocks">
+      <text x="45" y="-12" font-size="22" text-anchor="middle"
+            fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="#FFFFFF"/>
+      <rect x="14" y="12" width="16" height="16" fill="#edae49"/>
+      <rect x="38" y="13" width="14" height="14" fill="#00798c"/>
+      <rect x="13" y="35" width="18" height="18" fill="#edae49"/>
+      <rect x="38" y="37" width="14" height="14" fill="#00798c"/>
+      <rect x="60" y="36" width="16" height="16" fill="#edae49"/>
+      <rect x="15" y="61" width="14" height="14" fill="#00798c"/>
+      <rect x="36" y="59" width="18" height="18" fill="#edae49"/>
+      <rect x="60" y="60" width="16" height="16" fill="#edae49"/>
+      <rect x="14" y="84" width="16" height="16" fill="#00798c"/>
+      <rect x="38" y="85" width="14" height="14" fill="#edae49"/>
+      <rect x="59" y="83" width="18" height="18" fill="#00798c"/>
+      <path d="M 0 0 L 68 0 L 90 22 L 90 116 L 0 116 Z" fill="none"
+            stroke="#2e4057" stroke-width="2.5"/>
+      <path d="M 68 0 L 90 22 L 68 22 Z" fill="#FFFFFF"
+            stroke="#2e4057" stroke-width="2.5"/>
+    </g>
+
+    <!-- THE LOOP, drawn once and <use>d three times so the rows are provably
+         identical. Local coords: the row's centerline is y = 0. -->
+    <!-- The row is centred in the 900-wide viewBox (170..1070): me 340 ..
+         artifact 900 is 560 wide, centre x=620, so 170 units of margin either
+         side. (It was 285 when the artifact
+         was 200 wide; the page is 110 narrower, so the whole chain moved 55
+         right to stay centred. Nothing else about the row changed.) Both arrows
+         are identical — same weight, same 80-unit run, same 8-unit landing gap
+         — because they are the same kind of step. 80 is also what slide 2 uses
+         either side of the .qmd, so every arrow in the figure is one length. -->
+    <g id="loop">
+      <rect x="340" y="-32" width="110" height="64" rx="6"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+      <text x="395" y="9" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+
+      <path d="M 452 0 L 532 0" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDark)"/>
+
+      <!-- agent. dashed = the stochastic component. Same box in both slides:
+           the agent is not what changes between them. -->
+      <rect x="540" y="-32" width="180" height="64" rx="6"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+            stroke-dasharray="7 5"/>
+      <text x="630" y="9" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+
+      <!-- One jump, no intermediate, and deliberately unlabelled: the row
+           repeats three times, so any text here repeats three times too. The
+           emptiness under this arrow is exactly the space Quarto fills on the
+           next slide — say "one probabilistic pass" out loud instead. -->
+      <path d="M 722 0 L 802 0" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahDark)"/>
+    </g>
+
+    <!-- refX=5.5, not 7 (the tip). markerUnits defaults to strokeWidth, so the
+         head scales with the line; parking the tip exactly on the path end
+         leaves the line's blunt butt-cap poking out through the taper, because
+         near the point the triangle is narrower than the stroke is thick.
+         Backing refX off by 1.5 marker units pushes the head forward far enough
+         that the stroke ends where the triangle is already wider than it —
+         covered — while the visible tip lands 1.5x stroke-width past the path
+         end. Path ends are set with that overhang subtracted. -->
+    <marker id="ahDark" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+    <marker id="ahGray" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#606771"/></marker>
+  </defs>
+
+  <!-- RUN 1. Static, and it sits in its final place from the moment the slide
+       appears — no reveal class, no transform trigger. It used to be
+       `fragment custom lift`: parked low so it read as centred on its own, then
+       released up on click 1 to make room for run 2. Cut because nothing on
+       screen should move that isn't part of the argument, and a row sliding up
+       is a motion the audience has to parse before the point lands. Rows 2 and
+       3 now simply arrive underneath it.
+
+       Rows are 186 apart (was 165), giving 70 units of clear air between one
+       artifact and the next, against 56 before. The page is 116 tall, exactly
+       what the oval was, so none of this arithmetic moved when the shape
+       changed — only the width did.
+
+       The artifact sits at x=810 (was 755): the page is 110 narrower than the
+       oval, so the chain shifted 55 right and its centre stayed put. Its centre
+       is still x=855, which is why the connectors below need no new x. -->
+  <g transform="translate(0 175)">
+    <use href="#loop"/>
+    <g transform="translate(810 -58)"><use href="#docDots"/></g>
+  </g>
+
+  <!-- RUN 2. The connector is the only route from one row to the next, and it
+       lands on `me` — not on the document. You don't get to touch run 1; you
+       get to ask again. -->
+  <g class="fragment" data-fragment-index="1">
+    <path d="M 855 236 L 855 248 Q 855 260 841 260 L 409 260 Q 395 260 395 272 L 395 322"
+          fill="none" stroke="#606771" stroke-width="2.5"
+          stroke-dasharray="7 5" marker-end="url(#ahGray)"/>
+    <text x="625" y="282" font-size="22" fill="#606771"
+          text-anchor="middle">review &amp; re-prompt</text>
+    <g transform="translate(0 361)">
+      <use href="#loop"/>
+      <g transform="translate(810 -58)"><use href="#docBlocks"/></g>
+    </g>
+  </g>
+
+  <!-- RUN 3. -->
+  <g class="fragment" data-fragment-index="2">
+    <path d="M 855 422 L 855 434 Q 855 446 841 446 L 409 446 Q 395 446 395 458 L 395 508"
+          fill="none" stroke="#606771" stroke-width="2.5"
+          stroke-dasharray="7 5" marker-end="url(#ahGray)"/>
+    <text x="625" y="468" font-size="22" fill="#606771"
+          text-anchor="middle">review &amp; re-prompt</text>
+    <g transform="translate(0 547)">
+      <use href="#loop"/>
+      <g transform="translate(810 -58)"><use href="#doc"/></g>
+      <!-- THE ONE WE KEPT. Drawn on row 3 only, so it is deliberately NOT in
+           #loop — the rows stay provably identical and this sits beside the
+           last page rather than inside it. Green (#66a182, minou) is not used
+           anywhere else, so it reads as a verdict on the artifact and can't be
+           mistaken for content (yellow) or format (teal). It rides run 3's
+           fragment: no extra click, no motion after the page lands. -->
+      <path d="M 925 4 L 941 20 L 971 -26" fill="none" stroke="#66a182"
+            stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+</svg>
+```

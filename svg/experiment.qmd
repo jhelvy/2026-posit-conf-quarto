@@ -1,0 +1,184 @@
+<!--
+  THE EXPERIMENT FIGURE. Sits between the character-count slides and
+  fig-tokens.png, and its only job is to make the measurement legible before
+  the numbers land: what, exactly, was asked for in each condition.
+
+  TOP: three separate asks, one per output format. The agent emits the finished
+  artifact and that is the end of the chain.
+  BOTTOM (click 1): the same agent, the same three outputs, but what the agent
+  writes is one .qmd and Quarto does the rest.
+
+  REGISTRATION. The agent box is at the SAME x (170..350) in both halves, and
+  the writes-arrow is byte-identical to the three arrows above it. The only
+  thing that differs is what lands on the other end. That is the whole picture.
+  Don't recentre either half independently — the top block ending at x=578 while
+  the bottom runs to x=912 is the point, not a layout bug.
+
+  THE THREE OUTPUT ICONS ARE FONT AWESOME WEBFONT GLYPHS, not paths:
+  `Font Awesome 6 Free` at weight 900 for the solid file icons (\f1c1 pdf,
+  \f1c2 word) and `Font Awesome 6 Brands` at 400 for html5 (\f13b). The font is
+  already on the page because the three character-count slides use the `fa`
+  shortcode; if those ever go, this figure turns to tofu, which is why every
+  icon also carries a text label beside it.
+
+  NB: do not write a bare `fa` shortcode anywhere in this comment. Quarto's
+  shortcode pass scans raw HTML blocks, comments included, and an argument-less
+  one crashes fontawesome.lua at `stringify(args[1])`.
+
+  THE .qmd IS QUARTO'S OWN MARK, drawn as a path rather than a glyph. The
+  iconify extension renders `simple-icons:quarto` as a Web Component, which
+  cannot live inside an SVG, so the path is copied in at 24x24 and scaled 1.667
+  to 40 units. It is the same artwork the `quarto` shortcode paints on the
+  character-count slide.
+
+  COLORS are the cost slides' ramp, NOT the content/format chips: Quarto blue,
+  amber PDF, red HTML, Word blue. Same order, same colours, so this slide and
+  the character counts agree. The mark wears Quarto's brand #74aadb; the letters
+  beside it wear the darker twin, because #74aadb is 2.5:1 on white. The
+  entanglement figure's yellow/teal vocabulary is deliberately absent — this
+  slide is about what was measured, not about what is fused to what.
+
+  Arrows follow the deck's one convention: 2.5 stroke, 80 units, 2-unit gap off
+  the source box, refX=5.5 on the marker. Marker id is unique document-wide
+  (`ahExp`) because reveal display:none's non-current slides.
+-->
+
+```{=html}
+<svg viewBox="0 75 1085 520" width="100%" style="max-height:80vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <marker id="ahExp" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+
+    <!-- The agent. Same dashed rounded rect as the entanglement figure: the
+         dash is the stochastic step, and it is identical in both halves
+         because the agent is not what changes. -->
+    <g id="agentBox">
+      <rect x="170" y="-28" width="180" height="56" rx="6"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+            stroke-dasharray="7 5"/>
+      <text x="260" y="0" font-size="24" text-anchor="middle"
+            dominant-baseline="central" fill="#2e4057">LLM agent</text>
+    </g>
+  </defs>
+
+  <!-- ============ TOP: ask for the artifact ============ -->
+
+  <text x="170" y="110" font-size="30" font-weight="600" fill="#2e4057">Ask for the artifact</text>
+
+  <!-- PDF -->
+  <g transform="translate(0 170)">
+    <use href="#agentBox"/>
+    <path d="M 352 0 L 432 0" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahExp)"/>
+    <text x="468" y="0" font-size="46" text-anchor="middle"
+          dominant-baseline="central" fill="#A77400"
+          font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c1;</text>
+    <text x="500" y="0" font-size="26" dominant-baseline="central"
+          fill="#A77400" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+  </g>
+
+  <!-- HTML -->
+  <g transform="translate(0 250)">
+    <use href="#agentBox"/>
+    <path d="M 352 0 L 432 0" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahExp)"/>
+    <text x="468" y="0" font-size="46" text-anchor="middle"
+          dominant-baseline="central" fill="#d1495b"
+          font-family="'Font Awesome 6 Brands'" font-weight="400">&#xf13b;</text>
+    <text x="500" y="0" font-size="26" dominant-baseline="central"
+          fill="#d1495b" font-family="SFMono-Regular, Menlo, monospace">.html</text>
+  </g>
+
+  <!-- Word -->
+  <g transform="translate(0 330)">
+    <use href="#agentBox"/>
+    <path d="M 352 0 L 432 0" stroke="#2e4057" stroke-width="2.5"
+          marker-end="url(#ahExp)"/>
+    <text x="468" y="0" font-size="46" text-anchor="middle"
+          dominant-baseline="central" fill="#2B579A"
+          font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c2;</text>
+    <text x="500" y="0" font-size="26" dominant-baseline="central"
+          fill="#2B579A" font-family="SFMono-Regular, Menlo, monospace">.docx</text>
+  </g>
+
+  <!-- ============ BOTTOM: ask for the source ============ -->
+
+  <g class="fragment" data-fragment-index="1">
+
+    <line x1="170" y1="388" x2="912" y2="388" stroke="#c9ced6" stroke-width="2"/>
+
+    <text x="170" y="442" font-size="30" font-weight="600" fill="#2e4057">Ask for the source</text>
+
+    <g transform="translate(0 500)">
+      <use href="#agentBox"/>
+
+      <path d="M 352 0 L 432 0" stroke="#2e4057" stroke-width="2.5"
+            marker-end="url(#ahExp)"/>
+      <text x="392" y="-16" font-size="21" text-anchor="middle" fill="#2e4057">writes</text>
+
+      <!-- The one .qmd, wearing Quarto's own mark. 24x24 artwork scaled 1.667
+           to 40 units and hung on the row's centreline: translate puts its top
+           left at (462, -20), so it is centred on x=482 like the glyphs above.
+
+           It sits in the entanglement figure's box — same white fill, same navy
+           2.5 stroke, same rx=6 — because it is the same object: a FILE, not a
+           format, which is why the container is neutral rather than teal. The
+           box is also what stops the source from reading as a fourth output
+           icon in a row of three. Its right edge at 602 leaves the deck's
+           2-unit gap before the render line starts at 604; the left edge at 446
+           clears the incoming arrowhead, which lands ~436. -->
+      <rect x="446" y="-32" width="156" height="64" rx="6"
+            fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+      <g transform="translate(462 -20) scale(1.66667)">
+        <path fill="#74aadb" d="M12.65 12.854V24c6.042-.325 10.923-5.105 11.33-11.125H12.65Zm-1.504 0H.02c.427 5.94 5.166 10.699 11.105 11.105V12.854Zm1.505-1.505H24C23.675 5.247 18.753.325 12.65 0Zm-1.505 0V0C5.106.427.326 5.308 0 11.35Z"/>
+      </g>
+      <text x="526" y="0" font-size="26" dominant-baseline="central"
+            fill="#3d7fb5" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+
+      <!-- render, then the fan. The straight run 604..682 is the render step;
+           the three 80-unit arrows off the junction are the three outputs, and
+           they are the same arrow the top half uses three times. One source,
+           three artifacts, and the agent wrote none of them. -->
+      <path d="M 604 0 L 682 0" fill="none" stroke="#2e4057" stroke-width="2.5"/>
+      <text x="643" y="-16" font-size="21" text-anchor="middle" fill="#2e4057">render</text>
+
+      <!-- Fan spread is 64 units, up from 50: at 50 the three glyphs read as a
+           single block of icons rather than three separate outputs, which is
+           the opposite of what the fan is for. The corner radius stays 12, so
+           each elbow runs to (spread - 12) before the quad. The viewBox height
+           grew to 520 to hold the bottom row — the .docx glyph now centres at
+           y=564 and reaches ~587 against a floor of 595. Change the spread and
+           that floor has to be rechecked. -->
+      <path d="M 682 0 L 682 -52 Q 682 -64 694 -64 L 762 -64" fill="none"
+            stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
+      <path d="M 682 0 L 762 0" fill="none"
+            stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
+      <path d="M 682 0 L 682 52 Q 682 64 694 64 L 762 64" fill="none"
+            stroke="#2e4057" stroke-width="2.5" marker-end="url(#ahExp)"/>
+
+      <!-- Same three icons, same three colors, same order as above. -->
+      <text x="800" y="-64" font-size="46" text-anchor="middle"
+            dominant-baseline="central" fill="#A77400"
+            font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c1;</text>
+      <text x="834" y="-64" font-size="26" dominant-baseline="central"
+            fill="#A77400" font-family="SFMono-Regular, Menlo, monospace">.pdf</text>
+
+      <text x="800" y="0" font-size="46" text-anchor="middle"
+            dominant-baseline="central" fill="#d1495b"
+            font-family="'Font Awesome 6 Brands'" font-weight="400">&#xf13b;</text>
+      <text x="834" y="0" font-size="26" dominant-baseline="central"
+            fill="#d1495b" font-family="SFMono-Regular, Menlo, monospace">.html</text>
+
+      <text x="800" y="64" font-size="46" text-anchor="middle"
+            dominant-baseline="central" fill="#2B579A"
+            font-family="'Font Awesome 6 Free'" font-weight="900">&#xf1c2;</text>
+      <text x="834" y="64" font-size="26" dominant-baseline="central"
+            fill="#2B579A" font-family="SFMono-Regular, Menlo, monospace">.docx</text>
+    </g>
+  </g>
+
+</svg>
+```
