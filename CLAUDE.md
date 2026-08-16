@@ -11,6 +11,11 @@ products**. Use that phrase; it's the session's shared vocabulary.
 
 - **Speaker notes are now in.** Every slide carries a `::: {.notes}` block of
   talking points; keep them when you move a slide. (Reversed 2026-08-15.)
+- **`SUGGEST REMOVING THIS SLIDE` in a notes block is a live proposal**, not a
+  decision. Don't act on one without John; don't quietly delete the marker.
+- **`<!-- ==== ACT n ==== -->` banners in `index.qmd` mark the braid's
+  boundaries.** Move a slide across one and the banner is now wrong. They are
+  comments, never slides — the *no "Act 3" on a slide* rule still holds.
 - **Keep edits to this file minimal.** A design decision gets one line, not a
   paragraph. Don't narrate the reasoning behind small changes here.
 - **Never run `quarto render`** or any render command. Report done; John renders.
@@ -41,11 +46,30 @@ strength, then turn.
 ❌ **Don't argue for content/format separation. Show it.** Arguing makes the
 talk feel like a recap.
 
-Outline: `quarto_talk_detailed_outline.md` (canonical since 2026-08-15);
-`outline.md` is the superseded one. **Act order is now problem → dashboards →
-cost → correctness → payoff**: the dashboard act moved up to Act 2 so it lands
-as the *first application* of the thesis, and cost/correctness became the
-evidence behind it rather than a detour before it.
+Outline: `outline.md` (canonical since 2026-08-16, rewritten for the braid).
+⚠️ `quarto_talk_detailed_outline.md` is now **superseded** — it describes the
+2026-08-15 act order and its slide lists no longer match `index.qmd`.
+
+**The structure is now a braid, not a sequence.** Three arguments, each played
+twice — once on a worksheet, once on the dashboard:
+
+| | small case | same move, bigger document |
+|---|---|---|
+| Control | handwriting sheet + both figures | 15 `.qmd` files, not an app |
+| Cost | one paragraph, four sources, `fig-tokens` | the agent opens one page |
+| Correctness | the Africa map | computed at render, CI fails loudly |
+
+The dashboard act **no longer exists as an act**. Its nine slides are
+distributed: four open Control's second movement, one *is* Cost's second
+movement, and the rest became a victory lap after the ladder completes. ❌ Don't
+re-gather them — the whole point is that the dashboard appears three times so
+the room never waits for it.
+
+**The line that carries the braid, spoken three times, verbatim:**
+**"Same move. Bigger document."** ❌ Never say "act" or "movement" out loud.
+
+`index.qmd` carries `<!-- ==== ACT n ==== -->` banner comments at each boundary.
+They're navigation for us, not content; keep them in sync when slides move.
 
 ## Files
 
@@ -110,9 +134,14 @@ ratios are identical at turn 1 and turn 10 and the picture is fig-tokens
 rescaled. No new shape, no new information. The quadratic bound
 (`d · N(N+1)/2`) *would* be a new shape, but it's the worst case and invites
 "Claude Code edits by diff" — not worth a minute of a 20-minute talk. The point
-is now **verbal**, on the `Token tax compounds over turns` slide: 80,970 tokens
+is now **verbal**, over `fig-tokens.png`: 80,970 tokens
 vs. ~11,000 after ten edits, plus *the ratio never moves, the gap does* — which
 concedes the constant ratio rather than letting the room catch it.
+
+**Say the sharper claim here too:** *it is not that markdown is smaller — it is
+that you stop paying for the parts you did not change.* Character count is the
+proxy; regeneration is the mechanism, and the mechanism is what the next slide
+(`Small pieces have small context windows`) then scales up.
 
 `~11,000` is a deliberate round of the real 10,220–11,230 (Quarto HTML / PDF /
 Word). The tilde is what makes it honest; ❌ don't replace it with one exact
@@ -122,7 +151,10 @@ number, and don't pick one of the three.
 drifted sheet in Act 1, the minecraft sheet on the payoff slide); swapping it
 changes both. `handwriting-good-mario.png` and
 `handwriting-practice-minecraft.pdf` are unreferenced. `vehicletrends.gif` is
-used **twice** — the cold open and the Act 5 payoff; that bookend is the point.
+used **twice** — the cold open and the opening of **Control's second movement**,
+where it is the referent for *"same move, bigger document."* ⚠️ Its second use
+moved (it used to close the deck as the Act 5 payoff); it is no longer a
+bookend, it is the hinge of the braid.
 
 Render status: `index.qmd` has not been re-rendered since the lexis conversion.
 
@@ -132,10 +164,17 @@ Three slides right after the cold-open gif, on the title slide's ground
 (`{{< bg-color "#2e4057" >}}` + `{{< inverse >}}`, `{{< quarto size=3x >}}`): the
 mark alone, then the mark beside the AI chip, then `dashboards.png` full-bleed.
 They promise the talk's shape — Quarto is unreasonably effective at a lot of
-things, two of them get a half each. ⚠️ Their old job was licensing twelve
-non-dashboard minutes; the 2026-08-15 reorg moved the dashboard act to Act 2, so
-what they now buy is the deliberate *zoom out* to the handwriting sheet. The
-third slide is the playful promise you pivot away from, not an explainer.
+things, two of them get a half each. ⚠️ Their job has changed twice. Originally they licensed twelve
+non-dashboard minutes; after 2026-08-15 they bought the *zoom out* to the
+handwriting sheet. Under the braid the dashboard is only four slides away, so
+what they now buy is just the pivot — and the **`Give me four minutes` promise
+slide** that follows them does the licensing explicitly, with a number.
+The third slide is the playful promise you pivot away from, not an explainer.
+
+**`Give me four minutes` is the practice-run note *"glimpse into what you'll
+see"*** — but it promises that the worksheet *leads somewhere*, not a table of
+contents. ❌ It still may not name Control / Cost / Correctness; that spends the
+spine. Say the number out loud and then keep to it.
 
 - **They sit after the gif, not before it.** The gif keeps its cold open and
   becomes the referent for `Dashboards`.
@@ -150,16 +189,27 @@ third slide is the playful promise you pivot away from, not an explainer.
 
 ## The spine
 
-Two inverse slides run **Control → Cost → Correct**, one word per act, each
-arriving just before the act that earns it. Grey `#8d96a3` = already had it,
+**Three** inverse slides run **Control → Cost → Correctness**, one per act, each
+landing *after* the act it names rather than before it. Grey `#8d96a3` = earned,
 white = next. Slide 1 teaches the convention (`Control` white and alone, then
 `.dims` to grey on the same `data-fragment-index` that brings `Cost` in); slide
-2 relies on it (`.earned`, static, no motion). ❌ No icons beside the words —
-each word appears *before* its act, so an icon would preview, not recall; the
-cost act has no honest glyph (a dollar sign says money, the act is about
-tokens); and `Correct` has no colour left that doesn't already mean something.
-The spine stops at Act 4 — the dashboard act calls back to all three in speech,
-but carries no ladder slide of its own.
+2 relies on it (`.earned`, static, no motion); slide 3 is slide 2 with
+`Correctness` also `.earned` and no fragment at all.
+
+⚠️ **The third card is new (2026-08-16) and the spine now completes.** Under the
+old order it stopped at two and `Correctness` was never closed — the talk simply
+stopped arguing. It costs one slide and it is the cheapest thing in the reorg.
+
+⚠️ **A ladder card now marks a section END, not a section start.** Each act's
+second movement is the last thing before its card, so the card reads as a
+verdict on what just happened. Don't move them back above their acts.
+
+❌ No icons beside the words — the cost act has no honest glyph (a dollar sign
+says money, the act is about tokens) and `Correctness` has no colour left that
+doesn't already mean something.
+
+❌ **The victory lap carries no ladder slide.** It calls back to all three in
+speech; the argument is already finished when it starts.
 
 ## The palette
 
@@ -209,8 +259,8 @@ nice." When picking an accent, **chroma is the axis that matters, not hue.**
 
 ## The entanglement figure
 
-Two slides of inline SVG in `index.qmd` (Act 2). Neither is `{{< inverse >}}` —
-the SVG needs a light slide.
+Two slides of inline SVG in `index.qmd` (Act 1, Control's first movement).
+Neither is `{{< inverse >}}` — the SVG needs a light slide.
 
 ```
 SLIDE 1 — one loop, stacked 3×, three different documents fall out
@@ -394,7 +444,7 @@ x=255 descent on its left and doesn't run into the `.qmd` box on its right, and
 that the two labels don't crowd each other at 24px apart; and whether the 50px
 top margin centres slide 2 or just shifts the problem.
 
-## The payoff slide (right after the figure)
+## The payoff slide (now after the source slide, not the figure)
 
 **"Same `format`. No drift."** Two columns, each a `.qmd` box over the real
 sheet it produces: pokemon and minecraft.
@@ -413,10 +463,31 @@ yellow `#edae49` + navy text; minecraft wears the post-click red `#d1495b` +
 - These SVGs use **no ids and no markers** (explicit triangle arrowheads), so
   they add nothing to the id namespace. Keep it that way.
 
-## The "one paragraph, three sources" slides (Act 3 lead-in)
+## The source slide (new 2026-08-16, between figure 2 and the payoff)
 
-Make token efficiency visible before the numbers arrive. Sit after the
-"✅ Token efficient" build; `fig-tokens.png` now follows them immediately.
+**"The model wrote the left. I edit the right."** Two columns: `practice.qmd` in
+one, `sentences.txt` in the other.
+
+⚠️ **Currently a mock-up — replace both blocks with the real files.** The
+sentences and the chunk are invented, and this is the one slide in the deck that
+must not be, because its entire job is being a real file.
+
+- **This is the slide the talk was missing.** Everything before it argues
+  disentanglement with a diagram; this shows the seam as two filenames. Figure 2
+  claims the content has an address — here the address is `sentences.txt`.
+- The line to say: *the model wrote every line on the left, once. It has never
+  seen the file on the right.*
+- ❌ Don't let it become a Quarto syntax explainer. Nobody needs to learn
+  `results: asis`; they need to see two files where there was one artifact.
+- It also strengthens the payoff slide that follows — *one word changed* becomes
+  *one word in that text file*.
+- ⚠️ It sits **before** the payoff slide, so the payoff's `.qmd` boxes now recall
+  a real file rather than introducing the idea. Don't reorder them.
+
+## The "one paragraph, three sources" slides (Act 2, cost — first movement)
+
+Make token efficiency visible before the numbers arrive. Sit after the Cost
+ladder card; `fig-tokens.png` now follows them immediately.
 
 **Slide A — "One paragraph. Three sources."** A rendered paragraph in a bordered
 card across the top, then three columns of source: `.qmd`, LaTeX, HTML, with an
@@ -521,13 +592,18 @@ slide B above the three columns — same markup, different inline sizes.
 - **Not visually vetted** — check the glyphs resolve, the fan's 12-unit corners
   read as one split, and the figure clears ~695px of usable height.
 
-## The correctness act (now Act 4, last before the payoff)
+## The correctness act (now Act 3, two movements)
 
 Order is **Africa → trust**, and its two answer slides (`Quarto is checkable
 twice`, `HTML is good, but it can't tell you if it's broken`) sit directly after
-it — they answer the question Africa asks. The dashboard no longer follows it
-(that act moved to Act 2), so the escalation to a live dashboard is now carried
-by the Act 5 payoff instead.
+it — they answer the question Africa asks. That is the **first movement**; the
+second is one new slide (below) that runs the same argument on the dashboard.
+
+**Trust is this act's word**, and it is the practice-run note *"can we get trust
+in."* ⚠️ Don't assert it. Trust is the *name for what you have* once the numbers
+have addresses and the build can fail, so it belongs in the second movement,
+after the CI slide, not in the Africa setup. *You can't prompt your way to
+correctness. You architect it.*
 
 ❌ **Never claim who or what made that map.** No source establishes it was
 AI-generated; the BBC graphic says only "mislabels." The slide claims what it
@@ -588,18 +664,40 @@ is a better setup for the compile-step slides than an authorship claim would be.
   fails; draw the shape and there is nothing to fail. That is Act 2's thesis
   applied to data, which is why it earns its own slide rather than a caption.
 
-## The dashboard case study (now Act 2)
+### Second movement — `The same move, one more time` (new 2026-08-16)
+
+Two columns: the inline-R line and `library(vehicletrends)` on the left, the
+weekly GitHub Action on the right. It is the third and last *"same move, bigger
+document."*
+
+- **It exists because the braid needed a third repetition and Correctness
+  didn't have one.** If it gets cut, the pattern limps on its last iteration —
+  that's the cost, and it's a real one.
+- **The `library(vehicletrends)` line is a deliberate callback** to the
+  15-documents slide in Control's second movement. Plant it there, point at it
+  here: *in the control section this was about the agent not having to write the
+  numbers; here it's about nobody being able to write the wrong one.* ❌ Don't
+  reword it in either place — the callback is verbatim or it isn't a callback.
+- **The Sunday re-render (`cron: '0 5 * * 0'`, no `freeze`) is spent here now.**
+  ⚠️ It also appears on `It's just static files` in the victory lap. Pick one.
+  Here it is an argument (a stale number is a failed build); there it is trivia.
+- Uses `<pre class="specimen">` from the checkable-twice slides, and the inline-R
+  backticks are `&#96;` or knitr evaluates them at render.
+
+## The dashboard case study (distributed across all three acts)
 
 **vehicletrends.us** — source at `/Users/jhelvy/gh/vehicletrends/dashboard`. A
 real, multi-page, self-updating Quarto site. Draw principles from the real repo,
 never invented ones.
 
-**`Same picture. Bigger artifact.` opens the act**, right after the gif returns
-and before the file-tree slide — figure : receipt, the deck's usual order.
+**`Same picture. Bigger artifact.` opens Control's second movement**, right
+after the gif returns and before the file-tree slide — figure : receipt, the
+deck's usual order.
 It is entanglement figure 2 redrawn at site scale and echoes it horizontally:
 same x window, same `me` / agent / `writes` coordinates, and the stack's front
-card is figure 2's `.qmd` box unchanged. ❌ Don't move it back to Act 5; three
+card is figure 2's `.qmd` box unchanged. ❌ Don't move it later; five
 slides after figure 2 the callback is free, twenty-eight slides later it isn't.
+Under the braid it is closer to its twin than it has ever been.
 Two clicks: the data package feeding the stack, then figure 2's purple fork.
 ❌ **No map feeder.** One was drawn and cut — at this position the `Put it in a
 box` slides are still ahead, so an `<iframe>` box previewed instead of recalled
@@ -612,20 +710,22 @@ is a site, and the window is what makes `It's not an app, it's a website`
 visible); and the stack is **flush right at x=860**, which is the only reason
 the `render` arrow keeps figure 2's coordinates.
 
-**The act is now the thesis's first application, not its payoff.** It arrives
-directly after *ask for the `.qmd`* and answers *"why does this matter for
-dashboards?"* — so cost and correctness read as evidence for an architecture the
-room has already seen. It closes on the statement divider **`Quarto composes
-things that don't need to understand each other`**, which is the bridge into
-cost. ❌ The old *See? I told you I'd get to the dashboard eventually* joke is
-gone with the twelve-minute delay that earned it; don't reinstate it here.
-❌ Never frame the act as *here's how Control / Cost / Correct apply* — the spine
-hasn't been laid yet, and it was never a 1:1. Opening beat is the gif +
-*I built this with Quarto* — **provenance, not proof**, and ❌ never the word
-*artifact*, which the thesis line spends on the opposite meaning; then the turn,
-**`It's not an app. It's a website.`** That turn is the act's own spine — URLs,
-no server, the iframe, Shinylive, static files, free hosting all fall out of it,
-which is what frees the act from the spine above.
+**The dashboard is no longer an act; it is the second movement of each act.**
+It arrives first directly after *ask for the `.qmd`*, answering *"why does this
+matter for dashboards?"* — then again under cost, then again under correctness.
+❌ The old *See? I told you I'd get to the dashboard eventually* joke is gone
+with the twelve-minute delay that earned it; don't reinstate it.
+Opening beat is the gif + *I built this with Quarto* — **provenance, not
+proof**, and ❌ never the word *artifact*, which the thesis line spends on the
+opposite meaning; then the turn, **`It's not an app. It's a website.`**
+
+⚠️ **The turn is now split across two homes.** `It's not an application. It's a
+document.` sits early, in Control's second movement, because the room has been
+asking *"why isn't this Shiny?"* since the montage and you cannot argue cost to
+people stuck on that question. `Every page gets a URL` — which ends on the
+near-identical `It's not an app. It's a website.` — sits in the victory lap.
+❌ **Don't run both closing lines.** Cut the one on `Every page gets a URL`; the
+early slide is the one doing argumentative work.
 
 **169,552,665 listings** (74,894,001 new + 94,658,664 used), 100,000+
 dealerships, 2018–2025; 15 pages, ~2,900 lines of `.qmd`. ❌ The old "10M+" is
@@ -637,10 +737,20 @@ application seconds before the turn deflates it to a website. What survives
 there is the load-bearing half: *every number is computed at render, I typed
 none of them.*
 
-**The act is nine slides, in this order, and the order is the outline's** — it is
-**one argument, decomposition**, not a feature tour. ❌ Never present it as "here
-are N reasons Quarto is good for dashboards"; that turns the talk into a
+**The nine slides are now split three ways.** ❌ Never present any group as
+"here are N reasons Quarto is good for dashboards"; that turns the talk into a
 catalogue, which is the failure mode the outline names by name.
+
+**In Control's second movement (4 slides):** the `Same picture. Bigger artifact.`
+figure, then 1, then 3 from the list below.
+**As Cost's second movement (1 slide):** 4, alone, where it is finally read as
+the cost argument it always was rather than the sixth item in a tour.
+**In the victory lap (the rest):** 2, 5, 7, 8, 9, closing on the peel-apart.
+
+⚠️ **The victory lap must stay short — four or five slides.** Left at eight it
+re-forms into the feature tour the braid dissolved, and it sits between the
+finished argument and the close, which is the worst place in the talk to sprawl.
+Slide 6 is marked for removal and 2 is the next to go if you're over time.
 
 1. **`It's not a 3,000-line dashboard. It's 15 small documents.`** The file tree
    of all 15 `.qmd`, ~3,000 lines, and `library(vehicletrends)` at render. The
@@ -654,14 +764,19 @@ catalogue, which is the failure mode the outline names by name.
    Quarto-beats-Shiny argument. Honest concession stays on the slide:
    server-side compute over browser-too-big data is Shiny's turf.
 4. **`Small pieces have small context windows.`** The whole site vs. what the
-   agent opens. ⚠️ It moved **before** the box slides, so ❌ it may not mention
-   iframes — it used to end "it drops back in as an `iframe`" and that is now a
-   forward reference. Speak the handwriting callback here instead.
+   agent opens. ⚠️ **Now Cost's entire second movement**, standing alone after
+   `fig-tokens`. ❌ It may not mention iframes — the box slides are in the
+   victory lap and that would be a forward reference. Speak the handwriting
+   callback here instead, and say *"same move, bigger document"* first.
+   **Optional retitle, and I'd take it: `The agent never opens the dashboard.`**
+   The current title describes the mechanism; that one states the result.
 5. **`Interactivity lives in the browser`** — live `echarts4r`, opening on the
    objection *"But I need users to filter it."* Payoff: *I just put the widget
    in the document.* ❌ Never "Quarto supports JavaScript."
-6. **`Because it's a document, the layout comes for free`** — deliberately
-   demoted, one slide, no dwelling.
+6. **`Because it's a document, the layout comes for free`** — ⚠️ **marked
+   SUGGEST REMOVING in the deck.** It was already the demoted slide, and the
+   victory lap has no room for a slide whose payoff is "Quarto has tabsets."
+   Nothing later depends on it.
 7. **`Have a heavier artifact? Put it in a box!`** The live `hhi-map` iframe,
    with 276 lines / 1.64 GB / its own repo as a caption row underneath. ⚠️ This
    used to be **two** near-identical slides (the live map, then the same prose
@@ -670,10 +785,19 @@ catalogue, which is the failure mode the outline names by name.
    `registrations.qmd` are native `{shinylive-r}`, WASM, client-side. Same move
    as 7, so it sits right after it and resolves 3's concession.
 9. **`It's just static files`** — charts, map and Shiny app all client-side.
-   Weekly re-render is `cron: '0 5 * * 0'`; there is **no `freeze`**, so every
-   build re-executes all the R and nothing goes stale. Say **static files**,
-   never *serverless* — the outline is explicit: serverless drags in Lambda and
+   Say **static files**, never *serverless* — serverless drags in Lambda and
    edge functions and is a harder claim to defend than the true, simpler one.
+   ⚠️ The weekly re-render (`cron: '0 5 * * 0'`, no `freeze`) is now spent in
+   Correctness's second movement; drop that sentence here and let this slide be
+   purely about hosting.
+
+10. **`It looks like an application. It isn't.`** — closes the lap and the body
+    of the talk. *No piece has to understand the whole thing. Neither does the
+    agent.* ⚠️ It is the last thing before the close and it should be: it hands
+    the lap straight back to the thesis. The statement divider **`Quarto
+    composes things that don't need to understand each other`** now sits
+    immediately before it and is **marked SUGGEST REMOVING** — same beat, and
+    the peel-apart earns it instead of asserting it. Run one, never both.
 
 **Slide 5's live `echarts4r` chart** (powertrain share of
 new listings, `vehicletrends::percent_listings`). The demo IS the slide. The
@@ -760,8 +884,8 @@ slide goes black. The line under the author is `posit::conf(2026)` /
 - **Say one sentence defining Quarto out loud** while figure slide 2 is up:
   plain-text document, markdown with code, `quarto render` turns it into a PDF
   or a site or these slides. ~8 seconds. ❌ No dedicated explainer slide.
-- **Build Act 6's *change one word* slide** — `format: pdf` → `format: html`,
-  content unchanged. Not built.
+- **Build the close's *change one word* slide** — `format: pdf` → `format:
+  html`, content unchanged. Not built.
 - **Demo assets are all built** — no `> **[BRACKETED]**` placeholders left.
   The single-shot numbers are Word 8097→1121, HTML 4046→1022, PDF 1992→1123
   (Markdown 1267→1282, now unused).
@@ -770,9 +894,20 @@ slide goes black. The line under the author is `posit::conf(2026)` /
   level before naming a host.
 - **`# Close` is gone** — the label divider was dropped in the reorg rather than
   restated.
-- **Two slides in the reorg are new and thin** — the Act 2 synthesis divider and
-  the Act 5 `It looks like an application. It isn't.` peel-apart. Both are built
-  only from lines already in the deck; rewrite them in John's voice.
+- **Rewrite the new slides in John's voice.** Seven were added on 2026-08-16 and
+  all of them are drafts: `Give me four minutes`, `The model wrote the left. I
+  edit the right.` (the only one that is a *mock-up* and must be replaced with
+  real files), the non-strikethrough `Ask for the source` alternative, `The same
+  move, one more time`, the third ladder card, `Where this gets annoying`, and
+  `Quarto wasn't built for this.` The peel-apart is still built only from lines
+  already in the deck.
+- **Pick one of each pair.** `Ask for the source` runs as either the
+  strikethrough build or the alternative, never both; the same for `Quarto
+  composes things…` vs the peel-apart, and the two *"it's not an app"* closing
+  lines.
+- **`Where this gets annoying` needs real pitfalls from John.** The four bullets
+  in the deck are plausible, not observed. ❌ Don't ship invented ones — the slide
+  exists to be credible.
 - **`Because it's a document, the layout comes for free`** is built and
   deliberately **demoted** — one slide, no dwelling. The YAML and the tabset /
   grid are copied from the real `_quarto.yml` and pages, not invented. The
@@ -781,10 +916,20 @@ slide goes black. The line under the author is `posit::conf(2026)` /
 - **Check `Same map, from source` fits** — 33 lines of code at `.font45`. The
   clip at line 29 was Quarto's 500px code-block cap, now `code-block-height:
   660` in the YAML; the other knob is the font class.
-- **Time check** — the deck is now 46 slides for 20 minutes.
-- **The peel-apart slide is now Act 5's recap of Act 2's figure**, not a rival to
-  it — moving the figure to open Act 2 resolved the duplication. Re-read the two
-  together once before deciding either needs cutting.
+- **Time check** — the deck is now **53 slides** for 20 minutes: 46 originals,
+  7 new, 2 marked for removal. Net 51 if everything is taken, 49 if the optional
+  pair-halves go. ⚠️ That is tighter than the 46 it replaced, and the victory lap
+  is where the slack is.
+- **The peel-apart slide closes the victory lap**, recapping the site figure
+  rather than rivalling it. Re-read the two together once before deciding either
+  needs cutting.
+- **Say *"same move, bigger document"* three times and time the gaps.** The braid
+  only works if the room hears the repetition; if the three landings are
+  uneven — a 4-slide movement, then 1, then 1 — consider whether Control's
+  second movement should give a slide to the victory lap.
+- **Rehearse the `library(vehicletrends)` callback specifically.** It is planted
+  in Control and cashed in Correctness, roughly twenty slides apart, and it is
+  the only long-range verbal callback in the talk.
 - **Re-vet the dashboard figure** — first render fixed three things (clipped top
   label, dead canvas, an arrow through a caption); the new crop and the caption's
   new home under the agent are still unseen.
@@ -792,6 +937,17 @@ slide goes black. The line under the author is `posit::conf(2026)` /
   centre to the left column read as making room; do the 38/62 columns land the
   mark and the words where the mockup has them; is one `<br>` enough gap.
 - **Refresh `README.md`** — still names `custom.scss`, doesn't mention lexis.
-- **Optional "what bit me" slide** — only with real pitfalls from John.
+- **Link the blog post somewhere** — John wrote up how the site was built and
+  the deck doesn't reference it. Cheapest home is a URL on the closing slide or
+  under the 15-documents slide. ❌ Don't spend a slide on it.
+- **The "where to take AI out of the loop" diagram** from the practice notes
+  (top half → Africa map → bottom half → trust) is **not built, and probably
+  shouldn't be** — the correctness act now does that work in three slides, and a
+  fourth figure costs a minute of twenty. Build it only if the run-through shows
+  the three slides failing.
+- **Contact sheet of the eight handwriting drafts** — *eight rounds later* is
+  currently asserted, not shown. If the drafts survive, a 3×3 of the rejects
+  plus the keeper is the cheapest big win left. Noted in that slide's speaker
+  notes.
 - Optional: compare notes with the three co-speakers (Blake's talk is also
   AI-adjacent; check the setup slides don't collide).

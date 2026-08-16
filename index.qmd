@@ -17,6 +17,11 @@ execute:
   message: false
 ---
 
+<!-- ============================================================
+     ACT 0 — OPEN
+     Unchanged. Ends on a promise that buys you the handwriting section.
+     ============================================================ -->
+
 ```{r}
 #| label: setup
 #| include: false
@@ -130,6 +135,13 @@ So — epic dashboards.
 
 Then the pivot: "But before I show you how to build one, I want to start with a
 much simpler problem."
+
+Give me four minutes.
+
+[We are going to build that. But it will not make sense<br>until I show you a handwriting worksheet.]{.font120}
+
+Option, if you cut the next slide: make the promise here and put a number on
+it — "give me four minutes and this will make sense."
 :::
 
 ---
@@ -190,6 +202,11 @@ But not what I wanted.
 Eight rounds later.
 
 Every one of those rounds was another full pass — not an edit.
+
+OPTION WORTH BUILDING: if you kept any of the eight drafts, this slide wants to
+be a contact sheet — three by three, the eight rejects plus the keeper, the
+drift visible all at once. Right now "eight rounds" is asserted; a wall of
+near-misses is evidence, and it is the kind of image a room makes a noise at.
 :::
 
 ---
@@ -555,6 +572,10 @@ The model isn't editing a document. It's generating another document.
 
 Don't say "LLMs are bad at formatting" — too easy to rebut. The argument is
 that generation is probabilistic and rendering is deterministic.
+
+Optional heading, if "entangled" feels like a word the audience has to accept
+before the figure can work: **Every fix is a new document.** That is the actual
+claim, and it needs no metaphor.
 :::
 
 ---
@@ -918,7 +939,86 @@ or a website, or these slides.
 
 The point isn't that the .qmd is prettier. It's that the weaving moved somewhere
 I can reach, and reaching it took one step instead of eight.
+
+Optional heading: **The weaving moves to render time.** Slightly more concrete
+than "disentangles," and it sets up the next slide, which shows the seam.
 :::
+
+---
+
+## [The model wrote the left. I edit the right.]{.center}
+
+:::: {.col width="58%"}
+[**`handwriting-practice.qmd`**]{.qmdblue}
+
+::: {.font70}
+````{.markdown}
+---
+params:
+  data_file: "data/sentences-mario.csv"
+format: pdf
+---
+
+```{{r}}
+sentences <- read.csv(params$data_file)$sentence
+for (s in sentences) {
+  cat(sprintf("\\practiceblock{%s}\n\n", s))
+}
+```
+````
+:::
+::::
+
+:::: {.col width="42%"}
+[**`data/sentences-minecraft.csv`**]{.amber}
+
+::: {.font55}
+```
+sentence
+Minecraft is a popular building game.
+Players mine for resources underground.
+You can build almost anything you want.
+Creepers are sneaky and dangerous enemies.
+Diamonds are the best ore to find.
+Players must survive through the first night.
+The Nether is a hot and scary place.
+```
+:::
+
+`r sp(1)`
+
+[One `.qmd`. One folder of CSVs.<br>Swap the parameter, get a sheet.]{.font120 .blue}
+::::
+
+::: {.notes}
+Two files. The model wrote the left one, once. It has never seen the right one.
+
+**Click 1 — the parameters.** The sentences aren't in the document. They're in a
+file, and which file is an argument. That's what "the content has an address"
+actually looks like on disk.
+
+**Click 2 — the elision.** Those forty lines are TikZ: line heights, baselines,
+the grey trace text the kid writes over. That is the format. I wrote it once and
+I have not opened it since.
+
+**Click 3 — the read.** One line. That's where the two halves meet, and it
+happens at render, not in the model.
+
+And because the file is parameterized, it isn't one worksheet — it's a worksheet
+*generator*. A four-line loop renders every CSV in that folder into its own PDF.
+Pokemon, minecraft, mario: same source.
+
+Don't show `render.R`. Say "four lines" and move on; the loop is not the idea.
+
+⚠️ Replace the CSV rows and the header with the real ones. This is the one slide
+in the deck whose whole job is being a real file, so it must not stay a mock-up.
+
+⚠️ Decide against the closing *change one word* slide (`format: pdf` →
+`format: html`). Both slides change one thing in the YAML. Different claims —
+many topics here, many formats there — but if they read as the same trick, the
+second one deflates. Pick which gets the emphasis.
+:::
+
 
 ---
 
@@ -1018,6 +1118,9 @@ Same format. No drift.
 
 One word changed. Everything else held — same layout, same margins, same
 everything.
+
+If you added the source slide before this one, the line gets stronger: "one
+word in that text file."
 :::
 
 ---
@@ -1045,9 +1148,40 @@ And in Quarto, the source is a `.qmd`.
 
 The agent writes the structure. Quarto takes responsibility for producing the
 artifact.
+
+See the next slide for an alternative to the strikethrough — use one or the
+other, not both.
 :::
 
 ---
+
+{{< inverse >}}
+{{< middle >}}
+
+# [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+
+[In Quarto, the source is a [`.qmd`]{.yellow}.]{.font120}
+
+::: {.notes}
+NEW SLIDE — OPTIONAL ALTERNATIVE to the strikethrough build on the previous
+slide. Use one or the other, not both.
+
+The case for it: "source" is not wrong, so crossing it out costs you something.
+It is the general principle, it is the thing that survives Quarto, and it is
+your literal closing line. Do not put a line through your own thesis in the
+middle of the talk — narrow it instead.
+
+The case against it: the strikethrough is a nice bit of stagecraft and lands a
+laugh. If the laugh matters more, keep the original and delete this.
+:::
+
+---
+
+
+<!-- ============================================================
+     ACT 1 — CONTROL, SECOND MOVEMENT (same move, bigger document)
+     Four slides only. The site reveal, the file list, and the Shiny question.
+     ============================================================ -->
 
 {{< bg-color "#000000" >}}
 {{< middle >}}
@@ -1057,6 +1191,13 @@ artifact.
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
 
 ::: {.notes}
+CONTROL, SECOND MOVEMENT. The braid starts here, and the words that start it
+are the ones you will say twice more:
+
+**"Same move. Bigger document."**
+
+Then the original framing:
+
 A handwriting worksheet is a pretty trivial example. So why am I
 talking about it at a session about dashboards?
 
@@ -1408,27 +1549,10 @@ the same distinction as the handwriting sheet, just at a bigger scale.
 
 The agent writes the `.qmd`. The data lives in a package the pages load at
 render.
-:::
 
----
-
-## Every page gets a URL
-
-- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
-- the back button works
-- search engines index it
-- 10 pages in the sidebar, 10 addresses
-
-[A Shiny app is one URL. The state lives in a session.]{.font120}
-
-[It's not an app. It's a website.]{.font150 .blue}
-
-::: {.notes}
-It's a dashboard that behaves like a website.
-
-Link it, bookmark it, send it. The back button works. Search engines index it.
-
-A Shiny app is one URL, and the state lives in a session.
+Plant `library(vehicletrends)` deliberately — you are coming back to this exact
+line in the correctness section, and the callback only works if they saw it
+land here.
 :::
 
 ---
@@ -1462,256 +1586,19 @@ This isn't an application. It's a document.
 
 Not an anti-Shiny argument: real server-side compute over data too big for a
 browser is exactly Shiny's job. Most dashboards aren't that.
+
+This slide is early on purpose. This room has been silently asking "why isn't
+this Shiny?" since the montage, and you cannot argue cost and correctness to
+people who are still stuck on that question. Answer it, then move.
 :::
 
 ---
 
-## Small pieces have small context windows
 
-::: {.col}
-[**The whole site**]{.red}
-
-- 15 pages
-- ~3,000 lines
-- every chart, every table, every number
-:::
-
-::: {.col}
-[**What the agent opens**]{.blue}
-
-- one page
-- 200 to 600 lines
-:::
-
-<br>
-
-[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120}
-
-::: {.notes}
-This is the strongest AI-specific point in the whole section.
-
-The agent opens one page — 200 to 600 lines. Never the site.
-
-Remember the handwriting sheet? We separated the thing I wanted to change from
-the thing I wanted to preserve. Same move here, at a much larger scale.
-:::
-
----
-
-## Interactivity lives in the browser
-
-::: {.col width="40%"}
-*"But I need users to filter it."*
-
-::: {.font45}
-```r
-depreciation |>
-  filter(powertrain == "Gasoline") |>
-  group_by(vehicle_type) |>
-  e_charts(age_years) |>
-  e_line(rr_smooth) |>
-  e_legend()
-```
-:::
-
-[Click a category in the legend →]{.font110}
-
-[No input. No server. No reactive.]{.font110 .blue}
-
-[I just put the widget in the document.]{.font120}
-:::
-
-::: {.col width="60%"}
-```{r}
-smooth_group <- function(df) {
-  fit <- loess(rr ~ age_years, data = df, span = 0.5)
-  df$rr_smooth <- predict(fit)
-  df
-}
-
-depreciation |>
-  filter(powertrain == "Gasoline", quantile == 50) |>
-  mutate(age_years = age_bin / 12) |>
-  group_by(vehicle_type) |>
-  group_modify(~ smooth_group(.x)) |>
-  e_charts(age_years, height = "460px") |>
-  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
-  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
-  e_tooltip(trigger = "axis") |>
-  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
-  e_x_axis(name = "Age (years)") |>
-  e_grid(left = 90, right = 40, top = 30, bottom = 90)
-```
-:::
-
-::: {.notes}
-The point is not "Quarto supports JavaScript."
-
-The point is that I can put an interactive widget in a document without building
-the application around it.
-
-Click a category in the legend — live. No input, no server, no reactive.
-:::
-
----
-
-## Because it's a document,<br>the layout comes for free
-
-:::: {.col}
-[**in `_quarto.yml`**]{.blue}
-
-::: {.font45}
-```yaml
-website:
-  sidebar:
-    style: docked
-    search: true
-
-format:
-  html:
-    page-layout: full
-    toc: true
-    toc-location: right
-```
-:::
-::::
-
-:::: {.col}
-[**in the page**]{.blue}
-
-::: {.font45}
-````markdown
-::: {.panel-tabset}
-## New
-## Used
-:::
-
-::: {.grid}
-:::
-````
-:::
-::::
-
-[I never built the navigation. I declared it.]{.font120}
-
-::: {.notes}
-Don't dwell — this is the demoted slide.
-
-Sidebar, search, a table of contents on every page, tabsets, a grid. I didn't
-build a navigation system; I'm using the layout primitives the document format
-already gives me.
-
-Nobody needs to remember that Quarto has tabsets. They need to remember that I
-built a dashboard without building a dashboard application.
-:::
-
----
-
-## [Have a heavier artifact? Put it in a box!]{.center}
-
-<center>
-```{r}
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "500px",
-  width = "900px",
-  style = "border: none;"
-)
-```
-</center>
-
-::: {.col width="58%" .font80}
-The hardest thing on the site: **276 lines** of hand-written MapLibre and
-**1.64 GB** of tiles on a CDN. It's **not in the dashboard** — it's its own
-repo, built in isolation, then dropped in:
-:::
-
-::: {.col width="42%"}
-::: {.font55}
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", width = "100%"
-)
-```
-:::
-:::
-
-::: {.notes}
-This is the hardest thing on the entire site. So it isn't in the dashboard.
-
-276 lines of hand-written MapLibre and 1.64 GB of tiles, in its own repo, built
-and iterated in isolation, dropped in with six lines.
-
-Quarto doesn't need to be the thing that does everything. It needs to be the
-thing that composes everything.
-:::
-
----
-
-## Or drop a whole Shiny app in the page
-
-Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
-the reader's browser:
-
-````markdown
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
-```
-````
-
-[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
-
-::: {.notes}
-Same move. The hard thing goes in a box, and the page just says where.
-
-Two pages on the site are Shiny apps compiled to WebAssembly, running in the
-reader's browser.
-:::
-
----
-
-## It's just static files
-
-Everything here runs in the browser, and the whole site is files — **hosted for free.**
-
-- charts → ECharts (JS), rendered client-side
-- the map → PMTiles on a CDN, instant
-- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
-
-A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
-cached, so nothing goes stale.
-
-[No server to run. No server to secure. No server to pay for.]{.font120}
-
-::: {.notes}
-Say "static files," not "serverless" — serverless drags in Lambda and edge
-functions and backends. This is simpler than that.
-
-At the end of the day it's a folder of files a browser can read. So I can host
-it for free.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Quarto composes things that<br>don't need to understand each other.
-
-::: {.notes}
-Quarto lets me compose a dashboard out of things that don't need to understand
-each other.
-
-And that turns out to be really useful when one of the things building it is an
-AI.
-
-That's the bridge into cost.
-:::
-
----
+<!-- ============================================================
+     LADDER — CONTROL earned, COST appears
+     Unchanged.
+     ============================================================ -->
 
 {{< inverse >}}
 {{< middle >}}
@@ -1736,6 +1623,12 @@ Cost is next. Don't over-explain the ladder; they'll pick it up.
 :::
 
 ---
+
+
+<!-- ============================================================
+     ACT 2 — COST, FIRST MOVEMENT (small case)
+     One paragraph, four sources. Compress if you are over time: 30 and 31 can merge.
+     ============================================================ -->
 
 {{< center >}}
 {{< middle >}}
@@ -2131,6 +2024,11 @@ The agent pays for every character.
 
 And it compounds over turns: about 81,000 tokens versus about 11,000 after ten
 edits. The ratio never moves — the gap does.
+
+The sharper version of the whole cost argument, worth saying out loud right
+here: **it is not that markdown is smaller — it is that you stop paying for the
+parts you did not change.** Character count is the proxy; regeneration is the
+mechanism.
 :::
 
 ---
@@ -2149,6 +2047,56 @@ One source, many outputs.
 :::
 
 ---
+
+
+<!-- ============================================================
+     ACT 2 — COST, SECOND MOVEMENT (same move, bigger document)
+     One slide. Moved out of the old dashboard tour, where it was buried.
+     ============================================================ -->
+
+## Small pieces have small context windows
+
+::: {.col}
+[**The whole site**]{.red}
+
+- 15 pages
+- ~3,000 lines
+- every chart, every table, every number
+:::
+
+::: {.col}
+[**What the agent opens**]{.blue}
+
+- one page
+- 200 to 600 lines
+:::
+
+<br>
+
+[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120}
+
+::: {.notes}
+COST, SECOND MOVEMENT — and the second time you say it:
+
+**"Same move. Bigger document."**
+
+The agent opens one page — 200 to 600 lines. Never the site.
+
+Remember the handwriting sheet? We separated the thing I wanted to change from
+the thing I wanted to preserve. Same move here, at a much larger scale.
+
+Optional heading, and I think a better one: **The agent never opens the
+dashboard.** The current title describes the mechanism; that one states the
+result, which is the thing worth remembering.
+:::
+
+---
+
+
+<!-- ============================================================
+     LADDER — COST earned, CORRECTNESS appears
+     Unchanged.
+     ============================================================ -->
 
 {{< inverse >}}
 {{< center >}}
@@ -2173,6 +2121,12 @@ document.
 :::
 
 ---
+
+
+<!-- ============================================================
+     ACT 3 — CORRECTNESS, FIRST MOVEMENT (small case)
+     The Africa map. Unchanged.
+     ============================================================ -->
 
 {{< inverse >}}
 {{< center >}}
@@ -2207,6 +2161,8 @@ it demonstrates: a wrong artifact looks exactly like a right one.
 It rendered. It shipped. Nobody caught it.
 
 A generative pass has nothing in it that can fail.
+
+Optional, harder line: **there is no version of this that throws an error.**
 :::
 
 ---
@@ -2343,6 +2299,355 @@ it once and never re-type it.
 
 ---
 
+
+<!-- ============================================================
+     ACT 3 — CORRECTNESS, SECOND MOVEMENT (same move, bigger document)
+     New. The third and last time you say the line.
+     ============================================================ -->
+
+## [The same move, one more time]{.center}
+
+::: {.col width="52%"}
+[**In the page**]{.blue}
+
+<pre class="specimen">
+<span>Registrations grew &#96;r pct_growth&#96;%</span>
+<span>last quarter.</span>
+</pre>
+
+`r sp(0.6)`
+
+[`library(vehicletrends)`]{.font140 .blue}
+
+The number is computed at render.<br>I typed none of them.
+:::
+
+::: {.col width="48%"}
+[**In CI**]{.blue}
+
+A GitHub Action re-renders the whole site **every Sunday at 5am.**
+
+If the data moved and a page no longer builds, **the build fails** — before
+anyone reads it.
+
+`r sp(0.6)`
+
+[A wrong number is a broken build,<br>not a quiet mistake.]{.font120 .blue}
+:::
+
+::: {.notes}
+NEW SLIDE — RECOMMENDED. This is the Correctness-at-scale beat, and it is the
+one movement the braid needs that you did not already have.
+
+The `<pre class="specimen">` block reuses the styling from your checkable-twice
+slide, and the &#96; entities keep knitr from evaluating the inline expression.
+Swap in a real line from the site.
+
+Deliberately a callback: `library(vehicletrends)` and "I typed none of the
+numbers" are lifted from the 15-documents slide, so the audience recognises the
+line. Point at it: "You have seen this line already. In the control section it
+was about the agent not having to write the numbers. Here it is about nobody
+being able to write the wrong one."
+
+The Sunday re-render currently also appears on the static-files slide in the
+victory lap. Keep it in one place. My preference is here, where it is an
+argument, rather than there, where it is a fact.
+
+If you would rather not add a slide at all: cut this and let the machine-check
+slide carry Correctness alone. The braid still holds, it just limps on the
+third repetition.
+:::
+
+---
+
+
+<!-- ============================================================
+     LADDER — all three earned
+     New, and cheap: the previous ladder with one more word greyed.
+     ============================================================ -->
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# [Control]{.font150 .earned}
+
+# [Cost]{.font150 .earned}
+
+# [Correctness]{.font150 .earned}
+
+::: {.notes}
+NEW SLIDE — RECOMMENDED, and cheap: it is the previous ladder slide with the
+last word greyed out.
+
+Three ladder slides means the audience sees the spine complete. Without this
+one the third C never gets closed and the talk just stops arguing.
+
+No fragment, no motion. Land on it, say "that is the argument," and move to the
+victory lap.
+:::
+
+---
+
+
+<!-- ============================================================
+     ACT 4 — VICTORY LAP
+     Everything Quarto composes for free. Keep this SHORT — four slides, six at the outside.
+     ============================================================ -->
+
+## Every page gets a URL
+
+- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
+- the back button works
+- search engines index it
+- 10 pages in the sidebar, 10 addresses
+
+[A Shiny app is one URL. The state lives in a session.]{.font120}
+
+[It's not an app. It's a website.]{.font150 .blue}
+
+::: {.notes}
+It's a dashboard that behaves like a website.
+
+Link it, bookmark it, send it. The back button works. Search engines index it.
+
+A Shiny app is one URL, and the state lives in a session.
+
+Housekeeping: "It's not an app. It's a website." now echoes "It's not an
+application. It's a document." from the control section. Cut one. My vote is to
+cut it here, since the earlier slide is the one doing argumentative work.
+:::
+
+---
+
+## Interactivity lives in the browser
+
+::: {.col width="40%"}
+*"But I need users to filter it."*
+
+::: {.font45}
+```r
+depreciation |>
+  filter(powertrain == "Gasoline") |>
+  group_by(vehicle_type) |>
+  e_charts(age_years) |>
+  e_line(rr_smooth) |>
+  e_legend()
+```
+:::
+
+[Click a category in the legend →]{.font110}
+
+[No input. No server. No reactive.]{.font110 .blue}
+
+[I just put the widget in the document.]{.font120}
+:::
+
+::: {.col width="60%"}
+```{r}
+smooth_group <- function(df) {
+  fit <- loess(rr ~ age_years, data = df, span = 0.5)
+  df$rr_smooth <- predict(fit)
+  df
+}
+
+depreciation |>
+  filter(powertrain == "Gasoline", quantile == 50) |>
+  mutate(age_years = age_bin / 12) |>
+  group_by(vehicle_type) |>
+  group_modify(~ smooth_group(.x)) |>
+  e_charts(age_years, height = "460px") |>
+  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
+  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
+  e_tooltip(trigger = "axis") |>
+  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
+  e_x_axis(name = "Age (years)") |>
+  e_grid(left = 90, right = 40, top = 30, bottom = 90)
+```
+:::
+
+::: {.notes}
+The point is not "Quarto supports JavaScript."
+
+The point is that I can put an interactive widget in a document without building
+the application around it.
+
+Click a category in the legend — live. No input, no server, no reactive.
+:::
+
+---
+
+## Because it's a document,<br>the layout comes for free
+
+:::: {.col}
+[**in `_quarto.yml`**]{.blue}
+
+::: {.font45}
+```yaml
+website:
+  sidebar:
+    style: docked
+    search: true
+
+format:
+  html:
+    page-layout: full
+    toc: true
+    toc-location: right
+```
+:::
+::::
+
+:::: {.col}
+[**in the page**]{.blue}
+
+::: {.font45}
+````markdown
+::: {.panel-tabset}
+## New
+## Used
+:::
+
+::: {.grid}
+:::
+````
+:::
+::::
+
+[I never built the navigation. I declared it.]{.font120}
+
+::: {.notes}
+Don't dwell — this is the demoted slide.
+
+Sidebar, search, a table of contents on every page, tabsets, a grid. I didn't
+build a navigation system; I'm using the layout primitives the document format
+already gives me.
+
+Nobody needs to remember that Quarto has tabsets. They need to remember that I
+built a dashboard without building a dashboard application.
+
+SUGGEST REMOVING THIS SLIDE. Your own note calls it the demoted slide, and in
+the braided order the victory lap has to stay short or it re-forms into the
+feature block we just dissolved. Nothing later in the talk depends on it.
+:::
+
+---
+
+## [Have a heavier artifact? Put it in a box!]{.center}
+
+<center>
+```{r}
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "500px",
+  width = "900px",
+  style = "border: none;"
+)
+```
+</center>
+
+::: {.col width="58%" .font80}
+The hardest thing on the site: **276 lines** of hand-written MapLibre and
+**1.64 GB** of tiles on a CDN. It's **not in the dashboard** — it's its own
+repo, built in isolation, then dropped in:
+:::
+
+::: {.col width="42%"}
+::: {.font55}
+```r
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px", width = "100%"
+)
+```
+:::
+:::
+
+::: {.notes}
+This is the hardest thing on the entire site. So it isn't in the dashboard.
+
+276 lines of hand-written MapLibre and 1.64 GB of tiles, in its own repo, built
+and iterated in isolation, dropped in with six lines.
+
+Quarto doesn't need to be the thing that does everything. It needs to be the
+thing that composes everything.
+:::
+
+---
+
+## Or drop a whole Shiny app in the page
+
+Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
+the reader's browser:
+
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+```
+````
+
+[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
+
+::: {.notes}
+Same move. The hard thing goes in a box, and the page just says where.
+
+Two pages on the site are Shiny apps compiled to WebAssembly, running in the
+reader's browser.
+:::
+
+---
+
+## It's just static files
+
+Everything here runs in the browser, and the whole site is files — **hosted for free.**
+
+- charts → ECharts (JS), rendered client-side
+- the map → PMTiles on a CDN, instant
+- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
+
+A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
+cached, so nothing goes stale.
+
+[No server to run. No server to secure. No server to pay for.]{.font120}
+
+::: {.notes}
+Say "static files," not "serverless" — serverless drags in Lambda and edge
+functions and backends. This is simpler than that.
+
+At the end of the day it's a folder of files a browser can read. So I can host
+it for free.
+
+If you kept the correctness-at-scale slide, the Sunday re-render is already
+spent. Drop that sentence here and let this slide be purely about hosting.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Quarto composes things that<br>don't need to understand each other.
+
+::: {.notes}
+Quarto lets me compose a dashboard out of things that don't need to understand
+each other.
+
+And that turns out to be really useful when one of the things building it is an
+AI.
+
+SUGGEST REMOVING THIS SLIDE. It is the same beat as the slide that follows it,
+and that one says it better — "no piece has to understand the whole thing;
+neither does the agent" earns the point instead of asserting it. In the old
+order this slide was the bridge into cost, and it no longer has that job.
+
+If you prefer this wording, keep this one and cut the next instead. Do not run
+both.
+:::
+
+---
+
 ## [It looks like an application. It isn't.]{.center}
 
 <br>
@@ -2361,7 +2666,11 @@ it once and never re-type it.
 
 <br>
 
-[No piece has to understand the whole thing. Neither does the agent.]{.font120}
+[No piece has to understand the whole thing. Neither does the agent.
+
+This is the last thing the audience sees before the close, and it is the right
+last thing: it takes the victory-lap material and hands it straight back to the
+thesis.]{.font120}
 
 ::: {.notes}
 So let's look at that dashboard again.
@@ -2374,6 +2683,12 @@ Neither does the agent.
 :::
 
 ---
+
+
+<!-- ============================================================
+     ACT 5 — CLOSE
+     Practical, then honest, then philosophical.
+     ============================================================ -->
 
 ## You don't need to know Quarto to get started
 
@@ -2388,6 +2703,29 @@ prompt.
 
 ---
 
+## Where this gets annoying
+
+- agents invent chunk options that don't exist — `quarto render` catches it, but only if you make them run it
+- Quarto's errors point at the **rendered** line, not always the line you wrote
+- a big render loop is slow; cache it or the agent will wait, and so will you
+- models still write 2023-era Quarto — expect `output:` where you wanted `format:`
+
+[None of these are fatal. All of them are cheaper than re-prompting a PDF.]{.font120}
+
+::: {.notes}
+NEW SLIDE — RECOMMENDED. Edit the four bullets down to whatever actually bit
+you; the specific gripes matter less than the fact that you have some.
+
+This buys credibility with the skeptic in row three, and it makes the next
+slide read as mitigation rather than boilerplate. A talk that admits nothing
+gets argued with in the hallway.
+
+Keep it fast — twenty seconds, no dwelling. The last line is the whole point of
+the slide.
+:::
+
+---
+
 ## Make this work Monday
 
 1. Put *"always run `quarto render` before finishing"* in your `CLAUDE.md`
@@ -2396,6 +2734,9 @@ prompt.
 
 ::: {.notes}
 Three things you can do Monday.
+
+Read them fast. If you added the caveats slide before this one, these three now
+read as mitigations, which is a better register than advice.
 :::
 
 ---
@@ -2414,6 +2755,30 @@ Source and artifact. Software solved this decades ago.
 
 Documents are only getting there now — right when the authors became
 probabilistic.
+:::
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Quarto wasn't built for this.
+
+[Nobody was thinking about agents in 2022.<br>]{.font120}
+[It works anyway — that's the unreasonable part.]{.font120 .orange}
+
+::: {.notes}
+NEW SLIDE — RECOMMENDED. This is the title finally paying off, and it pays off
+at the end rather than the beginning, which is where you wanted it.
+
+"Unreasonable effectiveness" is Wigner's phrase, and it means a thing works far
+better than its designers had any right to expect. That is exactly the claim:
+the separation of content from format was built for reproducible research, and
+it happens to be the correct architecture for a probabilistic author nobody had
+met yet.
+
+Do not explain Wigner. Just say the two lines and go to the last slide.
 :::
 
 ---
