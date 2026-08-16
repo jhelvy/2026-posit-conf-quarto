@@ -1188,22 +1188,7 @@ third repetition.
 {{< center >}}
 {{< middle >}}
 
-# [Control]{.font150 .earned}
-
-# [Cost]{.font150 .earned}
-
-# [Correctness]{.font150 .earned}
-
-::: {.notes}
-NEW SLIDE — RECOMMENDED, and cheap: it is the previous ladder slide with the
-last word greyed out.
-
-Three ladder slides means the audience sees the spine complete. Without this
-one the third C never gets closed and the talk just stops arguing.
-
-No fragment, no motion. Land on it, say "that is the argument," and move to the
-victory lap.
-:::
+# [Bonus]{.font150}
 
 ---
 
@@ -1289,59 +1274,7 @@ Click a category in the legend — live. No input, no server, no reactive.
 
 ---
 
-## Because it's a document,<br>the layout comes for free
-
-:::: {.col}
-[**in `_quarto.yml`**]{.blue}
-
-::: {.font45}
-```yaml
-website:
-  sidebar:
-    style: docked
-    search: true
-
-format:
-  html:
-    page-layout: full
-    toc: true
-    toc-location: right
-```
-:::
-::::
-
-:::: {.col}
-[**in the page**]{.blue}
-
-::: {.font45}
-````markdown
-::: {.panel-tabset}
-## New
-## Used
-:::
-
-::: {.grid}
-:::
-````
-:::
-::::
-
-[I never built the navigation. I declared it.]{.font120}
-
-::: {.notes}
-Don't dwell — this is the demoted slide.
-
-Sidebar, search, a table of contents on every page, tabsets, a grid. I didn't
-build a navigation system; I'm using the layout primitives the document format
-already gives me.
-
-Nobody needs to remember that Quarto has tabsets. They need to remember that I
-built a dashboard without building a dashboard application.
-
-SUGGEST REMOVING THIS SLIDE. Your own note calls it the demoted slide, and in
-the braided order the victory lap has to stay short or it re-forms into the
-feature block we just dissolved. Nothing later in the talk depends on it.
-:::
+Option: slide showing Quarto layouts
 
 ---
 
@@ -1432,30 +1365,6 @@ it for free.
 
 If you kept the correctness-at-scale slide, the Sunday re-render is already
 spent. Drop that sentence here and let this slide be purely about hosting.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Quarto composes things that<br>don't need to understand each other.
-
-::: {.notes}
-Quarto lets me compose a dashboard out of things that don't need to understand
-each other.
-
-And that turns out to be really useful when one of the things building it is an
-AI.
-
-SUGGEST REMOVING THIS SLIDE. It is the same beat as the slide that follows it,
-and that one says it better — "no piece has to understand the whole thing;
-neither does the agent" earns the point instead of asserting it. In the old
-order this slide was the bridge into cost, and it no longer has that job.
-
-If you prefer this wording, keep this one and cut the next instead. Do not run
-both.
 :::
 
 ---
