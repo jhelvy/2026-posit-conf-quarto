@@ -17,11 +17,6 @@ execute:
   message: false
 ---
 
-<!-- ============================================================
-     ACT 0 — OPEN
-     Unchanged. Ends on a promise that buys you the handwriting section.
-     ============================================================ -->
-
 ```{r}
 #| label: setup
 #| include: false
@@ -514,12 +509,6 @@ other, not both.
 
 ---
 
-
-<!-- ============================================================
-     ACT 1 — CONTROL, SECOND MOVEMENT (same move, bigger document)
-     Four slides only. The site reveal, the file list, and the Shiny question.
-     ============================================================ -->
-
 {{< bg-color "#000000" >}}
 {{< middle >}}
 {{< center >}}
@@ -665,22 +654,10 @@ people who are still stuck on that question. Answer it, then move.
 
 ---
 
-
-<!-- ============================================================
-     LADDER — CONTROL earned, COST appears
-     Unchanged.
-     ============================================================ -->
-
 {{< inverse >}}
 {{< middle >}}
 {{< center >}}
 
-<!-- The spine. Control is white and alone while you say "we've already talked
-     about control"; it hands off to grey at the same click that brings Cost in,
-     so the room watches the convention get taught once. Every later appearance
-     can then rely on it: grey = an act you've already had, white = the one
-     coming next. Both fragments carry the same `data-fragment-index`, so the
-     dim and the arrival are one beat, not two. -->
 # [Control]{.font150 .fragment .custom .dims data-fragment-index="1"}
 
 ::: {.fragment data-fragment-index="1"}
@@ -694,12 +671,6 @@ Cost is next. Don't over-explain the ladder; they'll pick it up.
 :::
 
 ---
-
-
-<!-- ============================================================
-     ACT 2 — COST, FIRST MOVEMENT (small case)
-     One paragraph, four sources. Compress if you are over time: 30 and 31 can merge.
-     ============================================================ -->
 
 {{< center >}}
 {{< middle >}}
@@ -936,12 +907,6 @@ One source, many outputs.
 
 ---
 
-
-<!-- ============================================================
-     ACT 2 — COST, SECOND MOVEMENT (same move, bigger document)
-     One slide. Moved out of the old dashboard tour, where it was buried.
-     ============================================================ -->
-
 ## Small pieces have small context windows
 
 ::: {.col}
@@ -980,19 +945,10 @@ result, which is the thing worth remembering.
 
 ---
 
-
-<!-- ============================================================
-     LADDER — COST earned, CORRECTNESS appears
-     Unchanged.
-     ============================================================ -->
-
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 
-<!-- Two acts behind you, so both words are grey from the start — no motion here,
-     the previous ladder slide already taught what grey means. Only the new word
-     is lit. -->
 # [Control]{.font150 .earned}
 
 # [Cost]{.font150 .earned}
@@ -1010,47 +966,35 @@ document.
 
 ---
 
-
-<!-- ============================================================
-     ACT 3 — CORRECTNESS, FIRST MOVEMENT (small case)
-     The Africa map. Unchanged.
-     ============================================================ -->
-
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 
 <center>
-<img src="images/africa-bad.png" height="660">
+<img src="images/africa-bad.png" height="600">
 
 [Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
 
 ::: {.notes}
 This went out.
-
-Don't claim who or what made it — no source establishes that. The claim is what
-it demonstrates: a wrong artifact looks exactly like a right one.
 :::
 
 ---
 
+{{< inverse >}}
 {{< center >}}
 
-# This map has no failure mode
+# There is no version that throws an error
 
 <center>
-<img src="images/africa-bad.png" height="560">
+<img src="images/africa-bad.png" height="600">
 
 [Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
 
 ::: {.notes}
-It rendered. It shipped. Nobody caught it.
-
-A generative pass has nothing in it that can fail.
-
-Optional, harder line: **there is no version of this that throws an error.**
+This went out.
 :::
 
 ---
@@ -1128,8 +1072,6 @@ not with the document.
 
 ## [HTML is good, but it can't tell you if it's broken]{.center}
 
-<br>
-
 ::: {.col .fragment}
 [**HTML** - _manual_ numbers]{.red}
 
@@ -1187,12 +1129,6 @@ it once and never re-type it.
 
 ---
 
-
-<!-- ============================================================
-     ACT 3 — CORRECTNESS, SECOND MOVEMENT (same move, bigger document)
-     New. The third and last time you say the line.
-     ============================================================ -->
-
 ## [The same move, one more time]{.center}
 
 ::: {.col width="52%"}
@@ -1248,12 +1184,6 @@ third repetition.
 
 ---
 
-
-<!-- ============================================================
-     LADDER — all three earned
-     New, and cheap: the previous ladder with one more word greyed.
-     ============================================================ -->
-
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
@@ -1276,12 +1206,6 @@ victory lap.
 :::
 
 ---
-
-
-<!-- ============================================================
-     ACT 4 — VICTORY LAP
-     Everything Quarto composes for free. Keep this SHORT — four slides, six at the outside.
-     ============================================================ -->
 
 ## Every page gets a URL
 
@@ -1571,12 +1495,6 @@ Neither does the agent.
 :::
 
 ---
-
-
-<!-- ============================================================
-     ACT 5 — CLOSE
-     Practical, then honest, then philosophical.
-     ============================================================ -->
 
 ## You don't need to know Quarto to get started
 
