@@ -21,6 +21,11 @@ execute:
 #| label: setup
 #| include: false
 
+library(dplyr)
+library(echarts4r)
+library(vehicletrends)
+library(palmerpenguins)
+
 knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
@@ -35,9 +40,36 @@ sp <- function(gap = 2, unit = "em") {
   sprintf('<div style="height: %s%s;"></div>', gap, unit)
 }
 
-library(dplyr)
-library(echarts4r)
-library(vehicletrends)
+rungs <- function(n) {
+  labs <- c(
+    "a chart",
+    "linked charts",
+    "a box",
+    "Shiny in the box",
+    "anything in the box"
+  )
+  grp <- c(1, 1, 2, 2, 2)
+  hue <- c("#00798c", "#d1495b") # teal = inside Quarto; red = in a box
+  span <- vapply(
+    seq_along(labs),
+    function(i) {
+      on <- i == n
+      sprintf(
+        '<span class="rung%s" style="color:%s">%s</span>',
+        if (on) " rung-on" else "",
+        if (on) hue[grp[i]] else "#8d96a3",
+        labs[i]
+      )
+    },
+    character(1)
+  )
+  dot <- '<span class="rung-sep">&middot;</span>'
+  htmltools::HTML(sprintf(
+    '<div class="rungs">%s<span class="rung-split"></span>%s</div>',
+    paste(span[1:2], collapse = dot),
+    paste(span[3:5], collapse = dot)
+  ))
+}
 ```
 
 {{< bg-color "#2e4057" >}}
@@ -270,14 +302,6 @@ claim, and it needs no metaphor.
 {{< center >}}
 {{< middle >}}
 
-<!-- The Content chip turns red on click 3, with the content block inside the
-     figure. It is a `fragment custom` colour toggle, not a second heading:
-     reveal leaves it visible at rest and only adds `.visible`, and custom.css
-     does the rest. Stacking two headings and cross-fading them would have
-     reserved space for both (reveal hides fragments with visibility:hidden,
-     which still occupies layout), and moving the heading back inside the SVG
-     would cost the chips. -->
-
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
@@ -377,49 +401,6 @@ second one deflates. Pick which gets the emphasis.
 ---
 
 {{< center >}}
-
-<!--
-  THE PAYOFF — the abstraction cashed out in the real sheets, and the answer to
-  Act 1. TWO columns, and the pair is the point: it is the slide before, made
-  concrete. There, `content` went yellow -> red inside a .qmd box and the format
-  did not move. Here are the two documents that come out of exactly that, and
-  they differ ONLY where the word differs.
-
-  So the colours are not decorative: pokemon wears the SAME yellow as the
-  at-rest `content` block, minecraft wears the SAME red as the block after the
-  click, white text and all. Read left to right it is the animation, frozen.
-
-  What carries it is what DOESN'T vary. The `.qmd` box is the same box from the
-  slide before at the same 190x124, and the teal `yaml` band is byte-identical
-  in both columns. Only the content block changes — one word, one colour — and
-  the sheets below differ in exactly that and nothing else. Same layout, same
-  margins, same everything.
-
-  REVERSED, do not restore: this was three columns (pokemon amber / minecraft
-  green / mario red), rhyming with figure slide 1's three stacked rows. Mario
-  was cut and minecraft moved from green to red to build the stronger rhyme
-  with figure slide 2 instead. Two side effects, both good: green now means
-  ONLY "your direct action" anywhere in the deck, and the two sheets on screen
-  are exactly the two topics from the Act 1 cold open (pokemon, then the
-  minecraft one it drifted into). images/handwriting-good-mario.png is now
-  unreferenced.
-
-  No `render` label under the arrows: two of them would be two repetitions of a
-  word the previous slide just taught. Same rule as `#loop` on slide 1 —
-  anything in a repeated unit is paid for per copy.
-
-  SIZING. The two `.qmd` graphics were 216x180 on a "0 0 240 200" viewBox, which
-  carried 50 units of unused width and rendered the box at 0.9 scale — too small
-  to read from the back. They are now "21 2 198 195" at 218x215: the viewBox is
-  cropped to the actual ink (x 25..215, y 5.6..192.5, 4 units of margin all
-  round) and the element is 35px taller, which together put the box up ~22%.
-  The SHEETS ARE UNTOUCHED at height 530 — this slide's whole argument is that
-  only the content block differs, so the two photographs must not move.
-  ⚠️ 180+530 already nearly fills the 795px of usable slide height; +35 was
-  sized to fit the remaining slack. Going bigger means taking it out of the
-  sheets, which costs more than it buys. Keep the two SVGs byte-identical apart
-  from the content block's fill and its word.
--->
 
 ::: {.col .center}
 ```{=html}
@@ -945,6 +926,59 @@ result, which is the thing worth remembering.
 
 ---
 
+## [To change one thing, what has to agree?]{.center}
+
+<br>
+
+::: {.col}
+[**in an app**]{.red}
+
+- the **input** that defines it
+- the **output** that consumes it
+- the **reactive** that connects them
+
+[Three places, and they have to match.]{.font110}
+:::
+
+::: {.col}
+[**in a page**]{.blue}
+
+- the **chunk**
+
+`r sp(1)`
+
+[One place, and it's the one<br>I'm already looking at.]{.font110}
+:::
+
+<br>
+
+[This isn't about how much you write. It's about how much has to be true at once —]{.font120}
+
+[and *that* is what an agent has to hold in its head.]{.font130 .blue}
+
+::: {.notes}
+Here's the version of that which actually matters for an agent.
+
+An application is a coupled thing, and it should be -- that coupling is what
+makes it reactive. But it means adding one filter touches an input, an output,
+and the reactive expression between them, and all three have to agree.
+
+A page isn't coupled. Adding a filter is a chunk.
+
+**The line to land:** this is not a claim about how much code you write. It's a
+claim about how much has to be simultaneously true -- and that is exactly what
+an agent has to hold in context to make a change safely.
+
+Which is the same argument as the next slide, one level down. If you're running
+that one too, this is the handoff: *"and it scales."*
+
+Note there is no comparison of volume anywhere on this slide, and no number.
+Nothing here says an app is worse. It says an app is *coupled*, which is what
+an app is for.
+:::
+
+---
+
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
@@ -1188,7 +1222,447 @@ third repetition.
 {{< center >}}
 {{< middle >}}
 
-# [Bonus]{.font150}
+# [What about interactivity?]{.font150}
+
+---
+
+`r rungs(1)`
+
+## Interactivity you get from a code chunk
+
+::: {.col width="46%"}
+[**Python**]{.blue}
+
+::: {.font40}
+```python
+px.scatter(
+  penguins,
+  x = "bill_length_mm",
+  y = "flipper_length_mm",
+  color = "species"
+)
+```
+:::
+
+[**R**]{.blue}
+
+::: {.font40}
+```r
+penguins |>
+  group_by(species) |>
+  e_charts(bill_length_mm) |>
+  e_scatter(flipper_length_mm)
+```
+:::
+
+[Hover. Click the legend. &rarr;]{.font110}
+
+[No input. No server. No reactive.]{.font110 .blue}
+:::
+
+::: {.col width="54%"}
+```{r}
+library(palmerpenguins)
+library(echarts4r)
+
+penguins |>
+  tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
+  group_by(species) |>
+  e_charts(bill_length_mm, height = "420px") |>
+  e_scatter(flipper_length_mm, symbol_size = 9) |>
+  e_color(c("#00798c", "#A77400", "#d1495b")) |>
+  e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
+  e_tooltip() |>
+  e_x_axis(name = "Bill length (mm)") |>
+  e_y_axis(
+    name = "Flipper length (mm)",
+    nameLocation = "middle",
+    nameGap = 45
+  ) |>
+  e_grid(left = 80, right = 30, top = 20, bottom = 80)
+```
+:::
+
+::: {.notes}
+Open the section here -- it doesn't need a divider of its own:
+
+*"I promised I'd come back to this. Everything I've shown you was generated
+before anyone opened it. So: what about the part where the user does something?"*
+
+Then the ladder starts at the bottom. A plotting package that emits JavaScript --
+plotly, echarts4r, highcharter, take your pick -- gives you hovering, tooltips
+and legend filtering for the price of a code chunk.
+
+Point at the two code blocks: **Python on top, R underneath, same document.**
+Quarto doesn't care which one you're in. That's worth ten seconds at this
+conference and no more.
+
+Then the live chart: click a species out of the legend. No input, no server, no
+reactive.
+
+Don't say "rung one" or "level one" out loud. The indicator does that job --
+let the room notice it on its own.
+
+NOTE: the Python block is deliberately static. Rendering it live means adding
+`jupyter:` to the YAML and a working Python env on stage, for a chart that makes
+exactly the same point as the R one. Don't make conference wifi a dependency.
+:::
+
+---
+
+`r rungs(2)`
+
+## [Widgets that talk to each other: `crosstalk`]{.center}
+
+```{r}
+library(crosstalk)
+library(plotly)
+library(DT)
+
+pen <- palmerpenguins::penguins |>
+  tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species)
+shared <- SharedData$new(pen)
+
+htmltools::div(
+  filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
+  htmltools::div(
+    style = "display:flex; gap:1.2rem; margin-top:0.6rem;",
+    htmltools::div(
+      style = "flex:1 1 55%;",
+      plot_ly(
+        shared,
+        x = ~bill_length_mm,
+        y = ~flipper_length_mm,
+        color = ~species,
+        colors = c("#00798c", "#A77400", "#d1495b"),
+        type = "scatter",
+        mode = "markers",
+        height = 300
+      ) |>
+        layout(showlegend = FALSE, margin = list(l = 45, r = 5, t = 5, b = 40))
+    ),
+    htmltools::div(
+      style = "flex:1 1 45%;",
+      datatable(
+        shared,
+        rownames = FALSE,
+        options = list(pageLength = 5, dom = "t")
+      )
+    )
+  )
+)
+```
+
+[Move the slider. Drag a box on the plot. **Still no server.**]{.font120 .blue}
+
+::: {.notes}
+The obvious next question: *can one widget change another one?*
+
+Yes -- `crosstalk`. Wrap the data frame in `SharedData$new()`, hand that to both
+widgets instead of the data, and they're linked. Move the slider and both
+respond. Drag a box on the scatter and the table follows.
+
+All of it in the browser. Still a static file.
+
+**Say the limits before anyone asks -- this audience will know them:**
+widget authors have to opt in, so it's plotly, leaflet, DT, reactable, not
+everything. Notably **not echarts4r**, which is why this demo isn't from my
+site. And it filters *rows*, not aggregates -- it can hide points, it can't
+recompute a regression.
+
+That's the honest ceiling, and it's exactly what the next slide climbs over.
+:::
+
+---
+
+`r rungs(2)`
+
+## [Or recompute in the browser: `ojs`]{.center}
+
+```{r}
+#| echo: false
+ojs_define(
+  pen_ojs = palmerpenguins::penguins |>
+    tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species) |>
+    dplyr::select(species, bill_length_mm, flipper_length_mm, body_mass_g)
+)
+```
+
+::: {.col width="38%"}
+::: {.font40}
+````markdown
+```{r}
+ojs_define(pen_ojs = penguins)
+```
+
+```{ojs}
+data = transpose(pen_ojs)
+viewof mass = Inputs.range(
+  [2700, 6300], {label: "Min mass"})
+```
+````
+:::
+
+[R hands the data over.<br>The browser does the rest.]{.font110 .blue}
+
+[This one **recomputes** -- the fit is<br>refitted client-side, not filtered.]{.font110}
+:::
+
+::: {.col width="62%"}
+```{ojs}
+data = transpose(pen_ojs)
+
+viewof mass = Inputs.range([2700, 6300], {step: 50, value: 2700, label: "Min mass (g)"})
+
+filtered = data.filter(d => d.body_mass_g >= mass)
+
+Plot.plot({
+  height: 340,
+  marginLeft: 55,
+  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
+          range: ["#00798c", "#A77400", "#d1495b"]},
+  marks: [
+    Plot.dot(filtered, {x: "bill_length_mm", y: "flipper_length_mm",
+                        fill: "species", r: 4, fillOpacity: 0.75}),
+    Plot.linearRegressionY(filtered, {x: "bill_length_mm",
+                                      y: "flipper_length_mm", stroke: "#2e4057"})
+  ]
+})
+```
+:::
+
+::: {.notes}
+And if filtering isn't enough -- if you need it to actually *compute* -- Quarto
+ships Observable JS.
+
+`ojs_define()` hands an R data frame to the browser. From there it's a reactive
+runtime: change the input, everything downstream re-evaluates.
+
+**Point at the regression line.** That's the difference from the last slide.
+Crosstalk hides points. This refits the line as you move the slider. Nobody
+called a server, and there's no R running anywhere -- the page has been static
+this whole time.
+
+Don't oversell. OJS is JavaScript, so this is where an R-only room hits a
+language boundary -- and that's a fair reason to reach for Shiny two rungs up.
+Say it plainly; it makes rung 4 land better.
+:::
+
+---
+
+`r rungs(3)`
+
+## [Anything bigger goes in a box]{.center}
+
+<br>
+
+::: {.font70}
+```r
+htmltools::tags$iframe(
+  src    = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px",
+  width  = "100%",
+  style  = "border: none;"
+)
+```
+:::
+
+<br>
+
+[Six lines. That's the **entire** interface between the page<br>and whatever is on the other end.]{.font130 .blue}
+
+::: {.notes}
+Everything so far lives inside the document. Here's where that stops.
+
+This is the whole slide: six lines, and they are the entire contract between a
+Quarto page and something that isn't one. The page says *where*. It never says
+*what*.
+
+Fifteen seconds. Don't dwell -- it's a hinge, not a destination. The next two
+slides are what it holds.
+
+This is also where the modularity half of the section starts, and it's why the
+indicator has a divider in the middle of it.
+:::
+
+---
+
+`r rungs(4)`
+
+## [Yes, you can still use Shiny]{.center}
+
+::: {.col}
+[**Shinylive** -- no server]{.blue}
+
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+```
+````
+
+Compiled to WebAssembly, running in the reader's browser. Two pages on my site
+are exactly this.
+:::
+
+::: {.col}
+[**A real Shiny server**]{.red}
+
+::: {.font55}
+```r
+tags$iframe(
+  src = "https://shiny.example.com/explorer",
+  height = "700px", width = "100%"
+)
+```
+:::
+
+When WASM isn't enough -- a database, data too big to ship -- deploy it and
+point at it.
+:::
+
+<br>
+
+[Same six lines either way. **The page can't tell the difference.**]{.font130 .blue}
+
+::: {.notes}
+Be generous here. This is a Posit conference and Shiny is the right answer to a
+real class of problem: server-side compute over data too big for a browser,
+live connections, anything that has to reach a database. I am not arguing
+against Shiny.
+
+I'm arguing that the *page* doesn't need to know. Shinylive if it fits in the
+browser; a deployed app if it doesn't. Same iframe.
+
+And that's the one thing in this entire talk that costs money -- and it costs it
+inside one rectangle instead of across the whole site.
+
+NOTE: the right-hand example is generic. If you don't have a deployed app, say
+"if you needed one." Don't imply vehicletrends.us has a backend it doesn't have.
+:::
+
+---
+
+`r rungs(5)`
+
+## [Or something nobody has a package for]{.center}
+
+<center>
+```{r}
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "480px",
+  width = "900px",
+  style = "border: none;"
+)
+```
+</center>
+
+::: {.font90}
+The hardest thing on the site: **276 lines** of hand-written MapLibre and
+**1.64 GB** of tiles on a CDN. Its own repo, built in isolation -- then the six
+lines from two slides ago.
+:::
+
+::: {.notes}
+Top of the ladder. No package did this. It's hand-written MapLibre against 1.64
+GB of vector tiles on a CDN, and it is the hardest thing on the entire site.
+
+Which is exactly why it isn't *in* the site. It's its own repo, and it was its
+own conversation -- **the agent that built this never saw the dashboard, and the
+dashboard has never seen these 276 lines.**
+
+Six lines is everything they know about each other.
+
+That's the agent argument from the cost section showing up as architecture, and
+it's the reason this rung sits above Shiny rather than below it: the ladder is
+ordered by how much you have to *build*, not how much infrastructure you need.
+:::
+
+---
+
+## [The page says *where*. It never says *what*.]{.center}
+
+<br>
+
+::: {.col}
+[**inside the document**]{.blue}
+
+1. a **JS widget** -- hover, legend, tooltip
+2. **crosstalk** or **ojs** -- linked, or recomputed
+:::
+
+::: {.col}
+[**in a box**]{.red}
+
+3. an **iframe** -- six lines
+4. **Shiny** -- WASM, or a real server
+5. **anything** -- 276 lines of MapLibre
+:::
+
+<br>
+
+[Five kinds of interactive. One kind of hole in the page.]{.font130}
+
+[The document can't tell them apart. Neither can the agent.]{.font130 .blue}
+
+::: {.notes}
+Five kinds of interactivity, and the document treats every one of them the same
+way: it says where the thing is, and nothing about what it is.
+
+That's the whole architecture. Every box was built alone, in its own repo, in
+its own conversation -- and every one is six lines to the page that holds it.
+
+**The agent line is the point of the slide, not a flourish.** The agent inherits
+exactly the ignorance the page has. It works on one box at a time and never
+needs the system in its head.
+
+No fragments here. They've just seen all five -- this is a recap, not a reveal.
+:::
+
+---
+
+## [It looks like an application. It isn't.]{.center}
+
+<br>
+
+::: {.col}
+- each page is a **`.qmd`**
+- the data lives in an **R package**
+- the charts are **JS widgets**
+:::
+
+::: {.col}
+- the navigation comes from **Quarto**
+- the map is **its own repo**
+- the Shiny app is **WebAssembly**
+:::
+
+<br>
+
+[No piece has to understand the whole thing. Neither does the agent.]{.font120}
+
+::: {.notes}
+So let's look at that dashboard one more time.
+
+It looks like an application. It isn't -- it's a composition of pieces that
+don't know about each other. No single component ever needs to understand the
+whole system.
+
+Neither does the agent.
+
+FIXED: a block of my editorial notes had leaked into the visible body of this
+slide in an earlier pass. The bracketed line is now just the payoff line.
+
+NOTE: this lands one slide after "Neither can the agent" on the recap. Two of
+them back to back is one too many. Either change the recap's line to *"and
+neither does whatever built it"*, or cut this slide and let the recap close the
+section.
+:::
+
+---
+
+# OLD BONUS CONTENT
 
 ---
 
@@ -1213,63 +1687,6 @@ A Shiny app is one URL, and the state lives in a session.
 Housekeeping: "It's not an app. It's a website." now echoes "It's not an
 application. It's a document." from the control section. Cut one. My vote is to
 cut it here, since the earlier slide is the one doing argumentative work.
-:::
-
----
-
-## Interactivity lives in the browser
-
-::: {.col width="40%"}
-*"But I need users to filter it."*
-
-::: {.font45}
-```r
-depreciation |>
-  filter(powertrain == "Gasoline") |>
-  group_by(vehicle_type) |>
-  e_charts(age_years) |>
-  e_line(rr_smooth) |>
-  e_legend()
-```
-:::
-
-[Click a category in the legend →]{.font110}
-
-[No input. No server. No reactive.]{.font110 .blue}
-
-[I just put the widget in the document.]{.font120}
-:::
-
-::: {.col width="60%"}
-```{r}
-smooth_group <- function(df) {
-  fit <- loess(rr ~ age_years, data = df, span = 0.5)
-  df$rr_smooth <- predict(fit)
-  df
-}
-
-depreciation |>
-  filter(powertrain == "Gasoline", quantile == 50) |>
-  mutate(age_years = age_bin / 12) |>
-  group_by(vehicle_type) |>
-  group_modify(~ smooth_group(.x)) |>
-  e_charts(age_years, height = "460px") |>
-  e_line(rr_smooth, symbol = "none", smooth = FALSE) |>
-  e_legend(bottom = 0, textStyle = list(fontSize = 18)) |>
-  e_tooltip(trigger = "axis") |>
-  e_y_axis(name = "Retention rate", nameLocation = "middle", nameGap = 50) |>
-  e_x_axis(name = "Age (years)") |>
-  e_grid(left = 90, right = 40, top = 30, bottom = 90)
-```
-:::
-
-::: {.notes}
-The point is not "Quarto supports JavaScript."
-
-The point is that I can put an interactive widget in a document without building
-the application around it.
-
-Click a category in the legend — live. No input, no server, no reactive.
 :::
 
 ---

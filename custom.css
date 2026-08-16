@@ -279,3 +279,38 @@
 
    178 = 353.5 (centre of the visible viewBox, y 77..630) - 175 (run 1's row),
    in the SVG's own units — recompute it if that viewBox ever changes. */
+
+.rungs { 
+   text-align:center; 
+   font-size:0.44em; 
+   letter-spacing:0.02em;
+   margin:0 0 0.6em 0; 
+   line-height:1; 
+}
+
+.rung { 
+   opacity:0.5; 
+   font-weight:400; 
+   transition:opacity .2s; 
+}
+
+.rung-on { 
+   opacity:1; 
+   font-weight:600; 
+}
+
+.rung-sep { 
+   color:#8d96a3; 
+   opacity:0.35; 
+   padding:0 0.5em; 
+}
+
+.rung-split { 
+   display:inline-block; 
+   width:1px; 
+   height:0.9em;
+   background:#8d96a3; 
+   opacity:0.3; 
+   margin:0 0.9em;
+   vertical-align:middle; 
+}
