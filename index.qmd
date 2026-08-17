@@ -90,12 +90,6 @@ rungbar <- function(n) {
 
 [posit::conf(2026)<br>Houston, TX]{.font120}
 
-::: {.notes}
-The Unreasonable Effectiveness of Quarto.
-
-Don't explain the thesis yet — let them wonder what makes it "unreasonable."
-:::
-
 ---
 
 {{< bg-color "#000000" >}}
@@ -104,12 +98,6 @@ Don't explain the thesis yet — let them wonder what makes it "unreasonable."
 
 <br>
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
-
-::: {.notes}
-This is the kind of thing I love making with Quarto.
-
-Let it run. Don't explain how it works — that's the whole back half of the talk.
-:::
 
 ---
 
@@ -120,12 +108,6 @@ Let it run. Don't explain how it works — that's the whole back half of the tal
 `r sp(6)`
 
 # {{< quarto size=5x >}}
-
-::: {.notes}
-Quarto is unreasonably effective at a lot of things.
-
-Spoken over the bare mark. Never explain the title.
-:::
 
 ---
 
@@ -143,33 +125,9 @@ Spoken over the bare mark. Never explain the title.
 <img src="images/ai-chip.png" width=55%>
 :::
 
-::: {.notes}
-And now we have something that can build these things with us.
-
-Careful here: the claim is *not* that AI can't build dashboards. Of course it
-can. The interesting question is what happens when the AI owns the finished
-artifact.
-:::
-
 ---
 
 {{< bg-image "images/dashboards.png" size="contain" >}}
-
-::: {.notes}
-So — epic dashboards.
-
-*Pause.* Don't narrate the picture.
-
-Then the pivot: "But before I show you how to build one, I want to start with a
-much simpler problem."
-
-Give me four minutes.
-
-[We are going to build that. But it will not make sense<br>until I show you a handwriting worksheet.]{.font120}
-
-Option, if you cut the next slide: make the promise here and put a number on
-it — "give me four minutes and this will make sense."
-:::
 
 ---
 
@@ -184,14 +142,6 @@ it — "give me four minutes and this will make sense."
 <img src="images/handwriting.png" width=60%>
 </center>
 
-::: {.notes}
-Let's ask an AI to make a handwriting practice sheet.
-
-Say out loud that we're deliberately leaving dashboards behind for a few
-minutes — because the interesting problem here has nothing to do with
-dashboards.
-:::
-
 ---
 
 {{< middle >}}
@@ -201,21 +151,11 @@ dashboards.
 
 ## *"Make a one-page handwriting practice sheet<br>with sentences about **pokemon**"*
 
-::: {.notes}
-Read the prompt. That's the whole ask.
-:::
-
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
-
-::: {.notes}
-Not bad.
-
-But not what I wanted.
-:::
 
 ---
 
@@ -225,29 +165,11 @@ But not what I wanted.
 
 # Eight rounds later...
 
-::: {.notes}
-Eight rounds later.
-
-Every one of those rounds was another full pass — not an edit.
-
-OPTION WORTH BUILDING: if you kept any of the eight drafts, this slide wants to
-be a contact sheet — three by three, the eight rejects plus the keeper, the
-drift visible all at once. Right now "eight rounds" is asserted; a wall of
-near-misses is evidence, and it is the kind of image a room makes a noise at.
-:::
-
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="800"}
-
-::: {.notes}
-This is the one I kept.
-
-Note what moved: I started with pokemon and ended with minecraft. The content is
-exactly the thing that drifted.
-:::
 
 ---
 
@@ -263,15 +185,6 @@ exactly the thing that drifted.
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="600"}
 :::
 
-::: {.notes}
-Here's the problem with asking a model for a document.
-
-I didn't want *a* handwriting sheet. I wanted **these words** in **this layout**.
-
-Those are two different things — and when I ask for the finished document, I've
-asked the model to generate both of them at the same time.
-:::
-
 ---
 
 {{< center >}}
@@ -281,22 +194,6 @@ asked the model to generate both of them at the same time.
 
 {{< include svg/entanglement-1.qmd >}}
 
-::: {.notes}
-What actually happened across those eight rounds?
-
-Every time I re-prompted, I wasn't changing the thing I didn't like. I was
-rolling the dice on the entire document again.
-
-The model isn't editing a document. It's generating another document.
-
-Don't say "LLMs are bad at formatting" — too easy to rebut. The argument is
-that generation is probabilistic and rendering is deterministic.
-
-Optional heading, if "entangled" feels like a word the audience has to accept
-before the figure can work: **Every fix is a new document.** That is the actual
-claim, and it needs no metaphor.
-:::
-
 ---
 
 {{< center >}}
@@ -305,18 +202,6 @@ claim, and it needs no metaphor.
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
-
-::: {.notes}
-Define Quarto out loud here, about eight seconds: it's a plain-text
-document — markdown with code in it — and `quarto render` turns it into a PDF,
-or a website, or these slides.
-
-The point isn't that the .qmd is prettier. It's that the weaving moved somewhere
-I can reach, and reaching it took one step instead of eight.
-
-Optional heading: **The weaving moves to render time.** Slightly more concrete
-than "disentangles," and it sets up the next slide, which shows the seam.
-:::
 
 ---
 
@@ -368,36 +253,6 @@ for (s in sentences) {
 
 ::::
 
-::: {.notes}
-Two files. The model wrote the left one, once. It has never seen the right one.
-
-**Click 1 — the parameters.** The sentences aren't in the document. They're in a
-file, and which file is an argument. That's what "the content has an address"
-actually looks like on disk.
-
-**Click 2 — the elision.** Those forty lines are TikZ: line heights, baselines,
-the grey trace text the kid writes over. That is the format. I wrote it once and
-I have not opened it since.
-
-**Click 3 — the read.** One line. That's where the two halves meet, and it
-happens at render, not in the model.
-
-And because the file is parameterized, it isn't one worksheet — it's a worksheet
-*generator*. A four-line loop renders every CSV in that folder into its own PDF.
-Pokemon, minecraft, mario: same source.
-
-Don't show `render.R`. Say "four lines" and move on; the loop is not the idea.
-
-⚠️ Replace the CSV rows and the header with the real ones. This is the one slide
-in the deck whose whole job is being a real file, so it must not stay a mock-up.
-
-⚠️ Decide against the closing *change one word* slide (`format: pdf` →
-`format: html`). Both slides change one thing in the YAML. Different claims —
-many topics here, many formats there — but if they read as the same trick, the
-second one deflates. Pick which gets the emphasis.
-:::
-
-
 ---
 
 {{< center >}}
@@ -412,20 +267,6 @@ second one deflates. Pick which gets the emphasis.
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="470"}
 :::
 
-::: {.notes}
-Same format. No drift.
-
-Two files of sentences. One document. Two worksheets — and the layout is the
-same layout, because nothing about the layout was ever up for negotiation.
-
-Point at the dashed box: that's the slot. The sentences aren't in the `.qmd`,
-they're in a file, and which file is an argument. Swap the argument, get a
-different worksheet.
-
-And the teal band is drawn once, because it's the same band. That's the whole
-slide: one word changed, and it's a word in a text file.
-:::
-
 ---
 
 {{< inverse >}}
@@ -433,28 +274,12 @@ slide: one word changed, and it's a word in a text file.
 
 # [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
 
-::: {.notes}
-So here's the trick. Stop asking the model for the artifact.
-
-Ask it for the source.
-:::
-
 ---
 
 {{< inverse >}}
 {{< middle >}}
 
 # [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
-
-::: {.notes}
-And in Quarto, the source is a `.qmd`.
-
-The agent writes the structure. Quarto takes responsibility for producing the
-artifact.
-
-See the next slide for an alternative to the strikethrough — use one or the
-other, not both.
-:::
 
 ---
 
@@ -465,43 +290,12 @@ other, not both.
 <br>
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
 
-::: {.notes}
-A handwriting worksheet is a pretty trivial example. So why am I
-talking about it at a session about dashboards?
-
-Because a dashboard is just a document with a lot more that can go wrong: it has
-layout, text, data, code, JavaScript, interaction. And I don't want a
-model regenerating all of that every time I change one sentence.
-
-I built this with Quarto.
-:::
-
 ---
 
 {{< center >}}
 {{< middle >}}
 
 {{< include svg/dashboard.qmd >}}
-
-::: {.notes}
-This is the same picture from earlier, at site scale. Same me, same agent, same
-`.qmd` — one of them is still literally the same box. Point at it; don't argue
-the resemblance, the drawing is the argument.
-
-At rest this is the picture from the very beginning of the talk: I asked for the
-thing, and the agent handed me the thing. Only now the thing is a website.
-
-Click 1 — but that's not what I asked for. I asked for the `.qmd`. Fifteen of
-them. And notice where the arrow lands: on one page, not on the site.
-
-Click 2: the data comes from outside. `library(vehicletrends)` runs during the
-render, so the numbers get computed and baked in. The agent didn't write any of
-them — it wrote one page.
-
-Click 3: and I can still reach in. Prompt the agent to change a page, or open it
-and change it myself. Same two arrows as three slides ago — that's the point,
-they still work at fifteen pages.
-:::
 
 ---
 
@@ -586,7 +380,353 @@ website:
 {{< middle >}}
 {{< center >}}
 
-# [No UI. No Server. Just Code Chunks]{.center}
+# No UI, No Server
+
+. . . 
+
+`r sp(2)`
+
+# Just Code Chunks<br>(and maybe an iframe here and there)
+
+---
+
+`r rungbar(1)`
+
+## Interactivity you get from a code chunk
+
+::: {.col width="46%"}
+[**Python**]{.blue}
+
+::: {.font40}
+```python
+px.scatter(
+  penguins,
+  x = "bill_length_mm",
+  y = "flipper_length_mm",
+  color = "species"
+)
+```
+:::
+
+[**R**]{.blue}
+
+::: {.font40}
+```r
+penguins |>
+  group_by(species) |>
+  e_charts(bill_length_mm) |>
+  e_scatter(flipper_length_mm)
+```
+:::
+
+[Hover. Click the legend. &rarr;]{.font110}
+
+[No input. No server. No reactive.]{.font110 .blue}
+:::
+
+::: {.col width="54%"}
+```{r}
+library(palmerpenguins)
+library(echarts4r)
+
+penguins |>
+  tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
+  group_by(species) |>
+  e_charts(bill_length_mm, height = "400px") |>
+  e_scatter(flipper_length_mm, symbol_size = 9) |>
+  e_color(c("#00798c", "#A77400", "#d1495b")) |>
+  e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
+  e_tooltip() |>
+  e_x_axis(name = "Bill length (mm)") |>
+  e_y_axis(
+    name = "Flipper length (mm)",
+    nameLocation = "middle",
+    nameGap = 45
+  ) |>
+  e_grid(left = 80, right = 30, top = 20, bottom = 80)
+```
+:::
+
+::: {.notes}
+Then the ladder starts at the bottom. A plotting package that emits JavaScript --
+plotly, echarts4r, highcharter, take your pick -- gives you hovering, tooltips
+and legend filtering for the price of a code chunk.
+
+Point at the two code blocks: **Python on top, R underneath, same document.**
+Quarto doesn't care which one you're in. That's worth ten seconds at this
+conference and no more.
+
+Then the live chart: click a species out of the legend. No input, no server, no
+reactive.
+
+Don't say "rung one" or "step one" out loud. The bar does that job -- let the
+room notice it on its own. The only thing worth pointing at, once, is the split
+between the two group headers, and the right moment for that is slide 4.
+
+NOTE: the Python block is deliberately static. Rendering it live means adding
+`jupyter:` to the YAML and a working Python env on stage, for a chart that makes
+exactly the same point as the R one. Don't make conference wifi a dependency.
+:::
+
+---
+
+`r rungbar(2)`
+
+## [Widgets that talk to each other: `crosstalk`]{.center}
+
+```{r}
+library(crosstalk)
+library(plotly)
+library(DT)
+
+pen <- palmerpenguins::penguins |>
+  tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species)
+shared <- SharedData$new(pen)
+
+htmltools::div(
+  filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
+  htmltools::div(
+    style = "display:flex; gap:1.2rem; margin-top:0.6rem;",
+    htmltools::div(
+      style = "flex:1 1 55%;",
+      plot_ly(
+        shared,
+        x = ~bill_length_mm,
+        y = ~flipper_length_mm,
+        color = ~species,
+        colors = c("#00798c", "#A77400", "#d1495b"),
+        type = "scatter",
+        mode = "markers",
+        height = 290
+      ) |>
+        layout(showlegend = FALSE, margin = list(l = 45, r = 5, t = 5, b = 40))
+    ),
+    htmltools::div(
+      style = "flex:1 1 45%;",
+      datatable(
+        shared,
+        rownames = FALSE,
+        options = list(pageLength = 5, dom = "t")
+      )
+    )
+  )
+)
+```
+
+[Move the slider. Drag a box on the plot. **Still no server.**]{.font120 .blue}
+
+::: {.notes}
+The obvious next question: *can one widget change another one?*
+
+Yes -- `crosstalk`. Wrap the data frame in `SharedData$new()`, hand that to both
+widgets instead of the data, and they're linked. Move the slider and both
+respond. Drag a box on the scatter and the table follows.
+
+All of it in the browser. Still a static file.
+
+**Say the limits before anyone asks -- this audience will know them:**
+widget authors have to opt in, so it's plotly, leaflet, DT, reactable, not
+everything. Notably **not echarts4r**, which is why this demo isn't from my
+site. And it filters *rows*, not aggregates -- it can hide points, it can't
+recompute a regression.
+
+That's the honest ceiling, and it's exactly what the next slide climbs over.
+:::
+
+---
+
+`r rungbar(2)`
+
+## [Or recompute in the browser: `ojs`]{.center}
+
+```{r}
+#| echo: false
+ojs_define(
+  pen_ojs = palmerpenguins::penguins |>
+    tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species) |>
+    dplyr::select(species, bill_length_mm, flipper_length_mm, body_mass_g)
+)
+```
+
+::: {.col width="38%"}
+::: {.font40}
+````markdown
+```{r}
+ojs_define(pen_ojs = penguins)
+```
+
+```{ojs}
+data = transpose(pen_ojs)
+viewof mass = Inputs.range(
+  [2700, 6300], {label: "Min mass"})
+```
+````
+:::
+
+[R hands the data over.<br>The browser does the rest.]{.font110 .blue}
+
+[This one **recomputes** -- the fit is<br>refitted client-side, not filtered.]{.font110}
+:::
+
+::: {.col width="62%"}
+```{ojs}
+data = transpose(pen_ojs)
+
+viewof mass = Inputs.range([2700, 6300], {step: 50, value: 2700, label: "Min mass (g)"})
+
+filtered = data.filter(d => d.body_mass_g >= mass)
+
+Plot.plot({
+  height: 320,
+  marginLeft: 55,
+  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
+          range: ["#00798c", "#A77400", "#d1495b"]},
+  marks: [
+    Plot.dot(filtered, {x: "bill_length_mm", y: "flipper_length_mm",
+                        fill: "species", r: 4, fillOpacity: 0.75}),
+    Plot.linearRegressionY(filtered, {x: "bill_length_mm",
+                                      y: "flipper_length_mm", stroke: "#2e4057"})
+  ]
+})
+```
+:::
+
+::: {.notes}
+And if filtering isn't enough -- if you need it to actually *compute* -- Quarto
+ships Observable JS.
+
+`ojs_define()` hands an R data frame to the browser. From there it's a reactive
+runtime: change the input, everything downstream re-evaluates.
+
+**Point at the regression line.** That's the difference from the last slide.
+Crosstalk hides points. This refits the line as you move the slider. Nobody
+called a server, and there's no R running anywhere -- the page has been static
+this whole time.
+
+Don't oversell. OJS is JavaScript, so this is where an R-only room hits a
+language boundary -- and that's a fair reason to reach for Shiny two rungs up.
+Say it plainly; it makes rung 4 land better.
+:::
+
+---
+
+`r rungbar(3)`
+
+## [Anything bigger goes in a box]{.center}
+
+<br>
+
+::: {.font70}
+```r
+htmltools::tags$iframe(
+  src    = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px",
+  width  = "100%",
+  style  = "border: none;"
+)
+```
+:::
+
+<br>
+
+[Six lines. That's the **entire** interface between the page<br>and whatever is on the other end.]{.font130 .blue}
+
+::: {.notes}
+Everything so far lives inside the document. Here's where that stops.
+
+**This is the one slide where the bar is worth a glance.** The colour changed,
+and it changed here for a reason: everything to the left of that line is
+something Quarto gives you. Everything to the right is something Quarto
+*composes*.
+
+The slide itself is six lines, and they are the entire contract between a Quarto
+page and something that isn't one. The page says *where*. It never says *what*.
+
+Fifteen seconds. Don't dwell -- it's a hinge, not a destination. The next two
+slides are what it holds.
+:::
+
+---
+
+`r rungbar(4)`
+
+## [Yes, you can still use Shiny]{.center}
+
+::: {.col}
+[**Shinylive** -- no server]{.blue}
+
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+```
+````
+
+Compiled to WebAssembly, running in the reader's browser. Two pages on my site
+are exactly this.
+:::
+
+::: {.col}
+[**A real Shiny server**]{.red}
+
+::: {.font55}
+```r
+tags$iframe(
+  src = "https://shiny.example.com/explorer",
+  height = "700px", width = "100%"
+)
+```
+:::
+
+When WASM isn't enough -- a database, data too big to ship -- deploy it and
+point at it.
+:::
+
+<br>
+
+[Same six lines either way. **The page can't tell the difference.**]{.font130 .blue}
+
+::: {.notes}
+Be generous here. This is a Posit conference and Shiny is the right answer to a
+real class of problem: server-side compute over data too big for a browser,
+live connections, anything that has to reach a database. I am not arguing
+against Shiny.
+
+I'm arguing that the *page* doesn't need to know. Shinylive if it fits in the
+browser; a deployed app if it doesn't. Same iframe.
+
+And that's the one thing in this entire talk that costs money -- and it costs it
+inside one rectangle instead of across the whole site.
+
+NOTE: the right-hand example is generic. If you don't have a deployed app, say
+"if you needed one." Don't imply vehicletrends.us has a backend it doesn't have.
+:::
+
+---
+
+`r rungbar(5)`
+
+## [Same strategy works for custom widgets!]{.center}
+
+::: {.col width="58%" .font80}
+<center>
+```{r}
+htmltools::tags$iframe(
+  src = "https://vehicletrends.github.io/hhi-map/",
+  height = "500px",
+  width = "900px",
+  style = "border: none;"
+)
+```
+</center>
+:::
+
+::: {.col width="42%"}
+- **276 lines** of hand-written MapLibre 
+- **1.64 GB** of tiles built with `{pmtiles}` (thanks [Kyle Walker](https://walker-data.com/)!)
+- Lives in it's [own repo](https://github.com/vehicletrends/hhi-map) 
+- Hosted on [GitHub pages](https://vehicletrends.github.io/hhi-map/)
+:::
 
 ---
 
@@ -598,12 +738,6 @@ website:
 
 ::: {.fragment data-fragment-index="1"}
 # [Cost]{.font150}
-:::
-
-::: {.notes}
-Control is behind us — that was the handwriting sheet.
-
-Cost is next. Don't over-explain the ladder; they'll pick it up.
 :::
 
 ---
@@ -1181,499 +1315,7 @@ third repetition.
 
 ---
 
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# [What about interactivity?]{.font150}
-
----
-
-`r rungbar(1)`
-
-## Interactivity you get from a code chunk
-
-::: {.col width="46%"}
-[**Python**]{.blue}
-
-::: {.font40}
-```python
-px.scatter(
-  penguins,
-  x = "bill_length_mm",
-  y = "flipper_length_mm",
-  color = "species"
-)
-```
-:::
-
-[**R**]{.blue}
-
-::: {.font40}
-```r
-penguins |>
-  group_by(species) |>
-  e_charts(bill_length_mm) |>
-  e_scatter(flipper_length_mm)
-```
-:::
-
-[Hover. Click the legend. &rarr;]{.font110}
-
-[No input. No server. No reactive.]{.font110 .blue}
-:::
-
-::: {.col width="54%"}
-```{r}
-library(palmerpenguins)
-library(echarts4r)
-
-penguins |>
-  tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
-  group_by(species) |>
-  e_charts(bill_length_mm, height = "400px") |>
-  e_scatter(flipper_length_mm, symbol_size = 9) |>
-  e_color(c("#00798c", "#A77400", "#d1495b")) |>
-  e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
-  e_tooltip() |>
-  e_x_axis(name = "Bill length (mm)") |>
-  e_y_axis(
-    name = "Flipper length (mm)",
-    nameLocation = "middle",
-    nameGap = 45
-  ) |>
-  e_grid(left = 80, right = 30, top = 20, bottom = 80)
-```
-:::
-
-::: {.notes}
-Open the section here -- it doesn't need a divider of its own:
-
-*"I promised I'd come back to this. Everything I've shown you was generated
-before anyone opened it. So: what about the part where the user does something?"*
-
-Then the ladder starts at the bottom. A plotting package that emits JavaScript --
-plotly, echarts4r, highcharter, take your pick -- gives you hovering, tooltips
-and legend filtering for the price of a code chunk.
-
-Point at the two code blocks: **Python on top, R underneath, same document.**
-Quarto doesn't care which one you're in. That's worth ten seconds at this
-conference and no more.
-
-Then the live chart: click a species out of the legend. No input, no server, no
-reactive.
-
-Don't say "rung one" or "step one" out loud. The bar does that job -- let the
-room notice it on its own. The only thing worth pointing at, once, is the split
-between the two group headers, and the right moment for that is slide 4.
-
-NOTE: the Python block is deliberately static. Rendering it live means adding
-`jupyter:` to the YAML and a working Python env on stage, for a chart that makes
-exactly the same point as the R one. Don't make conference wifi a dependency.
-:::
-
----
-
-`r rungbar(2)`
-
-## [Widgets that talk to each other: `crosstalk`]{.center}
-
-```{r}
-library(crosstalk)
-library(plotly)
-library(DT)
-
-pen <- palmerpenguins::penguins |>
-  tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species)
-shared <- SharedData$new(pen)
-
-htmltools::div(
-  filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
-  htmltools::div(
-    style = "display:flex; gap:1.2rem; margin-top:0.6rem;",
-    htmltools::div(
-      style = "flex:1 1 55%;",
-      plot_ly(
-        shared,
-        x = ~bill_length_mm,
-        y = ~flipper_length_mm,
-        color = ~species,
-        colors = c("#00798c", "#A77400", "#d1495b"),
-        type = "scatter",
-        mode = "markers",
-        height = 290
-      ) |>
-        layout(showlegend = FALSE, margin = list(l = 45, r = 5, t = 5, b = 40))
-    ),
-    htmltools::div(
-      style = "flex:1 1 45%;",
-      datatable(
-        shared,
-        rownames = FALSE,
-        options = list(pageLength = 5, dom = "t")
-      )
-    )
-  )
-)
-```
-
-[Move the slider. Drag a box on the plot. **Still no server.**]{.font120 .blue}
-
-::: {.notes}
-The obvious next question: *can one widget change another one?*
-
-Yes -- `crosstalk`. Wrap the data frame in `SharedData$new()`, hand that to both
-widgets instead of the data, and they're linked. Move the slider and both
-respond. Drag a box on the scatter and the table follows.
-
-All of it in the browser. Still a static file.
-
-**Say the limits before anyone asks -- this audience will know them:**
-widget authors have to opt in, so it's plotly, leaflet, DT, reactable, not
-everything. Notably **not echarts4r**, which is why this demo isn't from my
-site. And it filters *rows*, not aggregates -- it can hide points, it can't
-recompute a regression.
-
-That's the honest ceiling, and it's exactly what the next slide climbs over.
-:::
-
----
-
-`r rungbar(2)`
-
-## [Or recompute in the browser: `ojs`]{.center}
-
-```{r}
-#| echo: false
-ojs_define(
-  pen_ojs = palmerpenguins::penguins |>
-    tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species) |>
-    dplyr::select(species, bill_length_mm, flipper_length_mm, body_mass_g)
-)
-```
-
-::: {.col width="38%"}
-::: {.font40}
-````markdown
-```{r}
-ojs_define(pen_ojs = penguins)
-```
-
-```{ojs}
-data = transpose(pen_ojs)
-viewof mass = Inputs.range(
-  [2700, 6300], {label: "Min mass"})
-```
-````
-:::
-
-[R hands the data over.<br>The browser does the rest.]{.font110 .blue}
-
-[This one **recomputes** -- the fit is<br>refitted client-side, not filtered.]{.font110}
-:::
-
-::: {.col width="62%"}
-```{ojs}
-data = transpose(pen_ojs)
-
-viewof mass = Inputs.range([2700, 6300], {step: 50, value: 2700, label: "Min mass (g)"})
-
-filtered = data.filter(d => d.body_mass_g >= mass)
-
-Plot.plot({
-  height: 320,
-  marginLeft: 55,
-  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
-          range: ["#00798c", "#A77400", "#d1495b"]},
-  marks: [
-    Plot.dot(filtered, {x: "bill_length_mm", y: "flipper_length_mm",
-                        fill: "species", r: 4, fillOpacity: 0.75}),
-    Plot.linearRegressionY(filtered, {x: "bill_length_mm",
-                                      y: "flipper_length_mm", stroke: "#2e4057"})
-  ]
-})
-```
-:::
-
-::: {.notes}
-And if filtering isn't enough -- if you need it to actually *compute* -- Quarto
-ships Observable JS.
-
-`ojs_define()` hands an R data frame to the browser. From there it's a reactive
-runtime: change the input, everything downstream re-evaluates.
-
-**Point at the regression line.** That's the difference from the last slide.
-Crosstalk hides points. This refits the line as you move the slider. Nobody
-called a server, and there's no R running anywhere -- the page has been static
-this whole time.
-
-Don't oversell. OJS is JavaScript, so this is where an R-only room hits a
-language boundary -- and that's a fair reason to reach for Shiny two rungs up.
-Say it plainly; it makes rung 4 land better.
-:::
-
----
-
-`r rungbar(3)`
-
-## [Anything bigger goes in a box]{.center}
-
-<br>
-
-::: {.font70}
-```r
-htmltools::tags$iframe(
-  src    = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px",
-  width  = "100%",
-  style  = "border: none;"
-)
-```
-:::
-
-<br>
-
-[Six lines. That's the **entire** interface between the page<br>and whatever is on the other end.]{.font130 .blue}
-
-::: {.notes}
-Everything so far lives inside the document. Here's where that stops.
-
-**This is the one slide where the bar is worth a glance.** The colour changed,
-and it changed here for a reason: everything to the left of that line is
-something Quarto gives you. Everything to the right is something Quarto
-*composes*.
-
-The slide itself is six lines, and they are the entire contract between a Quarto
-page and something that isn't one. The page says *where*. It never says *what*.
-
-Fifteen seconds. Don't dwell -- it's a hinge, not a destination. The next two
-slides are what it holds.
-:::
-
----
-
-`r rungbar(4)`
-
-## [Yes, you can still use Shiny]{.center}
-
-::: {.col}
-[**Shinylive** -- no server]{.blue}
-
-````markdown
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
-```
-````
-
-Compiled to WebAssembly, running in the reader's browser. Two pages on my site
-are exactly this.
-:::
-
-::: {.col}
-[**A real Shiny server**]{.red}
-
-::: {.font55}
-```r
-tags$iframe(
-  src = "https://shiny.example.com/explorer",
-  height = "700px", width = "100%"
-)
-```
-:::
-
-When WASM isn't enough -- a database, data too big to ship -- deploy it and
-point at it.
-:::
-
-<br>
-
-[Same six lines either way. **The page can't tell the difference.**]{.font130 .blue}
-
-::: {.notes}
-Be generous here. This is a Posit conference and Shiny is the right answer to a
-real class of problem: server-side compute over data too big for a browser,
-live connections, anything that has to reach a database. I am not arguing
-against Shiny.
-
-I'm arguing that the *page* doesn't need to know. Shinylive if it fits in the
-browser; a deployed app if it doesn't. Same iframe.
-
-And that's the one thing in this entire talk that costs money -- and it costs it
-inside one rectangle instead of across the whole site.
-
-NOTE: the right-hand example is generic. If you don't have a deployed app, say
-"if you needed one." Don't imply vehicletrends.us has a backend it doesn't have.
-:::
-
----
-
-`r rungbar(5)`
-
-## [Or something nobody has a package for]{.center}
-
-<center>
-```{r}
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "440px",
-  width = "900px",
-  style = "border: none;"
-)
-```
-</center>
-
-::: {.font90}
-The hardest thing on the site: **276 lines** of hand-written MapLibre and
-**1.64 GB** of tiles on a CDN. Its own repo, built in isolation -- then the six
-lines from two slides ago.
-:::
-
-::: {.notes}
-Top of the ladder. No package did this. It's hand-written MapLibre against 1.64
-GB of vector tiles on a CDN, and it is the hardest thing on the entire site.
-
-Which is exactly why it isn't *in* the site. It's its own repo, and it was its
-own conversation -- **the agent that built this never saw the dashboard, and the
-dashboard has never seen these 276 lines.**
-
-Six lines is everything they know about each other.
-
-That's the agent argument from the cost section showing up as architecture, and
-it's the reason this rung sits above Shiny rather than below it: the ladder is
-ordered by how much you have to *build*, not how much infrastructure you need.
-:::
-
----
-
-## [The page says *where*. It never says *what*.]{.center}
-
-<br>
-
-::: {.col}
-[**inside the document**]{.blue}
-
-1. a **JS widget** -- hover, legend, tooltip
-2. **crosstalk** or **ojs** -- linked, or recomputed
-:::
-
-::: {.col}
-[**in a box**]{.red}
-
-3. an **iframe** -- six lines
-4. **Shiny** -- WASM, or a real server
-5. **anything** -- 276 lines of MapLibre
-:::
-
-<br>
-
-[Five kinds of interactive. One kind of hole in the page.]{.font130}
-
-[The document can't tell them apart. Neither can the agent.]{.font130 .blue}
-
-::: {.notes}
-No bar on this slide, deliberately -- the bar has been the map, and this is the
-territory. Same two group labels, same two colours, now unpacked.
-
-Five kinds of interactivity, and the document treats every one of them the same
-way: it says where the thing is, and nothing about what it is.
-
-That's the whole architecture. Every box was built alone, in its own repo, in
-its own conversation -- and every one is six lines to the page that holds it.
-
-**The agent line is the point of the slide, not a flourish.** The agent inherits
-exactly the ignorance the page has. It works on one box at a time and never
-needs the system in its head.
-
-No fragments here. They've just seen all five -- this is a recap, not a reveal.
-:::
-
----
-
-## [It looks like an application. It isn't.]{.center}
-
-<br>
-
-::: {.col}
-- each page is a **`.qmd`**
-- the data lives in an **R package**
-- the charts are **JS widgets**
-:::
-
-::: {.col}
-- the navigation comes from **Quarto**
-- the map is **its own repo**
-- the Shiny app is **WebAssembly**
-:::
-
-<br>
-
-[No piece has to understand the whole thing. Neither does the agent.]{.font120}
-
-::: {.notes}
-So let's look at that dashboard one more time.
-
-It looks like an application. It isn't -- it's a composition of pieces that
-don't know about each other. No single component ever needs to understand the
-whole system.
-
-Neither does the agent.
-
-NOTE: this lands one slide after "Neither can the agent" on the recap. Two of
-them back to back is one too many. Either change the recap's line to *"and
-neither does whatever built it"*, or cut this slide and let the recap close the
-section.
-:::
-
----
-
 # OLD BONUS CONTENT
-
----
-
-Option: slide showing Quarto layouts
-
----
-
-## [Have a heavier artifact? Put it in a box!]{.center}
-
-<center>
-```{r}
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "500px",
-  width = "900px",
-  style = "border: none;"
-)
-```
-</center>
-
-::: {.col width="58%" .font80}
-The hardest thing on the site: **276 lines** of hand-written MapLibre and
-**1.64 GB** of tiles on a CDN. It's **not in the dashboard** — it's its own
-repo, built in isolation, then dropped in:
-:::
-
-::: {.col width="42%"}
-::: {.font55}
-```r
-htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px", width = "100%"
-)
-```
-:::
-:::
-
-::: {.notes}
-This is the hardest thing on the entire site. So it isn't in the dashboard.
-
-276 lines of hand-written MapLibre and 1.64 GB of tiles, in its own repo, built
-and iterated in isolation, dropped in with six lines.
-
-Quarto doesn't need to be the thing that does everything. It needs to be the
-thing that composes everything.
-:::
 
 ---
 
