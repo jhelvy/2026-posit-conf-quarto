@@ -25,6 +25,9 @@ library(dplyr)
 library(echarts4r)
 library(vehicletrends)
 library(palmerpenguins)
+library(crosstalk)
+library(plotly)
+library(DT)
 
 knitr::opts_chunk$set(
   warning = FALSE,
@@ -380,24 +383,37 @@ website:
 {{< middle >}}
 {{< center >}}
 
-# No UI, No Server
+# No UI
+
+# No Server
 
 . . . 
 
 `r sp(2)`
 
-# Just Code Chunks<br>(and maybe an iframe here and there)
+# Just Code Chunks
 
 ---
 
 `r rungbar(1)`
 
-## Interactivity you get from a code chunk
+## Interactivity from a code chunk in [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow}
 
-::: {.col width="46%"}
-[**Python**]{.blue}
+::: {.col width="50%"}
+[**R**]{.blue} via {echarts4r}
 
-::: {.font40}
+::: {.font70}
+```r
+penguins |>
+  group_by(species) |>
+  e_charts(bill_length_mm) |>
+  e_scatter(flipper_length_mm)
+```
+:::
+
+[**Python**]{.yellow} via {plotly}
+
+::: {.font70}
 ```python
 px.scatter(
   penguins,
@@ -407,65 +423,38 @@ px.scatter(
 )
 ```
 :::
-
-[**R**]{.blue}
-
-::: {.font40}
-```r
-penguins |>
-  group_by(species) |>
-  e_charts(bill_length_mm) |>
-  e_scatter(flipper_length_mm)
-```
 :::
 
-[Hover. Click the legend. &rarr;]{.font110}
-
-[No input. No server. No reactive.]{.font110 .blue}
-:::
-
-::: {.col width="54%"}
+::: {.col width="50%"}
 ```{r}
-library(palmerpenguins)
-library(echarts4r)
-
 penguins |>
   tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
   group_by(species) |>
-  e_charts(bill_length_mm, height = "400px") |>
+  # Square canvas, set explicitly rather than left to the column width, so the
+  # aspect ratio doesn't move if the 60/40 split ever changes. 560 is what fits
+  # under the rung bar and the title on a 900px slide.
+  e_charts(bill_length_mm, width = "600px", height = "560px") |>
   e_scatter(flipper_length_mm, symbol_size = 9) |>
   e_color(c("#00798c", "#A77400", "#d1495b")) |>
   e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
   e_tooltip() |>
-  e_x_axis(name = "Bill length (mm)") |>
+  # scale = TRUE drops echarts' default "always include zero" on a value axis,
+  # which otherwise parks the whole cloud in the top-right corner. boundaryGap
+  # then pads the data range by 5% so the points don't touch the frame.
+  e_x_axis(
+    name = "Bill length (mm)",
+    scale = TRUE,
+    boundaryGap = c("5%", "5%")
+  ) |>
   e_y_axis(
     name = "Flipper length (mm)",
     nameLocation = "middle",
-    nameGap = 45
+    nameGap = 45,
+    scale = TRUE,
+    boundaryGap = c("5%", "5%")
   ) |>
   e_grid(left = 80, right = 30, top = 20, bottom = 80)
 ```
-:::
-
-::: {.notes}
-Then the ladder starts at the bottom. A plotting package that emits JavaScript --
-plotly, echarts4r, highcharter, take your pick -- gives you hovering, tooltips
-and legend filtering for the price of a code chunk.
-
-Point at the two code blocks: **Python on top, R underneath, same document.**
-Quarto doesn't care which one you're in. That's worth ten seconds at this
-conference and no more.
-
-Then the live chart: click a species out of the legend. No input, no server, no
-reactive.
-
-Don't say "rung one" or "step one" out loud. The bar does that job -- let the
-room notice it on its own. The only thing worth pointing at, once, is the split
-between the two group headers, and the right moment for that is slide 4.
-
-NOTE: the Python block is deliberately static. Rendering it live means adding
-`jupyter:` to the YAML and a working Python env on stage, for a chart that makes
-exactly the same point as the R one. Don't make conference wifi a dependency.
 :::
 
 ---
@@ -474,63 +463,90 @@ exactly the same point as the R one. Don't make conference wifi a dependency.
 
 ## [Widgets that talk to each other: `crosstalk`]{.center}
 
+::: {.font55}
 ```{r}
-library(crosstalk)
-library(plotly)
-library(DT)
-
+# Two plots over one SharedData, with a dropdown and a slider above them, so the
+# slide reads as a small app rather than as two widgets that happen to share a
+# page. The table this replaced made the same crosstalk point but looked like a
+# report; a second plot makes the linking visible, because a selection in one
+# panel is legible in the other.
+#
+# `dragmode = "select"` matters on stage: without it a drag pans the plot and the
+# audience never sees the link unless you first find the box-select button in the
+# modebar. With it, drag a box and both panels respond.
 pen <- palmerpenguins::penguins |>
-  tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species)
+  tidyr::drop_na(
+    bill_length_mm,
+    bill_depth_mm,
+    flipper_length_mm,
+    body_mass_g,
+    species
+  )
 shared <- SharedData$new(pen)
 
+pal <- c("#00798c", "#A77400", "#d1495b")
+
+panel <- function(x, y, xlab, ylab) {
+  plot_ly(
+    shared,
+    x = x,
+    y = y,
+    color = ~species,
+    colors = pal,
+    type = "scatter",
+    mode = "markers",
+    marker = list(size = 8, opacity = 0.8),
+    # ~515px wide in a 78% column, so 460 tall lands close to square
+    height = 460
+  ) |>
+    layout(
+      showlegend = FALSE,
+      dragmode = "select",
+      xaxis = list(title = xlab),
+      yaxis = list(title = ylab),
+      margin = list(l = 60, r = 10, t = 10, b = 50)
+    ) |>
+    highlight(
+      on = "plotly_selected",
+      off = "plotly_deselect",
+      color = "#2e4057"
+    )
+}
+
 htmltools::div(
-  filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
+  style = "display:flex; gap:1.6rem; align-items:flex-start;",
+
+  # Controls stacked in their own left column, slider over dropdown. Stacking
+  # them beside the plots instead of above is what makes the slide read as an
+  # app: a control rail is the shape people recognise, and it buys the plots
+  # enough height to come out roughly square.
   htmltools::div(
-    style = "display:flex; gap:1.2rem; margin-top:0.6rem;",
+    style = "flex:0 0 22%; padding-top:0.6rem;",
+    filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
     htmltools::div(
-      style = "flex:1 1 55%;",
-      plot_ly(
-        shared,
-        x = ~bill_length_mm,
-        y = ~flipper_length_mm,
-        color = ~species,
-        colors = c("#00798c", "#A77400", "#d1495b"),
-        type = "scatter",
-        mode = "markers",
-        height = 290
-      ) |>
-        layout(showlegend = FALSE, margin = list(l = 45, r = 5, t = 5, b = 40))
+      style = "margin-top:1.2rem;",
+      filter_select("sp", "Species", shared, ~species)
+    )
+  ),
+
+  htmltools::div(
+    style = "flex:1 1 78%; display:flex; gap:1.2rem;",
+    htmltools::div(
+      style = "flex:1 1 50%;",
+      panel(
+        ~bill_length_mm,
+        ~flipper_length_mm,
+        "Bill length (mm)",
+        "Flipper length (mm)"
+      )
     ),
     htmltools::div(
-      style = "flex:1 1 45%;",
-      datatable(
-        shared,
-        rownames = FALSE,
-        options = list(pageLength = 5, dom = "t")
-      )
+      style = "flex:1 1 50%;",
+      panel(~body_mass_g, ~bill_depth_mm, "Body mass (g)", "Bill depth (mm)")
     )
   )
 )
 ```
-
-[Move the slider. Drag a box on the plot. **Still no server.**]{.font120 .blue}
-
-::: {.notes}
-The obvious next question: *can one widget change another one?*
-
-Yes -- `crosstalk`. Wrap the data frame in `SharedData$new()`, hand that to both
-widgets instead of the data, and they're linked. Move the slider and both
-respond. Drag a box on the scatter and the table follows.
-
-All of it in the browser. Still a static file.
-
-**Say the limits before anyone asks -- this audience will know them:**
-widget authors have to opt in, so it's plotly, leaflet, DT, reactable, not
-everything. Notably **not echarts4r**, which is why this demo isn't from my
-site. And it filters *rows*, not aggregates -- it can hide points, it can't
-recompute a regression.
-
-That's the honest ceiling, and it's exactly what the next slide climbs over.
 :::
 
 ---
