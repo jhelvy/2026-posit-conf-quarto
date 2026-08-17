@@ -361,3 +361,14 @@
 
 /* the bar is navigation, not content -- keep it out of the PDF handout */
 @media print { .rungbar { break-inside: avoid; } }
+/* Tighten the gap under one slide's title. lexis sets that gap with
+   `.reveal .slides section > h1 { margin-bottom: var(--title-gap, 0.9em) }`, and
+   0.9em of a title-sized heading is ~80px -- which is the gap, not the 20px
+   heading margin it looks like. Don't fight it with a `margin-bottom` override:
+   lexis's selector is more specific and wins. Retune the custom property
+   instead, which is what it exists for.
+
+   Opt in per slide with `# Heading {.tightbelow}` -- pandoc hoists a leading
+   heading's classes onto the <section> too, so the class lands where this rule
+   needs it. lexis also ships `{{< tight >}}`, which is this at exactly 0. */
+.reveal .slides section.tightbelow { --title-gap: 0.25em; }

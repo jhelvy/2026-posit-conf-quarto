@@ -505,7 +505,42 @@ they still work at fifteen pages.
 
 ---
 
-# [Using Quarto websites for dashboards]{.center}
+# [Quarto websites make great dashboards]{.center}
+
+:::: {.col width="45%"}
+[**`_quarto.yml`**]{.qmdblue .font120}
+
+::: {.font90}
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - vmt-age.qmd
+      - depreciation.qmd
+      - ...
+```
+:::
+::::
+
+::: {.col width="55%" .fragment}
+
+`r sp(2)`
+
+:::{.font80}
+## Every page gets a URL, e.g.:
+
+## [https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
+:::
+:::
+ 
+---
+
+# [Quarto websites make great dashboards]{.center}
 
 :::: {.col width="45%"}
 [**`_quarto.yml`**]{.qmdblue .font120}
@@ -529,118 +564,29 @@ website:
 
 ::: {.col width="55%"}
 
-`r sp(7)`
+`r sp(2)`
 
 :::{.font80}
-### Every page gets a URL:
+## Every page gets a URL, e.g.:
 
-[https://vehicletrends.us/about](https://vehicletrends.us/about)
+## [https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
 
-[https://vehicletrends.us/vmt-daily](https://vehicletrends.us/vmt-daily)
+`r sp(2)`
 
-[https://vehicletrends.us/vmt-age](https://vehicletrends.us/vmt-age)
+## Rich Quarto layouts options:
 
-[https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
-
-...
+### - Tabsets
+### - Header-level urls
 :::
 :::
 
 ---
 
-# [Change 1 file, 14 remain untouched]{.center}
+{{< inverse >}}
+{{< middle >}}
+{{< center >}}
 
-::: {.col width="44%"}
-<pre class="specimen treecard">
-<span>vehicletrends.us/            lines</span>
-<span class="sp-dim">├── index.qmd                    7</span>
-<span class="sp-dim">├── about.qmd                  101</span>
-<span class="sp-dim">├── vmt-daily.qmd              216</span>
-<span class="sp-dim">├── vmt-age.qmd                351</span>
-<span class="sp-hit">├── depreciation.qmd           324</span>
-<span class="sp-dim">├── percent-listings.qmd       620</span>
-<span class="sp-dim">├── percent-dealers.qmd        199</span>
-<span class="sp-dim">├── market-concentration.qmd   292</span>
-<span class="sp-dim">├── hhi-explained.qmd          331</span>
-<span class="sp-dim">├── registrations.qmd          349</span>
-<span class="sp-dim">├── nearest-vehicles.qmd        34</span>
-<span class="sp-dim">├── tech-stack.qmd              60</span>
-<span class="sp-dim">├── cite.qmd                    50</span>
-<span class="sp-dim">├── LICENSE.qmd                 26</span>
-<span class="sp-dim">└── 404.qmd                     21</span>
-</pre>
-:::
-
-::: {.col width="56%"}
-[**`depreciation.qmd`**]{.red .font120}
-
-<pre class="specimen diffcard">
-<span>  ## Depreciation by body style</span>
-<span> </span>
-<span>  Used trucks hold their value better</span>
-<span class="sp-del">- than any other body style.</span>
-<span class="sp-add">+ than any other body style, and the</span>
-<span class="sp-add">+ gap has widened every year since 2022.</span>
-</pre>
-:::
-
-::: {.notes}
-
-And here's what I did **not** do: I did not regenerate the site. Nothing decided
-the sidebar again, or the theme again, or the fourteen pages I never opened.
-There is no version of this where the navigation quietly comes back different —
-the same way there was no version of the worksheet where the layout drifted.
-
-The numbers on those other pages aren't in these files either — that's
-**`library(vehicletrends)`**, computed at render. Right now that just means the
-agent doesn't have to write them. Later it means nobody can write the wrong one.
-:::
-
----
-
-# [Every page gets a URL]{.center}
-
-:::: {.col width="45%"}
-[**`_quarto.yml`**]{.qmdblue .font120}
-
-::: {.font90}
-```yaml
-project:
-  type: website
-
-website:
-  sidebar:
-    contents:
-      - about.qmd
-      - vmt-daily.qmd
-      - ...
-```
-:::
-::::
-
-::: {.col width="55%"}
-<br><br>
-[https://vehicletrends.us/about](https://vehicletrends.us/about)
-
-[https://vehicletrends.us/vmt-daily](https://vehicletrends.us/vmt-daily)
-:::
-
-::: {.notes}
-That file is the whole reason the last slide worked. One line: `type: website`.
-
-Quarto does ship a `dashboard` project type, and it's good — this isn't it. Say
-that once and move on; everything I'm about to claim comes from the website
-choice, not from a dashboard feature.
-
-And the consequence is addresses. Link it, bookmark it, send it. The back button
-works. Search engines index it.
-
-A Shiny app is one URL, and the state lives in a session.
-
-Housekeeping: "It's not an app. It's a website." now echoes "It's not an
-application. It's a document." from the control section. Cut one. My vote is to
-cut it here, since the earlier slide is the one doing argumentative work.
-:::
+# [No UI. No Server. Just Code Chunks]{.center}
 
 ---
 
@@ -891,46 +837,54 @@ mechanism.
 <img src="images/its-all-markdown.png" width=100%>
 </center>
 
-::: {.notes}
-One source, many outputs.
-:::
-
 ---
 
-## Small pieces have small context windows
+# [Small pieces have small context windows]{.center}
 
-::: {.col}
-[**The whole site**]{.red}
-
-- 15 pages
-- 2,981 lines
-- every chart, every table, every number
+::: {.col width="44%"}
+<pre class="specimen treecard">
+<span>vehicletrends.us/            lines</span>
+<span class="sp-dim">├── index.qmd                    7</span>
+<span class="sp-dim">├── about.qmd                  101</span>
+<span class="sp-dim">├── vmt-daily.qmd              216</span>
+<span class="sp-dim">├── vmt-age.qmd                351</span>
+<span class="sp-hit">├── depreciation.qmd           324</span>
+<span class="sp-dim">├── percent-listings.qmd       620</span>
+<span class="sp-dim">├── percent-dealers.qmd        199</span>
+<span class="sp-dim">├── market-concentration.qmd   292</span>
+<span class="sp-dim">├── hhi-explained.qmd          331</span>
+<span class="sp-dim">├── registrations.qmd          349</span>
+<span class="sp-dim">├── nearest-vehicles.qmd        34</span>
+<span class="sp-dim">├── tech-stack.qmd              60</span>
+<span class="sp-dim">├── cite.qmd                    50</span>
+<span class="sp-dim">├── LICENSE.qmd                 26</span>
+<span class="sp-dim">└── 404.qmd                     21</span>
+</pre>
 :::
 
-::: {.col}
-[**What the agent opens**]{.blue}
+::: {.col width="56%"}
+[**`depreciation.qmd`**]{.red .font120}
 
-- one page
-- at most 620 lines
+<pre class="specimen diffcard">
+<span>  ## Depreciation by body style</span>
+<span> </span>
+<span>  Used trucks hold their value better</span>
+<span class="sp-del">- than any other body style.</span>
+<span class="sp-add">+ than any other body style, and the</span>
+<span class="sp-add">+ gap has widened every year since 2022.</span>
+</pre>
 :::
-
-<br>
-
-[The whole dashboard is never in scope at once. Neither is the token bill.]{.font120}
 
 ::: {.notes}
-COST, SECOND MOVEMENT — and the second time you say it:
 
-**"Same move. Bigger document."**
+And here's what I did **not** do: I did not regenerate the site. Nothing decided
+the sidebar again, or the theme again, or the fourteen pages I never opened.
+There is no version of this where the navigation quietly comes back different —
+the same way there was no version of the worksheet where the layout drifted.
 
-The agent opens one page — 620 lines at the very worst. Never the site.
-
-Remember the handwriting sheet? We separated the thing I wanted to change from
-the thing I wanted to preserve. Same move here, at a much larger scale.
-
-Optional heading, and I think a better one: **The agent never opens the
-dashboard.** The current title describes the mechanism; that one states the
-result, which is the thing worth remembering.
+The numbers on those other pages aren't in these files either — that's
+**`library(vehicletrends)`**, computed at render. Right now that just means the
+agent doesn't have to write them. Later it means nobody can write the wrong one.
 :::
 
 ---
