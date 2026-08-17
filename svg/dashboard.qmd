@@ -8,7 +8,8 @@
   Act 5's `It looks like an application. It isn't.` says the same thing in
   bullets, and now reads as the recap of this rather than a second first pass.
   The move cost the map feeder, which had to go: see the note where it used to
-  be. Two clicks now, not three.
+  be. TWO CLICKS: the stack arrives, then the data package feeds it. The purple
+  fork that used to be click 3 is gone too — see the note where it was.
 
   It is a CALLBACK, not a new picture. The left half is byte-identical to figure
   2's opened state — me at 200, agent at 400, the same 110x64 and 180x64 boxes,
@@ -46,9 +47,9 @@
       app, it's a website` visible. Its content area still carries the
       interleaved teal/yellow bands, because a rendered artifact is still
       entangled — that never was the problem.
-    * two feeders arrive on click. Both point INTO the chain from outside, which
-      is the composition claim: the data and the heavy component are things the
-      page refers to, not things the agent wrote.
+    * a feeder arrives on click 2, pointing INTO the chain from outside, which
+      is the composition claim: the data is a thing the page refers to, not a
+      thing the agent wrote. (It used to be two — see the map-feeder note.)
 
   THE STACK IS FLUSH RIGHT AT x=860 and fans left-and-up (686/678/670, tops
   97/105/113, widths 174/182/190). That is not decoration — it is what keeps the
@@ -63,7 +64,7 @@
   Marker id `ahDash` is unique document-wide; reveal display:none's non-current
   slides, so ids may not be shared across them.
 
-  VETTED ONCE (2026-08-15) and fixed: the stack reads as sheets, the browser
+  VETTED ONCE (2026-08-15), before the purple fork was cut: the stack reads as sheets, the browser
   reads as a browser, `vehicletrends.us` clears the right edge. Three things
   were wrong and are corrected above — the clipped top label, ~200px of dead
   canvas, and click 1's arrow drawn straight through a caption centred on the
@@ -79,8 +80,6 @@
   <defs>
     <marker id="ahDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
             orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
-    <marker id="ahEditDash" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
-            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#852f88"/></marker>
   </defs>
 
   <!-- ── AT REST: I asked for the website ─────────────────────────────────
@@ -128,8 +127,8 @@
   <!-- ❌ NOTHING goes above the agent. A caption there ("one page in context",
        "opens one page at a time") was tried and cut: the arrow already lands on
        exactly one card, which says it without a line of type, and the claim is
-       John's to make out loud. Under the stack and under the agent are both
-       occupied anyway — by click 2's feeder and by the purple fork. -->
+       John's to make out loud. Under the stack is occupied by click 2's feeder;
+       under the agent is now free, since the purple fork was cut. -->
 
   <!-- ── CLICK 1: the stack arrives. Back cards first, flush right at 860. ──
        Drawn at OPENED coordinates and never moved — it is the thing the gap
@@ -231,37 +230,21 @@
        1.64 GB of tiles are fetched from another origin by the READER's browser,
        so the map never enters the .qmd, the render, or the built site. -->
 
-  <!-- ── CLICK 3: and I can still reach in ─────────────────────────────── -->
-  <!-- Figure 2's forked purple descent, unchanged and on purpose: same x=255
-       origin out of `me`, same rails at y=263 and y=309, same landings 8 units
-       under the agent (490,215) and under the .qmd (690,245). The front card is
-       at figure 2's coordinates, so the lower arrow's landing point needed no
-       recomputing at all — which is the payoff for keeping the box where it was.
+  <!-- ❌ NO PURPLE FORK. Figure 2's two-branch descent out of `me` — *prompt the
+       agent to edit a .qmd* and *…or edit it directly* — was drawn here and cut
+       (2026-08-17). It was the third click, and it was the one the figure could
+       spare: figure 2 makes that point five slides earlier with the same purple
+       ink, at a scale where a single .qmd is on screen to be edited. Here it
+       arrived after fifteen cards and a data package, competing with the claim
+       this figure exists to make. Two clicks, not three.
 
-       It comes LAST here, not second as it does in figure 2. There the fork is
-       the answer to "the content now has an address"; here it is the answer to
-       everything already on screen — fifteen pages and a data package feeding
-       them, and I can still change any of it. Purple is still YOUR action, and
-       both branches are yours: delegating the typing to the agent is a choice
-       you make.
-
-       It is OUTSIDE `.openleft`, at `me`'s opened x=255, because it only ever
-       appears after the chain has opened. The rails clear everything: the upper
-       spans x 267..478, the lower 267..678, and click 2's feeder comes up at
-       x=765, right of both. -->
-  <g class="fragment" data-fragment-index="3">
-    <path d="M 255 211 L 255 251 Q 255 263 267 263 L 478 263 Q 490 263 490 251 L 490 215"
-          fill="none" stroke="#852f88" stroke-width="2.5"
-          marker-end="url(#ahEditDash)"/>
-    <text x="420" y="285" font-size="20" fill="#852f88"
-          text-anchor="middle">prompt the agent to edit a .qmd...</text>
-
-    <path d="M 255 263 L 255 297 Q 255 309 267 309 L 678 309 Q 690 309 690 297 L 690 245"
-          fill="none" stroke="#852f88" stroke-width="2.5"
-          marker-end="url(#ahEditDash)"/>
-    <text x="472" y="335" font-size="20" fill="#852f88"
-          text-anchor="middle">…or edit it directly</text>
-  </g>
+       If it ever comes back: it lived outside `.openleft` at `me`'s opened
+       x=255, with rails at y=263 and y=309 landing 8 units under the agent
+       (490,215) and under the front card (690,245), and it needs the
+       `ahEditDash` purple marker restored to <defs>. The rails cleared
+       everything — upper x 267..478, lower 267..678, click 2's feeder at
+       x=765 — and the viewBox needed no change, since the data box at y=396
+       already sets the floor. -->
 
 </svg>
 ```

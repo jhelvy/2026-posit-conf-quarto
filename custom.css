@@ -372,3 +372,49 @@
    heading's classes onto the <section> too, so the class lands where this rule
    needs it. lexis also ships `{{< tight >}}`, which is this at exactly 0. */
 .reveal .slides section.tightbelow { --title-gap: 0.25em; }
+
+/* Observable Inputs on the `ojs` slide, restyled to match the crosstalk slide's
+   control rail. Inputs.range and Inputs.select each render a <form> laid out as
+   a flex row: a fixed-width <label> gutter on the left, then the control. In a
+   narrow column that gutter eats most of the width and the two demos stop
+   looking like the same app.
+
+   Making the label a full-width flex item moves it above the control without
+   taking the form out of flex layout -- which matters, because Inputs.range
+   puts a slider and a number box on the same row and `display: block` would
+   stack those two as well.
+
+   Opt in with `:::: {.col .ojs-stack width="22%"}`. */
+.reveal .ojs-stack form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 100%;
+}
+.reveal .ojs-stack form > label {
+  flex: 0 0 100%;
+  width: auto;
+  margin: 0 0 0.3em 0;
+  font-weight: 600;
+  color: #2e4057;
+}
+
+/* The species list box: full width of the rail, and tall enough that all three
+   rows show without scrolling. Observable sizes a `multiple: 3` select by rows,
+   which the .font55 wrapper then shrinks. */
+.reveal .ojs-stack form select[multiple] { width: 100%; }
+
+/* The two Plot panels on the `ojs` slide. Plot's root SVG is transparent, and
+   its `style` option did not reliably paint it white through Quarto's bundled
+   build, so the white lives on the column that holds it instead. That also
+   gives the panel a little padding, which plotly's own paper does for free on
+   the crosstalk slide -- the point of both slides being that they are the same
+   app with different machinery, so they have to look like it.
+
+   Opt in with `::: {.col .ojs-panel width="39%"}`. */
+.reveal .ojs-panel {
+  background: #FFFFFF;
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+.reveal .ojs-panel svg { background: #FFFFFF; }

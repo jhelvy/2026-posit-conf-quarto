@@ -383,15 +383,15 @@ website:
 {{< middle >}}
 {{< center >}}
 
-# No UI
+# [No UI]{.font120}
 
-# No Server
+# [No Server]{.font120}
 
 . . . 
 
-`r sp(2)`
+`r sp(1)`
 
-# Just Code Chunks
+# [Just Code Chunks]{.font120}
 
 ---
 
@@ -461,7 +461,7 @@ penguins |>
 
 `r rungbar(2)`
 
-## [Widgets that talk to each other: `crosstalk`]{.center}
+## [Widgets that talk to each other: `crosstalk` + `plotly`]{.center}
 
 ::: {.font55}
 ```{r}
@@ -609,6 +609,12 @@ panel = (x, y, xlab, ylab) => Plot.plot({
   height: 460,
   marginLeft: 60,
   marginBottom: 50,
+  // Plot's root is transparent by default, so the panels sit straight on the
+  // slide's ground while plotly (two slides back) paints its own white paper.
+  // Both knobs, because `style` alone did not take: `--plot-background` is the
+  // variable Plot's own stylesheet reads, and the white on .ojs-panel in
+  // custom.css paints the div underneath whatever the SVG ends up doing.
+  style: {background: "#FFFFFF", "--plot-background": "#FFFFFF"},
   x: {label: xlab, labelAnchor: "center"},
   y: {label: ylab, labelAnchor: "center"},
   color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
@@ -619,12 +625,16 @@ panel = (x, y, xlab, ylab) => Plot.plot({
 })
 ```
 
-:::: {.col width="22%"}
+:::: {.col .ojs-stack width="22%"}
 ::: {.font55}
 ```{ojs}
+// `width` is the form's width, not the track's; the label sits above it because
+// of .ojs-stack in custom.css, so the whole 260 goes to the slider and its
+// number box. Observable Inputs would otherwise park the label in a fixed
+// 120px gutter on the left, which is not how crosstalk's filter_slider reads.
 viewof mass = Inputs.range(
   [2700, 6300],
-  {step: 50, value: 2700, label: "Body mass (g)"}
+  {step: 50, value: 2700, label: "Body mass (g)", width: 260}
 )
 ```
 
@@ -634,20 +644,21 @@ viewof mass = Inputs.range(
 // `multiple: true` would open with NOTHING selected, i.e. an empty plot.
 viewof sp = Inputs.select(
   ["Adelie", "Chinstrap", "Gentoo"],
-  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"], label: "Species"}
+  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"],
+   label: "Species", width: 260}
 )
 ```
 :::
 ::::
 
-::: {.col width="39%"}
+::: {.col .ojs-panel width="39%"}
 ```{ojs}
 panel("bill_length_mm", "flipper_length_mm",
       "Bill length (mm)", "Flipper length (mm)")
 ```
 :::
 
-::: {.col width="39%"}
+::: {.col .ojs-panel width="39%"}
 ```{ojs}
 panel("body_mass_g", "bill_depth_mm",
       "Body mass (g)", "Bill depth (mm)")
@@ -656,87 +667,47 @@ panel("body_mass_g", "bill_depth_mm",
 
 ---
 
-`r rungbar(3)`
+`r rungbar(4)`
 
-## [Anything bigger goes in a box]{.center}
+## [Yes, you can still use Shiny]{.center}
 
-<br>
+::: {.col width="35%"}
+[**Shinylive** -- no server]{.blue}
 
-::: {.font70}
-```r
+::: {.font90}
+````markdown
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+
+# <Shiny app code>
+```
+````
+:::
+:::
+
+::: {.col width="65%"}
+[**A real Shiny server**]{.red}
+
+::: {.font90}
+````markdown
+```{{r}}
 htmltools::tags$iframe(
-  src    = "https://vehicletrends.github.io/hhi-map/",
+  src    = "https://app.share.connect.posit.cloud/",
   height = "700px",
   width  = "100%",
   style  = "border: none;"
 )
 ```
-:::
-
-<br>
-
-[Six lines. That's the **entire** interface between the page<br>and whatever is on the other end.]{.font130 .blue}
-
-::: {.notes}
-Everything so far lives inside the document. Here's where that stops.
-
-**This is the one slide where the bar is worth a glance.** The colour changed,
-and it changed here for a reason: everything to the left of that line is
-something Quarto gives you. Everything to the right is something Quarto
-*composes*.
-
-The slide itself is six lines, and they are the entire contract between a Quarto
-page and something that isn't one. The page says *where*. It never says *what*.
-
-Fifteen seconds. Don't dwell -- it's a hinge, not a destination. The next two
-slides are what it holds.
-:::
-
----
-
-`r rungbar(4)`
-
-## [Yes, you can still use Shiny]{.center}
-
-::: {.col}
-[**Shinylive** -- no server]{.blue}
-
-````markdown
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
-```
 ````
-
-Compiled to WebAssembly, running in the reader's browser. Two pages on my site
-are exactly this.
 :::
-
-::: {.col}
-[**A real Shiny server**]{.red}
-
-::: {.font55}
-```r
-tags$iframe(
-  src = "https://shiny.example.com/explorer",
-  height = "700px", width = "100%"
-)
-```
 :::
-
-When WASM isn't enough -- a database, data too big to ship -- deploy it and
-point at it.
-:::
-
-<br>
-
-[Same six lines either way. **The page can't tell the difference.**]{.font130 .blue}
 
 ---
 
 `r rungbar(5)`
 
-## [Same strategy works for custom widgets!]{.center}
+## [Put any widget in a box!]{.center}
 
 ::: {.col width="58%" .font80}
 <center>
@@ -752,6 +723,18 @@ htmltools::tags$iframe(
 :::
 
 ::: {.col width="42%"}
+
+::: {.font50}
+```r
+htmltools::tags$iframe(
+  src    = "https://vehicletrends.github.io/hhi-map/",
+  height = "700px",
+  width  = "100%",
+  style  = "border: none;"
+)
+```
+:::
+
 - **276 lines** of hand-written MapLibre 
 - **1.64 GB** of tiles built with `{pmtiles}` (thanks [Kyle Walker](https://walker-data.com/)!)
 - Lives in it's [own repo](https://github.com/vehicletrends/hhi-map) 

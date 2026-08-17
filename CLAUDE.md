@@ -728,7 +728,11 @@ same x window, same `me` / agent / `writes` coordinates, and the stack's front
 card is figure 2's `.qmd` box unchanged. ❌ Don't move it later; five
 slides after figure 2 the callback is free, twenty-eight slides later it isn't.
 Under the braid it is closer to its twin than it has ever been.
-Two clicks: the data package feeding the stack, then figure 2's purple fork.
+Two clicks: the stack of `.qmd` arriving, then the data package
+feeding it. ⚠️ Figure 2's purple fork was drawn here as a third click and **cut
+2026-08-17** — figure 2 makes that point five slides earlier in the same purple
+ink, and here it arrived after fifteen cards and a data package, competing with
+the claim the figure exists to make. Restoring it is documented in the partial.
 ❌ **No map feeder.** One was drawn and cut — at this position the `Put it in a
 box` slides are still ahead, so an `<iframe>` box previewed instead of recalled
 and the figure had to be talked around. Those slides carry the map alone. Its viewBox is cropped tighter vertically (`170 68 900 342`) so
