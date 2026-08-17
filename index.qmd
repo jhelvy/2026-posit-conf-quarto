@@ -1164,10 +1164,6 @@ This went out.
 [Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
 
-::: {.notes}
-This went out.
-:::
-
 ---
 
 ## [Same map from source]{.center}
@@ -1202,10 +1198,11 @@ shapefile a wrong name fails; if you *draw* the shape there's nothing to fail.
 
 <br>
 
-::: {.col .fragment}
-## [**By machine**]{.darkgreen}
+## [**By machine**]{.center .darkgreen}
 
-### `quarto render` is a compile step
+::: {.col .fragment}
+
+### `quarto render` errors _loudly_
 
 <pre class="specimen errcard">
 <span class="sp-dim">Quitting from index.qmd:12-30 [africa-map]</span>
@@ -1217,63 +1214,24 @@ shapefile a wrong name fails; if you *draw* the shape there's nothing to fail.
 :::
 
 ::: {.col .fragment}
-## [**By human**]{.darkgreen}
 
-### Plain text means the edit is a **diff**
+### `quarto render` errors _quickly_
 
-<pre class="specimen diffcard">
-<span>  ## EV Sales</span>
-<span> </span>
-<span>  Sales of **electric vehicles** grew 20% in 2025,</span>
-<span class="sp-del">- reaching <span class="w">over</span> _20 million_ sales globally.</span>
-<span class="sp-add">+ reaching <span class="w">nearly</span> _20 million_ sales globally.</span>
-</pre>
+On GitHub actions 
 
-:::
-
-::: {.notes}
-By machine: `quarto render` is a compile step, and an assertion can
-fail the build.
-
-By human: plain text means the edit is a diff. Review scales with the change,
-not with the document.
 :::
 
 ---
 
-## [HTML is good, but it can't tell you if it's broken]{.center}
+# [Quarto is checkable twice]{.center}
+
+<br>
+
+## [**By humans**]{.center .darkgreen}
 
 ::: {.col .fragment}
-[**HTML** - _manual_ numbers]{.red}
 
-::: {.font140}
-<pre class="specimen diffcard compact">
-<span>  &lt;!DOCTYPE html&gt;</span>
-<span>  &lt;html lang="en"&gt;</span>
-<span>  &lt;head&gt;</span>
-<span>  &lt;meta charset="utf-8"&gt;</span>
-<span>  &lt;title&gt;EV Sales&lt;/title&gt;</span>
-<span>  &lt;style&gt;</span>
-<span>  body { font-family: Georgia, serif;</span>
-<span>         max-width: 40em; margin: 3em auto; }</span>
-<span>  h2 { font-size: 1.6em; }</span>
-<span>  &lt;/style&gt;</span>
-<span>  &lt;/head&gt;</span>
-<span>  &lt;body&gt;</span>
-<span>  &lt;h2&gt;EV Sales&lt;/h2&gt;</span>
-<span>  &lt;p&gt;Sales of &lt;strong&gt;electric vehicles&lt;/strong&gt; grew</span>
-<span class="sp-del">- 20% in 2025, reaching over &lt;em&gt;<span class="w">18 million</span>&lt;/em&gt;</span>
-<span class="sp-add">+ 20% in 2025, reaching over &lt;em&gt;<span class="w">20 million</span>&lt;/em&gt;</span>
-<span>  sales globally.&lt;/p&gt;</span>
-<span>  &lt;/body&gt;</span>
-<span>  &lt;/html&gt;</span>
-</pre>
-:::
-
-:::
-
-::: {.col .fragment}
-[**`.qmd`** - _computed_ numbers]{.blue}
+### Plain text means the edit is a **diff**
 
 ::: {.font140}
 <pre class="specimen diffcard compact">
@@ -1284,73 +1242,14 @@ not with the document.
 <span class="sp-del">- _<span class="w">20 million</span>_ sales globally.</span>
 <span class="sp-add">+ _<span class="w">&#96;r ev_sales&#96; million</span>_ sales globally.</span>
 </pre>
-:::
 
 :::
-
-::: {.notes}
-Why not just ask for HTML? Agents are very good at it.
-
-Because malformed HTML still renders as *something*, so the agent can't tell
-whether it succeeded.
-
-Left: nineteen lines, and the changed row has somewhere to hide. Right: compute
-it once and never re-type it.
 :::
 
----
+::: {.col .fragment}
 
-## [The same move, one more time]{.center}
+### Inline R code means numbers can be [_computed_]{.blue}
 
-::: {.col width="52%"}
-[**In the page**]{.blue}
-
-<pre class="specimen">
-<span>Registrations grew &#96;r pct_growth&#96;%</span>
-<span>last quarter.</span>
-</pre>
-
-`r sp(0.6)`
-
-[`library(vehicletrends)`]{.font140 .blue}
-
-The number is computed at render.<br>I typed none of them.
-:::
-
-::: {.col width="48%"}
-[**In CI**]{.blue}
-
-A GitHub Action re-renders the whole site **every Sunday at 5am.**
-
-If the data moved and a page no longer builds, **the build fails** — before
-anyone reads it.
-
-`r sp(0.6)`
-
-[A wrong number is a broken build,<br>not a quiet mistake.]{.font120 .blue}
-:::
-
-::: {.notes}
-NEW SLIDE — RECOMMENDED. This is the Correctness-at-scale beat, and it is the
-one movement the braid needs that you did not already have.
-
-The `<pre class="specimen">` block reuses the styling from your checkable-twice
-slide, and the &#96; entities keep knitr from evaluating the inline expression.
-Swap in a real line from the site.
-
-Deliberately a callback: `library(vehicletrends)` and "I typed none of the
-numbers" are lifted from the 15-documents slide, so the audience recognises the
-line. Point at it: "You have seen this line already. In the control section it
-was about the agent not having to write the numbers. Here it is about nobody
-being able to write the wrong one."
-
-The Sunday re-render currently also appears on the static-files slide in the
-victory lap. Keep it in one place. My preference is here, where it is an
-argument, rather than there, where it is a fact.
-
-If you would rather not add a slide at all: cut this and let the machine-check
-slide carry Correctness alone. The braid still holds, it just limps on the
-third repetition.
 :::
 
 ---
