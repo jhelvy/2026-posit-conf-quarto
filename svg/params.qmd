@@ -1,0 +1,78 @@
+```{=html}
+<!-- The payoff slide's figure ("Same format. No drift."). Two CSVs feed ONE
+     .qmd, and two PDFs fall out of it. This is the previous slide's
+     parameterization drawn instead of described: the content has an address,
+     the address is an argument, and the format never enters the conversation.
+
+     The slide's two sheet images and its .notes stay in index.qmd; only the
+     drawing lives here, pulled in with {{< include svg/params.qmd >}}.
+
+     INVARIANTS
+     - No ids, no <defs>, no markers. Arrowheads are explicit triangles (15 wide,
+       17.5 long, base overlapped 3 units by its line), so this figure adds
+       nothing to the document-wide id namespace. Keep it that way.
+     - The .qmd box is the entanglement figure's box at its own scale: 190x124,
+       rx=6, white fill, navy 2.5 stroke, teal yaml band 158x36. The yaml band is
+       what does not vary, and it is the only thing on the slide that is drawn
+       once instead of twice. Do not recolor it, do not move it.
+     - The content block is an empty SLOT -- white, dashed navy, labelled
+       `content`. It is not yellow and not red on purpose: the colors live on the
+       CSV boxes now, so the slot reads as the thing either file can occupy.
+       Filling it picks a winner and kills the parameterization claim.
+     - pokemon wears the at-rest content yellow #edae49 with navy text; minecraft
+       wears the post-click red #d1495b with white text. That pairing is
+       entanglement figure 2's click, frozen -- read left to right it is the
+       animation. Text on yellow is navy, text on red is white; legibility, not
+       taste.
+     - Arrows are navy ink, never colored to match their CSV. Yellow is invisible
+       as a line (1.6:1) and a red-only link would say the two sides differ in
+       kind. Left/right position carries the pairing instead: pokemon top-left
+       and bottom-left, minecraft top-right and bottom-right.
+     - The two output arrows leave the .qmd box at its thirds (x=438 and x=502),
+       not from one shared stem at the centre. Two departures say two renders;
+       a single stem that splits would say one render produced both sheets, which
+       is the one thing this figure must not claim.
+     - Fan endpoints (x=240, x=700) are the quarter and three-quarter points of
+       the viewBox, so they land roughly over the two images below. Roughly is
+       the requirement; exact registration would depend on the rendered width and
+       is not worth chasing. -->
+<svg viewBox="10 2 920 218" width="1120" height="266"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <!-- the .qmd -->
+  <text x="470" y="20" font-size="20" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
+  <rect x="375" y="30" width="190" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="391" y="46" width="158" height="36" fill="#00798c"/>
+  <text x="470" y="71" font-size="20" text-anchor="middle"
+        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="391" y="94" width="158" height="44"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="470" y="123" font-size="20" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+  <!-- pokemon.csv, left, pointing in -->
+  <rect x="27" y="88" width="260" height="56" fill="#edae49"/>
+  <text x="157" y="123" font-size="24" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">pokemon.csv</text>
+  <path d="M 295 116 L 357 116" stroke="#2e4057" stroke-width="2.5"/>
+  <path d="M 354 108.5 L 371.5 116 L 354 123.5 z" fill="#2e4057"/>
+
+  <!-- minecraft.csv, right, pointing in -->
+  <rect x="653" y="88" width="260" height="56" fill="#d1495b"/>
+  <text x="783" y="123" font-size="24" text-anchor="middle"
+        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">minecraft.csv</text>
+  <path d="M 645 116 L 583 116" stroke="#2e4057" stroke-width="2.5"/>
+  <path d="M 586 108.5 L 568.5 116 L 586 123.5 z" fill="#2e4057"/>
+
+  <!-- two renders, leaving the box at its thirds, out to the two sheets below -->
+  <path d="M 438 154 L 438 172 L 240 172 L 240 196"
+        stroke="#2e4057" stroke-width="2.5" fill="none"/>
+  <path d="M 232.5 193 L 240 210.5 L 247.5 193 z" fill="#2e4057"/>
+  <path d="M 502 154 L 502 172 L 700 172 L 700 196"
+        stroke="#2e4057" stroke-width="2.5" fill="none"/>
+  <path d="M 692.5 193 L 700 210.5 L 707.5 193 z" fill="#2e4057"/>
+</svg>
+```

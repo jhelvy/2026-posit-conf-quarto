@@ -40,7 +40,7 @@ sp <- function(gap = 2, unit = "em") {
   sprintf('<div style="height: %s%s;"></div>', gap, unit)
 }
 
-rungs <- function(n) {
+rungbar <- function(n) {
   labs <- c(
     "a chart",
     "linked charts",
@@ -48,26 +48,26 @@ rungs <- function(n) {
     "Shiny in the box",
     "anything in the box"
   )
-  grp <- c(1, 1, 2, 2, 2)
-  hue <- c("#00798c", "#d1495b") # teal = inside Quarto; red = in a box
-  span <- vapply(
+  grp <- c("in", "in", "box", "box", "box")
+  steps <- vapply(
     seq_along(labs),
     function(i) {
-      on <- i == n
       sprintf(
-        '<span class="rung%s" style="color:%s">%s</span>',
-        if (on) " rung-on" else "",
-        if (on) hue[grp[i]] else "#8d96a3",
+        '<div class="rs rs-%s%s"><span class="rs-n">%d</span>%s</div>',
+        grp[i],
+        if (i == n) " is-on" else "",
+        i,
         labs[i]
       )
     },
     character(1)
   )
-  dot <- '<span class="rung-sep">&middot;</span>'
-  htmltools::HTML(sprintf(
-    '<div class="rungs">%s<span class="rung-split"></span>%s</div>',
-    paste(span[1:2], collapse = dot),
-    paste(span[3:5], collapse = dot)
+  htmltools::HTML(paste0(
+    '<div class="rungbar">',
+    '<div class="rg rg-in">inside the document</div>',
+    '<div class="rg rg-box">in a box</div>',
+    paste(steps, collapse = ""),
+    '</div>'
   ))
 }
 ```
@@ -333,7 +333,7 @@ than "disentangles," and it sets up the next slide, which shows the seam.
 ````{.markdown}
 ---
 params:
-  data_file: "data/sentences-mario.csv"
+  data_file: "data/minecraft.csv"
 format: pdf
 ---
 
@@ -348,7 +348,7 @@ for (s in sentences) {
 ::::
 
 :::: {.col width="42%"}
-[**`sentences-minecraft.csv`**]{.amber .font120}
+[**`minecraft.csv`**]{.amber .font120}
 
 (written by Me)
 
@@ -402,60 +402,28 @@ second one deflates. Pick which gets the emphasis.
 
 {{< center >}}
 
-::: {.col .center}
-```{=html}
-<svg viewBox="21 2 198 195" width="218" height="215"
-     xmlns="http://www.w3.org/2000/svg"
-     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
-  <text x="120" y="20" font-size="20" text-anchor="middle"
-        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
-  <rect x="25" y="30" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
-  <rect x="41" y="46" width="158" height="36" fill="#00798c"/>
-  <text x="120" y="71" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <rect x="41" y="94" width="158" height="44" fill="#edae49"/>
-  <text x="120" y="123" font-size="20" text-anchor="middle"
-        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">pokemon</text>
-  <path d="M 120 162 L 120 178" stroke="#2e4057" stroke-width="2.5"/>
-  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#2e4057"/>
-</svg>
-```
+{{< include svg/params.qmd >}}
 
-![](images/handwriting-good-pokemon.png){fig-align="center" height="530"}
+::: {.col .center}
+![](images/handwriting-good-pokemon.png){fig-align="center" height="470"}
 :::
 
 ::: {.col .center}
-```{=html}
-<svg viewBox="21 2 198 195" width="218" height="215"
-     xmlns="http://www.w3.org/2000/svg"
-     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
-  <text x="120" y="20" font-size="20" text-anchor="middle"
-        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd</text>
-  <rect x="25" y="30" width="190" height="124" rx="6"
-        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
-  <rect x="41" y="46" width="158" height="36" fill="#00798c"/>
-  <text x="120" y="71" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
-  <rect x="41" y="94" width="158" height="44" fill="#d1495b"/>
-  <text x="120" y="123" font-size="20" text-anchor="middle"
-        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">minecraft</text>
-  <path d="M 120 162 L 120 178" stroke="#2e4057" stroke-width="2.5"/>
-  <path d="M 112.5 175 L 120 192.5 L 127.5 175 z" fill="#2e4057"/>
-</svg>
-```
-
-![](images/handwriting-good-minecraft.png){fig-align="center" height="530"}
+![](images/handwriting-good-minecraft.png){fig-align="center" height="470"}
 :::
 
 ::: {.notes}
 Same format. No drift.
 
-One word changed. Everything else held — same layout, same margins, same
-everything.
+Two files of sentences. One document. Two worksheets — and the layout is the
+same layout, because nothing about the layout was ever up for negotiation.
 
-If you added the source slide before this one, the line gets stronger: "one
-word in that text file."
+Point at the dashed box: that's the slot. The sentences aren't in the `.qmd`,
+they're in a file, and which file is an argument. Swap the argument, get a
+different worksheet.
+
+And the teal band is drawn once, because it's the same band. That's the whole
+slide: one word changed, and it's a word in a text file.
 :::
 
 ---
@@ -498,13 +466,6 @@ other, not both.
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
 
 ::: {.notes}
-CONTROL, SECOND MOVEMENT. The braid starts here, and the words that start it
-are the ones you will say twice more:
-
-**"Same move. Bigger document."**
-
-Then the original framing:
-
 A handwriting worksheet is a pretty trivial example. So why am I
 talking about it at a session about dashboards?
 
@@ -524,7 +485,8 @@ I built this with Quarto.
 
 ::: {.notes}
 This is the same picture from earlier, at site scale. Same me, same agent, same
-`.qmd` — one of them is still literally the same box.
+`.qmd` — one of them is still literally the same box. Point at it; don't argue
+the resemblance, the drawing is the argument.
 
 At rest this is the picture from the very beginning of the talk: I asked for the
 thing, and the agent handed me the thing. Only now the thing is a website.
@@ -543,94 +505,141 @@ they still work at fifteen pages.
 
 ---
 
-## It's not a 3,000-line dashboard.<br>It's 15 small documents.
+# [Using Quarto websites for dashboards]{.center}
 
-:::: {.col width="42%"}
-::: {.font55}
-```
-vehicletrends.us/
-├── index.qmd
-├── about.qmd
-├── vmt-daily.qmd
-├── vmt-age.qmd
-├── depreciation.qmd
-├── percent-listings.qmd
-├── percent-dealers.qmd
-├── market-concentration.qmd
-├── hhi-explained.qmd
-├── registrations.qmd
-├── nearest-vehicles.qmd
-├── tech-stack.qmd
-├── cite.qmd
-├── LICENSE.qmd
-└── 404.qmd
+:::: {.col width="45%"}
+[**`_quarto.yml`**]{.qmdblue .font120}
+
+::: {.font90}
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - vmt-age.qmd
+      - depreciation.qmd
+      - ...
 ```
 :::
 ::::
 
-::: {.col width="58%"}
-<br>
+::: {.col width="55%"}
 
-**~3,000 lines** of markdown and code — and not one file over a few hundred.
+`r sp(7)`
 
-<br>
+:::{.font80}
+### Every page gets a URL:
 
-The data loads at render:
+[https://vehicletrends.us/about](https://vehicletrends.us/about)
 
-[`library(vehicletrends)`]{.font140 .blue}
+[https://vehicletrends.us/vmt-daily](https://vehicletrends.us/vmt-daily)
 
-I typed none of the numbers.
+[https://vehicletrends.us/vmt-age](https://vehicletrends.us/vmt-age)
+
+[https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
+
+...
 :::
-
-::: {.notes}
-This isn't a 3,000-line dashboard. It's 15 small documents.
-
-That distinction matters enormously once an agent is working on it — and it's
-the same distinction as the handwriting sheet, just at a bigger scale.
-
-The agent writes the `.qmd`. The data lives in a package the pages load at
-render.
-
-Plant `library(vehicletrends)` deliberately — you are coming back to this exact
-line in the correctness section, and the callback only works if they saw it
-land here.
 :::
 
 ---
 
-## It's not an application. It's a document.
+# [Change 1 file, 14 remain untouched]{.center}
 
-::: {.col}
-[**Shiny**]{.red}
-
-- a UI
-- a server function
-- a reactive graph
-- a process that has to be running
-
-You maintain an **application**.
+::: {.col width="44%"}
+<pre class="specimen treecard">
+<span>vehicletrends.us/            lines</span>
+<span class="sp-dim">├── index.qmd                    7</span>
+<span class="sp-dim">├── about.qmd                  101</span>
+<span class="sp-dim">├── vmt-daily.qmd              216</span>
+<span class="sp-dim">├── vmt-age.qmd                351</span>
+<span class="sp-hit">├── depreciation.qmd           324</span>
+<span class="sp-dim">├── percent-listings.qmd       620</span>
+<span class="sp-dim">├── percent-dealers.qmd        199</span>
+<span class="sp-dim">├── market-concentration.qmd   292</span>
+<span class="sp-dim">├── hhi-explained.qmd          331</span>
+<span class="sp-dim">├── registrations.qmd          349</span>
+<span class="sp-dim">├── nearest-vehicles.qmd        34</span>
+<span class="sp-dim">├── tech-stack.qmd              60</span>
+<span class="sp-dim">├── cite.qmd                    50</span>
+<span class="sp-dim">├── LICENSE.qmd                 26</span>
+<span class="sp-dim">└── 404.qmd                     21</span>
+</pre>
 :::
 
-::: {.col}
-[**Quarto**]{.blue}
+::: {.col width="56%"}
+[**`depreciation.qmd`**]{.red .font120}
 
-- markdown
-- a chunk that returns a widget
-
-You maintain a **document**.
+<pre class="specimen diffcard">
+<span>  ## Depreciation by body style</span>
+<span> </span>
+<span>  Used trucks hold their value better</span>
+<span class="sp-del">- than any other body style.</span>
+<span class="sp-add">+ than any other body style, and the</span>
+<span class="sp-add">+ gap has widened every year since 2022.</span>
+</pre>
 :::
-
-[No UI. No server. Real compute over data too big for a browser is still Shiny's job.]{.font120}
 
 ::: {.notes}
-This isn't an application. It's a document.
 
-Not an anti-Shiny argument: real server-side compute over data too big for a
-browser is exactly Shiny's job. Most dashboards aren't that.
+And here's what I did **not** do: I did not regenerate the site. Nothing decided
+the sidebar again, or the theme again, or the fourteen pages I never opened.
+There is no version of this where the navigation quietly comes back different —
+the same way there was no version of the worksheet where the layout drifted.
 
-This slide is early on purpose. This room has been silently asking "why isn't
-this Shiny?" since the montage, and you cannot argue cost and correctness to
-people who are still stuck on that question. Answer it, then move.
+The numbers on those other pages aren't in these files either — that's
+**`library(vehicletrends)`**, computed at render. Right now that just means the
+agent doesn't have to write them. Later it means nobody can write the wrong one.
+:::
+
+---
+
+# [Every page gets a URL]{.center}
+
+:::: {.col width="45%"}
+[**`_quarto.yml`**]{.qmdblue .font120}
+
+::: {.font90}
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - ...
+```
+:::
+::::
+
+::: {.col width="55%"}
+<br><br>
+[https://vehicletrends.us/about](https://vehicletrends.us/about)
+
+[https://vehicletrends.us/vmt-daily](https://vehicletrends.us/vmt-daily)
+:::
+
+::: {.notes}
+That file is the whole reason the last slide worked. One line: `type: website`.
+
+Quarto does ship a `dashboard` project type, and it's good — this isn't it. Say
+that once and move on; everything I'm about to claim comes from the website
+choice, not from a dashboard feature.
+
+And the consequence is addresses. Link it, bookmark it, send it. The back button
+works. Search engines index it.
+
+A Shiny app is one URL, and the state lives in a session.
+
+Housekeeping: "It's not an app. It's a website." now echoes "It's not an
+application. It's a document." from the control section. Cut one. My vote is to
+cut it here, since the earlier slide is the one doing argumentative work.
 :::
 
 ---
@@ -894,7 +903,7 @@ One source, many outputs.
 [**The whole site**]{.red}
 
 - 15 pages
-- ~3,000 lines
+- 2,981 lines
 - every chart, every table, every number
 :::
 
@@ -902,7 +911,7 @@ One source, many outputs.
 [**What the agent opens**]{.blue}
 
 - one page
-- 200 to 600 lines
+- at most 620 lines
 :::
 
 <br>
@@ -914,7 +923,7 @@ COST, SECOND MOVEMENT — and the second time you say it:
 
 **"Same move. Bigger document."**
 
-The agent opens one page — 200 to 600 lines. Never the site.
+The agent opens one page — 620 lines at the very worst. Never the site.
 
 Remember the handwriting sheet? We separated the thing I wanted to change from
 the thing I wanted to preserve. Same move here, at a much larger scale.
@@ -1226,7 +1235,7 @@ third repetition.
 
 ---
 
-`r rungs(1)`
+`r rungbar(1)`
 
 ## Interactivity you get from a code chunk
 
@@ -1268,7 +1277,7 @@ library(echarts4r)
 penguins |>
   tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
   group_by(species) |>
-  e_charts(bill_length_mm, height = "420px") |>
+  e_charts(bill_length_mm, height = "400px") |>
   e_scatter(flipper_length_mm, symbol_size = 9) |>
   e_color(c("#00798c", "#A77400", "#d1495b")) |>
   e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
@@ -1300,8 +1309,9 @@ conference and no more.
 Then the live chart: click a species out of the legend. No input, no server, no
 reactive.
 
-Don't say "rung one" or "level one" out loud. The indicator does that job --
-let the room notice it on its own.
+Don't say "rung one" or "step one" out loud. The bar does that job -- let the
+room notice it on its own. The only thing worth pointing at, once, is the split
+between the two group headers, and the right moment for that is slide 4.
 
 NOTE: the Python block is deliberately static. Rendering it live means adding
 `jupyter:` to the YAML and a working Python env on stage, for a chart that makes
@@ -1310,7 +1320,7 @@ exactly the same point as the R one. Don't make conference wifi a dependency.
 
 ---
 
-`r rungs(2)`
+`r rungbar(2)`
 
 ## [Widgets that talk to each other: `crosstalk`]{.center}
 
@@ -1337,7 +1347,7 @@ htmltools::div(
         colors = c("#00798c", "#A77400", "#d1495b"),
         type = "scatter",
         mode = "markers",
-        height = 300
+        height = 290
       ) |>
         layout(showlegend = FALSE, margin = list(l = 45, r = 5, t = 5, b = 40))
     ),
@@ -1375,7 +1385,7 @@ That's the honest ceiling, and it's exactly what the next slide climbs over.
 
 ---
 
-`r rungs(2)`
+`r rungbar(2)`
 
 ## [Or recompute in the browser: `ojs`]{.center}
 
@@ -1417,7 +1427,7 @@ viewof mass = Inputs.range([2700, 6300], {step: 50, value: 2700, label: "Min mas
 filtered = data.filter(d => d.body_mass_g >= mass)
 
 Plot.plot({
-  height: 340,
+  height: 320,
   marginLeft: 55,
   color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
           range: ["#00798c", "#A77400", "#d1495b"]},
@@ -1450,7 +1460,7 @@ Say it plainly; it makes rung 4 land better.
 
 ---
 
-`r rungs(3)`
+`r rungbar(3)`
 
 ## [Anything bigger goes in a box]{.center}
 
@@ -1474,20 +1484,21 @@ htmltools::tags$iframe(
 ::: {.notes}
 Everything so far lives inside the document. Here's where that stops.
 
-This is the whole slide: six lines, and they are the entire contract between a
-Quarto page and something that isn't one. The page says *where*. It never says
-*what*.
+**This is the one slide where the bar is worth a glance.** The colour changed,
+and it changed here for a reason: everything to the left of that line is
+something Quarto gives you. Everything to the right is something Quarto
+*composes*.
+
+The slide itself is six lines, and they are the entire contract between a Quarto
+page and something that isn't one. The page says *where*. It never says *what*.
 
 Fifteen seconds. Don't dwell -- it's a hinge, not a destination. The next two
 slides are what it holds.
-
-This is also where the modularity half of the section starts, and it's why the
-indicator has a divider in the middle of it.
 :::
 
 ---
 
-`r rungs(4)`
+`r rungbar(4)`
 
 ## [Yes, you can still use Shiny]{.center}
 
@@ -1543,7 +1554,7 @@ NOTE: the right-hand example is generic. If you don't have a deployed app, say
 
 ---
 
-`r rungs(5)`
+`r rungbar(5)`
 
 ## [Or something nobody has a package for]{.center}
 
@@ -1551,7 +1562,7 @@ NOTE: the right-hand example is generic. If you don't have a deployed app, say
 ```{r}
 htmltools::tags$iframe(
   src = "https://vehicletrends.github.io/hhi-map/",
-  height = "480px",
+  height = "440px",
   width = "900px",
   style = "border: none;"
 )
@@ -1607,6 +1618,9 @@ ordered by how much you have to *build*, not how much infrastructure you need.
 [The document can't tell them apart. Neither can the agent.]{.font130 .blue}
 
 ::: {.notes}
+No bar on this slide, deliberately -- the bar has been the map, and this is the
+territory. Same two group labels, same two colours, now unpacked.
+
 Five kinds of interactivity, and the document treats every one of them the same
 way: it says where the thing is, and nothing about what it is.
 
@@ -1651,9 +1665,6 @@ whole system.
 
 Neither does the agent.
 
-FIXED: a block of my editorial notes had leaked into the visible body of this
-slide in an earlier pass. The bracketed line is now just the payoff line.
-
 NOTE: this lands one slide after "Neither can the agent" on the recap. Two of
 them back to back is one too many. Either change the recap's line to *"and
 neither does whatever built it"*, or cut this slide and let the recap close the
@@ -1663,31 +1674,6 @@ section.
 ---
 
 # OLD BONUS CONTENT
-
----
-
-## Every page gets a URL
-
-- `vehicletrends.us/depreciation` — link it, bookmark it, send it to someone
-- the back button works
-- search engines index it
-- 10 pages in the sidebar, 10 addresses
-
-[A Shiny app is one URL. The state lives in a session.]{.font120}
-
-[It's not an app. It's a website.]{.font150 .blue}
-
-::: {.notes}
-It's a dashboard that behaves like a website.
-
-Link it, bookmark it, send it. The back button works. Search engines index it.
-
-A Shiny app is one URL, and the state lives in a session.
-
-Housekeeping: "It's not an app. It's a website." now echoes "It's not an
-application. It's a document." from the control section. Cut one. My vote is to
-cut it here, since the earlier slide is the one doing argumentative work.
-:::
 
 ---
 
@@ -1923,4 +1909,45 @@ Do not explain Wigner. Just say the two lines and go to the last slide.
 
 ::: {.notes}
 That's the talk.
+:::
+
+---
+
+EXTRA
+
+---
+
+## It's  application. It's a document.
+
+::: {.col}
+[**Shiny**]{.red}
+
+- a UI
+- a server function
+- a reactive graph
+- a process that has to be running
+
+You maintain an **application**.
+:::
+
+::: {.col}
+[**Quarto**]{.blue}
+
+- markdown
+- a chunk that returns a widget
+
+You maintain a **document**.
+:::
+
+[No UI. No server. Real compute over data too big for a browser is still Shiny's job.]{.font120}
+
+::: {.notes}
+This isn't an application. It's a document.
+
+Not an anti-Shiny argument: real server-side compute over data too big for a
+browser is exactly Shiny's job. Most dashboards aren't that.
+
+This slide is early on purpose. This room has been silently asking "why isn't
+this Shiny?" since the montage, and you cannot argue cost and correctness to
+people who are still stuck on that question. Answer it, then move.
 :::

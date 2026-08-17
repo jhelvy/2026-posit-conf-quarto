@@ -222,6 +222,19 @@
 .reveal pre.diffcard .sp-del .w { background: #f6c3c9; }
 .reveal pre.diffcard .sp-add .w { background: #bcdcc9; }
 
+/* The file tree on "To change one page, I open one file" takes the same specimen
+   chrome as the diff card beside it, so the two columns read as one pair rather
+   than as a code block next to a diff. The dimming is the argument: "fourteen
+   untouched" is not something a screenshot of an unchanged page can show, so the
+   only way to make it visible is to grey the files that were never opened. Grey
+   is the spine's #8d96a3 — it already means "not the thing you're looking at" —
+   and the one lit file is palette red, which already means "content that
+   changed." The root line stays navy: it's the site, not a file. */
+.reveal pre.treecard { background: #f4f5f7; color: #2e4057;
+                       border: 1px solid #d8dbe0; }
+.reveal pre.treecard .sp-dim { color: #8d96a3; }
+.reveal pre.treecard .sp-hit { color: #d1495b; font-weight: 700; }
+
 /* A whole-document diff needs more rows than the five-line cards this chrome was
    built for. Both cards on a slide take this together — the columns must stay
    the same type size, since the comparison is how hard the change is to find,
@@ -280,37 +293,71 @@
    178 = 353.5 (centre of the visible viewBox, y 77..630) - 175 (run 1's row),
    in the SVG's own units — recompute it if that viewBox ever changes. */
 
-.rungs { 
-   text-align:center; 
-   font-size:0.44em; 
-   letter-spacing:0.02em;
-   margin:0 0 0.6em 0; 
-   line-height:1; 
+/* --- rung bar ------------------------------------------------------------ */
+/* ONLY KNOB YOU SHOULD NEED: match --rungbar-bleed to the section padding.
+   Nudge it 4px at a time until the bar kisses both slide edges.           */
+.rungbar {
+  --rungbar-bleed: 40px;
+  --rung-teal: #00798c;   /* inside the document */
+  --rung-red:  #d1495b;   /* in a box            */
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 5px;
+  row-gap: 4px;
+  margin: calc(-1 * var(--rungbar-bleed))
+          calc(-1 * var(--rungbar-bleed))
+          0.85em;
+  padding: 10px var(--rungbar-bleed) 12px;
+  border-bottom: 1px solid rgba(141, 150, 163, 0.28);
+  text-align: left;
+  line-height: 1.15;
 }
 
-.rung { 
-   opacity:0.5; 
-   font-weight:400; 
-   transition:opacity .2s; 
+.rungbar .rg {
+  grid-row: 1;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.rungbar .rg-in  { grid-column: 1 / 3; color: var(--rung-teal); }
+.rungbar .rg-box { grid-column: 3 / 6; color: var(--rung-red);  }
+
+.rungbar .rs {
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 7px 11px;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: #8d96a3;
+}
+.rungbar .rs-in  { background: #e6eff1; }
+.rungbar .rs-box { background: #fbeaed; }
+
+.rungbar .rs-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45em;
+  height: 1.45em;
+  border-radius: 50%;
+  font-size: 0.82em;
+  font-weight: 700;
+  background: rgba(141, 150, 163, 0.22);
+  color: #6c7683;
 }
 
-.rung-on { 
-   opacity:1; 
-   font-weight:600; 
-}
+.rungbar .is-on { color: #fff; font-weight: 700; }
+.rungbar .rs-in.is-on  { background: var(--rung-teal); }
+.rungbar .rs-box.is-on { background: var(--rung-red);  }
+.rungbar .is-on .rs-n  { background: rgba(255,255,255,0.28); color: #fff; }
 
-.rung-sep { 
-   color:#8d96a3; 
-   opacity:0.35; 
-   padding:0 0.5em; 
-}
-
-.rung-split { 
-   display:inline-block; 
-   width:1px; 
-   height:0.9em;
-   background:#8d96a3; 
-   opacity:0.3; 
-   margin:0 0.9em;
-   vertical-align:middle; 
-}
+/* the bar is navigation, not content -- keep it out of the PDF handout */
+@media print { .rungbar { break-inside: avoid; } }

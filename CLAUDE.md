@@ -75,13 +75,11 @@ They're navigation for us, not content; keep them in sync when slides move.
 
 - `index.qmd` — the deck. Canonical, repo root. `format: lexis-revealjs` — read
   Styling before editing; the syntax is not stock Quarto reveal.
-- `svg/` — the four big inline-SVG figures, one `.qmd` partial each
-  (`entanglement-1`, `entanglement-2`, `dashboard`, `experiment`), pulled in
-  with `{{< include svg/….qmd >}}`. Each file is its invariants comment plus one
-  ```` ```{=html} ```` block; the slide's heading and `.notes` stay in
-  `index.qmd`. The payoff slide's two 16-line `.qmd` boxes stay inline — they
-  must be verified byte-identical apart from two lines, which is easier side by
-  side. ⚠️ If a `_quarto.yml` is ever added, list `index.qmd` under
+- `svg/` — the five big inline-SVG figures, one `.qmd` partial each
+  (`entanglement-1`, `entanglement-2`, `dashboard`, `experiment`, `params`),
+  pulled in with `{{< include svg/….qmd >}}`. Each file is its invariants comment
+  plus one ```` ```{=html} ```` block; the slide's heading, images and `.notes`
+  stay in `index.qmd`. ⚠️ If a `_quarto.yml` is ever added, list `index.qmd` under
   `project: render:` or these partials become renderable inputs.
 - `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
 - `_extensions/lexis/` — the lexis extension. Don't hand-edit. Two exceptions,
@@ -454,22 +452,46 @@ top margin centres slide 2 or just shifts the problem.
 
 ## The payoff slide (now after the source slide, not the figure)
 
-**"Same `format`. No drift."** Two columns, each a `.qmd` box over the real
-sheet it produces: pokemon and minecraft.
+**"Same `format`. No drift."** ⚠️ **Rebuilt 2026-08-17.** One full-width SVG
+across the top, now `svg/params.qmd` — two CSVs pointing *in* to a single `.qmd`,
+then two arrows out of its bottom to the two sheets below — over the two real
+sheets, pokemon and minecraft. It replaced two half-width inline SVGs that each
+showed their own `.qmd`; the old drawing implied two source files, which is the
+opposite of what the previous slide just established.
 
 **It is figure slide 2's click, frozen.** pokemon wears the at-rest `content`
 yellow `#edae49` + navy text; minecraft wears the post-click red `#d1495b` +
-**white** text. Read left to right, it's the animation.
+**white** text — now on the CSV boxes rather than inside the `.qmd`. Read left to
+right, it's still the animation.
 
-- **What carries it is what doesn't vary.** Same 190×124 `.qmd` box, teal `yaml`
-  band byte-identical in both columns. Only the content block differs. Keep the
-  two SVGs verified-identical apart from that.
+- **What carries it is what doesn't vary** — and now that is literal: the teal
+  `yaml` band is *drawn once*, because it is the same band. There is nothing to
+  keep in sync any more.
+- **The content block is an empty SLOT** — white, dashed navy, labelled
+  `content`. ❌ Don't fill it yellow or red; the colors live on the CSVs, and
+  picking one kills the parameterization claim.
+- **Arrows stay navy ink**, never colored to match their CSV. Left/right position
+  carries the pairing.
+- **The two output arrows leave the box at its thirds** (x=438, x=502), not from
+  one shared centre stem. ❌ Don't "tidy" them into a single stem that splits —
+  two departures say two renders; one stem says one render made both sheets,
+  which is the one thing this figure must not claim.
+- Their endpoints are the viewBox's quarter points so they land roughly over the
+  images. Roughly is the requirement; exact registration depends on rendered
+  width and isn't worth chasing.
 - ❌ Was three columns (pokemon / minecraft green / mario red). Mario is cut.
   Don't "fix" minecraft back to green — green now means *verdict* (the run-3
   checkmark), not a third document.
-- ❌ No `render` label under the arrows — the previous slide just taught it.
-- These SVGs use **no ids and no markers** (explicit triangle arrowheads), so
-  they add nothing to the id namespace. Keep it that way.
+- ❌ Was three columns (pokemon / minecraft green / mario red). Mario is cut.
+  Don't "fix" minecraft back to green — green now means *verdict* (the run-3
+  checkmark), not a third document.
+- ❌ No `render` label under the fan — the previous slide just taught it.
+- The SVG uses **no ids, no `<defs>`, no markers** (explicit triangle
+  arrowheads), so it adds nothing to the id namespace. Keep it that way.
+- **Not visually vetted.** On first render check: does the figure clear the two
+  470px images inside the slide; do the two 23-character CSV filenames fit their
+  260-unit boxes at font-size 17; do the fan's two landings read as pointing at
+  the sheets below.
 
 ## The source slide (new 2026-08-16, between figure 2 and the payoff)
 
@@ -735,7 +757,7 @@ near-identical `It's not an app. It's a website.` — sits in the victory lap.
 early slide is the one doing argumentative work.
 
 **169,552,665 listings** (74,894,001 new + 94,658,664 used), 100,000+
-dealerships, 2018–2025; 15 pages, ~2,900 lines of `.qmd`. ❌ The old "10M+" is
+dealerships, 2018–2025; 15 pages, 2,981 lines of `.qmd` (biggest file 620). ❌ The old "10M+" is
 wrong by 17×. `about.qmd:11–16` computes these at render and inlines them with
 `` `r n_new` `` — the case study's own source states the thesis, so use the exact
 number, not "about 170 million." The big number is **off the title card** — its
@@ -759,12 +781,26 @@ re-forms into the feature tour the braid dissolved, and it sits between the
 finished argument and the close, which is the worst place in the talk to sprawl.
 Slide 6 is marked for removal and 2 is the next to go if you're over time.
 
-1. **`It's not a 3,000-line dashboard. It's 15 small documents.`** The file tree
-   of all 15 `.qmd`, ~3,000 lines, and `library(vehicletrends)` at render. The
-   tree replaced a `_quarto.yml` listing on purpose: this slide is about
-   decomposition, and config belongs to slide 6. It is the **receipt** for the
-   figure before it.
-2. **`Every page gets a URL`** — ends on **`It's not an app. It's a website.`**
+1. **`To change one page, I open one file`** — the **demonstration**, not a
+   receipt. File tree of all 15 `.qmd` **with each file's real line count
+   beside it** (measured from the repo, re-measure if the site changes), 2,981
+   total, with `depreciation.qmd` lit red and the other fourteen dimmed to the
+   spine grey; a one-line diff of that file arrives on a `.fragment` beside it.
+   ⚠️ **The diff is invented and may stay invented** — it is a content edit
+   standing in for any content edit, not a claim about a real commit. It is the
+   worksheet payoff slide (`Same format. No drift.`) at site scale, and the
+   dimming is load-bearing: *fourteen pages didn't move* cannot be shown with a
+   screenshot of an unchanged page, only with the files you never opened. Chrome
+   is `.treecard` + `.diffcard` in `custom.css`; both `<pre>`, so no `---` and no
+   ```` ```{r} ```` inside them. `library(vehicletrends)` is planted here in
+   speech and cashed in Correctness's second movement — verbatim both times.
+2. **`Every page gets a URL`** — now also carries the abbreviated `_quarto.yml`
+   whose one load-bearing line is `type: website`, commented *not `dashboard`*
+   (it moved here from slide 1, which needed the room for the diff, and it reads
+   better as the cause of the URLs). Quarto really does ship a `dashboard`
+   project type; say once that this isn't it, then move on — every claim in the
+   lap follows from the website choice, not from a dashboard feature. Ends on
+   **`It's not an app. It's a website.`**
 3. **`It's not an application. It's a document.`** Shiny vs Quarto, two columns.
    ⚠️ The title carries the claim so the columns read as evidence rather than as
    a scoreboard — the outline is explicit that this must not become a
