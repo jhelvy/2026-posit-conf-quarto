@@ -522,7 +522,13 @@ htmltools::div(
   # enough height to come out roughly square.
   htmltools::div(
     style = "flex:0 0 22%; padding-top:0.6rem;",
-    filter_slider("mass", "Body mass (g)", shared, ~body_mass_g, width = "100%"),
+    filter_slider(
+      "mass",
+      "Body mass (g)",
+      shared,
+      ~body_mass_g,
+      width = "100%"
+    ),
     htmltools::div(
       style = "margin-top:1.2rem;",
       filter_select("sp", "Species", shared, ~species)
@@ -559,69 +565,93 @@ htmltools::div(
 #| echo: false
 ojs_define(
   pen_ojs = palmerpenguins::penguins |>
-    tidyr::drop_na(bill_length_mm, flipper_length_mm, body_mass_g, species) |>
-    dplyr::select(species, bill_length_mm, flipper_length_mm, body_mass_g)
+    tidyr::drop_na(
+      bill_length_mm,
+      bill_depth_mm,
+      flipper_length_mm,
+      body_mass_g,
+      species
+    ) |>
+    dplyr::select(
+      species,
+      bill_length_mm,
+      bill_depth_mm,
+      flipper_length_mm,
+      body_mass_g
+    )
 )
 ```
 
-::: {.col width="38%"}
-::: {.font40}
-````markdown
-```{r}
-ojs_define(pen_ojs = penguins)
+```{ojs}
+//| output: false
+// Deliberately the SAME app as the crosstalk slide -- same two panels, same
+// slider, same dropdown -- so the difference between the two slides is the
+// machinery, not the picture.
+//
+// OJS is a dataflow runtime, so these two cells can be declared before the
+// inputs they depend on. `output: false` keeps their values out of the slide.
+data = transpose(pen_ojs)
 ```
 
 ```{ojs}
-data = transpose(pen_ojs)
-viewof mass = Inputs.range(
-  [2700, 6300], {label: "Min mass"})
+//| output: false
+filtered = data.filter(
+  d => d.body_mass_g >= mass && sp.includes(d.species)
+)
 ```
-````
-:::
 
-[R hands the data over.<br>The browser does the rest.]{.font110 .blue}
-
-[This one **recomputes** -- the fit is<br>refitted client-side, not filtered.]{.font110}
-:::
-
-::: {.col width="62%"}
 ```{ojs}
-data = transpose(pen_ojs)
-
-viewof mass = Inputs.range([2700, 6300], {step: 50, value: 2700, label: "Min mass (g)"})
-
-filtered = data.filter(d => d.body_mass_g >= mass)
-
-Plot.plot({
-  height: 320,
-  marginLeft: 55,
+//| output: false
+// One plot definition used twice, so the two panels are provably the same call
+// with different columns.
+panel = (x, y, xlab, ylab) => Plot.plot({
+  width: 520,
+  height: 460,
+  marginLeft: 60,
+  marginBottom: 50,
+  x: {label: xlab, labelAnchor: "center"},
+  y: {label: ylab, labelAnchor: "center"},
   color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
           range: ["#00798c", "#A77400", "#d1495b"]},
   marks: [
-    Plot.dot(filtered, {x: "bill_length_mm", y: "flipper_length_mm",
-                        fill: "species", r: 4, fillOpacity: 0.75}),
-    Plot.linearRegressionY(filtered, {x: "bill_length_mm",
-                                      y: "flipper_length_mm", stroke: "#2e4057"})
+    Plot.dot(filtered, {x: x, y: y, fill: "species", r: 4.5, fillOpacity: 0.8})
   ]
 })
 ```
+
+:::: {.col width="22%"}
+::: {.font55}
+```{ojs}
+viewof mass = Inputs.range(
+  [2700, 6300],
+  {step: 50, value: 2700, label: "Body mass (g)"}
+)
+```
+
+```{ojs}
+// multiple: 3 makes this a list box with all three rows visible and everything
+// selected at rest -- the same behaviour as crosstalk's filter_select. Plain
+// `multiple: true` would open with NOTHING selected, i.e. an empty plot.
+viewof sp = Inputs.select(
+  ["Adelie", "Chinstrap", "Gentoo"],
+  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"], label: "Species"}
+)
+```
+:::
+::::
+
+::: {.col width="39%"}
+```{ojs}
+panel("bill_length_mm", "flipper_length_mm",
+      "Bill length (mm)", "Flipper length (mm)")
+```
 :::
 
-::: {.notes}
-And if filtering isn't enough -- if you need it to actually *compute* -- Quarto
-ships Observable JS.
-
-`ojs_define()` hands an R data frame to the browser. From there it's a reactive
-runtime: change the input, everything downstream re-evaluates.
-
-**Point at the regression line.** That's the difference from the last slide.
-Crosstalk hides points. This refits the line as you move the slider. Nobody
-called a server, and there's no R running anywhere -- the page has been static
-this whole time.
-
-Don't oversell. OJS is JavaScript, so this is where an R-only room hits a
-language boundary -- and that's a fair reason to reach for Shiny two rungs up.
-Say it plainly; it makes rung 4 land better.
+::: {.col width="39%"}
+```{ojs}
+panel("body_mass_g", "bill_depth_mm",
+      "Body mass (g)", "Bill depth (mm)")
+```
 :::
 
 ---
@@ -702,22 +732,6 @@ point at it.
 
 [Same six lines either way. **The page can't tell the difference.**]{.font130 .blue}
 
-::: {.notes}
-Be generous here. This is a Posit conference and Shiny is the right answer to a
-real class of problem: server-side compute over data too big for a browser,
-live connections, anything that has to reach a database. I am not arguing
-against Shiny.
-
-I'm arguing that the *page* doesn't need to know. Shinylive if it fits in the
-browser; a deployed app if it doesn't. Same iframe.
-
-And that's the one thing in this entire talk that costs money -- and it costs it
-inside one rectangle instead of across the whole site.
-
-NOTE: the right-hand example is generic. If you don't have a deployed app, say
-"if you needed one." Don't imply vehicletrends.us has a backend it doesn't have.
-:::
-
 ---
 
 `r rungbar(5)`
@@ -743,6 +757,21 @@ htmltools::tags$iframe(
 - Lives in it's [own repo](https://github.com/vehicletrends/hhi-map) 
 - Hosted on [GitHub pages](https://vehicletrends.github.io/hhi-map/)
 :::
+
+---
+
+## It's just static files
+
+Everything here runs in the browser, and the whole site is files — **hosted for free.**
+
+- charts → ECharts (JS), rendered client-side
+- the map → PMTiles on a CDN, instant
+- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
+
+A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
+cached, so nothing goes stale.
+
+[No server to run. No server to secure. No server to pay for.]{.font120}
 
 ---
 
@@ -772,11 +801,6 @@ htmltools::tags$iframe(
   globally.</div>
 </div>
 ```
-
-::: {.notes}
-One paragraph. Look at it — the next slides are this same paragraph
-written four different ways.
-:::
 
 ---
 
@@ -1331,95 +1355,6 @@ third repetition.
 
 ---
 
-# OLD BONUS CONTENT
-
----
-
-## Or drop a whole Shiny app in the page
-
-Two pages on the site **are** Shiny apps — compiled to WebAssembly, running in
-the reader's browser:
-
-````markdown
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
-```
-````
-
-[Same move. The hard thing goes in a box, and the page just says where.]{.font120}
-
-::: {.notes}
-Same move. The hard thing goes in a box, and the page just says where.
-
-Two pages on the site are Shiny apps compiled to WebAssembly, running in the
-reader's browser.
-:::
-
----
-
-## It's just static files
-
-Everything here runs in the browser, and the whole site is files — **hosted for free.**
-
-- charts → ECharts (JS), rendered client-side
-- the map → PMTiles on a CDN, instant
-- the Shiny app → **Shinylive**, compiled to WebAssembly. No server.
-
-A GitHub Action re-renders and republishes it **every Sunday at 5am.** Nothing is
-cached, so nothing goes stale.
-
-[No server to run. No server to secure. No server to pay for.]{.font120}
-
-::: {.notes}
-Say "static files," not "serverless" — serverless drags in Lambda and edge
-functions and backends. This is simpler than that.
-
-At the end of the day it's a folder of files a browser can read. So I can host
-it for free.
-
-If you kept the correctness-at-scale slide, the Sunday re-render is already
-spent. Drop that sentence here and let this slide be purely about hosting.
-:::
-
----
-
-## [It looks like an application. It isn't.]{.center}
-
-<br>
-
-::: {.col}
-- each page is a **`.qmd`**
-- the data lives in an **R package**
-- the charts are **JS widgets**
-:::
-
-::: {.col}
-- the navigation comes from **Quarto**
-- the map is **its own repo**
-- the Shiny app is **WebAssembly**
-:::
-
-<br>
-
-[No piece has to understand the whole thing. Neither does the agent.
-
-This is the last thing the audience sees before the close, and it is the right
-last thing: it takes the victory-lap material and hands it straight back to the
-thesis.]{.font120}
-
-::: {.notes}
-So let's look at that dashboard again.
-
-It looks like an application. It isn't — it's a composition of pieces that don't
-know about each other. And no single component ever needs to understand the
-whole system.
-
-Neither does the agent.
-:::
-
----
-
 ## You don't need to know Quarto to get started
 
 Change **one word** in your prompt.
@@ -1475,24 +1410,6 @@ read as mitigations, which is a better register than advice.
 {{< center >}}
 {{< middle >}}
 
-# Software solved this<br>decades ago.
-
-[Source and artifact. Documents are only getting there now —]{.font120}
-[right when the authors became probabilistic.]{.font120 .orange}
-
-::: {.notes}
-Source and artifact. Software solved this decades ago.
-
-Documents are only getting there now — right when the authors became
-probabilistic.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
 # Quarto wasn't built for this.
 
 [Nobody was thinking about agents in 2022.<br>]{.font120}
@@ -1521,45 +1438,4 @@ Do not explain Wigner. Just say the two lines and go to the last slide.
 
 ::: {.notes}
 That's the talk.
-:::
-
----
-
-EXTRA
-
----
-
-## It's  application. It's a document.
-
-::: {.col}
-[**Shiny**]{.red}
-
-- a UI
-- a server function
-- a reactive graph
-- a process that has to be running
-
-You maintain an **application**.
-:::
-
-::: {.col}
-[**Quarto**]{.blue}
-
-- markdown
-- a chunk that returns a widget
-
-You maintain a **document**.
-:::
-
-[No UI. No server. Real compute over data too big for a browser is still Shiny's job.]{.font120}
-
-::: {.notes}
-This isn't an application. It's a document.
-
-Not an anti-Shiny argument: real server-side compute over data too big for a
-browser is exactly Shiny's job. Most dashboards aren't that.
-
-This slide is early on purpose. This room has been silently asking "why isn't
-this Shiny?" since the montage, and you cannot argue cost and correctness to
-people who are still stuck on that question. Answer it, then move.
 :::
