@@ -69,61 +69,6 @@ sp <- function(gap = 2, unit = "em") {
 
 ---
 
-{{< bg-color "#000000" >}}
-{{< middle >}}
-{{< center >}}
-
-<br>
-![](images/vehicletrends.gif){fig-align="center" width=100%}
-
-::: {.notes}
-
-:::
-
----
-
-{{< bg-color "#2e4057" >}}
-{{< inverse >}}
-{{< center >}}
-
-`r sp(6)`
-
-# {{< quarto size=5x >}}
-
-::: {.notes}
-
-:::
-
----
-
-{{< bg-color "#2e4057" >}}
-{{< inverse >}}
-
-`r sp(6)`
-
-::: {.col width="50%" .center}
-`r sp(0.5)`
-# {{< quarto size=5x >}}
-:::
-
-::: {.col width="50%" .center}
-<img src="images/ai-chip.png" width=55%>
-:::
-
-::: {.notes}
-
-:::
-
----
-
-{{< bg-image "images/dashboards.png" size="contain" >}}
-
-::: {.notes}
-
-:::
-
----
-
 {{< bg-color "#2e4057" >}}
 {{< middle >}}
 {{< center >}}
@@ -136,6 +81,13 @@ sp <- function(gap = 2, unit = "em") {
 </center>
 
 ::: {.notes}
+
+Open by acknowledging the apparent mismatch: this is a dashboard session, but we are
+starting with a handwriting worksheet. The worksheet is deliberately simple because it
+makes the underlying problem obvious.
+
+Say: "I promise we will get to dashboards. But this is the smallest example I could find
+of a problem that gets much more interesting when the artifact gets complicated."
 
 :::
 
@@ -150,6 +102,9 @@ sp <- function(gap = 2, unit = "em") {
 
 ::: {.notes}
 
+Let the request sound almost trivial. The point is not that the model cannot do it; the
+point is that asking for a finished artifact entangles the content and the format.
+
 :::
 
 ---
@@ -159,6 +114,9 @@ sp <- function(gap = 2, unit = "em") {
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
 
 ::: {.notes}
+
+This is the first generated artifact. Don't spend long critiquing it; the next slides make
+the failure mode more useful.
 
 :::
 
@@ -172,6 +130,9 @@ sp <- function(gap = 2, unit = "em") {
 
 ::: {.notes}
 
+Eight rounds later, the model has mostly converged, but only by repeatedly changing things
+that were already right. This is the setup for separating content from format.
+
 :::
 
 ---
@@ -181,6 +142,9 @@ sp <- function(gap = 2, unit = "em") {
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="800"}
 
 ::: {.notes}
+
+The Minecraft version is intentionally useful: the content changed, but what I really
+wanted was for the format to stay fixed.
 
 :::
 
@@ -200,6 +164,9 @@ sp <- function(gap = 2, unit = "em") {
 
 ::: {.notes}
 
+Say: "This is what I was actually asking for: these sentences, with this layout."
+That is a compositional problem, not really a prompting problem.
+
 :::
 
 ---
@@ -213,6 +180,9 @@ sp <- function(gap = 2, unit = "em") {
 
 ::: {.notes}
 
+Name the problem: the artifact is one entangled object. To change the content, the model
+has to regenerate the thing that also controls the format.
+
 :::
 
 ---
@@ -225,6 +195,9 @@ sp <- function(gap = 2, unit = "em") {
 {{< include svg/entanglement-2.qmd >}}
 
 ::: {.notes}
+
+Introduce the canvas idea. Quarto lets the format become a stable canvas while content is
+supplied separately. This is the first major property: composition.
 
 :::
 
@@ -298,6 +271,9 @@ for (s in sentences) {
 
 ::: {.notes}
 
+Show the payoff: one canvas, different content, same structure. Pokémon and Minecraft are
+two inputs to the same compositional system.
+
 :::
 
 ---
@@ -320,6 +296,9 @@ for (s in sentences) {
 
 ::: {.notes}
 
+Make the thesis explicit: "Ask for the .qmd, not the artifact." Then immediately scale the
+idea up: "Now let's see what happens when the artifact is a dashboard."
+
 :::
 
 ---
@@ -333,6 +312,10 @@ for (s in sentences) {
 
 ::: {.notes}
 
+Reveal the Vehicle Trends dashboard. This is the payoff for starting with the handwriting
+example. The audience now sees that the same idea scales from a tiny PDF to a complex web
+application.
+
 :::
 
 ---
@@ -344,44 +327,9 @@ for (s in sentences) {
 
 ::: {.notes}
 
-:::
-
----
-
-# [Quarto websites make great dashboards]{.center}
-
-:::: {.col width="45%"}
-[**`_quarto.yml`**]{.qmdblue .font120}
-
-::: {.font90}
-```yaml
-project:
-  type: website
-
-website:
-  sidebar:
-    contents:
-      - about.qmd
-      - vmt-daily.qmd
-      - vmt-age.qmd
-      - depreciation.qmd
-      - ...
-```
-:::
-::::
-
-::: {.col width="55%" .fragment}
-
-`r sp(2)`
-
-:::{.font80}
-## Every page gets a URL, e.g.:
-
-## [https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
-:::
-:::
-
-::: {.notes}
+Use this as the large-scale counterpart to the handwriting diagram. Say: "This is the same
+idea at a much larger scale." The LLM is not being asked to understand one monolithic
+dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
 
 :::
 
@@ -429,6 +377,10 @@ website:
 
 ::: {.notes}
 
+Introduce modularity here. The dashboard is a Quarto website whose pages are independent
+QMDs. Each page is effectively its own small canvas, while the website provides the
+overall structure and navigation.
+
 :::
 
 ---
@@ -448,6 +400,9 @@ website:
 # [Just Code Chunks]{.font120}
 
 ::: {.notes}
+
+This is the key architectural simplification: no dashboard framework is required. A page
+can just be code chunks that render into a browser artifact.
 
 :::
 
@@ -518,6 +473,9 @@ penguins |>
 :::
 
 ::: {.notes}
+
+Do not frame R versus Python as a competition. They are examples of different components
+that can live inside the same Quarto canvas.
 
 :::
 
@@ -631,6 +589,9 @@ htmltools::div(
 
 ::: {.notes}
 
+The important point is composition: widgets can remain independent components and still
+communicate. Quarto provides the page that contains them.
+
 :::
 
 ---
@@ -743,6 +704,9 @@ panel("body_mass_g", "bill_depth_mm",
 
 ::: {.notes}
 
+OJS is another implementation choice. The same visual idea can be recomputed in the
+browser without changing the surrounding Quarto page.
+
 :::
 
 ---
@@ -782,6 +746,9 @@ htmltools::tags$iframe(
 :::
 
 ::: {.notes}
+
+Shiny shows how far the canvas can stretch. The thing inside the page can be an entire
+interactive application, whether it runs through Shinylive or a server.
 
 :::
 
@@ -830,6 +797,9 @@ htmltools::tags$iframe(
 
 ::: {.notes}
 
+The map pushes the point one step further: the component can even live in another
+repository and be embedded. Quarto does not need to own the technology to compose it.
+
 :::
 
 ---
@@ -849,21 +819,9 @@ cached, so nothing goes stale.
 
 ::: {.notes}
 
-:::
-
----
-
-{{< inverse >}}
-{{< middle >}}
-{{< center >}}
-
-# [Control]{.font150 .fragment .custom .dims data-fragment-index="1"}
-
-::: {.fragment data-fragment-index="1"}
-# [Cost]{.font150}
-:::
-
-::: {.notes}
+Briefly emphasize the deployment payoff, but don't turn this into a deployment talk:
+the composed dashboard can still reduce operational complexity because much of the
+artifact is just static files.
 
 :::
 
@@ -885,6 +843,9 @@ cached, so nothing goes stale.
 ```
 
 ::: {.notes}
+
+Now pivot from "what can the canvas contain?" to "why does this architecture matter for an
+AI agent?" Introduce the source-versus-rendered-artifact comparison.
 
 :::
 
@@ -912,8 +873,11 @@ cached, so nothing goes stale.
 
 ::: {.font45}
 ````markdown
+
 ---
+
 format: pdf
+
 ---
 
 ## EV Sales
@@ -1052,6 +1016,9 @@ sales globally.</p>
 
 ::: {.notes}
 
+Use the experiment as evidence for the broader claim: the same underlying content can
+explode into much larger rendered representations. Source is the compact interface.
+
 :::
 
 ---
@@ -1065,6 +1032,9 @@ sales globally.</p>
 </center>
 
 ::: {.notes}
+
+This is the empirical punchline of the token section. Smaller source representations mean
+less context to move around and reason about.
 
 :::
 
@@ -1080,6 +1050,9 @@ sales globally.</p>
 </center>
 
 ::: {.notes}
+
+"All Markdown" is the conceptual bridge: underneath the rendered artifacts, we can work
+with a compact, plain-text source representation.
 
 :::
 
@@ -1123,6 +1096,12 @@ sales globally.</p>
 
 ::: {.notes}
 
+Bring back the dashboard architecture mentally: fifteen small QMDs, not one giant object.
+Highlight depreciation.qmd. Say: "If I ask the agent to change depreciation, it can reason
+about this page rather than the whole dashboard."
+
+This is where the dashboard diagram from earlier becomes the modularity argument.
+
 :::
 
 ---
@@ -1159,6 +1138,12 @@ sales globally.</p>
 
 ::: {.notes}
 
+This is the key AI line: "This isn't about how much you write. It's about how much has to
+be true at once — and that is what an agent has to hold in its head."
+
+Then make the causal chain explicit: modularity -> smaller context -> fewer tokens -> lower
+cost. Cost is a consequence of modularity, not a separate pillar.
+
 :::
 
 ---
@@ -1167,17 +1152,28 @@ sales globally.</p>
 {{< center >}}
 {{< middle >}}
 
-# [Control]{.font150 .earned}
+# [Composition]{.font150}
 
-# [Cost]{.font150 .earned}
+::: {.fragment}
+# [Modularity]{.font150}
+:::
 
 ::: {.fragment}
 # [Correctness]{.font150}
 :::
 
 ::: {.notes}
+These are the three properties I want the audience to remember.
 
+Composition: Quarto gives AI a canvas where different kinds of content can live together.
+
+Modularity: that canvas is made of small pieces, so humans and agents don't have to hold the
+whole system in their heads at once. Lower token cost follows from this.
+
+Correctness: because the source is executable and inspectable, we can test it, render it,
+and review exactly what changed.
 :::
+
 
 ---
 
@@ -1192,6 +1188,12 @@ sales globally.</p>
 </center>
 
 ::: {.notes}
+
+Now move to correctness. The Africa map is intentionally a finished artifact: it looks
+like a map, but the borders are terribly wrong. This is not a hypothetical failure mode;
+it was actually presented at a conference.
+
+The question is: what leverage do we have when all we possess is the finished image?
 
 :::
 
@@ -1209,6 +1211,9 @@ sales globally.</p>
 </center>
 
 ::: {.notes}
+
+"The problem with the artifact is that there is no version that throws an error." There is
+nothing inherent in the finished image that can tell us the geography is wrong.
 
 :::
 
@@ -1233,6 +1238,12 @@ sales globally.</p>
 :::
 
 ::: {.notes}
+
+Now generate the same kind of map from source. The shapefile/geographic data, the funding
+data, the join, and the plotting code are all inspectable.
+
+The point is not that code is magically correct. The point is that source gives us places
+where correctness can be checked and enforced.
 
 :::
 
@@ -1266,6 +1277,9 @@ On GitHub actions
 :::
 
 ::: {.notes}
+
+Quarto makes the source executable. If an assertion fails, render stops. That turns a
+silent artifact problem into an explicit failure that a machine can catch.
 
 :::
 
@@ -1302,17 +1316,10 @@ On GitHub actions
 
 ::: {.notes}
 
-:::
+And source is also human-checkable. A plain-text QMD produces a meaningful diff. Humans can
+see what changed rather than trying to compare two opaque rendered artifacts.
 
----
-
-## You don't need to know Quarto to get started
-
-Change **one word** in your prompt.
-
-[Ask for the `.qmd`.]{.font160 .blue}
-
-::: {.notes}
+Together: machine checks execution; humans inspect the source.
 
 :::
 
@@ -1329,6 +1336,12 @@ Change **one word** in your prompt.
 
 ::: {.notes}
 
+Acknowledge the rough edges briefly. This is not a claim that AI + Quarto is frictionless.
+The important comparison is that these failures are cheap to detect and fix when the
+agent is working on source.
+
+Do not dwell here; the next slide is the philosophical punchline.
+
 :::
 
 ---
@@ -1340,5 +1353,33 @@ Change **one word** in your prompt.
 # Quarto wasn't built for AI
 
 ::: {.notes}
+Pause here.
 
+Quarto was built around reproducible, executable, composable source. Those properties were
+not designed for AI agents, but they turn out to be exactly the properties that make an AI
+workflow tractable and trustworthy.
 :::
+
+
+---
+
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# [Ask your agent for the `.qmd`.]{.font150}
+
+::: {.notes}
+Return to the handwriting example.
+
+Say: "We started with a tiny artifact — a handwriting worksheet — and the lesson was not
+that AI should make handwriting worksheets."
+
+"The lesson was: don't ask the agent for the finished artifact. Ask it for the source."
+
+Then: "Next time you're building something — a PDF, a report, a website, or a dashboard —
+ask your agent to build you a .qmd and see where it takes you."
+
+Stop there.
+:::
+
