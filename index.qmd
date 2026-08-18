@@ -63,6 +63,10 @@ sp <- function(gap = 2, unit = "em") {
 
 [posit::conf(2026)<br>Houston, TX]{.font120}
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< bg-color "#000000" >}}
@@ -71,6 +75,10 @@ sp <- function(gap = 2, unit = "em") {
 
 <br>
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -81,6 +89,10 @@ sp <- function(gap = 2, unit = "em") {
 `r sp(6)`
 
 # {{< quarto size=5x >}}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -98,9 +110,17 @@ sp <- function(gap = 2, unit = "em") {
 <img src="images/ai-chip.png" width=55%>
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< bg-image "images/dashboards.png" size="contain" >}}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -115,6 +135,10 @@ sp <- function(gap = 2, unit = "em") {
 <img src="images/handwriting.png" width=60%>
 </center>
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< middle >}}
@@ -124,11 +148,19 @@ sp <- function(gap = 2, unit = "em") {
 
 ## *"Make a one-page handwriting practice sheet<br>with sentences about **pokemon**"*
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-practice-pokemon.png){fig-align="center" height="800"}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -138,11 +170,19 @@ sp <- function(gap = 2, unit = "em") {
 
 # Eight rounds later...
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< bg-color "#2e4057" >}}
 
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="800"}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -158,6 +198,10 @@ sp <- function(gap = 2, unit = "em") {
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="600"}
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< center >}}
@@ -167,6 +211,10 @@ sp <- function(gap = 2, unit = "em") {
 
 {{< include svg/entanglement-1.qmd >}}
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< center >}}
@@ -175,6 +223,10 @@ sp <- function(gap = 2, unit = "em") {
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -226,6 +278,10 @@ for (s in sentences) {
 
 ::::
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< center >}}
@@ -240,6 +296,10 @@ for (s in sentences) {
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="470"}
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< inverse >}}
@@ -247,12 +307,20 @@ for (s in sentences) {
 
 # [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< inverse >}}
 {{< middle >}}
 
 # [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -263,12 +331,20 @@ for (s in sentences) {
 <br>
 ![](images/vehicletrends.gif){fig-align="center" width=100%}
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< center >}}
 {{< middle >}}
 
 {{< include svg/dashboard.qmd >}}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -304,7 +380,11 @@ website:
 ## [https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
 :::
 :::
- 
+
+::: {.notes}
+
+:::
+
 ---
 
 # [Quarto websites make great dashboards]{.center}
@@ -347,6 +427,10 @@ website:
 :::
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< inverse >}}
@@ -362,6 +446,10 @@ website:
 `r sp(1)`
 
 # [Just Code Chunks]{.font120}
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -427,6 +515,10 @@ penguins |>
   ) |>
   e_grid(left = 80, right = 30, top = 20, bottom = 80)
 ```
+:::
+
+::: {.notes}
+
 :::
 
 ---
@@ -537,6 +629,10 @@ htmltools::div(
 ```
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 ## [Or recompute in the browser: `ojs`]{.center}
@@ -645,6 +741,10 @@ panel("body_mass_g", "bill_depth_mm",
 ```
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 ## [Use Shiny in a box!]{.center}
@@ -679,6 +779,10 @@ htmltools::tags$iframe(
 ```
 ````
 :::
+:::
+
+::: {.notes}
+
 :::
 
 ---
@@ -724,6 +828,10 @@ htmltools::tags$iframe(
 - Hosted on [GitHub pages](https://vehicletrends.github.io/hhi-map/)
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 ## It's just static files
@@ -739,6 +847,10 @@ cached, so nothing goes stale.
 
 [No server to run. No server to secure. No server to pay for.]{.font120}
 
+::: {.notes}
+
+:::
+
 ---
 
 {{< inverse >}}
@@ -749,6 +861,10 @@ cached, so nothing goes stale.
 
 ::: {.fragment data-fragment-index="1"}
 # [Cost]{.font150}
+:::
+
+::: {.notes}
+
 :::
 
 ---
@@ -767,6 +883,10 @@ cached, so nothing goes stale.
   globally.</div>
 </div>
 ```
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -920,8 +1040,7 @@ sales globally.</p>
 :::
 
 ::: {.notes}
-And then there's Word. 663 characters for one paragraph — and that's
-one file inside a zip that also needs four more.
+
 :::
 
 ---
@@ -932,10 +1051,7 @@ one file inside a zip that also needs four more.
 {{< include svg/experiment.qmd >}}
 
 ::: {.notes}
-Two ways to ask for the same document.
 
-Top: three separate asks, three finished artifacts, and that's the end of the
-chain. Bottom: same agent, one `.qmd`, and render fans out to the same three.
 :::
 
 ---
@@ -949,15 +1065,7 @@ chain. Bottom: same agent, one `.qmd`, and render fans out to the same three.
 </center>
 
 ::: {.notes}
-The agent pays for every character.
 
-And it compounds over turns: about 81,000 tokens versus about 11,000 after ten
-edits. The ratio never moves — the gap does.
-
-The sharper version of the whole cost argument, worth saying out loud right
-here: **it is not that markdown is smaller — it is that you stop paying for the
-parts you did not change.** Character count is the proxy; regeneration is the
-mechanism.
 :::
 
 ---
@@ -970,6 +1078,10 @@ mechanism.
 <center>
 <img src="images/its-all-markdown.png" width=100%>
 </center>
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -1011,14 +1123,6 @@ mechanism.
 
 ::: {.notes}
 
-And here's what I did **not** do: I did not regenerate the site. Nothing decided
-the sidebar again, or the theme again, or the fourteen pages I never opened.
-There is no version of this where the navigation quietly comes back different —
-the same way there was no version of the worksheet where the layout drifted.
-
-The numbers on those other pages aren't in these files either — that's
-**`library(vehicletrends)`**, computed at render. Right now that just means the
-agent doesn't have to write them. Later it means nobody can write the wrong one.
 :::
 
 ---
@@ -1054,24 +1158,7 @@ agent doesn't have to write them. Later it means nobody can write the wrong one.
 [and *that* is what an agent has to hold in its head.]{.font130 .blue}
 
 ::: {.notes}
-Here's the version of that which actually matters for an agent.
 
-An application is a coupled thing, and it should be -- that coupling is what
-makes it reactive. But it means adding one filter touches an input, an output,
-and the reactive expression between them, and all three have to agree.
-
-A page isn't coupled. Adding a filter is a chunk.
-
-**The line to land:** this is not a claim about how much code you write. It's a
-claim about how much has to be simultaneously true -- and that is exactly what
-an agent has to hold in context to make a change safely.
-
-Which is the same argument as the next slide, one level down. If you're running
-that one too, this is the handoff: *"and it scales."*
-
-Note there is no comparison of volume anywhere on this slide, and no number.
-Nothing here says an app is worse. It says an app is *coupled*, which is what
-an app is for.
 :::
 
 ---
@@ -1089,10 +1176,7 @@ an app is for.
 :::
 
 ::: {.notes}
-Control and cost are behind us.
 
-Correctness is the one that matters most the moment there's data in the
-document.
 :::
 
 ---
@@ -1108,7 +1192,7 @@ document.
 </center>
 
 ::: {.notes}
-This went out.
+
 :::
 
 ---
@@ -1123,6 +1207,10 @@ This went out.
 
 [Source: [BBC](https://www.bbc.com/news/articles/c89n0xykw2go)]{.small}
 </center>
+
+::: {.notes}
+
+:::
 
 ---
 
@@ -1145,11 +1233,7 @@ This went out.
 :::
 
 ::: {.notes}
-`stopifnot(all(funding$name %in% africa$name))` is the whole point of
-this slide. Mistype a country and the render stops.
 
-Values live in data, code lives in code. And the turn: if you *join* names to a
-shapefile a wrong name fails; if you *draw* the shape there's nothing to fail.
 :::
 
 ---
@@ -1178,6 +1262,10 @@ shapefile a wrong name fails; if you *draw* the shape there's nothing to fail.
 ### `quarto render` errors _quickly_
 
 On GitHub actions 
+
+:::
+
+::: {.notes}
 
 :::
 
@@ -1212,6 +1300,10 @@ On GitHub actions
 
 :::
 
+::: {.notes}
+
+:::
+
 ---
 
 ## You don't need to know Quarto to get started
@@ -1221,8 +1313,7 @@ Change **one word** in your prompt.
 [Ask for the `.qmd`.]{.font160 .blue}
 
 ::: {.notes}
-You don't need to know Quarto to start. Change one word in your
-prompt.
+
 :::
 
 ---
@@ -1237,30 +1328,7 @@ prompt.
 [None of these are fatal. All of them are cheaper than re-prompting a PDF.]{.font120}
 
 ::: {.notes}
-NEW SLIDE — RECOMMENDED. Edit the four bullets down to whatever actually bit
-you; the specific gripes matter less than the fact that you have some.
 
-This buys credibility with the skeptic in row three, and it makes the next
-slide read as mitigation rather than boilerplate. A talk that admits nothing
-gets argued with in the hallway.
-
-Keep it fast — twenty seconds, no dwelling. The last line is the whole point of
-the slide.
-:::
-
----
-
-## Make this work Monday
-
-1. Put *"always run `quarto render` before finishing"* in your `CLAUDE.md`
-2. Have the agent work on a branch, so edits arrive as diffs
-3. Keep data in files the `.qmd` reads — never in the prompt
-
-::: {.notes}
-Three things you can do Monday.
-
-Read them fast. If you added the caveats slide before this one, these three now
-read as mitigations, which is a better register than advice.
 :::
 
 ---
@@ -1269,7 +1337,8 @@ read as mitigations, which is a better register than advice.
 {{< center >}}
 {{< middle >}}
 
-# Quarto wasn't built for this.
+# Quarto wasn't built for AI
 
-[Nobody was thinking about agents in 2022.<br>]{.font120}
-[It works anyway — that's the unreasonable part.]{.font120 .orange}
+::: {.notes}
+
+:::
