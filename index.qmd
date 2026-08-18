@@ -155,7 +155,7 @@ Introduce the canvas idea. Quarto lets the format become a stable canvas while c
 
 ---
 
-# [One `.qmd`, one folder of CSVs]{.center}
+# [Modularized content]{.center}
 
 :::: {.col width="58%"}
 [**`handwriting-practice.qmd`**]{.qmdblue .font120}
@@ -231,22 +231,10 @@ two inputs to the same compositional system.
 ---
 
 {{< inverse >}}
+{{< center >}}
 {{< middle >}}
 
-# [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
-
----
-
-{{< inverse >}}
-{{< middle >}}
-
-# [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
-
-::: {.notes}
-
-"Now let's see what happens when the artifact is a dashboard."
-
-:::
+# One canvas, modular content
 
 ---
 
@@ -274,12 +262,52 @@ dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
 
 ---
 
-# [Quarto websites make great dashboards]{.center}
+{{< middle >}}
 
-:::: {.col width="45%"}
+::: {.col width="28%"}
+{{< include svg/qmd-stack.qmd >}}
+:::
+
+::: {.col width="50%" valign="middle"}
 [**`_quarto.yml`**]{.qmdblue .font120}
 
-::: {.font90}
+```yaml
+project:
+  type: website
+C
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - vmt-age.qmd
+      - depreciation.qmd
+      - ...
+```
+:::
+
+::: {.col width="22%"}
+
+:::
+
+---
+
+{{< middle >}}
+
+::: {.col width="50%" .font130}
+## Things we get for free:
+
+→ URLs to each [page](https://vehicletrends.us/percent-dealers)<br>
+→ URLs to each header<br>
+→ navigation<br>
+→ consistent layout
+
+:::
+
+::: {.col width="50%"}
+
+[**`_quarto.yml`**]{.qmdblue .font120}
+
 ```yaml
 project:
   type: website
@@ -293,33 +321,19 @@ website:
       - depreciation.qmd
       - ...
 ```
-:::
-::::
 
-::: {.col width="55%"}
-
-`r sp(2)`
-
-:::{.font80}
-## Every page gets a URL, e.g.:
-
-## [https://vehicletrends.us/depreciation](https://vehicletrends.us/depreciation)
-
-`r sp(2)`
-
-## Rich Quarto layouts options:
-
-### - Tabsets
-### - Header-level urls
-:::
 :::
 
-::: {.notes}
+---
 
-Introduce modularity here. The dashboard is a Quarto website whose pages are independent QMDs. Each page is effectively its own small canvas, while the website provides the overall structure and navigation.
+{{< middle >}}
 
-"A dashboard can just be a Quarto website made up of independent pages."
+::: {.col width="28%"}
+{{< include svg/qmd-stack.qmd >}}
+:::
 
+::: {.col width="72%" valign="middle"}
+# Each page is its own canvas
 :::
 
 ---
@@ -337,12 +351,6 @@ Introduce modularity here. The dashboard is a Quarto website whose pages are ind
 `r sp(1)`
 
 # [Just Code Chunks]{.font120}
-
-::: {.notes}
-
-This is the key architectural simplification: no dashboard framework is required. A page can just be code chunks that render into a browser artifact.
-
-:::
 
 ---
 
@@ -1378,4 +1386,24 @@ that AI should make handwriting worksheets."
 
 Then: "Next time you're building something — a PDF, a report, a website, or a dashboard —
 ask your agent to build you a .qmd and see where it takes you."
+:::
+
+---
+
+{{< inverse >}}
+{{< middle >}}
+
+# [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+
+---
+
+{{< inverse >}}
+{{< middle >}}
+
+# [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+
+::: {.notes}
+
+"Now let's see what happens when the artifact is a dashboard."
+
 :::

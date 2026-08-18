@@ -1,0 +1,42 @@
+<!--
+  THE .qmd STACK, ALONE — lifted verbatim from svg/dashboard.qmd's click-1 stack
+  (the `.qmd x 15` cards) so the `Each page is its own canvas` slide can carry
+  the same visual beside its title. Same coordinates, colors, fonts, and bands as
+  the parent figure; this is the stack with the arrows, markers and fragments
+  stripped, re-cropped to its own ink. If dashboard.qmd's stack ever changes,
+  change this too — they are meant to read as the same object.
+
+  viewBox is tuned to the stack's real ink: cards x 668..861 (front card 670+190,
+  2.5 stroke), y 74..238 (front card 113+124); the `.qmd x 15` label at y=90
+  sits above at ~74. Yellow is a fill only; text on yellow is navy, on teal white.
+
+  SIZE MATCHES the dashboard slide. dashboard.qmd is width-bound and fills the
+  slide (935 viewBox units across ~full width, ~1.6 units/px), so its stack reads
+  at that scale. Here the stack lives in a 28% column, so it must be HEIGHT-bound
+  to hit the same scale: 168 viewBox units x 1.6 ~ 270px ~ 30vh. Raising
+  max-height past what the column's width allows does nothing — width takes over.
+-->
+
+```{=html}
+<svg viewBox="666 72 198 168" width="100%" style="max-height:30vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <text x="765" y="90" font-size="22" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd &#215; 15</text>
+
+  <rect x="686" y="97" width="174" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="678" y="105" width="182" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+
+  <rect x="670" y="113" width="190" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="686" y="129" width="158" height="36" fill="#00798c"/>
+  <text x="765" y="154" font-size="20" text-anchor="middle"
+        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="686" y="177" width="158" height="44" fill="#edae49"/>
+  <text x="765" y="206" font-size="20" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+</svg>
+```
