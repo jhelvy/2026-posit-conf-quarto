@@ -1,0 +1,44 @@
+<script>
+// Nudge every JavaScript widget when its slide arrives.
+//
+// Reveal keeps non-current slides at `display: none`, so anything that measures
+// its container while off-screen -- echarts4r, plotly, crosstalk, Observable
+// Plot -- computes a layout against a zero-size box and keeps it. That is the
+// bug where a chart looks broken until you hit refresh while sitting on the
+// slide, at which point it measures a visible container and comes out right.
+//
+// htmlwidgets, plotly and echarts all re-layout on a window resize event, so
+// dispatching one after the slide transition is enough to make them re-measure.
+// It is a no-op for widgets that were already correct.
+//
+// Iframes are NOT covered by this -- a cross-origin frame can't be reached from
+// here. Those use Reveal's own `data-src` lazy loading instead; see the map
+// slide in index.qmd.
+(function () {
+  function bump() {
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  function nudge() {
+    // Twice: once now, once after the slide transition has settled, since the
+    // container's final size isn't known until the transform finishes.
+    bump();
+    setTimeout(bump, 350);
+  }
+
+  // Quarto initializes Reveal in a module script, so it may not exist yet when
+  // this runs. Poll briefly rather than racing it.
+  var tries = 0;
+  var timer = setInterval(function () {
+    if (window.Reveal && typeof window.Reveal.on === 'function') {
+      clearInterval(timer);
+      window.Reveal.on('ready', nudge);
+      window.Reveal.on('slidechanged', nudge);
+      window.Reveal.on('fragmentshown', nudge);
+      nudge();
+    } else if (++tries > 100) {
+      clearInterval(timer);
+    }
+  }, 100);
+})();
+</script>

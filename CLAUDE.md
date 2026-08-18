@@ -86,6 +86,9 @@ They're navigation for us, not content; keep them in sync when slides move.
   both pending upstream: the guarded `.inverse` card paint in `lexis.scss`, and
   background-only slides in `lexis.lua` — see Styling.
 - `custom.css` — the only local stylesheet.
+- `widget-resize.html` — `include-after-body`; dispatches a window resize on
+  every slide change so widgets that measured a `display: none` container
+  re-layout without a manual refresh. The map iframe uses `data-src` instead.
 - `custom.scss` — **dead**, safe to delete.
 - `plots.R` — regenerates `images/fig-tokens.png` and `images/africa-map.png`
   (the only generated images). `Rscript plots.R`. Everything else in `images/`

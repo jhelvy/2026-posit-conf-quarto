@@ -6,6 +6,7 @@ format:
   lexis-revealjs:
     css: custom.css
     code-block-height: "660px"
+    include-after-body: widget-resize.html
 extensions:
   iconify:
     preload: iconify-preload.json
@@ -41,37 +42,6 @@ knitr::opts_chunk$set(
 
 sp <- function(gap = 2, unit = "em") {
   sprintf('<div style="height: %s%s;"></div>', gap, unit)
-}
-
-rungbar <- function(n) {
-  labs <- c(
-    "a chart",
-    "linked charts",
-    "a box",
-    "Shiny in the box",
-    "anything in the box"
-  )
-  grp <- c("in", "in", "box", "box", "box")
-  steps <- vapply(
-    seq_along(labs),
-    function(i) {
-      sprintf(
-        '<div class="rs rs-%s%s"><span class="rs-n">%d</span>%s</div>',
-        grp[i],
-        if (i == n) " is-on" else "",
-        i,
-        labs[i]
-      )
-    },
-    character(1)
-  )
-  htmltools::HTML(paste0(
-    '<div class="rungbar">',
-    '<div class="rg rg-in">inside the document</div>',
-    '<div class="rg rg-box">in a box</div>',
-    paste(steps, collapse = ""),
-    '</div>'
-  ))
 }
 ```
 
@@ -395,8 +365,6 @@ website:
 
 ---
 
-`r rungbar(1)`
-
 ## Interactivity from a code chunk in [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow}
 
 ::: {.col width="50%"}
@@ -431,11 +399,15 @@ penguins |>
   tidyr::drop_na(bill_length_mm, flipper_length_mm, species) |>
   group_by(species) |>
   # Square canvas, set explicitly rather than left to the column width, so the
-  # aspect ratio doesn't move if the 60/40 split ever changes. 560 is what fits
-  # under the rung bar and the title on a 900px slide.
+  # aspect ratio doesn't move if the 60/40 split ever changes. 560 is what
+  # fits under the title on a 900px slide.
   e_charts(bill_length_mm, width = "600px", height = "560px") |>
   e_scatter(flipper_length_mm, symbol_size = 9) |>
-  e_color(c("#00798c", "#A77400", "#d1495b")) |>
+  # `background` is e_color's second argument, and it sets echarts' top-level
+  # backgroundColor. The canvas is transparent by default, so the chart sat
+  # straight on the slide's grey; white matches the plotly and Plot panels on
+  # the next two slides.
+  e_color(c("#00798c", "#A77400", "#d1495b"), background = "#FFFFFF") |>
   e_legend(bottom = 0, textStyle = list(fontSize = 16)) |>
   e_tooltip() |>
   # scale = TRUE drops echarts' default "always include zero" on a value axis,
@@ -458,8 +430,6 @@ penguins |>
 :::
 
 ---
-
-`r rungbar(2)`
 
 ## [Widgets that talk to each other: `crosstalk` + `plotly`]{.center}
 
@@ -496,7 +466,13 @@ panel <- function(x, y, xlab, ylab) {
     type = "scatter",
     mode = "markers",
     marker = list(size = 8, opacity = 0.8),
-    # ~515px wide in a 78% column, so 460 tall lands close to square
+    # Both dimensions in pixels, on purpose. Left to autosize, plotly measures
+    # its container at document-ready -- which on a reveal deck is while the
+    # slide is still `display: none`, so it lays out against a garbage width and
+    # draws a plot far bigger than the box, with the points off-screen and no
+    # x-axis in view. A fixed size cannot be measured wrong. 500 x 460 is what
+    # two panels plus the control rail fit into 1420px of usable slide width.
+    width = 500,
     height = 460
   ) |>
     layout(
@@ -513,15 +489,21 @@ panel <- function(x, y, xlab, ylab) {
     )
 }
 
+# Every width here is fixed in pixels rather than a percentage. Percentages
+# resolve against a container that reveal has not laid out yet on the first
+# visit to the slide, and a flex item with no `min-width: 0` cannot shrink below
+# its content -- so one mis-measured panel used to take the whole row and squeeze
+# the other one to nothing. 300 + 500 + 500 plus the two gaps fits the 1420px of
+# usable slide width with room to spare.
 htmltools::div(
-  style = "display:flex; gap:1.6rem; align-items:flex-start;",
+  style = "display:flex; gap:1.6rem; align-items:flex-start; justify-content:center;",
 
   # Controls stacked in their own left column, slider over dropdown. Stacking
   # them beside the plots instead of above is what makes the slide read as an
   # app: a control rail is the shape people recognise, and it buys the plots
   # enough height to come out roughly square.
   htmltools::div(
-    style = "flex:0 0 22%; padding-top:0.6rem;",
+    style = "flex:0 0 300px; min-width:0; padding-top:0.6rem;",
     filter_slider(
       "mass",
       "Body mass (g)",
@@ -536,9 +518,9 @@ htmltools::div(
   ),
 
   htmltools::div(
-    style = "flex:1 1 78%; display:flex; gap:1.2rem;",
+    style = "flex:0 0 auto; display:flex; gap:1.2rem;",
     htmltools::div(
-      style = "flex:1 1 50%;",
+      style = "flex:0 0 500px; min-width:0;",
       panel(
         ~bill_length_mm,
         ~flipper_length_mm,
@@ -547,7 +529,7 @@ htmltools::div(
       )
     ),
     htmltools::div(
-      style = "flex:1 1 50%;",
+      style = "flex:0 0 500px; min-width:0;",
       panel(~body_mass_g, ~bill_depth_mm, "Body mass (g)", "Bill depth (mm)")
     )
   )
@@ -556,8 +538,6 @@ htmltools::div(
 :::
 
 ---
-
-`r rungbar(2)`
 
 ## [Or recompute in the browser: `ojs`]{.center}
 
@@ -667,9 +647,7 @@ panel("body_mass_g", "bill_depth_mm",
 
 ---
 
-`r rungbar(4)`
-
-## [Yes, you can still use Shiny]{.center}
+## [Use Shiny in a box!]{.center}
 
 ::: {.col width="35%"}
 [**Shinylive** -- no server]{.blue}
@@ -705,15 +683,20 @@ htmltools::tags$iframe(
 
 ---
 
-`r rungbar(5)`
-
 ## [Put any widget in a box!]{.center}
 
 ::: {.col width="58%" .font80}
 <center>
 ```{r}
+# `data-src`, not `src`. Reveal keeps every non-current slide at `display: none`,
+# so an iframe with a real `src` loads into a zero-size box and MapLibre sizes
+# its canvas to nothing -- which is why the map only looked right after a manual
+# refresh. Reveal handles `data-src` natively: it swaps in the real src at the
+# moment the slide becomes current, when the box finally has dimensions.
+# Cost of the fix: leaving the slide unloads the iframe, so coming back re-inits
+# the map. That takes a second and it comes back correct, which is the trade.
 htmltools::tags$iframe(
-  src = "https://vehicletrends.github.io/hhi-map/",
+  `data-src` = "https://vehicletrends.github.io/hhi-map/",
   height = "500px",
   width = "900px",
   style = "border: none;"
@@ -883,13 +866,7 @@ sales globally.</p>
 ::::
 
 ::: {.notes}
-Same paragraph, three sources, smallest to biggest.
 
-The counts are measured, not estimated. HTML costing more than LaTeX is not a
-bug.
-
-If anyone asks why column one has no preamble: the styling moved into the
-renderer.
 :::
 
 ---
@@ -1296,28 +1273,3 @@ read as mitigations, which is a better register than advice.
 
 [Nobody was thinking about agents in 2022.<br>]{.font120}
 [It works anyway — that's the unreasonable part.]{.font120 .orange}
-
-::: {.notes}
-NEW SLIDE — RECOMMENDED. This is the title finally paying off, and it pays off
-at the end rather than the beginning, which is where you wanted it.
-
-"Unreasonable effectiveness" is Wigner's phrase, and it means a thing works far
-better than its designers had any right to expect. That is exactly the claim:
-the separation of content from format was built for reproducible research, and
-it happens to be the correct architecture for a probabilistic author nobody had
-met yet.
-
-Do not explain Wigner. Just say the two lines and go to the last slide.
-:::
-
----
-
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
-
-# Agents should write the source,<br>not the artifact.
-
-::: {.notes}
-That's the talk.
-:::
