@@ -274,14 +274,6 @@ for (s in sentences) {
 
 {{< include svg/dashboard.qmd >}}
 
-::: {.notes}
-
-"This is the same idea at a much larger scale." 
-The LLM is not being asked to understand one monolithic
-dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
-
-:::
-
 ---
 
 {{< middle >}}
@@ -291,7 +283,7 @@ dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
 :::
 
 ::: {.col width="50%" valign="middle"}
-[**`_quarto.yml`**]{.qmdblue .font120}
+### [_quarto.yml]{.formatchip}
 
 ```yaml
 project:
@@ -306,6 +298,10 @@ website:
       - depreciation.qmd
       - ...
 ```
+
+<br>
+
+### [Charts built with {vehicletrends}]{.contentchip}
 :::
 
 ---
@@ -313,18 +309,20 @@ website:
 {{< middle >}}
 
 ::: {.col width="50%" .font130}
+<br>
+
 ## Things we get for free
 
 → URLs to each [page](https://vehicletrends.us/percent-dealers)<br>
 → URLs to each header<br>
-→ navigation<br>
-→ consistent layout
+→ Navigation<br>
+→ Consistent layout
 
 :::
 
 ::: {.col width="50%"}
 
-[**`_quarto.yml`**]{.qmdblue .font120}
+### [_quarto.yml]{.formatchip}
 
 ```yaml
 project:
@@ -340,6 +338,9 @@ website:
       - ...
 ```
 
+<br>
+
+### [Charts built with {vehicletrends}]{.contentchip}
 :::
 
 ---
@@ -374,7 +375,7 @@ website:
 
 ## [(Things to put in the canvas)]{.center .gray}
 
-# [JavaScript from [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow} packages]{.center}
+# [JavaScript graphics via [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow} packages]{.center}
 
 ::: {.col width="50%"}
 [**R**]{.blue} via {echarts4r}
@@ -680,7 +681,9 @@ panel("body_mass_g", "bill_depth_mm",
 
 ## [(Things to put in the canvas)]{.center .gray}
 
-# [Full Shiny apps!]{.center}
+::: {style="text-align: center;"}
+[Put &zwj;]{.fira style="font-size: 2.5em; vertical-align: middle;"} ![](images/shiny.png){width=10% style="vertical-align: middle; margin-left: 0.4em;"} [&zwj; in a box!]{.fira style="font-size: 2.5em; vertical-align: middle;"}
+:::
 
 ::: {.col width="35%"}
 [**Shinylive** -- no server]{.blue}
@@ -726,7 +729,7 @@ Shiny shows how far the canvas can stretch.
 
 ## [(Things to put in the canvas)]{.center .gray}
 
-## [Put any widget in a box!]{.center}
+# [Put any widget in a box!]{.center}
 
 ::: {.col width="58%" .font80}
 <center>
@@ -749,17 +752,6 @@ htmltools::tags$iframe(
 :::
 
 ::: {.col width="42%"}
-
-::: {.font50}
-```r
-htmltools::tags$iframe(
-  src    = "https://vehicletrends.github.io/hhi-map/",
-  height = "700px",
-  width  = "100%",
-  style  = "border: none;"
-)
-```
-:::
 
 - **276 lines** of hand-written MapLibre 
 - **1.64 GB** of tiles built with `{pmtiles}` (thanks [Kyle Walker](https://walker-data.com/)!)
