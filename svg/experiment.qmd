@@ -104,13 +104,13 @@
           fill="#2B579A" font-family="SFMono-Regular, Menlo, monospace">.docx</text>
   </g>
 
-  <!-- ============ BOTTOM: ask for the source ============ -->
+  <!-- ============ BOTTOM: ask for the .qmd ============ -->
 
   <g class="fragment" data-fragment-index="1">
 
     <line x1="170" y1="388" x2="912" y2="388" stroke="#c9ced6" stroke-width="2"/>
 
-    <text x="170" y="442" font-size="30" font-weight="600" fill="#2e4057">Ask for the source</text>
+    <text x="170" y="442" font-size="30" font-weight="600" fill="#2e4057">Ask for the .qmd</text>
 
     <g transform="translate(0 500)">
       <use href="#agentBox"/>

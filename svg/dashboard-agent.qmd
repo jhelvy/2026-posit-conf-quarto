@@ -1,0 +1,134 @@
+<!--
+  THE DASHBOARD FIGURE, AGENT VARIANT — the callback figure frozen at its
+  FINAL state, reused to pivot into the agent's point of view.
+
+  This is svg/dashboard.qmd's fully-opened last click, drawn once, at rest.
+  Everything the original figure builds across two clicks — the opened chain,
+  the fifteen .qmd, the rendered site, the data package — is present from the
+  first frame. There is exactly ONE fragment, and it does not add or move any
+  ink: click 1 drops a highlight ring around the LLM agent, because the next
+  few slides are told from the agent's side and the eye needs to be parked on
+  it. Nothing else animates.
+
+  WHY THE COORDINATES DIFFER FROM dashboard.qmd. There the boxes sit at CLOSED
+  positions and `.openleft` / `.openright` CSS transforms slide them apart on
+  click 1. Here there is no opening to animate, so every coordinate is baked at
+  its OPENED home directly: the openleft group is drawn 140 left of here, so
+  `me` is at 200 (was 340) and the agent at 400 (was 540); the openright group
+  is drawn 140 right, so the window is at 950 (was 810) and its label centred at
+  1007 (was 867). The stack, both inner arrows, the render arrow and the data
+  package were already at final coordinates in the original and are copied
+  verbatim. The direct agent -> site arrow is GONE: it only ever existed to fade
+  out as the chain opened, and the chain is already open.
+
+  viewBox "185 68 935 342" is dashboard.qmd's, unchanged, so the two figures
+  frame identically and the callback survives — this reads as the same picture,
+  held still. The highlight ring (x 390..590, y 133..217) sits well inside it.
+
+  Marker id `ahDashA` is unique to THIS slide. reveal display:none's the
+  non-current slides, and a `url(#id)` marker reference resolves to the first
+  matching id in the whole document, so the two dashboard figures must not share
+  one — dashboard.qmd keeps `ahDash`, this keeps `ahDashA`.
+
+  Palette rule holds: yellow only as the data box's and the content band's FILL,
+  never as a line or letter; text on yellow is navy. The highlight ring is red
+  `#d1495b` — it appears nowhere else in this figure, so it reads purely as
+  emphasis. It is one line to recolour.
+-->
+
+```{=html}
+<svg viewBox="185 68 935 342" width="100%" style="max-height:85vh;"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Fira Sans Condensed', Tahoma, sans-serif">
+
+  <defs>
+    <marker id="ahDashA" markerWidth="9" markerHeight="9" refX="5.5" refY="3"
+            orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#2e4057"/></marker>
+  </defs>
+
+  <!-- ── me -> agent, opened. `me` at 200, agent at 400 (dashed, unchanged). ── -->
+  <rect x="200" y="143" width="110" height="64" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <text x="255" y="184" font-size="24" text-anchor="middle" fill="#2e4057">me</text>
+
+  <path d="M 312 175 L 392 175" stroke="#2e4057" stroke-width="2.5"
+        marker-end="url(#ahDashA)"/>
+
+  <rect x="400" y="143" width="180" height="64" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"
+        stroke-dasharray="7 5"/>
+  <text x="490" y="184" font-size="24" text-anchor="middle" fill="#2e4057">LLM agent</text>
+
+  <!-- ── CLICK 1: highlight the agent. A ring around the box, nothing else. ──
+       Drawn after the box so the stroke rides on top; fill:none so it never
+       tints the label. -->
+  <g class="fragment" data-fragment-index="1">
+    <rect x="390" y="133" width="200" height="84" rx="12"
+          fill="none" stroke="#d1495b" stroke-width="6"/>
+  </g>
+
+  <!-- ── writes -> the .qmd stack, flush right at 860 (final coordinates). ── -->
+  <text x="622" y="161" font-size="20" fill="#2e4057"
+        text-anchor="middle">writes</text>
+  <path d="M 582 175 L 662 175" stroke="#2e4057" stroke-width="2.5"
+        marker-end="url(#ahDashA)"/>
+
+  <text x="765" y="90" font-size="22" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">.qmd &#215; 15</text>
+
+  <rect x="686" y="97" width="174" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="678" y="105" width="182" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+
+  <!-- Front card: figure 2's .qmd, same box, same two bands. -->
+  <rect x="670" y="113" width="190" height="124" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <rect x="686" y="129" width="158" height="36" fill="#00798c"/>
+  <text x="765" y="154" font-size="20" text-anchor="middle"
+        fill="#FFFFFF" font-family="SFMono-Regular, Menlo, monospace">yaml</text>
+  <rect x="686" y="177" width="158" height="44" fill="#edae49"/>
+  <text x="765" y="206" font-size="20" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">content</text>
+
+  <text x="902" y="161" font-size="20" fill="#2e4057"
+        text-anchor="middle">render</text>
+  <path d="M 862 175 L 942 175" stroke="#2e4057" stroke-width="2.5"
+        marker-end="url(#ahDashA)"/>
+
+  <!-- ── The site, opened. Window at 950, label centred on it at 1007. ──────── -->
+  <text x="1007" y="98" font-size="20" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">vehicletrends.us</text>
+
+  <rect x="950" y="110" width="115" height="130" rx="6"
+        fill="#FFFFFF" stroke="#2e4057" stroke-width="2.5"/>
+  <path d="M 950 132 L 1065 132" stroke="#2e4057" stroke-width="2"/>
+  <circle cx="962" cy="121" r="3" fill="#2e4057"/>
+  <circle cx="973" cy="121" r="3" fill="#2e4057"/>
+  <circle cx="984" cy="121" r="3" fill="#2e4057"/>
+
+  <path d="M 984 132 L 984 240" stroke="#2e4057" stroke-width="2"/>
+  <rect x="956" y="144" width="20" height="5" fill="#2e4057"/>
+  <rect x="956" y="157" width="20" height="5" fill="#2e4057"/>
+  <rect x="956" y="170" width="20" height="5" fill="#2e4057"/>
+  <rect x="956" y="183" width="20" height="5" fill="#2e4057"/>
+
+  <rect x="992" y="140" width="64" height="10" fill="#00798c"/>
+  <rect x="992" y="154" width="64" height="14" fill="#edae49"/>
+  <rect x="992" y="172" width="64" height="8"  fill="#00798c"/>
+  <rect x="992" y="184" width="64" height="16" fill="#edae49"/>
+  <rect x="992" y="204" width="64" height="10" fill="#00798c"/>
+  <rect x="992" y="218" width="64" height="8"  fill="#edae49"/>
+
+  <!-- ── The data package feeding the stack at render (final coordinates). ──── -->
+  <path d="M 765 330 L 765 250" stroke="#2e4057" stroke-width="2.5"
+        marker-end="url(#ahDashA)"/>
+  <rect x="670" y="332" width="190" height="64" rx="6"
+        fill="#edae49" stroke="#2e4057" stroke-width="2.5"/>
+  <text x="765" y="356" font-size="19" text-anchor="middle"
+        fill="#2e4057" font-family="SFMono-Regular, Menlo, monospace">{vehicletrends}</text>
+  <text x="765" y="380" font-size="18" text-anchor="middle"
+        fill="#2e4057">R data package</text>
+
+</svg>
+```

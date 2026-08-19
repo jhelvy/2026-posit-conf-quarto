@@ -103,11 +103,8 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 
 ---
 
-{{< inverse >}}
-{{< middle >}}
-{{< center >}}
-
-# Eight rounds later...
+{{< bg-image "images/8-rounds-later.png" >}}
+{{< no-slide-number >}}
 
 ---
 
@@ -143,22 +140,23 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 {{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
-{{< middle >}}
 
-`r sp(4.3)`
+`r sp(6)`
 
+::: {.col width="10%"}
+:::
+
+::: {.col width="35%"}
 ## {{< quarto size=6x >}}
+:::
 
----
+::: {.col width="55%"}
+`r sp(1.5)`
 
-{{< bg-color "#2e4057" >}}
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
+# Quarto disentangles 
 
-# Quarto disentangles [Content]{.contentchip} and [Format]{.formatchip}
-
-## {{< quarto size=6x >}}
+# [Content]{.contentchip} and [Format]{.formatchip}
+:::
 
 ---
 
@@ -168,12 +166,6 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 # Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
-
-::: {.notes}
-
-Introduce the canvas idea. Quarto lets the format become a stable canvas while content is supplied separately. This is the first major property: composition.
-
-:::
 
 ---
 
@@ -229,10 +221,6 @@ for (s in sentences) {
 
 ::::
 
-::: {.notes}
-
-:::
-
 ---
 
 {{< center >}}
@@ -254,7 +242,7 @@ for (s in sentences) {
 {{< center >}}
 {{< middle >}}
 
-# Quarto is a *canvas* for *modular content*
+# [Quarto is a *canvas* for *modular content*]{.font120}
 
 ## {{< quarto size=6x >}}
 
@@ -273,6 +261,32 @@ for (s in sentences) {
 {{< middle >}}
 
 {{< include svg/dashboard.qmd >}}
+
+---
+
+{{< middle >}}
+
+::: {.col width="40%"}
+{{< include svg/qmd-stack.qmd >}}
+:::
+
+::: {.col width="50%" valign="middle" .fragment}
+### [_quarto.yml]{.formatchip}
+
+```yaml
+project:
+  type: website
+
+website:
+  sidebar:
+    contents:
+      - about.qmd
+      - vmt-daily.qmd
+      - vmt-age.qmd
+      - depreciation.qmd
+      - ...
+```
+:::
 
 ---
 
@@ -311,12 +325,13 @@ website:
 ::: {.col width="50%" .font130}
 <br>
 
-## Things we get for free
+## A cohesive framework:
 
-→ URLs to each [page](https://vehicletrends.us/percent-dealers)<br>
+→ URLs to each page<br>
 → URLs to each header<br>
 → Navigation<br>
-→ Consistent layout
+→ Consistent layout<br>
+→ Easy deployment
 
 :::
 
@@ -345,31 +360,39 @@ website:
 
 ---
 
-{{< middle >}}
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
 
-::: {.col width="28%"}
-{{< include svg/qmd-stack.qmd >}}
+`r sp(6)`
+
+::: {.col width="10%"}
 :::
 
-::: {.col width="72%" valign="middle"}
-# Each page is its own canvas
+::: {.col width="40%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="50%"}
+`r sp(3.2)`
+
+# [Modularity]{.font150}
 :::
 
 ---
 
-{{< inverse >}}
 {{< middle >}}
-{{< center >}}
 
-# [No UI]{.font120}
+::: {.col width="5%"}
+:::
 
-# [No Server]{.font120}
+::: {.col width="25%"}
+{{< include svg/qmd-stack.qmd >}}
+:::
 
-. . . 
-
-`r sp(1)`
-
-# [Just Code Chunks 😎]{.font120}
+::: {.col width="70%" valign="middle"}
+# Each page is its own canvas
+:::
 
 ---
 
@@ -449,7 +472,7 @@ penguins |>
 
 ## [(Things to put in the canvas)]{.center .gray}
 
-## [Widgets that talk to each other:<br>`crosstalk` + `plotly`]{.center}
+## [Widgets that talk to each other:<br>`crosstalk` + `plotly`, or `ojs`]{.center}
 
 ::: {.font55}
 ```{r}
@@ -565,122 +588,6 @@ The important point is composition: widgets can remain independent components an
 
 ## [(Things to put in the canvas)]{.center .gray}
 
-# [Widgets that talk to each other: `ojs`]{.center}
-
-```{r}
-#| echo: false
-ojs_define(
-  pen_ojs = palmerpenguins::penguins |>
-    tidyr::drop_na(
-      bill_length_mm,
-      bill_depth_mm,
-      flipper_length_mm,
-      body_mass_g,
-      species
-    ) |>
-    dplyr::select(
-      species,
-      bill_length_mm,
-      bill_depth_mm,
-      flipper_length_mm,
-      body_mass_g
-    )
-)
-```
-
-```{ojs}
-//| output: false
-// Deliberately the SAME app as the crosstalk slide -- same two panels, same
-// slider, same dropdown -- so the difference between the two slides is the
-// machinery, not the picture.
-//
-// OJS is a dataflow runtime, so these two cells can be declared before the
-// inputs they depend on. `output: false` keeps their values out of the slide.
-data = transpose(pen_ojs)
-```
-
-```{ojs}
-//| output: false
-filtered = data.filter(
-  d => d.body_mass_g >= mass && sp.includes(d.species)
-)
-```
-
-```{ojs}
-//| output: false
-// One plot definition used twice, so the two panels are provably the same call
-// with different columns.
-panel = (x, y, xlab, ylab) => Plot.plot({
-  width: 520,
-  height: 460,
-  marginLeft: 60,
-  marginBottom: 50,
-  // Plot's root is transparent by default, so the panels sit straight on the
-  // slide's ground while plotly (two slides back) paints its own white paper.
-  // Both knobs, because `style` alone did not take: `--plot-background` is the
-  // variable Plot's own stylesheet reads, and the white on .ojs-panel in
-  // custom.css paints the div underneath whatever the SVG ends up doing.
-  style: {background: "#FFFFFF", "--plot-background": "#FFFFFF"},
-  x: {label: xlab, labelAnchor: "center"},
-  y: {label: ylab, labelAnchor: "center"},
-  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
-          range: ["#00798c", "#A77400", "#d1495b"]},
-  marks: [
-    Plot.dot(filtered, {x: x, y: y, fill: "species", r: 4.5, fillOpacity: 0.8})
-  ]
-})
-```
-
-:::: {.col .ojs-stack width="22%"}
-::: {.font55}
-```{ojs}
-// `width` is the form's width, not the track's; the label sits above it because
-// of .ojs-stack in custom.css, so the whole 260 goes to the slider and its
-// number box. Observable Inputs would otherwise park the label in a fixed
-// 120px gutter on the left, which is not how crosstalk's filter_slider reads.
-viewof mass = Inputs.range(
-  [2700, 6300],
-  {step: 50, value: 2700, label: "Body mass (g)", width: 260}
-)
-```
-
-```{ojs}
-// multiple: 3 makes this a list box with all three rows visible and everything
-// selected at rest -- the same behaviour as crosstalk's filter_select. Plain
-// `multiple: true` would open with NOTHING selected, i.e. an empty plot.
-viewof sp = Inputs.select(
-  ["Adelie", "Chinstrap", "Gentoo"],
-  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"],
-   label: "Species", width: 260}
-)
-```
-:::
-::::
-
-::: {.col .ojs-panel width="39%"}
-```{ojs}
-panel("bill_length_mm", "flipper_length_mm",
-      "Bill length (mm)", "Flipper length (mm)")
-```
-:::
-
-::: {.col .ojs-panel width="39%"}
-```{ojs}
-panel("body_mass_g", "bill_depth_mm",
-      "Body mass (g)", "Bill depth (mm)")
-```
-:::
-
-::: {.notes}
-
-"I can change the machinery without changing the canvas."
-
-:::
-
----
-
-## [(Things to put in the canvas)]{.center .gray}
-
 ::: {style="text-align: center;"}
 [Put &zwj;]{.fira style="font-size: 2.5em; vertical-align: middle;"} ![](images/shiny.png){width=10% style="vertical-align: middle; margin-left: 0.4em;"} [&zwj; in a box!]{.fira style="font-size: 2.5em; vertical-align: middle;"}
 :::
@@ -703,7 +610,7 @@ panel("body_mass_g", "bill_depth_mm",
 ::: {.col width="65%"}
 [**A real Shiny server**]{.red}
 
-::: {.font90}
+::: {.font80}
 ````markdown
 ```{{r}}
 htmltools::tags$iframe(
@@ -769,92 +676,58 @@ Quarto does not need to own the technology to compose it.
 
 ---
 
-Synthesis slide.
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
 
-Potential visual:
+`r sp(6)`
 
-**Quarto**
+::: {.col width="10%"}
+:::
 
-surrounded by:
+::: {.col width="40%"}
+## {{< quarto size=6x >}}
+:::
 
-`R` `Python` `Plotly` `OJS` `Shiny` `MapLibre` `HTML` etc.
+::: {.col width="50%"}
+`r sp(3.2)`
+
+# [Modularity]{.font150}
+:::
+
+---
+
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
+
+`r sp(6)`
+
+::: {.col width="10%"}
+:::
+
+::: {.col width="40%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="50%"}
+`r sp(1.5)`
+
+# [Modularity]{.font150 .qmdlightblue}
+
+# [Efficiency]{.font150}
+:::
+
+---
+
+{{< center >}}
+{{< middle >}}
+
+{{< include svg/dashboard-agent.qmd >}}
 
 ::: {.notes}
-
-"Quarto doesn't need to own the pieces. It gives them a place to live."
-
-::: 
-
----
-
-## It's just static files
-
-Everything here runs in the browser, and the whole site is files — **hosted for free.**
-
-[No server to run. No server to secure. No server to pay for.]{.font120}
-
-::: {.col}
-<center>
-<img src="images/github.png" width=100%>
-</center>
+"Now let's think about this from the perspective of an AI agent."
 :::
-
-::: {.col}
-<center>
-<img src="images/netlify.svg" width=100%>
-</center>
-:::
-
-::: {.notes}
-
-Briefly emphasize the deployment payoff, but don't turn this into a deployment talk: the composed dashboard can still reduce operational complexity because much of the artifact is just static files.
-
-:::
-
----
-
-## ACT III — **Why modularity changes AI**
-
----
-
-### 17. Return to the dashboard diagram
-
-Bring back the QMD stack, but now **zoom into the 15 QMDs**.
-
-> "Now let's think about this from the perspective of an AI agent."
-
----
-
-### 18. One page instead of the whole dashboard
-
-Show `depreciation.qmd`.
-
-Then your existing:
-
-> app → input + output + reactive
-
-versus
-
-> page → chunk
-
-And:
-
-> **"This isn't about how much you write. It's about how much has to be true at once."**
-
-This is one of the major intellectual peaks.
-
----
-
-### 19. Small pieces have small context windows
-
-Your file-tree slide.
-
-Now it has an obvious purpose.
-
-**Talking point:**
-
-> "The agent doesn't have to hold Vehicle Trends in its head."
-> "It can reason about the thing I'm asking it to change."
 
 ---
 
@@ -903,11 +776,8 @@ Now pivot from "what can the canvas contain?" to "why does this architecture mat
 
 ::: {.font45}
 ````markdown
-
 ---
-
 format: pdf
-
 ---
 
 ## EV Sales
@@ -918,7 +788,7 @@ _20 million_ sales globally.
 ````
 :::
 
-[**126** characters]{.qmdblue .font140}
+[**125** characters]{.qmdblue .font140}
 ::::
 
 :::: {.col .fragment}
@@ -1003,7 +873,7 @@ sales globally.</p>
 ::: {.col width="20%"}
 :::
 
-::: {.col width="55%"}
+::: {.col width="60%"}
 [{{< fa file-word size=2x >}}]{.wordblue}
 
 [**Word**]{.wordblue} (`word/document.xml`)
@@ -1073,22 +943,13 @@ less context to move around and reason about.
 {{< bg-color "#000000" >}}
 {{< center >}}
 
-`r sp(2)`
-
 <center>
 <img src="images/its-all-markdown.png" width=100%>
 </center>
 
-::: {.notes}
-
-"All Markdown" is the conceptual bridge: underneath the rendered artifacts, we can work
-with a compact, plain-text source representation.
-
-:::
-
 ---
 
-# [Small pieces have small context windows]{.center}
+# [Small pieces have *small context windows*]{.center}
 
 ::: {.col width="44%"}
 <pre class="specimen treecard">
@@ -1124,84 +985,80 @@ with a compact, plain-text source representation.
 </pre>
 :::
 
-::: {.notes}
+---
 
-Bring back the dashboard architecture mentally: fifteen small QMDs, not one giant object.
-Highlight depreciation.qmd. Say: "If I ask the agent to change depreciation, it can reason
-about this page rather than the whole dashboard."
+{{< center >}}
 
-This is where the dashboard diagram from earlier becomes the modularity argument.
+# [Small pieces have *less to agree upon*]{.center}
+
+::: {.col .center}
+
+<center>
+<img src="images/shiny.png" width=30%>
+</center>
+
+### The **input** that defines it
+
+### The **output** that consumes it
+
+### The **reactive** that connects them
+:::
+
+::: {.col .center}
+
+# {{< quarto size=3x >}}
+
+<br>
+
+### The **code chunk**
 
 :::
 
 ---
 
-## [To change one thing, what has to agree?]{.center}
-
-<br>
-
-::: {.col}
-[**in an app**]{.red}
-
-- the **input** that defines it
-- the **output** that consumes it
-- the **reactive** that connects them
-
-[Three places, and they have to match.]{.font110}
-:::
-
-::: {.col}
-[**in a page**]{.blue}
-
-- the **chunk**
-
-`r sp(1)`
-
-[One place, and it's the one<br>I'm already looking at.]{.font110}
-:::
-
-<br>
-
-[This isn't about how much you write. It's about how much has to be true at once —]{.font120}
-
-[and *that* is what an agent has to hold in its head.]{.font130 .blue}
-
-::: {.notes}
-
-This is the key AI line: "This isn't about how much you write. It's about how much has to
-be true at once — and that is what an agent has to hold in its head."
-
-Then make the causal chain explicit: modularity -> smaller context -> fewer tokens -> lower
-cost. Cost is a consequence of modularity, not a separate pillar.
-
-:::
-
----
-
+{{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
-{{< middle >}}
 
-# [Composition]{.font150}
+`r sp(6)`
 
-::: {.fragment}
+::: {.col width="10%"}
+:::
+
+::: {.col width="40%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="50%"}
+`r sp(1.5)`
+
 # [Modularity]{.font150}
+
+# [Efficiency]{.font150}
 :::
 
-::: {.fragment}
+---
+
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
+
+`r sp(6)`
+
+::: {.col width="10%"}
+:::
+
+::: {.col width="40%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="50%"}
+
+# [Modularity]{.font150 .qmdlightblue}
+
+# [Efficiency]{.font150 .qmdlightblue}
+
 # [Correctness]{.font150}
-:::
-
-::: {.notes}
-These are the three properties I want the audience to remember.
-
-Composition: Quarto gives AI a canvas where different kinds of content can live together.
-
-Modularity: that canvas is made of small pieces, so humans and agents don't have to hold the
-whole system in their heads at once. Lower token cost follows from this.
-
-Correctness: because the source is executable and inspectable, we can test it, render it,
-and review exactly what changed.
 :::
 
 ---
@@ -1248,7 +1105,7 @@ nothing inherent in the finished image that can tell us the geography is wrong.
 
 ---
 
-## [Same map from source]{.center}
+# [Same map from source]{.center}
 
 ::: {.col width="55%" .font45}
 
@@ -1280,13 +1137,19 @@ where correctness can be checked and enforced.
 
 # [Quarto is checkable twice]{.center}
 
+. . .
+
 <br>
 
 ## [**By machine**]{.center .darkgreen}
 
+<br>
+
 ::: {.col .fragment}
 
-### `quarto render` errors _loudly_
+### [`quarto render`<br>errors _loudly_]{.center}
+
+`r sp(0.5)`
 
 <pre class="specimen errcard">
 <span class="sp-dim">Quitting from index.qmd:12-30 [africa-map]</span>
@@ -1299,16 +1162,11 @@ where correctness can be checked and enforced.
 
 ::: {.col .fragment}
 
-### `quarto render` errors _quickly_
+### [`quarto render`<br>can be _automated_]{.center}
 
-On GitHub actions 
-
-:::
-
-::: {.notes}
-
-Quarto makes the source executable. If an assertion fails, render stops. That turns a
-silent artifact problem into an explicit failure that a machine can catch.
+<center>
+<img src="images/github.png" width=80%>
+</center>
 
 :::
 
@@ -1322,7 +1180,7 @@ silent artifact problem into an explicit failure that a machine can catch.
 
 ::: {.col .fragment}
 
-### Plain text means the edit is a **diff**
+### Plain text means edits are **diffs**
 
 ::: {.font140}
 <pre class="specimen diffcard compact">
@@ -1341,20 +1199,20 @@ silent artifact problem into an explicit failure that a machine can catch.
 
 ### Inline R code means numbers can be [_computed_]{.blue}
 
+::: {.font140}
+<pre class="specimen rendercard">
+<span class="rc-row"><span class="rc-in">20.9</span> &#8594; …reaching over <span class="rc-num">20.9&#160;million</span> sales</span>
+<span class="rc-row"><span class="rc-in">24.1</span> &#8594; …reaching over <span class="rc-num">24.1&#160;million</span> sales</span>
+</pre>
 :::
 
-::: {.notes}
+`r sp(0.5)`
 
-And source is also human-checkable. A plain-text QMD produces a meaningful diff. Humans can
-see what changed rather than trying to compare two opaque rendered artifacts.
-
-Together: machine checks execution; humans inspect the source.
+[No magic numbers &mdash; change the data, the prose follows]{.font90 .gray}
 
 :::
 
 ---
-
-### 27. **Composition + Modularity + Correctness**
 
 Your synthesis slide.
 
@@ -1390,40 +1248,149 @@ Bring back handwriting here?
 
 ---
 
-{{< inverse >}}
 {{< center >}}
 {{< middle >}}
+{{< inverse >}}
+{{< no-slide-number >}}
 
-# [Ask your agent for the `.qmd`.]{.font150}
+# Thanks!
 
-::: {.notes}
-Return to the handwriting example.
-
-Say: "We started with a tiny artifact — a handwriting worksheet — and the lesson was not
-that AI should make handwriting worksheets."
-
-"The lesson was: don't ask the agent for the finished artifact. Ask it for the source."
-
-Then: "Next time you're building something — a PDF, a report, a website, or a dashboard —
-ask your agent to build you a .qmd and see where it takes you."
+::: {.footer-large}
+::: {.right}
+[jhelvy.com [{{< fa link >}}]{.white}](https://www.jhelvy.com)<br>
+[jph@gwu.edu [{{< fa paper-plane >}}]{.white}](mailto:jph@gwu.edu)<br>
+[@jhelvy [{{< fa brands github >}}]{.white}](http://github.com/jhelvy)
+:::
 :::
 
 ---
 
 {{< inverse >}}
+{{< center >}}
 {{< middle >}}
 
-# [[Ask for the [source]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+# Extra
 
 ---
 
-{{< inverse >}}
-{{< middle >}}
+## [(Things to put in the canvas)]{.center .gray}
 
-# [[Ask for the [~~source~~]{.yellow} [.qmd]{.yellow},<br>not the [artifact]{.red}]{.font150}]{.center}
+# [Widgets that talk to each other: `ojs`]{.center}
 
-::: {.notes}
+```{r}
+#| echo: false
+ojs_define(
+  pen_ojs = palmerpenguins::penguins |>
+    tidyr::drop_na(
+      bill_length_mm,
+      bill_depth_mm,
+      flipper_length_mm,
+      body_mass_g,
+      species
+    ) |>
+    dplyr::select(
+      species,
+      bill_length_mm,
+      bill_depth_mm,
+      flipper_length_mm,
+      body_mass_g
+    )
+)
+```
 
-"Now let's see what happens when the artifact is a dashboard."
+```{ojs}
+//| output: false
+// Deliberately the SAME app as the crosstalk slide -- same two panels, same
+// slider, same dropdown -- so the difference between the two slides is the
+// machinery, not the picture.
+//
+// OJS is a dataflow runtime, so these two cells can be declared before the
+// inputs they depend on. `output: false` keeps their values out of the slide.
+data = transpose(pen_ojs)
+```
 
+```{ojs}
+//| output: false
+filtered = data.filter(
+  d => d.body_mass_g >= mass && sp.includes(d.species)
+)
+```
+
+```{ojs}
+//| output: false
+// One plot definition used twice, so the two panels are provably the same call
+// with different columns.
+panel = (x, y, xlab, ylab) => Plot.plot({
+  width: 520,
+  height: 460,
+  marginLeft: 60,
+  marginBottom: 50,
+  // Plot's root is transparent by default, so the panels sit straight on the
+  // slide's ground while plotly (two slides back) paints its own white paper.
+  // Both knobs, because `style` alone did not take: `--plot-background` is the
+  // variable Plot's own stylesheet reads, and the white on .ojs-panel in
+  // custom.css paints the div underneath whatever the SVG ends up doing.
+  style: {background: "#FFFFFF", "--plot-background": "#FFFFFF"},
+  x: {label: xlab, labelAnchor: "center"},
+  y: {label: ylab, labelAnchor: "center"},
+  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
+          range: ["#00798c", "#A77400", "#d1495b"]},
+  marks: [
+    Plot.dot(filtered, {x: x, y: y, fill: "species", r: 4.5, fillOpacity: 0.8})
+  ]
+})
+```
+
+:::: {.col .ojs-stack width="22%"}
+::: {.font55}
+```{ojs}
+// `width` is the form's width, not the track's; the label sits above it because
+// of .ojs-stack in custom.css, so the whole 260 goes to the slider and its
+// number box. Observable Inputs would otherwise park the label in a fixed
+// 120px gutter on the left, which is not how crosstalk's filter_slider reads.
+viewof mass = {
+  const r = Inputs.range(
+    [2700, 6300],
+    {step: 50, value: 2700, label: "Body mass (g)", width: 260}
+  );
+  // Paint the filled-left portion blue like crosstalk's ionRangeSlider bar. A
+  // native range has no cross-browser "progress" pseudo-element (WebKit has
+  // none), so track the value as a CSS variable that .ojs-stack's track
+  // gradient reads. Returning the same Inputs element keeps the viewof binding.
+  const el = r.querySelector('input[type="range"]');
+  const paint = () => {
+    const p = (el.value - el.min) / (el.max - el.min) * 100;
+    el.style.setProperty("--fill", p + "%");
+  };
+  el.addEventListener("input", paint);
+  paint();
+  return r;
+}
+```
+
+```{ojs}
+// multiple: 3 makes this a list box with all three rows visible and everything
+// selected at rest -- the same behaviour as crosstalk's filter_select. Plain
+// `multiple: true` would open with NOTHING selected, i.e. an empty plot.
+viewof sp = Inputs.select(
+  ["Adelie", "Chinstrap", "Gentoo"],
+  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"],
+   label: "Species", width: 260}
+)
+```
+:::
+::::
+
+::: {.col .ojs-panel width="39%"}
+```{ojs}
+panel("bill_length_mm", "flipper_length_mm",
+      "Bill length (mm)", "Flipper length (mm)")
+```
+:::
+
+::: {.col .ojs-panel width="39%"}
+```{ojs}
+panel("body_mass_g", "bill_depth_mm",
+      "Body mass (g)", "Bill depth (mm)")
+```
 :::

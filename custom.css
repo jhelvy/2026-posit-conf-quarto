@@ -80,6 +80,7 @@
    Scoped to the cost slides on purpose. Everywhere else `[word]{.blue}` is
    still the figure's teal, because there teal means FORMAT, not Quarto. */
 .reveal .qmdblue  { color: #3d7fb5; }
+.reveal .qmdlightblue  { color: #74AADB; }
 .reveal .wordblue { color: #2B579A; }
 
 /* ── CHIPS ──────────────────────────────────────────────────────────────────
@@ -241,6 +242,40 @@
    not how big the type is. */
 .reveal pre.specimen.compact { font-size: 0.4em; line-height: 1.45; }
 
+/* ── RENDERED-OUTPUT CARD: right column of `checkable by humans` ──────────────
+   The left column is the source diff, set in mono; this is the READER'S
+   document, so it is set in the body font (Inter). The pair reads as "what you
+   change" beside "what a reader sees." It answers the diff's second claim: the
+   number is `r ev_sales`, a variable, so the same sentence renders the current
+   data every time. Two data values, two correct outputs, one unchanged
+   sentence — the no-magic-number point made visible.
+
+   Palette: the data value is a yellow CHIP (yellow is a fill, never ink), and
+   the number where it lands in the prose carries the same light-yellow
+   highlight, so the eye ties the input to the output. `.rc-in` / `.rc-num` are
+   grandchildren of the <pre>, so the `> span` block rule leaves them inline and
+   they hug just their own text, the way `.w` does in the diff card. */
+.reveal pre.rendercard {
+  background: #FFFFFF;
+  color: #2e4057;
+  border: 1px solid #d8dbe0;
+  font-family: Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+.reveal pre.rendercard .rc-row { padding: 0.28em 0.9em; }
+.reveal pre.rendercard .rc-in {
+  background: #edae49;
+  color: #2e4057;
+  padding: 0.02em 0.4em;
+  border-radius: 0.2em;
+  font-weight: 600;
+}
+.reveal pre.rendercard .rc-num {
+  background: #f7e3ad;
+  color: #2e4057;
+  padding: 0 0.15em;
+  border-radius: 0.15em;
+}
+
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.
    but no color variants; these follow its own wrapper-div pattern, so they go
@@ -331,10 +366,79 @@
   color: #2e4057;
 }
 
+/* The mass slider, restyled to read like crosstalk's ionRangeSlider "shiny"
+   skin: an 8px #428bca bar filling from the left, on a grey track, with a grey
+   round handle (#dedede fill, #ababab border). WebKit has no progress
+   pseudo-element, so the filled portion is a gradient sized by the --fill
+   variable that the viewof cell updates on input; Firefox uses its native
+   ::-moz-range-progress instead. */
+.reveal .ojs-stack input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 8px;
+  background:
+    linear-gradient(#428bca, #428bca) 0 / var(--fill, 0%) 100% no-repeat,
+    #e1e4e9;
+  cursor: pointer;
+}
+.reveal .ojs-stack input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: #dedede;
+  border: 1px solid #ababab;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+}
+.reveal .ojs-stack input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 8px;
+  background: #e1e4e9;
+}
+.reveal .ojs-stack input[type="range"]::-moz-range-progress {
+  height: 8px;
+  border-radius: 8px;
+  background: #428bca;
+}
+.reveal .ojs-stack input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #dedede;
+  border: 1px solid #ababab;
+}
+/* The number read-out beside the slider, given the same tidy box as the list. */
+.reveal .ojs-stack input[type="number"] {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
 /* The species list box: full width of the rail, and tall enough that all three
    rows show without scrolling. Observable sizes a `multiple: 3` select by rows,
-   which the .font55 wrapper then shrinks. */
-.reveal .ojs-stack form select[multiple] { width: 100%; }
+   which the .font55 wrapper then shrinks. A native multi-select can't become
+   selectize pills, so the closest match to crosstalk's filter_select is a tidy
+   bordered white box with the selected rows painted in crosstalk's blue. */
+.reveal .ojs-stack form select[multiple] {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 3px;
+  background: #fff;
+  outline: none;
+}
+.reveal .ojs-stack form select[multiple] option {
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+/* Selected rows in crosstalk's #428bca. Chrome overrides the OS highlight on a
+   multi-select unless the colour is forced with a gradient and !important. */
+.reveal .ojs-stack form select[multiple] option:checked {
+  background: #428bca linear-gradient(0deg, #428bca 0%, #428bca 100%) !important;
+  color: #fff !important;
+}
 
 /* The two Plot panels on the `ojs` slide. Plot's root SVG is transparent, and
    its `style` option did not reliably paint it white through Quarto's bundled

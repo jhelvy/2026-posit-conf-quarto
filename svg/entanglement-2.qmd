@@ -7,8 +7,9 @@
   content sits beside it, and the weave happens at render.
 
   At rest the output is slide 1's ROW 1 — the first draft, dots — so the pair
-  starts from the same picture. On click 1 it becomes ROW 3, the page carrying
-  the green check: the document that took eight rounds to reach the last time.
+  starts from the same picture. It STAYS the dots through click 1 (the .qmd
+  arriving) and only on click 2 becomes ROW 3, the page carrying the green
+  check: the document that took eight rounds to reach the last time.
   The argument is still NOT "the .qmd is prettier"; it's that the weaving moved
   somewhere you can reach, and that reaching it took one step instead of eight.
   Keep each <defs> copy identical to its twin on slide 1.
@@ -86,7 +87,7 @@
 
     <!-- Byte-identical to #doc on the previous slide — ROW 3, the draw that
          carries the green check. This is the document you actually wanted, and
-         it is what the .qmd renders to from click 1 on. If you edit one, edit
+         it is what the .qmd renders to from click 2 on. If you edit one, edit
          both.
 
          The `.pdf` label earns its keep here: with the .qmd on screen the row
@@ -195,7 +196,7 @@
   </g>
 
   <!-- The artifact. At rest byte-identical to run 1 on slide 1, same page, same
-       1:1 size; from click 1 it is run 3's page, the checked one. Either way
+       1:1 size; from click 2 it is run 3's page, the checked one. Either way
        it is entangled — a PDF is a PDF. Same two colours as the .qmd box —
        but here they interleave with no boundary, and there they each have a
        place. That contrast IS the address argument, so keep both on screen
@@ -210,21 +211,23 @@
        promise. It is an overlay rather than a swap because the two have
        identical geometry, so the red simply covers the yellow. -->
   <g class="fragment custom openright" data-fragment-index="1">
-    <!-- At rest: slide 1's row 1, the first draw. Fades out on click 1, when the
-         route it came from (agent -> document) fades out with it. -->
-    <g class="fragment fade-out" data-fragment-index="1">
+    <!-- At rest: slide 1's row 1, the first draw. Held through click 1 (the .qmd
+         arriving) and faded out on click 2. Note this no longer fades WITH the
+         agent -> document route, which still goes on click 1: on click 1 the
+         chain opens but the output is still the dots, and only click 2 (the
+         `prompt the agent` fork) swaps in the kept page. -->
+    <g class="fragment fade-out" data-fragment-index="2">
       <g transform="translate(810 117)"><use href="#docDotsOut"/></g>
     </g>
-    <!-- Click 1: the document you kept — row 3's page, the one with the check.
+    <!-- Click 2: the document you kept — row 3's page, the one with the check.
          Painted OVER the dots, which it fully covers (the eleven bands total
          exactly 116 and the fold is repainted white), so this is an overlay like
-         the click-3 recolour, not a swap. The swap rides click 1 and not click 3
-         on purpose: what changes here is the ROUTE (the agent now writes source),
-         so a different document coming out is honest. Move it to
-         data-fragment-index="3" if you'd rather the edit itself be what produces
-         the kept document — one attribute, and click 3 then changes the whole
-         page instead of only its content. -->
-    <g class="fragment" data-fragment-index="1">
+         the click-3 recolour, not a swap. The swap rides click 2, the same beat
+         as the `prompt the agent` fork: click 1 reveals the .qmd with the output
+         still the first-draft dots, and only reaching for the source (click 2)
+         produces the kept page. Move it back to data-fragment-index="1" to have
+         the kept document arrive the moment the .qmd does. -->
+    <g class="fragment" data-fragment-index="2">
       <g transform="translate(810 117)"><use href="#docOut"/></g>
     </g>
     <g class="fragment" data-fragment-index="3">
