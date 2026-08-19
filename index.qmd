@@ -140,6 +140,28 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 
 ---
 
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+`r sp(4.3)`
+
+## {{< quarto size=6x >}}
+
+---
+
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
+{{< middle >}}
+
+# Quarto disentangles [Content]{.contentchip} and [Format]{.formatchip}
+
+## {{< quarto size=6x >}}
+
+---
+
 {{< center >}}
 {{< middle >}}
 
@@ -155,10 +177,12 @@ Introduce the canvas idea. Quarto lets the format become a stable canvas while c
 
 ---
 
-# [Modularized content]{.center}
+# [Modularized content via parameters]{.center}
 
 :::: {.col width="58%"}
-[**`handwriting-practice.qmd`**]{.qmdblue .font120}
+[{{< quarto >}}]{.font120}
+
+[**handwriting-practice.qmd**]{.qmdblue .font120}
 
 (written by Claude Code)
 
@@ -183,7 +207,9 @@ for (s in sentences) {
 ::::
 
 :::: {.col width="42%"}
-[**`minecraft.csv`**]{.amber .font120}
+[{{< fa file-csv >}}]{.red .font120}
+
+[**minecraft.csv**]{.red .font120}
 
 (written by Me)
 
@@ -223,11 +249,14 @@ for (s in sentences) {
 
 ---
 
+{{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 
-# Quarto is a canvas for modular content
+# Quarto is a *canvas* for *modular content*
+
+## {{< quarto size=6x >}}
 
 ---
 
