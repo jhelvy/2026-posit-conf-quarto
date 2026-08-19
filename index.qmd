@@ -221,20 +221,13 @@ for (s in sentences) {
 ![](images/handwriting-good-minecraft.png){fig-align="center" height="470"}
 :::
 
-::: {.notes}
-
-One canvas, different content, same structure. Pokémon and Minecraft are
-two inputs to the same compositional system.
-
-:::
-
 ---
 
 {{< inverse >}}
 {{< center >}}
 {{< middle >}}
 
-# One canvas, modular content
+# Quarto is a canvas for modular content
 
 ---
 
@@ -264,7 +257,7 @@ dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
 
 {{< middle >}}
 
-::: {.col width="28%"}
+::: {.col width="40%"}
 {{< include svg/qmd-stack.qmd >}}
 :::
 
@@ -274,7 +267,7 @@ dashboard; it writes a collection of Quarto pages, and Quarto composes the site.
 ```yaml
 project:
   type: website
-C
+
 website:
   sidebar:
     contents:
@@ -286,16 +279,12 @@ website:
 ```
 :::
 
-::: {.col width="22%"}
-
-:::
-
 ---
 
 {{< middle >}}
 
 ::: {.col width="50%" .font130}
-## Things we get for free:
+## Things we get for free
 
 → URLs to each [page](https://vehicletrends.us/percent-dealers)<br>
 → URLs to each header<br>
@@ -350,11 +339,13 @@ website:
 
 `r sp(1)`
 
-# [Just Code Chunks]{.font120}
+# [Just Code Chunks 😎]{.font120}
 
 ---
 
-## Interactivity from a code chunk in [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow}
+## [(Things to put in the canvas)]{.center .gray}
+
+# [JavaScript from [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow} packages]{.center}
 
 ::: {.col width="50%"}
 [**R**]{.blue} via {echarts4r}
@@ -426,7 +417,9 @@ penguins |>
 
 ---
 
-## [Widgets that talk to each other: `crosstalk` + `plotly`]{.center}
+## [(Things to put in the canvas)]{.center .gray}
+
+## [Widgets that talk to each other:<br>`crosstalk` + `plotly`]{.center}
 
 ::: {.font55}
 ```{r}
@@ -540,7 +533,9 @@ The important point is composition: widgets can remain independent components an
 
 ---
 
-## [Or recompute in the browser: `ojs`]{.center}
+## [(Things to put in the canvas)]{.center .gray}
+
+# [Widgets that talk to each other: `ojs`]{.center}
 
 ```{r}
 #| echo: false
@@ -654,7 +649,9 @@ panel("body_mass_g", "bill_depth_mm",
 
 ---
 
-## [Use Shiny in a box!]{.center}
+## [(Things to put in the canvas)]{.center .gray}
+
+# [Full Shiny apps!]{.center}
 
 ::: {.col width="35%"}
 [**Shinylive** -- no server]{.blue}
@@ -697,6 +694,8 @@ Shiny shows how far the canvas can stretch.
 :::
 
 ---
+
+## [(Things to put in the canvas)]{.center .gray}
 
 ## [Put any widget in a box!]{.center}
 
