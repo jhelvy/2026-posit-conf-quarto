@@ -1135,13 +1135,13 @@ where correctness can be checked and enforced.
 
 ---
 
-# [Quarto is checkable twice]{.center}
+# [Four places an error gets caught]{.center}
 
 . . .
 
 <br>
 
-## [**By machine**]{.center .darkgreen}
+## [**Caught when it runs**]{.center .darkgreen}
 
 <br>
 
@@ -1162,21 +1162,30 @@ where correctness can be checked and enforced.
 
 ::: {.col .fragment}
 
-### [`quarto render`<br>can be _automated_]{.center}
+### [GitHub Actions runs it<br>on _every commit_]{.center}
 
-<center>
-<img src="images/github.png" width=80%>
-</center>
+`r sp(0.5)`
+
+<pre class="specimen errcard">
+<span class="sp-dim">&#10003;  render-site   passed in 38s   a1f3c9d</span>
+<span class="sp-dim">&#10003;  render-site   passed in 41s   7b2e004</span>
+<span class="sp-err">&#10007;  render-site   failed in 12s   3d97951</span>
+<span class="sp-err">   ! all(funding$name %in% africa$name)</span>
+</pre>
+
+:::
+
+::: {.notes}
 
 :::
 
 ---
 
-# [Quarto is checkable twice]{.center}
+# [Four places an error gets caught]{.center}
 
 <br>
 
-## [**By humans**]{.center .darkgreen}
+## [**Caught when it's read**]{.center .darkgreen}
 
 ::: {.col .fragment}
 
@@ -1188,8 +1197,10 @@ where correctness can be checked and enforced.
 <span> </span>
 <span>  Sales of **electric vehicles** grew</span>
 <span>  20% in 2025, reaching over</span>
-<span class="sp-del">- _<span class="w">20 million</span>_ sales globally.</span>
-<span class="sp-add">+ _<span class="w">&#96;r ev_sales&#96; million</span>_ sales globally.</span>
+<span>  _&#96;r ev_sales&#96; million_ sales globally.</span>
+<span> </span>
+<span class="sp-del">- EVs now <span class="w">outsell</span> hybrids.</span>
+<span class="sp-add">+ EVs are <span class="w">closing the gap with</span> hybrids.</span>
 </pre>
 
 :::
@@ -1197,7 +1208,7 @@ where correctness can be checked and enforced.
 
 ::: {.col .fragment}
 
-### Inline R code means numbers can be [_computed_]{.blue}
+### Inline R code means **computed numbers**
 
 ::: {.font140}
 <pre class="specimen rendercard">
@@ -1205,10 +1216,6 @@ where correctness can be checked and enforced.
 <span class="rc-row"><span class="rc-in">24.1</span> &#8594; …reaching over <span class="rc-num">24.1&#160;million</span> sales</span>
 </pre>
 :::
-
-`r sp(0.5)`
-
-[No magic numbers &mdash; change the data, the prose follows]{.font90 .gray}
 
 :::
 
