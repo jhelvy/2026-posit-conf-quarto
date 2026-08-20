@@ -1135,13 +1135,13 @@ where correctness can be checked and enforced.
 
 ---
 
-# [Four places an error gets caught]{.center}
+# [Four ways an error gets stopped]{.center}
 
 . . .
 
 <br>
 
-## [**Caught when it runs**]{.center .darkgreen}
+## [**The source runs**]{.center .darkgreen}
 
 <br>
 
@@ -1181,11 +1181,11 @@ where correctness can be checked and enforced.
 
 ---
 
-# [Four places an error gets caught]{.center}
+# [Four ways an error gets stopped]{.center}
 
 <br>
 
-## [**Caught when it's read**]{.center .darkgreen}
+## [**The source is text**]{.center .darkgreen}
 
 ::: {.col .fragment}
 
