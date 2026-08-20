@@ -322,7 +322,7 @@ website:
 
 {{< middle >}}
 
-::: {.col width="50%" .font130}
+::: {.col width="40%" .font130}
 <br>
 
 ## A cohesive framework:
@@ -392,11 +392,17 @@ website:
 
 ::: {.col width="70%" valign="middle"}
 # Each page is its own canvas
+
+## ...all you need is code chunks
 :::
 
 ---
 
-## [(Things to put in the canvas)]{.center .gray}
+::: {.canvasbanner}
+Things to put in the canvas
+:::
+
+`r sp(1)`
 
 # [JavaScript graphics via [{{< fa brands r-project >}}]{.blue} or [{{< fa brands python >}}]{.yellow} packages]{.center}
 
@@ -470,7 +476,11 @@ penguins |>
 
 ---
 
-## [(Things to put in the canvas)]{.center .gray}
+::: {.canvasbanner}
+Things to put in the canvas
+:::
+
+`r sp(1)`
 
 ## [Widgets that talk to each other:<br>`crosstalk` + `plotly`, or `ojs`]{.center}
 
@@ -586,11 +596,17 @@ The important point is composition: widgets can remain independent components an
 
 ---
 
-## [(Things to put in the canvas)]{.center .gray}
+::: {.canvasbanner}
+Things to put in the canvas
+:::
+
+`r sp(1)`
 
 ::: {style="text-align: center;"}
 [Put &zwj;]{.fira style="font-size: 2.5em; vertical-align: middle;"} ![](images/shiny.png){width=10% style="vertical-align: middle; margin-left: 0.4em;"} [&zwj; in a box!]{.fira style="font-size: 2.5em; vertical-align: middle;"}
 :::
+
+`r sp(1)`
 
 ::: {.col width="35%"}
 [**Shinylive** -- no server]{.blue}
@@ -634,7 +650,11 @@ Shiny shows how far the canvas can stretch.
 
 ---
 
-## [(Things to put in the canvas)]{.center .gray}
+::: {.canvasbanner}
+Things to put in the canvas
+:::
+
+`r sp(1)`
 
 # [Put any widget in a box!]{.center}
 
@@ -1043,16 +1063,17 @@ less context to move around and reason about.
 {{< inverse >}}
 {{< center >}}
 
-`r sp(6)`
-
 ::: {.col width="10%"}
 :::
 
 ::: {.col width="40%"}
+`r sp(6)`
+
 ## {{< quarto size=6x >}}
 :::
 
 ::: {.col width="50%"}
+`r sp(5)`
 
 # [Modularity]{.font150 .qmdlightblue}
 
@@ -1221,15 +1242,29 @@ where correctness can be checked and enforced.
 
 ---
 
-Your synthesis slide.
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
 
-Something like:
+::: {.col width="10%"}
+:::
 
-|                 |                                    |
-| --------------- | ---------------------------------- |
-| **Composition** | Quarto gives us the canvas         |
-| **Modularity**  | Small pieces are tractable         |
-| **Correctness** | Source can be executed and checked |
+::: {.col width="40%"}
+`r sp(6)`
+
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="50%"}
+`r sp(5)`
+
+# [Modularity]{.font150}
+
+# [Efficiency]{.font150}
+
+# [Correctness]{.font150}
+:::
+
 
 ---
 
@@ -1247,11 +1282,9 @@ Something like:
 :::
 
 ::: {.col width="60%"}
-`r sp(1.5)`
+`r sp(3.9)`
 
-# Quarto wasn't built for AI, 
-
-# but it's 
+# Quarto wasn't built for AI
 :::
 
 ::: {.notes}
@@ -1259,10 +1292,6 @@ Quarto was built around reproducible, executable, composable source. Those prope
 not designed for AI agents, but they turn out to be exactly the properties that make an AI
 workflow tractable and trustworthy.
 :::
-
----
-
-Bring back handwriting here?
 
 ---
 

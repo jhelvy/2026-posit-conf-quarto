@@ -1,20 +1,57 @@
 <script>
-// Nudge every JavaScript widget when its slide arrives.
+// Two fixes for JavaScript widgets on reveal slides, both about measurement.
 //
-// Reveal keeps non-current slides at `display: none`, so anything that measures
-// its container while off-screen -- echarts4r, plotly, crosstalk, Observable
-// Plot -- computes a layout against a zero-size box and keeps it. That is the
-// bug where a chart looks broken until you hit refresh while sitting on the
-// slide, at which point it measures a visible container and comes out right.
+// 1. NUDGE. Reveal keeps non-current slides at `display: none`, so anything
+// that measures its container while off-screen -- echarts4r, plotly, crosstalk,
+// Observable Plot -- computes a layout against a zero-size box and keeps it.
+// That is the bug where a chart looks broken until you hit refresh while
+// sitting on the slide, at which point it measures a visible container and
+// comes out right. htmlwidgets, plotly and echarts all re-layout on a window
+// resize event, so dispatching one after the slide transition is enough to make
+// them re-measure. It is a no-op for widgets that were already correct.
 //
-// htmlwidgets, plotly and echarts all re-layout on a window resize event, so
-// dispatching one after the slide transition is enough to make them re-measure.
-// It is a no-op for widgets that were already correct.
+// 2. UNSCALE. Reveal fits its fixed 1600x900 canvas to the window with a CSS
+// `transform: scale()` on `.slides`. htmlwidgets sizes every widget from
+// `getBoundingClientRect()`, and that returns TRANSFORMED pixels -- so on any
+// window bigger than 1600x900 (scale > 1) it hands the widget a box larger than
+// the one the CSS actually reserves. A 600x560 chart is redrawn at 720x672,
+// overflows its container, and Quarto's `.cell-output-display { overflow: auto }`
+// turns that into scrollbars: the legend ends up below the fold. It only shows
+// up once something dispatches a resize -- which is what fix 1 does on the first
+// visit to the slide -- and it goes away on refresh, because the reload
+// re-measures before any resize fires. The fix is to make each widget report
+// its own box in untransformed CSS pixels, which is the coordinate space the
+// layout is authored in.
 //
-// Iframes are NOT covered by this -- a cross-origin frame can't be reached from
-// here. Those use Reveal's own `data-src` lazy loading instead; see the map
+// Iframes are NOT covered by either -- a cross-origin frame can't be reached
+// from here. Those use Reveal's own `data-src` lazy loading instead; see the map
 // slide in index.qmd.
 (function () {
+  function scale() {
+    if (window.Reveal && typeof window.Reveal.getScale === 'function') {
+      return window.Reveal.getScale() || 1;
+    }
+    return 1;
+  }
+
+  // Own-property override, not a patch of Element.prototype: reveal measures
+  // plenty of things itself and must keep seeing real, transformed pixels.
+  function unscale(el) {
+    if (el.dataset.unscaled) return;
+    el.dataset.unscaled = '1';
+    var rect = el.getBoundingClientRect.bind(el);
+    el.getBoundingClientRect = function () {
+      var r = rect();
+      var s = scale();
+      if (!s || s === 1) return r;
+      return new DOMRect(r.x, r.y, r.width / s, r.height / s);
+    };
+  }
+
+  function unscaleAll() {
+    document.querySelectorAll('.html-widget').forEach(unscale);
+  }
+
   function bump() {
     window.dispatchEvent(new Event('resize'));
   }
@@ -25,6 +62,11 @@
     bump();
     setTimeout(bump, 350);
   }
+
+  // This script sits at the end of <body>, so every widget element already
+  // exists -- wrap them before htmlwidgets' own staticRender takes its first
+  // measurement on DOMContentLoaded.
+  unscaleAll();
 
   // Quarto initializes Reveal in a module script, so it may not exist yet when
   // this runs. Poll briefly rather than racing it.

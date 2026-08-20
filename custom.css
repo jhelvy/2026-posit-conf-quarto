@@ -454,3 +454,32 @@
   padding: 6px 8px;
 }
 .reveal .ojs-panel svg { background: #FFFFFF; }
+
+/* ── THE CANVAS BANNER ──────────────────────────────────────────────────────
+   The four "things to put in the canvas" slides share a running label. As grey
+   text it read as a second title competing with the real one; as a band it
+   reads as chrome — the same strip on all four, so the room knows it is the
+   frame around the demo and not the point of the slide.
+
+   Navy is the deck's INK color: every stroke and label in the figures is
+   #2e4057, so a navy band is the one dark value already in the vocabulary and
+   it can't be mistaken for content/format/changed. White on it is 11:1.
+
+   Full-bleed by cancelling the section's own padding — lexis sets
+   `padding: 45px 90px 60px` on every slide (lexis.scss), and its print rule
+   restates the same three numbers, so this bleeds correctly on export too. If
+   that padding is ever retuned, these two negative margins follow it.
+
+   Bottom margin is in rem, not em: at 0.75em the band's own em is small, and
+   what has to match is the ~0.9em gap lexis puts under a real slide title, so
+   the heading below sits where it did when this was an `##`. */
+.reveal section > .canvasbanner {
+  margin: -45px -90px 1.6rem;
+  padding: 0.5em 90px;
+  background-color: #EDAE48;
+  color: #2E4057;
+  font-size: 0.75em;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.reveal section > .canvasbanner p { margin: 0; }
