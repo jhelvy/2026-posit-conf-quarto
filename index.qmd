@@ -1226,15 +1226,26 @@ Something like:
 
 ---
 
+{{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
-{{< middle >}}
 
-# Quarto wasn't built for AI
+`r sp(6)`
 
-. . . 
+::: {.col width="10%"}
+:::
 
-## That's why it works
+::: {.col width="30%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="60%"}
+`r sp(1.5)`
+
+# Quarto wasn't built for AI, 
+
+# but it's 
+:::
 
 ::: {.notes}
 Quarto was built around reproducible, executable, composable source. Those properties were
@@ -1248,149 +1259,22 @@ Bring back handwriting here?
 
 ---
 
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
 {{< center >}}
 {{< middle >}}
-{{< inverse >}}
 {{< no-slide-number >}}
+
+# {{< quarto size=2x >}}
+
+<br>
 
 # Thanks!
 
-::: {.footer-large}
-::: {.right}
-[jhelvy.com [{{< fa link >}}]{.white}](https://www.jhelvy.com)<br>
-[jph@gwu.edu [{{< fa paper-plane >}}]{.white}](mailto:jph@gwu.edu)<br>
-[@jhelvy [{{< fa brands github >}}]{.white}](http://github.com/jhelvy)
-:::
-:::
+<br>
 
----
+jhelvy.com {{< fa globe >}}
 
-{{< inverse >}}
-{{< center >}}
-{{< middle >}}
+jph@gwu.edu {{< fa paper-plane >}}
 
-# Extra
-
----
-
-## [(Things to put in the canvas)]{.center .gray}
-
-# [Widgets that talk to each other: `ojs`]{.center}
-
-```{r}
-#| echo: false
-ojs_define(
-  pen_ojs = palmerpenguins::penguins |>
-    tidyr::drop_na(
-      bill_length_mm,
-      bill_depth_mm,
-      flipper_length_mm,
-      body_mass_g,
-      species
-    ) |>
-    dplyr::select(
-      species,
-      bill_length_mm,
-      bill_depth_mm,
-      flipper_length_mm,
-      body_mass_g
-    )
-)
-```
-
-```{ojs}
-//| output: false
-// Deliberately the SAME app as the crosstalk slide -- same two panels, same
-// slider, same dropdown -- so the difference between the two slides is the
-// machinery, not the picture.
-//
-// OJS is a dataflow runtime, so these two cells can be declared before the
-// inputs they depend on. `output: false` keeps their values out of the slide.
-data = transpose(pen_ojs)
-```
-
-```{ojs}
-//| output: false
-filtered = data.filter(
-  d => d.body_mass_g >= mass && sp.includes(d.species)
-)
-```
-
-```{ojs}
-//| output: false
-// One plot definition used twice, so the two panels are provably the same call
-// with different columns.
-panel = (x, y, xlab, ylab) => Plot.plot({
-  width: 520,
-  height: 460,
-  marginLeft: 60,
-  marginBottom: 50,
-  // Plot's root is transparent by default, so the panels sit straight on the
-  // slide's ground while plotly (two slides back) paints its own white paper.
-  // Both knobs, because `style` alone did not take: `--plot-background` is the
-  // variable Plot's own stylesheet reads, and the white on .ojs-panel in
-  // custom.css paints the div underneath whatever the SVG ends up doing.
-  style: {background: "#FFFFFF", "--plot-background": "#FFFFFF"},
-  x: {label: xlab, labelAnchor: "center"},
-  y: {label: ylab, labelAnchor: "center"},
-  color: {domain: ["Adelie", "Chinstrap", "Gentoo"],
-          range: ["#00798c", "#A77400", "#d1495b"]},
-  marks: [
-    Plot.dot(filtered, {x: x, y: y, fill: "species", r: 4.5, fillOpacity: 0.8})
-  ]
-})
-```
-
-:::: {.col .ojs-stack width="22%"}
-::: {.font55}
-```{ojs}
-// `width` is the form's width, not the track's; the label sits above it because
-// of .ojs-stack in custom.css, so the whole 260 goes to the slider and its
-// number box. Observable Inputs would otherwise park the label in a fixed
-// 120px gutter on the left, which is not how crosstalk's filter_slider reads.
-viewof mass = {
-  const r = Inputs.range(
-    [2700, 6300],
-    {step: 50, value: 2700, label: "Body mass (g)", width: 260}
-  );
-  // Paint the filled-left portion blue like crosstalk's ionRangeSlider bar. A
-  // native range has no cross-browser "progress" pseudo-element (WebKit has
-  // none), so track the value as a CSS variable that .ojs-stack's track
-  // gradient reads. Returning the same Inputs element keeps the viewof binding.
-  const el = r.querySelector('input[type="range"]');
-  const paint = () => {
-    const p = (el.value - el.min) / (el.max - el.min) * 100;
-    el.style.setProperty("--fill", p + "%");
-  };
-  el.addEventListener("input", paint);
-  paint();
-  return r;
-}
-```
-
-```{ojs}
-// multiple: 3 makes this a list box with all three rows visible and everything
-// selected at rest -- the same behaviour as crosstalk's filter_select. Plain
-// `multiple: true` would open with NOTHING selected, i.e. an empty plot.
-viewof sp = Inputs.select(
-  ["Adelie", "Chinstrap", "Gentoo"],
-  {multiple: 3, value: ["Adelie", "Chinstrap", "Gentoo"],
-   label: "Species", width: 260}
-)
-```
-:::
-::::
-
-::: {.col .ojs-panel width="39%"}
-```{ojs}
-panel("bill_length_mm", "flipper_length_mm",
-      "Bill length (mm)", "Flipper length (mm)")
-```
-:::
-
-::: {.col .ojs-panel width="39%"}
-```{ojs}
-panel("body_mass_g", "bill_depth_mm",
-      "Body mass (g)", "Bill depth (mm)")
-```
-:::
+@jhelvy {{< fa brands github >}}
