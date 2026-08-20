@@ -242,39 +242,42 @@
    not how big the type is. */
 .reveal pre.specimen.compact { font-size: 0.4em; line-height: 1.45; }
 
-/* ── RENDERED-OUTPUT CARD: right column of `checkable by humans` ──────────────
-   The left column is the source diff, set in mono; this is the READER'S
-   document, so it is set in the body font (Inter). The pair reads as "what you
-   change" beside "what a reader sees." It answers the diff's second claim: the
-   number is `r ev_sales`, a variable, so the same sentence renders the current
-   data every time. Two data values, two correct outputs, one unchanged
-   sentence — the no-magic-number point made visible.
+/* ── THE HIGHLIGHT MOVES: `The source is text` ──────────────────────────────
+   That slide used to be two cards side by side — a diff on the left, a
+   rendered-output card on the right — which made it look like two unrelated
+   claims. It is one claim twice: the SAME four lines of source are both a thing
+   you can diff and a thing that recomputes. So there is now one card, and what
+   changes between the two points is which line is lit.
 
-   Palette: the data value is a yellow CHIP (yellow is a fill, never ink), and
-   the number where it lands in the prose carries the same light-yellow
-   highlight, so the eye ties the input to the output. `.rc-in` / `.rc-num` are
-   grandchildren of the <pre>, so the `> span` block rule leaves them inline and
-   they hug just their own text, the way `.w` does in the diff card. */
-.reveal pre.rendercard {
-  background: #FFFFFF;
-  color: #2e4057;
-  border: 1px solid #d8dbe0;
-  font-family: Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+   At rest the card is a plain diff, which is the first point already made. On
+   click 2 the `-`/`+` rows step back to the spine grey (#8d96a3 — "you have had
+   this one") and the `r ev_sales` line lights instead. Row tint plus a darker
+   tint on the token that matters is the diff card's own idiom (`.sp-add` +
+   `.w`); this reuses it in yellow, because a computed value is CONTENT, and
+   yellow is a fill — #edae49 on the token with navy text, #f7e3ad washed across
+   the row behind it.
+
+   `fragment custom` means reveal leaves both rows visible at rest and only
+   toggles `.visible`, so the colour change is ours and nothing reflows.
+   Specificity: `.reveal pre.diffcard .sp-del.steps-back.visible` (0,4,1) beats
+   `.reveal pre.diffcard .sp-del` (0,3,1), so the step-back wins wherever it
+   sits in this file. */
+.reveal pre.diffcard .steps-back,
+.reveal pre.diffcard .steps-up,
+.reveal pre.diffcard .steps-back .w,
+.reveal pre.diffcard .steps-up .w {
+  transition: background-color 400ms ease, color 400ms ease;
 }
-.reveal pre.rendercard .rc-row { padding: 0.28em 0.9em; }
-.reveal pre.rendercard .rc-in {
-  background: #edae49;
-  color: #2e4057;
-  padding: 0.02em 0.4em;
-  border-radius: 0.2em;
-  font-weight: 600;
+.reveal pre.diffcard .sp-del.steps-back.visible,
+.reveal pre.diffcard .sp-add.steps-back.visible {
+  background: transparent;
+  color: #8d96a3;
 }
-.reveal pre.rendercard .rc-num {
-  background: #f7e3ad;
-  color: #2e4057;
-  padding: 0 0.15em;
-  border-radius: 0.15em;
-}
+.reveal pre.diffcard .sp-del.steps-back.visible .w,
+.reveal pre.diffcard .sp-add.steps-back.visible .w { background: transparent; }
+
+.reveal pre.diffcard .steps-up.visible    { background: #f7e3ad; }
+.reveal pre.diffcard .steps-up.visible .w { background: #edae49; }
 
 /* Colored image borders, tying each chip to the sheet it describes on the
    "this layout / these sentences" slide. lexis ships .border/.whiteborder/etc.

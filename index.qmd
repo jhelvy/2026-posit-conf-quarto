@@ -146,14 +146,14 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 ::: {.col width="10%"}
 :::
 
-::: {.col width="35%"}
+::: {.col width="30%"}
 ## {{< quarto size=6x >}}
 :::
 
-::: {.col width="55%"}
-`r sp(1.5)`
+::: {.col width="60%"}
+`r sp(2.3)`
 
-# Quarto disentangles 
+# Quarto separates
 
 # [Content]{.contentchip} and [Format]{.formatchip}
 :::
@@ -163,7 +163,7 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 {{< center >}}
 {{< middle >}}
 
-# Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
+# Quarto separates [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
 
@@ -240,11 +240,42 @@ for (s in sentences) {
 {{< bg-color "#2e4057" >}}
 {{< inverse >}}
 {{< center >}}
-{{< middle >}}
 
-# [Quarto is a *canvas* for *modular content*]{.font120}
+`r sp(6)`
 
+::: {.col width="10%"}
+:::
+
+::: {.col width="33%"}
 ## {{< quarto size=6x >}}
+:::
+
+::: {.col width="57%"}
+`r sp(1.5)`
+
+# "An open-source<br>scientific and technical<br>publishing system"
+:::
+
+---
+
+{{< bg-color "#2e4057" >}}
+{{< inverse >}}
+{{< center >}}
+
+`r sp(6)`
+
+::: {.col width="10%"}
+:::
+
+::: {.col width="33%"}
+## {{< quarto size=6x >}}
+:::
+
+::: {.col width="57%"}
+`r sp(2.2)`
+
+# [A modular *canvas*<br>for modular *content*]{.font120}
+:::
 
 ---
 
@@ -789,7 +820,7 @@ Now pivot from "what can the canvas contain?" to "why does this architecture mat
 `r sp(0.2)`
 <hr>
 
-:::: {.col .fragment}
+:::: {.col .fragment width="30%"}
 {{< quarto size=2x >}}
 
 [**Quarto**]{.qmdblue} (`.qmd`)
@@ -811,7 +842,7 @@ _20 million_ sales globally.
 [**125** characters]{.qmdblue .font140}
 ::::
 
-:::: {.col .fragment}
+:::: {.col .fragment width="30%"}
 [{{< fa file-pdf size=2x >}}]{.amber}
 
 [**PDF**]{.amber} (via LaTeX)
@@ -838,7 +869,7 @@ Sales of \textbf{electric vehicles} grew
 [**252** characters]{.amber .font140}
 ::::
 
-:::: {.col .fragment}
+:::: {.col .fragment width="40%"}
 [{{< fa brands html5 size=2x >}}]{.red}
 
 [**HTML**]{.red}
@@ -1208,35 +1239,47 @@ where correctness can be checked and enforced.
 
 ## [**The source is text**]{.center .darkgreen}
 
-::: {.col .fragment}
+::: {.col .font140 width="60%" valign="middle"}
+<!-- ONE artifact, two readings. The card never moves; what moves is the
+     highlight. Click 1 makes the point the diff rows are already showing;
+     click 2 steps those rows back to plain grey and lights the ev_sales line
+     instead, so the eye is handed from one claim to the other on the same four
+     lines of source. Row tint plus a darker token tint is the diff card's own
+     idiom (.sp-add + .w), reused here in yellow because a computed value is
+     CONTENT.
 
-### Plain text means edits are **diffs**
-
-::: {.font140}
-<pre class="specimen diffcard compact">
+     NEVER write a live inline-R span anywhere on this slide -- not in the card,
+     not in this comment. knitr runs before pandoc and evaluates backtick-r
+     anywhere in the file, HTML comments included, so it would try to resolve
+     ev_sales and fail with "object 'ev_sales' not found". The card shows the
+     call by escaping both backticks as &#96;. -->
+<pre class="specimen diffcard">
 <span>  ## EV Sales</span>
 <span> </span>
 <span>  Sales of **electric vehicles** grew</span>
 <span>  20% in 2025, reaching over</span>
-<span>  _&#96;r ev_sales&#96; million_ sales globally.</span>
+<span class="steps-up fragment custom" data-fragment-index="2">  _<span class="w">&#96;r ev_sales&#96;</span> million_ sales globally.</span>
 <span> </span>
-<span class="sp-del">- EVs now <span class="w">outsell</span> hybrids.</span>
-<span class="sp-add">+ EVs are <span class="w">closing the gap with</span> hybrids.</span>
-</pre>
-
-:::
-:::
-
-::: {.col .fragment}
-
-### Inline R code means **computed numbers**
-
-::: {.font140}
-<pre class="specimen rendercard">
-<span class="rc-row"><span class="rc-in">20.9</span> &#8594; …reaching over <span class="rc-num">20.9&#160;million</span> sales</span>
-<span class="rc-row"><span class="rc-in">24.1</span> &#8594; …reaching over <span class="rc-num">24.1&#160;million</span> sales</span>
+<span class="sp-del steps-back fragment custom" data-fragment-index="2">- EVs now <span class="w">outsell</span> hybrids.</span>
+<span class="sp-add steps-back fragment custom" data-fragment-index="2">+ EVs are <span class="w">closing the gap with</span> hybrids.</span>
 </pre>
 :::
+
+::: {.col width="40%" valign="middle"}
+
+::: {.fragment data-fragment-index="1"}
+### Plain text means<br>edits are **diffs**
+:::
+
+<br>
+
+::: {.fragment data-fragment-index="2"}
+### Inline R code means<br>**computed numbers**
+:::
+
+:::
+
+::: {.notes}
 
 :::
 

@@ -35,7 +35,14 @@
      - Fan endpoints (x=240, x=700) are the quarter and three-quarter points of
        the viewBox, so they land roughly over the two images below. Roughly is
        the requirement; exact registration would depend on the rendered width and
-       is not worth chasing. -->
+       is not worth chasing.
+     - The two output arrows are cubic beziers with VERTICAL tangents at both
+       ends, the same idiom as the experiment figure's fan, so the drawn triangle
+       (which cannot rotate) still points straight down into the sheet. The
+       control points sit 46 units past each endpoint (y=200 and y=150), not at
+       the midpoint: the drop is only 42 units against ~200 of horizontal travel,
+       and pulling the controls in whips the curve into a kink right where the
+       arrowhead is. If either endpoint moves, re-check that overhang. -->
 <svg viewBox="10 2 920 218" width="1120" height="266"
      xmlns="http://www.w3.org/2000/svg"
      font-family="'Fira Sans Condensed', Tahoma, sans-serif">
@@ -68,10 +75,10 @@
   <path d="M 586 108.5 L 568.5 116 L 586 123.5 z" fill="#2e4057"/>
 
   <!-- two renders, leaving the box at its thirds, out to the two sheets below -->
-  <path d="M 438 154 L 438 172 L 240 172 L 240 196"
+  <path d="M 438 154 C 438 200, 240 150, 240 196"
         stroke="#2e4057" stroke-width="2.5" fill="none"/>
   <path d="M 232.5 193 L 240 210.5 L 247.5 193 z" fill="#2e4057"/>
-  <path d="M 502 154 L 502 172 L 700 172 L 700 196"
+  <path d="M 502 154 C 502 200, 700 150, 700 196"
         stroke="#2e4057" stroke-width="2.5" fill="none"/>
   <path d="M 692.5 193 L 700 210.5 L 707.5 193 z" fill="#2e4057"/>
 </svg>
