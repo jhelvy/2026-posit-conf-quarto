@@ -1,0 +1,40 @@
+<script>
+// ---- Offline Quarto mark ---------------------------------------------------
+// `{{< quarto >}}` comes from the mcanouil/iconify extension, which renders an
+// <iconify-icon> web component. That component has NO icon data of its own: it
+// fetches `simple-icons:quarto` from api.iconify.design at runtime. On a phone
+// with no signal, on a plane, on a locked-down conference network, or from a
+// `file://` copy of the deck, the request fails and the icon-extension's
+// fallback swaps in a text glyph — which is why the Quarto logo goes missing
+// while the Font Awesome icons (a local webfont, no network) keep working.
+//
+// Fix the one icon lexis decks actually lean on by handing iconify its data
+// locally, so nothing has to be fetched. `addIcon` lives on the custom element
+// class (iconify-icon copies its module exports onto it), and
+// `customElements.whenDefined` means this does not care whether the iconify
+// script tag lands before or after this one in <head>. If the iconify extension
+// is not installed at all the element is never defined, the promise never
+// settles, and this is a no-op — lexis does not depend on that extension.
+//
+// Icon body is simple-icons' `quarto` (24x24, CC0), inlined verbatim. Registered
+// under both the prefixed and bare names because iconify resolves the two
+// separately.
+(function () {
+  if (!window.customElements || !customElements.whenDefined) return;
+
+  var QUARTO = {
+    body: '<path fill="currentColor" d="M12.65 12.854V24c6.042-.325 10.923-5.105 11.33-11.125H12.65Zm-1.504 0H.02c.427 5.94 5.166 10.699 11.105 11.105V12.854Zm1.505-1.505H24C23.675 5.247 18.753.325 12.65 0Zm-1.505 0V0C5.106.427.326 5.308 0 11.35Z"/>',
+    width: 24,
+    height: 24
+  };
+
+  customElements.whenDefined('iconify-icon').then(function () {
+    var el = customElements.get('iconify-icon');
+    if (!el || typeof el.addIcon !== 'function') return;
+    try {
+      el.addIcon('simple-icons:quarto', QUARTO);
+      el.addIcon('quarto', QUARTO);
+    } catch (e) { /* a future iconify may rename this; the CDN still works */ }
+  });
+})();
+</script>

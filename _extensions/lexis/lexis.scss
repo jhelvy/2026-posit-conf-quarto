@@ -121,16 +121,29 @@ $progress-color: $color-blue;
 // left/right, never all four sides at once.
 .reveal-viewport {
   background-color: $color-gray;
-  // Size of the gray letterbox band on each axis, in real window px. reveal
-  // scales the 1600x900 deck by margin:0 to exactly
-  //   min(100vw, 177.78vh) x min(100vh, 56.25vw)   (16/9 = 1.7778, 9/16 = .5625)
-  // and centers it, so half the leftover on each axis is the band width. The UI
-  // chrome (slide number, menu button, footer bar) is positioned against the
-  // full window, which drops it into that gray band — off the slide. Expose the
-  // band size so those elements can be nudged back onto the card, like the old
+  // Size of the gray letterbox band on each axis. reveal centers the scaled
+  // deck, so half the leftover on each axis is the band width. The UI chrome
+  // (slide number, menu button, footer bar) is positioned against the full
+  // window, which drops it into that gray band — off the slide. Expose the band
+  // size so those elements can be nudged back onto the card, like the old
   // xaringan deck where the page number lived inside the slide.
-  --lexis-lb-x: calc((100vw - min(100vw, 177.78vh)) / 2);
-  --lexis-lb-y: calc((100vh - min(100vh,  56.25vw)) / 2);
+  //
+  // The card size is read from REVEAL'S OWN measurements — it publishes
+  // `--slide-width`/`--slide-height`/`--slide-scale` on this element from
+  // `layout()` — rather than re-deriving it from `vw`/`vh`. Two places where
+  // the viewport-unit version was wrong:
+  //   * iOS Safari. `100vh` is the LARGE viewport (URL bar hidden) while reveal
+  //     scales to the visible height, so `177.78vh` overshot, `min()` clamped to
+  //     `100vw`, and the band computed to ZERO — a {{< bg-color >}} slide then
+  //     bled its color edge to edge instead of stopping at the card.
+  //   * The portrait rotation below, which swaps what `vw` and `vh` mean
+  //     relative to the stage but leaves reveal's own numbers correct.
+  // The percentage resolves against each user's containing block, which is the
+  // window for the `position: fixed` chrome and `.reveal` for `.backgrounds` —
+  // the same box either way. `max()` keeps the band non-negative in the modes
+  // where reveal never runs `layout()` and the scale falls back to 1.
+  --lexis-lb-x: max(0px, calc((100% - var(--slide-width,  1600px) * var(--slide-scale, 1)) / 2));
+  --lexis-lb-y: max(0px, calc((100% - var(--slide-height,  900px) * var(--slide-scale, 1)) / 2));
 
   // Overview-mode (`o`) tile grid; see the block below. lexis-overview.js
   // overwrites `--lexis-ov-scale` on THIS element (inline styles win the
@@ -149,6 +162,97 @@ $progress-color: $color-blue;
   --lexis-ov-px: calc(1px / var(--lexis-ov-scale));
 }
 .reveal .slides  { background-color: $body-bg; }
+
+// ---- Handheld portrait: turn the deck, not the reader ----------------------
+// The stage is 16:9, i.e. landscape. On a phone held upright reveal scales that
+// stage down to the narrow width and leaves most of the screen gray, so the
+// slide arrives as a stamp the reader has to pinch at. Rotate the whole document
+// 90deg clockwise, sized to the SWAPPED viewport, so the slide uses the screen's
+// long side; the reader turns the device and gets a full-bleed landscape deck.
+//
+// `pointer: coarse` restricts this to devices whose PRIMARY input is a finger,
+// which is the only case where turning the device is the answer to a rotated
+// page. A desktop window dragged narrow also matches `orientation: portrait`,
+// but there the rotation is a trap: the picture turns while the trackpad,
+// scrollbars and the overview grid keep working on the screen's real axes. Those
+// machines keep the deck upright and simply letterbox it. A no-touch laptop
+// reports `pointer: fine`; an iPad reports coarse even with a trackpad attached.
+//
+// Why <body> and not `.reveal`: reveal derives its scale from `.reveal`'s
+// offsetWidth/offsetHeight, which are PRE-transform layout values. Sizing body
+// to the swapped viewport makes `.reveal` (width/height 100%) report landscape
+// dimensions, so reveal lays out for a landscape viewport on its own — and
+// `--slide-scale`, which the letterbox above reads, comes out right with it.
+// Rotating `.reveal` directly would leave reveal measuring the portrait box and
+// scaling the stage to the narrow side, which is the bug this replaces.
+//
+// The CSS handles what the deck LOOKS like; lexis-orientation.html handles the
+// two things CSS cannot — re-running reveal's layout after a flip, and making
+// swipes follow the rotated picture instead of the raw screen axes.
+//
+// reveal's zoom plugin sets `body.style.transition = "transform 0.8s ease"`
+// INLINE at init to animate alt-click zoom, and the rotation below is also a
+// transform on body, so it inherits that easing and the flip visibly swings.
+// Killing it here rather than inside the media query covers BOTH directions: a
+// rule scoped to portrait only covers the flip into portrait, and the moment the
+// query stops matching the easing is back for the flip out of it. `!important`
+// is required to beat the plugin's inline style; the only cost is that alt-click
+// zoom becomes instant too.
+body,
+body.reveal-viewport {
+  transition: none !important;
+}
+
+@media screen and (orientation: portrait) and (pointer: coarse) {
+  // The selector must reach CLASS specificity: reveal puts `.reveal-viewport` on
+  // <body> and reveal.css sets `.reveal-viewport { height: 100%; position:
+  // relative }`, which a bare `body` rule loses to — width would apply, height
+  // would not, and the rotated deck comes out square. Both selectors are listed
+  // so the bare-body fallback survives a build without the class.
+  //
+  // `screen` keeps this away from print/PDF export, which must stay upright.
+  // `svh` is the toolbar-visible viewport height on iOS; the deck never scrolls,
+  // so it is the stable measure (`100vh` would push the far edge behind Safari's
+  // bottom toolbar). `vh` stays as the fallback for browsers without
+  // small-viewport units; on desktop the two are equal.
+  body,
+  body.reveal-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    width: 100svh;
+    height: 100vw;
+    transform-origin: top left;
+    transform: translateX(100vw) rotate(90deg);
+  }
+
+  // reveal only switches its nav arrows to the "edges" layout (one arrow
+  // centered on each slide edge) inside `@media (min-width: 500px)`, and that
+  // query measures the PHYSICAL viewport. Rotated, the deck is laid out along
+  // the device's long side, which clears 500px on any phone, but the physical
+  // width does not — so the arrows collapse into reveal's tiny bottom-right
+  // cluster and read as missing. Re-apply the edges layout with reveal's own
+  // values so the arrows sit where the rotated slide's edges actually are. The
+  // container's own inset is not repeated here: the letterbox rule further down
+  // positions it in every mode, at a specificity that wins either way.
+  .reveal-viewport { --r-controls-spacing: 0.8em; }
+
+  .reveal .controls[data-controls-layout='edges'] {
+    .navigate-left,
+    .navigate-right,
+    .navigate-up,
+    .navigate-down {
+      bottom: auto;
+      right: auto;
+    }
+
+    .navigate-left  { top: 50%; left: var(--r-controls-spacing); margin-top: -1.8em; }
+    .navigate-right { top: 50%; right: var(--r-controls-spacing); margin-top: -1.8em; }
+    .navigate-up    { top: var(--r-controls-spacing); left: 50%; margin-left: -1.8em; }
+    .navigate-down  { bottom: calc(var(--r-controls-spacing) - 1.4em + 0.3em); left: 50%; margin-left: -1.8em; }
+  }
+}
 
 // ---- Overview mode (`o`) — xaringan-style tile grid -------------------------
 // reveal's stock overview lays every slide out in ONE horizontal row on a 3D
@@ -1240,11 +1344,29 @@ $progress-color: $color-blue;
 .reveal.reveal .slide-menu-button .fa-bars::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(105,105,105)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
 }
-// Flip BOTH the hamburger and the slide number to white on inverse / dark-
-// background slides so they stay visible (and matching) on dark cards — the
+// reveal's edge arrows (`controls: true` in _extension.yml) are the one visible
+// way to move through the deck on a phone — tap to advance. Reveal pins the
+// container to the four edges of `.reveal`, i.e. the WINDOW, so the left/right
+// arrows land out in the gray band whenever the window is wider than 16:9. Same
+// fix as the footer and the slide number: inset the container by the letterbox
+// so the arrows ride the card's edges.
+.reveal.reveal .controls[data-controls-layout='edges'] {
+  top:    var(--lexis-lb-y);
+  right:  var(--lexis-lb-x);
+  bottom: var(--lexis-lb-y);
+  left:   var(--lexis-lb-x);
+}
+// ...and match the slide number's gray rather than reveal's black. `color` is
+// enough: the arrows are SVGs drawn with `fill: currentColor`.
+.reveal.reveal .controls { color: $color-gray; }
+
+// Flip the hamburger, the slide number AND the arrows to white on inverse /
+// dark-background slides so they stay visible (and matching) on dark cards — the
 // hardcoded gray above would otherwise be invisible there.
 .reveal:has(.slides section.present.inverse) .slide-number,
 .reveal.reveal.has-dark-background .slide-number { color: #fff; }
+.reveal.reveal:has(.slides section.present.inverse) .controls,
+.reveal.reveal.has-dark-background .controls { color: #fff; }
 .reveal:has(.slides section.present.inverse) .slide-menu-button a,
 .reveal.reveal.has-dark-background .slide-menu-button a {
   color: #fff;

@@ -1,0 +1,126 @@
+<script>
+// ---- Handheld portrait support (touch devices only) ------------------------
+// lexis.scss rotates <body> 90deg clockwise on a portrait viewport whose primary
+// pointer is a finger, so the landscape stage uses the screen's long side (see
+// "Handheld portrait" there). Desktops stay upright at any window size, so
+// nothing in this file does anything there.
+//
+// The CSS handles what the deck LOOKS like. This file handles the two things CSS
+// cannot: keeping reveal's scale correct across a flip, and making swipes follow
+// the rotated picture instead of the raw screen axes.
+(function () {
+  // Must state the SAME condition as the SCSS media query, `pointer: coarse`
+  // included. Testing orientation alone would report "rotated" on a desktop
+  // window dragged narrow, where the CSS deliberately leaves the deck upright,
+  // and the swipe remap below would then fight input that was never rotated.
+  var mq = window.matchMedia('(orientation: portrait) and (pointer: coarse)');
+  var rotated = function () { return mq.matches; };
+
+  // ---- 1. Relayout after a flip ----
+  // Reveal reads its scale from `.reveal`'s pre-transform box, so the rotation
+  // alone is usually enough. What is not reliable is the TIMING on a real
+  // device: turning a phone fires resize while the media query, the visual
+  // viewport and the URL bar are all still settling, so reveal can measure a
+  // stale box and leave the deck mis-scaled until the next interaction — and
+  // since lexis derives its letterbox from `--slide-scale`, a stale scale also
+  // means a stale gray band. Re-run layout after the flip, once on the following
+  // frame, and once more after the toolbar animation.
+  var relayout = function () {
+    if (!window.Reveal || !Reveal.layout) return;
+    Reveal.layout();
+    requestAnimationFrame(function () { Reveal.layout(); });
+    setTimeout(function () { Reveal.layout(); }, 300);
+  };
+  if (mq.addEventListener) mq.addEventListener('change', relayout);
+  else if (mq.addListener) mq.addListener(relayout); // Safari < 14
+  window.addEventListener('orientationchange', relayout);
+
+  // ---- 2. Swipe remap ----
+  // Pointer/touch events report SCREEN coordinates; a CSS transform does not
+  // rotate them. Reveal navigates on screen deltaX, so once the page is rotated
+  // the viewer has to swipe along the axis they SEE as vertical.
+  //
+  // The page is rotated 90deg clockwise: page +x is drawn along screen +y, and
+  // page +y along screen -x. Reading the slide means turning the device 90deg
+  // counter-clockwise, after which, from the viewer's point of view:
+  //
+  //   swipe left   -> screen dy < 0   -> Reveal.right()  (advance)
+  //   swipe right  -> screen dy > 0   -> Reveal.left()
+  //   swipe up     -> screen dx > 0   -> Reveal.down()
+  //   swipe down   -> screen dx < 0   -> Reveal.up()
+  //
+  // Directions mirror reveal's own convention, where swiping left advances.
+  //
+  // Reveal binds its touch controller ONCE at init, so
+  // `Reveal.configure({touch: false})` afterwards does nothing. Its events are
+  // instead caught on window in the CAPTURE phase and stopped there, so they
+  // never reach the `.reveal` element's listener. Suppression only happens while
+  // rotated, leaving reveal's normal handling untouched in landscape.
+  //
+  // Bind the SAME event family reveal picked, using reveal's own test
+  // (`'onpointerdown' in window`). Reveal prefers Pointer Events wherever they
+  // exist, which includes iOS Safari, and only falls back to touch events on old
+  // browsers. Listening to touch alone would suppress nothing on a modern phone
+  // and would leave both handlers firing at once.
+  var POINTER = 'onpointerdown' in window;
+  var EVENTS = POINTER
+    ? { down: 'pointerdown', move: 'pointermove', up: 'pointerup', cancel: 'pointercancel' }
+    : { down: 'touchstart', move: 'touchmove', up: 'touchend', cancel: 'touchcancel' };
+
+  var THRESHOLD = 40; // px, same as reveal's swipe threshold
+  var startX = 0, startY = 0, tracking = false;
+
+  // Ignore anything that is not a finger: a mouse drag must not page the deck.
+  var isFinger = function (e) {
+    return POINTER ? (e.pointerType === 'touch' || e.pointerType === 'pen') : e.touches.length === 1;
+  };
+  var point = function (e) {
+    var p = POINTER ? e : (e.touches[0] || e.changedTouches[0]);
+    return { x: p.clientX, y: p.clientY };
+  };
+
+  // Never swallow gestures meant for a control, a link, the menu, or an
+  // interactive htmlwidget (a plotly tap must reach the widget), and stay out of
+  // the way in overview, where a swipe scrolls the tile grid.
+  var passThrough = function (target) {
+    if (window.Reveal && Reveal.isOverview && Reveal.isOverview()) return true;
+    return !!(target && target.closest && target.closest(
+      'a, button, input, select, textarea, .controls, .slide-menu-button, ' +
+      '.slide-menu, .slide-menu-overlay, .panel-tabset, .html-widget, iframe, ' +
+      '[data-prevent-swipe]'
+    ));
+  };
+
+  window.addEventListener(EVENTS.down, function (e) {
+    tracking = false;
+    if (!rotated() || !isFinger(e) || passThrough(e.target)) return;
+    e.stopPropagation();
+    tracking = true;
+    var p = point(e);
+    startX = p.x;
+    startY = p.y;
+  }, { capture: true, passive: true });
+
+  window.addEventListener(EVENTS.move, function (e) {
+    if (tracking) e.stopPropagation();
+  }, { capture: true, passive: true });
+
+  window.addEventListener(EVENTS.up, function (e) {
+    if (!tracking) return;
+    tracking = false;
+    e.stopPropagation();
+    if (!window.Reveal) return;
+    var p = point(e);
+    var dx = p.x - startX;
+    var dy = p.y - startY;
+    if (Math.abs(dx) < THRESHOLD && Math.abs(dy) < THRESHOLD) return; // a tap
+    if (Math.abs(dy) >= Math.abs(dx)) {
+      if (dy < 0) Reveal.right(); else Reveal.left();
+    } else {
+      if (dx > 0) Reveal.down(); else Reveal.up();
+    }
+  }, { capture: true, passive: true });
+
+  window.addEventListener(EVENTS.cancel, function () { tracking = false; }, { capture: true, passive: true });
+})();
+</script>

@@ -53,6 +53,22 @@ contributes:
       include-in-header:
         - lexis-overview.html
         - lexis-nav.html
+        # Hands the iconify web component the Quarto mark locally, so
+        # `{{< quarto >}}` still renders with no network. See the file.
+        - lexis-offline-icons.html
+      # Rotation + swipe remap for a phone held upright; the look it goes with is
+      # the "Handheld portrait" block in lexis.scss.
+      include-after-body:
+        - lexis-orientation.html
+      # Always show reveal's left/right edge arrows. Quarto's default is
+      # `controls: auto`, which its quarto-support plugin resolves at runtime to
+      # `(inIframe && !localhost) || hasVerticalSlides` — so a deck opened
+      # directly (not embedded) never gets arrows, and neither does one served
+      # from localhost during preview. On a phone the arrows are the only visible
+      # affordance for moving through the deck: tap to advance, nothing to guess
+      # at. Pin them on rather than letting the context decide.
+      controls: true
+      controls-layout: edges
       # Run AFTER Quarto expands the {{< inverse >}}/etc. shortcodes into markers.
       filters:
         - at: post-quarto
