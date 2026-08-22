@@ -238,6 +238,11 @@ body.reveal-viewport {
   // positions it in every mode, at a specificity that wins either way.
   .reveal-viewport { --r-controls-spacing: 0.8em; }
 
+  // The one place the arrows are wanted. The `.reveal.reveal` bump is what makes
+  // this win: the global `display: none` further down is also `!important` and
+  // comes LATER in the file, so at equal specificity it would take the tie.
+  .reveal.reveal .controls { display: block !important; }
+
   .reveal .controls[data-controls-layout='edges'] {
     .navigate-left,
     .navigate-right,
@@ -1344,12 +1349,22 @@ body.reveal-viewport {
 .reveal.reveal .slide-menu-button .fa-bars::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(105,105,105)" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
 }
-// reveal's edge arrows (`controls: true` in _extension.yml) are the one visible
-// way to move through the deck on a phone — tap to advance. Reveal pins the
-// container to the four edges of `.reveal`, i.e. the WINDOW, so the left/right
-// arrows land out in the gray band whenever the window is wider than 16:9. Same
-// fix as the footer and the slide number: inset the container by the letterbox
-// so the arrows ride the card's edges.
+// reveal's edge arrows are a HANDHELD affordance and nothing else. On a phone
+// they are the only visible way to move through the deck — tap to advance, with
+// nothing to guess at — but on a laptop they are chrome sitting on top of a
+// slide next to a keyboard that already does the job, and they show up in
+// screenshots and in the PDF export. So `controls: true` in _extension.yml
+// builds them, and this hides them everywhere except the handheld-portrait
+// block above, which turns them back on.
+//
+// `!important` is load-bearing: reveal writes `display` as an INLINE style on
+// the container from its own config, so a plain rule here never wins.
+.reveal .controls { display: none !important; }
+
+// Reveal pins the container to the four edges of `.reveal`, i.e. the WINDOW, so
+// the left/right arrows land out in the gray band whenever the window is wider
+// than 16:9. Same fix as the footer and the slide number: inset the container by
+// the letterbox so the arrows ride the card's edges.
 .reveal.reveal .controls[data-controls-layout='edges'] {
   top:    var(--lexis-lb-y);
   right:  var(--lexis-lb-x);

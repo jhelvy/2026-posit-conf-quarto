@@ -60,13 +60,14 @@ contributes:
       # the "Handheld portrait" block in lexis.scss.
       include-after-body:
         - lexis-orientation.html
-      # Always show reveal's left/right edge arrows. Quarto's default is
-      # `controls: auto`, which its quarto-support plugin resolves at runtime to
-      # `(inIframe && !localhost) || hasVerticalSlides` — so a deck opened
-      # directly (not embedded) never gets arrows, and neither does one served
-      # from localhost during preview. On a phone the arrows are the only visible
-      # affordance for moving through the deck: tap to advance, nothing to guess
-      # at. Pin them on rather than letting the context decide.
+      # BUILD reveal's edge arrows; lexis.scss then hides them everywhere except
+      # a phone held upright, which is the only place they are wanted (tap to
+      # advance). Quarto's default is `controls: auto`, which its quarto-support
+      # plugin resolves at runtime to `(inIframe && !localhost) ||
+      # hasVerticalSlides` — so a deck opened directly, or served from localhost
+      # during preview, never gets them at all. The visibility decision belongs
+      # to a media query, not to that expression, so pin the arrows on here and
+      # let the CSS choose. See "reveal's edge arrows" in lexis.scss.
       controls: true
       controls-layout: edges
       # Run AFTER Quarto expands the {{< inverse >}}/etc. shortcodes into markers.

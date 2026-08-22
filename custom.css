@@ -486,3 +486,176 @@
   text-align: center;
 }
 .reveal section > .canvasbanner p { margin: 0; }
+
+/* ── THE ROBUSTNESS WORKFLOW SLIDE ──────────────────────────────────────────
+   Two columns: the five-step stack on the left, and on the right the one piece
+   of the EV Sales document that the lit step actually touches.
+
+   `.robustness` has exactly TWO direct children, `.stack` and `.demo`. It is a
+   2-column grid, so every extra direct child gets auto-placed into the next
+   free cell — putting the individual beats in here as siblings scrambles the
+   layout. The beats live inside the two columns.
+
+   The stack is centred in its column; the demo is pinned to the TOP of its
+   own. The demo is the shorter of the two and its height changes with the beat
+   (a two-line card, a seven-line diff), so centring it made the claim drift up
+   and down the slide from click to click. Anchored at the top, the claim and
+   the top edge of the card stay put and only the card's bottom moves.
+
+   No `height` on the grid. Reveal scales a fixed 1600x900 stage, so a `vh`
+   height measures the browser WINDOW, not the card, and the grid drifts out of
+   the slide as the window changes. The two regions that gain and lose content
+   reserve their room in slide px instead (`.panels`, `.claims`), which is the
+   same coordinate system the stage is in.
+
+   The right column has NO frame. The cards inside it already carry the deck's
+   `pre.specimen` chrome (see above), so a box around them was a second border
+   around a bordered thing. Only `.step` is drawn as a box here, because a
+   workflow step is the one thing on this slide that is not a document.
+
+   Greys (#ccc/#777/#f7f7f7) are neutral chrome — the step boxes are furniture.
+   The one value that carries meaning is the deck's navy ink on the lit step. */
+.reveal .robustness {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  gap: 2rem;
+  align-items: center;
+}
+.reveal .robustness .demo { align-self: start; }
+
+/* Fira Sans Condensed is lexis's heading face (`$font-header`), already loaded
+   by the theme — the stack is a set of labels, not prose, so it belongs in the
+   heading font rather than the body Inter. Repeated literally because
+   custom.css is plain CSS and cannot see the Sass variable; keep it in step
+   with `$font-header` in lexis.scss if that ever changes.
+
+   Padding is symmetric and sizes are in `em`, so a step that wraps to two lines
+   gets the same space above and below its text as a one-liner does — the box
+   just grows. That is what makes wrapping a non-event here: nothing has to be
+   hand-tuned per label. `text-wrap: balance` splits a wrapped label into two
+   even lines instead of a long one and an orphan (ignored where unsupported).
+
+   The gaps are in `em` too, not `rem`: `rem` resolves against the browser root,
+   which has nothing to do with the deck's 34px stage type, so a step's type and
+   the air around it would drift apart the moment either was retuned. */
+.reveal .robustness .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+.reveal .robustness .step {
+  border: 2px solid #d7dade;
+  border-radius: 10px;
+  padding: 0.55em 0.7em;
+  background: #e2e5e8;
+  color: #6c7684;
+  font-family: "Fira Sans Condensed", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.85em;
+  line-height: 1.2;
+  /* Weight is the SAME in both states, on purpose. Bolding only the current
+     step widens its text, which can push a label onto a second line and make
+     the whole stack jump as you click through. The state change below is the
+     signal; the weight must not move. */
+  font-weight: 600;
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+}
+/* A fenced div wraps its content in a `<p>`, so the icon and the label are
+   siblings inside one paragraph, not two boxes. Making that paragraph the flex
+   container splits them: the `.ico` span is one flex item and the label text
+   becomes an anonymous one beside it. A previous attempt used a hanging indent
+   instead (`padding-left` plus a negative `text-indent`) and the mark rendered
+   OUTSIDE the rounded box — a negative indent is not clipped by padding.
+   Flex cannot overflow this way, and it also keeps a wrapped label's second
+   line aligned under its first rather than under the icon.
+
+   `align-items: baseline` sits the mark on the label's first baseline, which is
+   what stops a two-line step from floating its icon down to the middle.
+
+   The mark inherits `currentColor`, so it dims and lights with the step and
+   never needs a colour of its own. Brand colours here would compete with the
+   yellow, red and green doing real work in the cards on the right, and five
+   competing hues down the left edge is exactly the busyness the icons are
+   supposed to avoid. */
+.reveal .robustness .step p {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  margin: 0;
+  text-align: left;
+}
+.reveal .robustness .step .ico {
+  flex: 0 0 1.5em;
+  text-align: center;
+}
+/* The `quarto` shortcode hardcodes Quarto's brand blue as an inline style and
+   rewrites any `color:` passed to it, so the shortcode can never be recoloured
+   from the document. The slide calls the generic iconify shortcode with the
+   same icon name instead, which ships no colour and inherits. This is the
+   backstop in case that ever changes — an inline style needs `!important` to
+   beat it. */
+.reveal .robustness .step .ico iconify-icon {
+  color: inherit !important;
+  vertical-align: -0.1em;
+}
+
+/* Reveal marks the fragment(s) at the current index `.current-fragment`, so the
+   lit box follows the clicks with no duplicated markup.
+
+   Both states are LIGHT. An earlier version made the resting blocks navy, and
+   five dark slabs down the left edge pulled the eye away from the card on the
+   right, which is where the argument actually is. So the stack sits a half-step
+   BELOW the slide's own background (#e2e5e8 on a light grey slide) with muted
+   type, and the current step rises to a white card with the deck's navy ink and
+   a navy border. The signal is the same inversion as before — figure and ground
+   swap — but it now happens between two light values, so the whole left column
+   stays quiet.
+
+   Contrast: #6c7684 on #e2e5e8 is about 4.4:1, enough to read at this size and
+   plainly receded; navy on white is 11:1. Border and weight hold still in both
+   states, so the box cannot change size when it flips. */
+.reveal .robustness .step.current-fragment {
+  background: #FFFFFF;
+  border-color: #2e4057;
+  color: #2e4057;
+}
+.reveal .robustness .arrow {
+  text-align: center;
+  color: #777;
+  /* Five steps, four arrows and eight gaps have to clear the slide's lower
+     edge with a two-line step in the stack. The arrow is the cheapest place to
+     buy that room back, so it is set tight on purpose. */
+  line-height: 0.8;
+}
+
+.reveal .robustness .demo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+/* The claim sits ABOVE the card: it is the sentence John says out loud, so it
+   reads as the point being made, not as a caption on the artifact below it.
+
+   `.panels` and `.claims` each hold every beat's content stacked in ONE cell —
+   the same trick as reveal's `.r-stack` — so the card never moves as the beats
+   swap. `current-visible` hides with `visibility`, which keeps a box in flow,
+   but only the tallest beat would set the height and an all-hidden region would
+   collapse, so both reserve a floor: the five-line card and the one-line claim.
+   Retune these together with the `font-size` below if that changes. */
+.reveal .robustness .panels,
+.reveal .robustness .claims {
+  display: grid;
+  grid-template-rows: 100%;
+}
+.reveal .robustness .panels { min-height: 260px; }
+.reveal .robustness .claims { min-height: 70px; }
+.reveal .robustness .panels > *,
+.reveal .robustness .claims > * {
+  grid-area: 1/1;
+  margin: 0;
+}
+/* `pre.specimen` is 0.62em, sized for a card sitting inside a `.font140`
+   column. These cards are not in one, so the multiplier is folded in here
+   (0.62 x 1.4) — same rendered size as the diff card on "The source is text",
+   which is the point: the room should recognise it as the same object. */
+.reveal .robustness .panels pre.specimen { font-size: 0.87em; }
+.reveal .robustness .claim { font-size: 1.1em; }

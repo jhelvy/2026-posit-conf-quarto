@@ -39,7 +39,8 @@ products**. Use that phrase; it's the session's shared vocabulary.
   (`entanglement-1`, `entanglement-2`, `dashboard`, `experiment`, `params`),
   pulled in with `{{< include svg/….qmd >}}`. Each file is its invariants comment
   plus one ```` ```{=html} ```` block; the slide's heading, images and `.notes`
-  stay in `index.qmd`.
+  stay in `index.qmd`. `robustness.qmd` lives here too — not an SVG, but the same
+  deal: a slide body too big to read inline.
 - `index.html` + `index_files/` — rendered output, committed. Never hand-edit.
 - `_extensions/lexis/` — the lexis extension. Don't hand-edit. Two exceptions,
   both pending upstream: the guarded `.inverse` card paint in `lexis.scss`, and

@@ -64,7 +64,10 @@ sp <- function(gap = 2, unit = "em") {
 [posit::conf(2026)<br>Houston, TX]{.font120}
 
 ::: {.notes}
-
+This is the first talk in a session on dashboards. 
+And I promise you, I will talk about dashboards. 
+But I want to start with something that seems completely unrelated: 
+handwriting practice sheets.
 :::
 
 ---
@@ -153,7 +156,7 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 ::: {.col width="60%"}
 `r sp(2.3)`
 
-# Quarto separates
+# Quarto disentangles
 
 # [Content]{.contentchip} and [Format]{.formatchip}
 :::
@@ -163,7 +166,7 @@ This is a dashboard session, but we are starting with a handwriting worksheet. T
 {{< center >}}
 {{< middle >}}
 
-# Quarto separates [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
+# Quarto disentangles [Content]{.contentchip .fragment .custom .turnsred data-fragment-index="3"} and [Format]{.formatchip}
 
 {{< include svg/entanglement-2.qmd >}}
 
@@ -1187,99 +1190,35 @@ where correctness can be checked and enforced.
 
 ---
 
-# [Four ways an error gets stopped]{.center}
-
-. . .
-
-<br>
-
-## [**The source runs**]{.center .darkgreen}
-
-<br>
-
-::: {.col .fragment}
-
-### [`quarto render`<br>errors _loudly_]{.center}
-
-`r sp(0.5)`
-
-<pre class="specimen errcard">
-<span class="sp-dim">Quitting from index.qmd:12-30 [africa-map]</span>
-<span class="sp-err">Error:</span>
-<span class="sp-err">! all(funding$name %in% africa$name) is not TRUE</span>
-<span>Execution halted</span>
-</pre>
-
-:::
-
-::: {.col .fragment}
-
-### [GitHub Actions runs it<br>on _every commit_]{.center}
-
-`r sp(0.5)`
-
-<pre class="specimen errcard">
-<span class="sp-dim">&#10003;  render-site   passed in 38s   a1f3c9d</span>
-<span class="sp-dim">&#10003;  render-site   passed in 41s   7b2e004</span>
-<span class="sp-err">&#10007;  render-site   failed in 12s   3d97951</span>
-<span class="sp-err">   ! all(funding$name %in% africa$name)</span>
-</pre>
-
-:::
+# [Architect robustness into the workflow]{.center}
 
 ::: {.notes}
 
-:::
+The key idea: we don't have to make the AI perfectly reliable.
 
----
+Instead, we can **architect robustness into the workflow**.
 
-# [Four ways an error gets stopped]{.center}
+The AI writes the source, and then deterministic tools and human checks sit downstream of it.
 
-<br>
-
-## [**The source is text**]{.center .darkgreen}
-
-::: {.col .font140 width="60%" valign="middle"}
-<!-- ONE artifact, two readings. The card never moves; what moves is the
-     highlight. Click 1 makes the point the diff rows are already showing;
-     click 2 steps those rows back to plain grey and lights the ev_sales line
-     instead, so the eye is handed from one claim to the other on the same four
-     lines of source. Row tint plus a darker token tint is the diff card's own
-     idiom (.sp-add + .w), reused here in yellow because a computed value is
-     CONTENT.
-
-     NEVER write a live inline-R span anywhere on this slide -- not in the card,
-     not in this comment. knitr runs before pandoc and evaluates backtick-r
-     anywhere in the file, HTML comments included, so it would try to resolve
-     ev_sales and fail with "object 'ev_sales' not found". The card shows the
-     call by escaping both backticks as &#96;. -->
-<pre class="specimen diffcard">
-<span>  ## EV Sales</span>
-<span> </span>
-<span>  Sales of **electric vehicles** grew</span>
-<span>  20% in 2025, reaching over</span>
-<span class="steps-up fragment custom" data-fragment-index="2">  _<span class="w">&#96;r ev_sales&#96;</span> million_ sales globally.</span>
-<span> </span>
-<span class="sp-del steps-back fragment custom" data-fragment-index="2">- EVs now <span class="w">outsell</span> hybrids.</span>
-<span class="sp-add steps-back fragment custom" data-fragment-index="2">+ EVs are <span class="w">closing the gap with</span> hybrids.</span>
-</pre>
-:::
-
-::: {.col width="40%" valign="middle"}
-
-::: {.fragment data-fragment-index="1"}
-### Plain text means<br>edits are **diffs**
-:::
-
-<br>
-
-::: {.fragment data-fragment-index="2"}
-### Inline R code means<br>**computed numbers**
-:::
+The stack on the left is the workflow. On the right, each click shows what that step buys us.
 
 :::
+
+{{< include svg/robustness.qmd >}}
 
 ::: {.notes}
+
+**AI writes the source:** I am not asking the model for a PDF or dashboard. I am asking for source code—the thing we can inspect, execute, test, and regenerate.
+
+**Quarto executes it:** `quarto render` actually runs the source. If something is broken, it fails loudly rather than handing us a polished-looking artifact. This isn't unique to Quarto, but Quarto gives us a very clean test: does the document render?
+
+**GitHub tests it:** GitHub Actions can render the project on every commit. We don't have to remember to run the test.
+
+**Git shows you what changed:** Because the source is plain text, I can inspect exactly what the model changed. I don't have to visually inspect an entire regenerated artifact. This connects directly to "ask the AI for the source, not the artifact."
+
+**R computes the numbers:** Don't ask the model to write numbers that can be computed. Inline R means the number comes from the data at render time.
+
+**Close:** None of this makes the AI perfect. The goal is to build a workflow where the AI doesn't have to be perfect. We put deterministic execution, automated testing, human-readable diffs, and computed content downstream of a probabilistic model. That is what I mean by **architecting robustness into the workflow**.
 
 :::
 

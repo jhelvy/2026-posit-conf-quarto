@@ -1,0 +1,152 @@
+<!-- The "Architect robustness into the workflow" slide body. Lives out here
+     for the same reason the figures do: it is a two-column build with five
+     beats on each side, and inline it buried the surrounding slides. The
+     heading and the `.notes` stay in index.qmd; this file is everything
+     between them.
+
+     ONE example, five readings. Every card on the right is the SAME EV Sales
+     document used in the efficiency act and on the diff slide below, so by the
+     time the room gets here they already know these lines. Do not swap in a
+     second example: the argument is that one artifact survives all five checks.
+
+     Each beat shows ONLY the part that step touches — the failing render, the
+     failing check, the rows that changed, the computed lines. Beats 4 and 5 are
+     the SAME artifact twice: 4 shows the hand-typed numbers being replaced by
+     the calls that compute them, 5 drops the diff and shows the result, with
+     those two lines washed yellow because a computed value is CONTENT. Red/
+     green is a claim about an EDIT; yellow is a claim about the VALUE, so the
+     colour change is the argument moving from "you can see it" to "it comes
+     from the data." Keep the two cards' lines and variable names identical. An earlier
+     version kept the whole source block pinned above every beat; it was five
+     lines of already-read text sitting on top of the one line that was new, and
+     the eye had to hunt for the change.
+
+     `.robustness` has exactly TWO direct children, `.stack` and `.demo`. It is
+     a 2-column grid, so every extra direct child gets auto-placed into the next
+     free cell — an earlier version put the individual beats in here as siblings
+     and they laid out as stack1|stack2, stack3|stack4, ...
+
+     Left: ONE stack, not one copy per beat. Each step is `fragment custom`,
+     which reveal leaves visible at rest (`.fragment:not(.custom)` is what hides
+     a fragment), so the whole workflow is readable from beat 0 and a click only
+     moves reveal's `.current-fragment` class down the list.
+
+     Right: the claim first, then the card that backs it. The claim is the
+     sentence John says out loud, so it reads before the artifact rather than
+     as a caption after it. Every card lives in ONE grid cell (`.panels > *` is
+     `grid-area: 1/1`), so nothing moves as the beats swap, and the claims do
+     the same above it. Both regions reserve a floor in slide px, because
+     `current-visible` hides with `visibility` — the box stays in flow, but an
+     empty region would otherwise collapse.
+
+     Card chrome is the deck's own `pre.specimen` (see custom.css): `.diffcard`
+     for source, `.errcard` for tool output, `.sp-del`/`.sp-add`/`.w` for the
+     changed rows, `.steps-up` for the yellow computed-value highlight. Nothing
+     here invents a second visual idiom for what the deck already draws.
+
+     NEVER write a live inline-R span on this slide -- not in a card, not in
+     this comment. knitr runs before pandoc and evaluates backtick-r anywhere in
+     the file, HTML comments included, so it would try to resolve ev_sales and
+     fail with "object 'ev_sales' not found". Both backticks are escaped as
+     &#96;. -->
+
+::: {.robustness}
+
+<!-- Fenced divs, not raw <div>s, because the icons are shortcodes: Quarto
+     expands the fa and quarto shortcodes in markdown, and a raw HTML block
+     passes straight through unexpanded. Each mark names the TOOL that step is
+     about, which is the only reason they earn their space here — four of the
+     five are marks the room already reads instantly, and the robot stands in
+     for the one thing with no canonical logo. They inherit `currentColor` from
+     `.step`, so they dim and light with it.
+
+     NEVER write a shortcode's braces in a comment on this slide, not even as
+     an example. Quarto expands shortcodes inside HTML comments -- the same trap
+     as backtick-r below -- so an argument-less `fa` written here reaches
+     fontawesome.lua with no icon name and kills the render with
+     "Cannot get Attr from TypeNil". Name the shortcode in words instead. -->
+::: {.stack}
+
+::: {.step .fragment .custom data-fragment-index="1"}
+[{{< fa robot >}}]{.ico} AI writes the source
+:::
+
+<div class="arrow">↓</div>
+
+::: {.step .fragment .custom data-fragment-index="2"}
+[{{< iconify simple-icons:quarto >}}]{.ico} Quarto executes it
+:::
+
+<div class="arrow">↓</div>
+
+::: {.step .fragment .custom data-fragment-index="3"}
+[{{< fa brands github >}}]{.ico} GitHub tests it
+:::
+
+<div class="arrow">↓</div>
+
+::: {.step .fragment .custom data-fragment-index="4"}
+[{{< fa brands git-alt >}}]{.ico} Git shows you what changed
+:::
+
+<div class="arrow">↓</div>
+
+::: {.step .fragment .custom data-fragment-index="5"}
+[{{< fa brands r-project >}}]{.ico} R computes the numbers
+:::
+
+:::
+
+::: {.demo}
+
+::: {.claims}
+<div class="claim fragment current-visible" data-fragment-index="1"></div>
+<div class="claim fragment current-visible" data-fragment-index="2">`quarto render` <strong>fails loudly</strong></div>
+<div class="claim fragment current-visible" data-fragment-index="3">GitHub Actions runs `quarto render` <strong>continuously</strong></div>
+<div class="claim fragment current-visible" data-fragment-index="4">Plain text diffs means <strong>you see what the AI changed</strong></div>
+<div class="claim fragment current-visible" data-fragment-index="5">Numbers come from the <strong>data</strong></div>
+:::
+
+::: {.panels}
+<pre class="specimen diffcard fragment current-visible" data-fragment-index="1">
+<span>  ## EV Sales</span>
+<span> </span>
+<span>  Sales of **electric vehicles** grew</span>
+<span>  20% in 2025, reaching over</span>
+<span>  _20 million_ sales globally.</span>
+</pre>
+<pre class="specimen errcard fragment current-visible" data-fragment-index="2">
+<span class="sp-dim">$ quarto render</span>
+<span class="sp-dim">Quitting from index.qmd:12-18 [ev-data]</span>
+<span class="sp-err">Error:</span>
+<span class="sp-err">! `data/ev-sales.csv` does not exist.</span>
+<span>Execution halted</span>
+</pre>
+<pre class="specimen errcard fragment current-visible" data-fragment-index="3">
+<span class="sp-dim">&#10003;  render-site   passed in 38s   a1f3c9d</span>
+<span class="sp-dim">&#10003;  render-site   passed in 41s   7b2e004</span>
+<span class="sp-err">&#10007;  render-site   failed in 12s   3d97951</span>
+<span class="sp-err">   ! `data/ev-sales.csv` does not exist.</span>
+</pre>
+<pre class="specimen diffcard fragment current-visible" data-fragment-index="4">
+<span>  ## EV Sales</span>
+<span> </span>
+<span>  Sales of **electric vehicles** grew</span>
+<span class="sp-del">- <span class="w">20%</span> in 2025, reaching over</span>
+<span class="sp-del">- _<span class="w">20 million</span>_ sales globally.</span>
+<span class="sp-add">+ <span class="w">&#96;r ev_percent_25&#96;</span> in 2025, reaching over</span>
+<span class="sp-add">+ _<span class="w">&#96;r ev_sales_25&#96;</span>_ sales globally.</span>
+</pre>
+<pre class="specimen diffcard fragment current-visible" data-fragment-index="5">
+<span>  ## EV Sales</span>
+<span> </span>
+<span>  Sales of **electric vehicles** grew</span>
+<span class="steps-up visible">  <span class="w">&#96;r ev_percent_25&#96;</span> in 2025, reaching over</span>
+<span class="steps-up visible">  _<span class="w">&#96;r ev_sales_25&#96;</span>_ sales globally.</span>
+</pre>
+:::
+
+:::
+
+:::
+
